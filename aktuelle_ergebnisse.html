@@ -270,71 +270,18 @@
         }
 
         // Swipe-Funktionalität für mobile Geräte
-       <script>
-    let currentIndex = 0;
-    const tableContainer = document.getElementById('tableContainer');
-    const paginationDots = document.querySelectorAll('.pagination-dot');
-    const totalTables = document.querySelectorAll('.table-wrapper').length;
-    let startX = 0;
-    let isDragging = false;
-
-    // Swipe-Handler mit verbessertem Touch-Tracking
-    function handleTouchStart(e) {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-    }
-
-    function handleTouchMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        
-        const currentX = e.touches[0].clientX;
-        const diff = startX - currentX;
-        tableContainer.style.transition = 'none';
-        tableContainer.style.transform = `translateX(calc(-${currentIndex * 100}% - ${diff}px))`;
-    }
-
-    function handleTouchEnd(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        
-        const endX = e.changedTouches[0].clientX;
-        const diffX = startX - endX;
-        tableContainer.style.transition = 'transform 0.5s ease-in-out';
-
-        if (Math.abs(diffX) > 30) { // Reduzierter Schwellenwert
-            if (diffX > 0 && currentIndex < totalTables - 1) {
-                showTable(currentIndex + 1);
-            } else if (diffX < 0 && currentIndex > 0) {
-                showTable(currentIndex - 1);
-            } else {
-                showTable(currentIndex);
-            }
-        } else {
-            showTable(currentIndex);
-        }
-    }
-
-    // Event-Listener mit passiver Option
-    tableContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
-    tableContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
-    tableContainer.addEventListener('touchend', handleTouchEnd);
-
-    // Restlicher Code unverändert
-    function showTable(index) {
-        if (index < 0) index = 0;
-        if (index >= totalTables) index = totalTables - 1;
-        currentIndex = index;
-        tableContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updatePagination();
-    }
-
-    function updatePagination() {
-        paginationDots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
+        let startX = 0;
+        tableContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
         });
-    }
-</script>
+        tableContainer.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            if (diffX > 50 && currentIndex < totalTables - 1) {
+                showTable(currentIndex + 1); // Nach rechts swipen
+            } else if (diffX < -50 && currentIndex > 0) {
+                showTable(currentIndex - 1); // Nach links swipen
+            }
         });
     </script>
 </body>
