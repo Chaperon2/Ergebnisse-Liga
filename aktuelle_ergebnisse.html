@@ -30,6 +30,7 @@
             min-width: 100%;
             box-sizing: border-box;
             padding: 20px;
+            position: relative;
         }
         table {
             width: 100%;
@@ -88,6 +89,30 @@
         .pagination-dot.active {
             background-color: #333;
         }
+        .nav-arrow {
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 20px;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+        .nav-arrow:hover {
+            background-color: rgba(68, 68, 68, 0.8);
+        }
+        .nav-arrow.left {
+            left: 10px;
+        }
+        .nav-arrow.right {
+            right: 10px;
+        }
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.5rem;
@@ -95,6 +120,14 @@
             th, td {
                 padding: 10px;
                 font-size: 14px;
+            }
+            .nav-arrow {
+                display: none;
+            }
+        }
+        @media (min-width: 601px) {
+            .nav-arrow {
+                display: block;
             }
         }
     </style>
@@ -130,6 +163,9 @@
                     <!-- Weitere Zeilen -->
                 </tbody>
             </table>
+            <div class="back-button">
+                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+            </div>
         </div>
 
         <!-- Einzelgesamtwertung -->
@@ -157,6 +193,9 @@
                     <!-- Weitere Zeilen -->
                 </tbody>
             </table>
+            <div class="back-button">
+                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+            </div>
         </div>
 
         <!-- Teamwertung -->
@@ -184,6 +223,9 @@
                     <!-- Weitere Zeilen -->
                 </tbody>
             </table>
+            <div class="back-button">
+                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+            </div>
         </div>
     </div>
 
@@ -194,18 +236,20 @@
         <div class="pagination-dot" onclick="showTable(2)"></div>
     </div>
 
-    <!-- Zurück-Button -->
-    <div class="back-button">
-        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-    </div>
+    <!-- Navigationspfeile -->
+    <button class="nav-arrow left" onclick="showTable(currentIndex - 1)">&#10094;</button>
+    <button class="nav-arrow right" onclick="showTable(currentIndex + 1)">&#10095;</button>
 
     <script>
         let currentIndex = 0;
         const tableContainer = document.getElementById('tableContainer');
         const paginationDots = document.querySelectorAll('.pagination-dot');
+        const totalTables = document.querySelectorAll('.table-wrapper').length;
 
         // Funktion zum Anzeigen der ausgewählten Tabelle
         function showTable(index) {
+            if (index < 0) index = 0;
+            if (index >= totalTables) index = totalTables - 1;
             currentIndex = index;
             tableContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
             updatePagination();
@@ -226,7 +270,7 @@
         tableContainer.addEventListener('touchend', (e) => {
             const endX = e.changedTouches[0].clientX;
             const diffX = startX - endX;
-            if (diffX > 50 && currentIndex < 2) {
+            if (diffX > 50 && currentIndex < totalTables - 1) {
                 showTable(currentIndex + 1); // Nach rechts swipen
             } else if (diffX < -50 && currentIndex > 0) {
                 showTable(currentIndex - 1); // Nach links swipen
