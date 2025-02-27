@@ -22,25 +22,45 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin: 20px 0;
         }
+  
         .table-container {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            width: 300%; /* 3 Tabellen = 300% Breite */
+            width: 300%; /* 3 × 100% Viewport Breite */
         }
         .table-wrapper {
-            width: 100%; /* Jede Tabelle nimmt 100% der Bildschirmbreite ein */
+            width: 33.333333%; /* Jede Tabelle nimmt 1/3 des Containers ein (≈100% Viewport) */
             box-sizing: border-box;
-            padding: 20px;
-            flex-shrink: 0; /* Verhindert, dass die Tabellen schrumpfen */
+            padding: 20px 0; /* Vertikales Padding beibehalten */
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         table {
-            width: 100%;
+            width: 95%; /* Leichte seitliche Abstände */
             border-collapse: collapse;
             background-color: rgba(51, 51, 51, 0.8);
             border-radius: 10px;
-            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin: 0 auto;
+            table-layout: fixed; /* Gleichmäßige Spaltenverteilung */
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #444444;
+            word-wrap: break-word; /* Zeilenumbruch für lange Inhalte */
+        }
+        /* Medientypen anpassen */
+        @media (max-width: 600px) {
+            .table-wrapper {
+                width: 100%; Auf Mobilgeräten volle Breite pro Tabelle */
+                padding: 10px 0;
+            }
+            .table-container {
+                width: 300%; /* 3 × 100% Viewport */
+            }
         }
         th, td {
             padding: 12px;
