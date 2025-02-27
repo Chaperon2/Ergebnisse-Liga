@@ -6,47 +6,53 @@
     <title>Spielergebnisse</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-    background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp); /* Ersetze 'URL_DES_BILDES' mit dem tatsächlichen Pfad zum Bild */
-    background-size: cover; /* Damit das Bild den ganzen Bildschirm abdeckt */
-    background-position: center; /* Damit das Bild zentriert wird */
-    background-attachment: fixed; /* Fixiert den Hintergrund, wenn man scrollt */
-}
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff; /* Weiße Schrift für bessere Lesbarkeit */
+        }
 
         .button-container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            flex-wrap: wrap;  /* Ermöglicht Umbruch der Buttons bei kleinen Bildschirmen */
+            flex-wrap: wrap;
         }
+
         .button-container button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: rgba(255, 255, 255, 0.1); /* Transparentes Weiß */
+            color: #ffffff;
             padding: 15px 32px;
             text-align: center;
             font-size: 18px;
-            border: none;
+            border: 2px solid #ffffff; /* Weißer Rand */
             cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
-            width: 200px;  /* Breite für große Bildschirme */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 200px;
             margin: 10px;
+            backdrop-filter: blur(5px); /* Leichter Blur-Effekt */
         }
+
         .button-container button:hover {
-            background-color: #45a049;
+            background-color: rgba(255, 255, 255, 0.2); /* Helleres transparentes Weiß beim Hover */
+            transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
         }
 
         /* Anpassung für kleine Bildschirme */
         @media (max-width: 600px) {
             .button-container button {
-                width: 90%;  /* Buttons auf 90% der Bildschirmbreite */
-                padding: 12px 0;  /* Weniger Polsterung */
-                font-size: 16px;  /* Kleinere Schrift */
+                width: 90%;
+                padding: 12px 0;
+                font-size: 16px;
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> <!-- Roboto Schriftart einbinden -->
 </head>
 <body>
     <h1>Spielergebnisse</h1>
