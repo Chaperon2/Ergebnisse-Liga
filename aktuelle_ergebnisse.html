@@ -191,26 +191,27 @@
             </div>
         </div>
 
-        <!-- Einzelgesamtwertung -->
+<!-- Einzelgesamtwertung -->
 <div class="table-wrapper">
     <h2>Einzelgesamtwertung</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Platz</th>
-                <th>Tendenz</th>
-                <th>Name</th>
-                <th>Team</th>
-                <th>Spiele</th>
-                <th>Beste Serie</th>
-                <th>Bestes Spiel</th>
-                <th>Pins Gesamt</th>
-                <th>ω</th>
-                <th>θ letzte Saison</th>
-                <th>Spiele > 200</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Platz</th>
+                    <th>Tendenz</th>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Spiele</th>
+                    <th>Beste Serie</th>
+                    <th>Bestes Spiel</th>
+                    <th>Pins Gesamt</th>
+                    <th>ω</th>
+                    <th>θ letzte Saison</th>
+                    <th>Spiele > 200</th>
+                </tr>
+            </thead>
+            <tbody>
             <tr>
                 <td>1</td>
                 <td>+1 ↑</td>
@@ -550,7 +551,8 @@
                 <td></td>
             </tr>
         </tbody>
-    </table>
+        </table>
+    </div>
     <div class="back-button">
         <button onclick="location.href='index.html'">Zurück zur Startseite</button>
     </div>
@@ -587,6 +589,33 @@
         </div>
     </div>
 
+    @media (max-width: 600px) {
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Für ein besseres Scrollen auf iOS-Geräten */
+    }
+
+    table {
+        width: 100%;
+        min-width: 600px; /* Mindestbreite der Tabelle, um sicherzustellen, dass sie nicht zu klein wird */
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .back-button button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+    
     <!-- Pagination-Dots -->
     <div class="pagination" id="pagination">
         <div class="pagination-dot active" onclick="showTable(0)"></div>
