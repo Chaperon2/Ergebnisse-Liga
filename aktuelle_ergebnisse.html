@@ -8,35 +8,46 @@
         body {
             font-family: 'Roboto', Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            margin: 0;
+            padding: 0;
             background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #ffffff;
+            overflow-x: hidden;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
+            margin: 20px 0;
+        }
+        .table-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .table-wrapper {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
         }
         table {
-            width: 80%;
-            margin: 0 auto;
+            width: 100%;
             border-collapse: collapse;
             background-color: rgba(51, 51, 51, 0.8);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
         }
         th, td {
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             border-bottom: 1px solid #444444;
         }
         th {
             background-color: #333333;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
         }
         tr:hover {
@@ -48,8 +59,7 @@
         .back-button button {
             background-color: #333333;
             color: #ffffff;
-            padding: 15px 32px;
-            text-align: center;
+            padding: 12px 24px;
             font-size: 16px;
             font-weight: 500;
             border: none;
@@ -61,48 +71,167 @@
             background-color: #444444;
             transform: scale(1.05);
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .pagination-dot.active {
+            background-color: #333;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Aktuelle Ergebnisse</h1>
 
-    <!-- Ergebnistabelle -->
-    <table>
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th>Mannschaft</th>
-                <th>Ergebnis</th>
-                <th>Gegner</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>01.01.2024</td>
-                <td>Team A</td>
-                <td>3:2</td>
-                <td>Team B</td>
-            </tr>
-            <tr>
-                <td>08.01.2024</td>
-                <td>Team A</td>
-                <td>1:1</td>
-                <td>Team C</td>
-            </tr>
-            <tr>
-                <td>15.01.2024</td>
-                <td>Team A</td>
-                <td>2:0</td>
-                <td>Team D</td>
-            </tr>
-            <!-- Weitere Zeilen können hier hinzugefügt werden -->
-        </tbody>
-    </table>
+    <!-- Tabellen-Container -->
+    <div class="table-container" id="tableContainer">
+        <!-- Tagesergebnisse -->
+        <div class="table-wrapper">
+            <h2>Tagesergebnisse</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Spieler</th>
+                        <th>Punkte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01.01.2024</td>
+                        <td>Spieler A</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>01.01.2024</td>
+                        <td>Spieler B</td>
+                        <td>12</td>
+                    </tr>
+                    <!-- Weitere Zeilen -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Einzelgesamtwertung -->
+        <div class="table-wrapper">
+            <h2>Einzelgesamtwertung</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platz</th>
+                        <th>Spieler</th>
+                        <th>Punkte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Spieler A</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Spieler B</td>
+                        <td>110</td>
+                    </tr>
+                    <!-- Weitere Zeilen -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Teamwertung -->
+        <div class="table-wrapper">
+            <h2>Teamwertung</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platz</th>
+                        <th>Team</th>
+                        <th>Punkte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Team A</td>
+                        <td>250</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Team B</td>
+                        <td>230</td>
+                    </tr>
+                    <!-- Weitere Zeilen -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination-Dots -->
+    <div class="pagination" id="pagination">
+        <div class="pagination-dot active" onclick="showTable(0)"></div>
+        <div class="pagination-dot" onclick="showTable(1)"></div>
+        <div class="pagination-dot" onclick="showTable(2)"></div>
+    </div>
 
     <!-- Zurück-Button -->
     <div class="back-button">
         <button onclick="location.href='index.html'">Zurück zur Startseite</button>
     </div>
+
+    <script>
+        let currentIndex = 0;
+        const tableContainer = document.getElementById('tableContainer');
+        const paginationDots = document.querySelectorAll('.pagination-dot');
+
+        // Funktion zum Anzeigen der ausgewählten Tabelle
+        function showTable(index) {
+            currentIndex = index;
+            tableContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updatePagination();
+        }
+
+        // Funktion zum Aktualisieren der Pagination-Dots
+        function updatePagination() {
+            paginationDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // Swipe-Funktionalität für mobile Geräte
+        let startX = 0;
+        tableContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        tableContainer.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            if (diffX > 50 && currentIndex < 2) {
+                showTable(currentIndex + 1); // Nach rechts swipen
+            } else if (diffX < -50 && currentIndex > 0) {
+                showTable(currentIndex - 1); // Nach links swipen
+            }
+        });
+    </script>
 </body>
 </html>
