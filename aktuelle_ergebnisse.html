@@ -22,10 +22,10 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin: 20px 0;
         }
-          .table-container {
+        .table-container {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            width: 100%; /* 3 × 100% Viewport Breite */
+            width: 300%; /* 3 × 100% Viewport Breite */
         }
         .table-wrapper {
             width: 100%; /* Jede Tabelle nimmt 1/3 des Containers ein (≈100% Viewport) */
@@ -54,11 +54,14 @@
         /* Medientypen anpassen */
         @media (max-width: 600px) {
             .table-wrapper {
-                width: 100%; Auf Mobilgeräten volle Breite pro Tabelle */
+                width: 100%; /* Auf Mobilgeräten volle Breite pro Tabelle */
                 padding: 10px 0;
             }
             .table-container {
-                width: 100%; /* 3 × 100% Viewport */
+                width: 300%; /* 3 Tabellen = 300% Breite */
+            }
+            table {
+                width: 90%; /* Tabellenbreite auf Mobilgeräten anpassen */
             }
         }
         th, td {
@@ -143,12 +146,6 @@
             }
             .nav-arrow {
                 display: none;
-            }
-            .table-container {
-                width: 300%; /* 3 Tabellen = 300% Breite */
-            }
-            .table-wrapper {
-                width: 100%; /* Jede Tabelle nimmt 100% der Bildschirmbreite ein */
             }
         }
         @media (min-width: 601px) {
