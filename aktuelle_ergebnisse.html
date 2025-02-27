@@ -1,127 +1,137 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <!-- Meta Tags unverändert -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktuelle Ergebnisse</title>
     <style>
-        /* Unveränderte CSS-Regeln */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+            padding: 0 15px;
+        }
+
         .table-container {
             display: flex;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            touch-action: pan-y; /* Vertikales Scrollen erlauben */
+            touch-action: pan-y;
         }
 
-        /* Neuer CSS für Snap-Effekt */
         .table-wrapper {
             min-width: 100%;
             box-sizing: border-box;
             padding: 20px;
             scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
         }
 
-        /* Back-Button Anpassung */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(51, 51, 51, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 20px;
+            flex-grow: 1;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #444444;
+        }
+
+        th {
+            background-color: #333333;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background-color: rgba(68, 68, 68, 0.8);
+        }
+
         .back-button {
-            margin-top: 20px;
-            position: relative; /* Damit der Button im sichtbaren Bereich bleibt */
+            margin: auto 0 20px;
+            position: relative;
             z-index: 1;
         }
-    </style>
-</head>
-<body>
-    <h1>Aktuelle Ergebnisse</h1>
 
-    <div class="table-container" id="tableContainer">
-        <!-- Tagesergebnisse -->
-        <div class="table-wrapper">
-            <h2>Tagesergebnisse</h2>
-            <table>...</table>
-            <div class="back-button">
-                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-            </div>
-        </div>
-
-        <!-- Einzelgesamtwertung -->
-        <div class="table-wrapper">
-            <h2>Einzelgesamtwertung</h2>
-            <table>...</table>
-            <div class="back-button">
-                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-            </div>
-        </div>
-
-        <!-- Teamwertung -->
-        <div class="table-wrapper">
-            <h2>Teamwertung</h2>
-            <table>...</table>
-            <div class="back-button">
-                <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pagination unverändert -->
-
-    <script>
-        let currentIndex = 0;
-        let startX = 0;
-        let isDragging = false;
-        let startTime = 0;
-        const tableContainer = document.getElementById('tableContainer');
-        const paginationDots = document.querySelectorAll('.pagination-dot');
-
-        function showTable(index) {
-            currentIndex = Math.max(0, Math.min(index, 2));
-            tableContainer.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            tableContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-            updatePagination();
+        .back-button button {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        // Touch-Handler mit Snap-Logik
-        tableContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            startTime = e.timeStamp;
-            isDragging = true;
-            tableContainer.style.transition = 'none';
-        });
+        .back-button button:hover {
+            background-color: #444444;
+            transform: scale(1.05);
+        }
 
-        tableContainer.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const currentX = e.touches[0].clientX;
-            const diffX = currentX - startX;
-            const newTranslate = -currentIndex * 100 + (diffX / window.innerWidth) * 100;
-            
-            // Begrenzung für das Überscrollen
-            if (newTranslate > 0 || newTranslate < -200) return;
-            
-            tableContainer.style.transform = `translateX(${newTranslate}%)`;
-            e.preventDefault();
-        }, { passive: false });
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
 
-        tableContainer.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const endX = e.changedTouches[0].clientX;
-            const diffX = endX - startX;
-            const swipeTime = e.timeStamp - startTime;
-            const velocity = diffX / swipeTime;
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-            // Snap-Logik
-            const swipeThreshold = window.innerWidth * 0.15; // 15% der Bildschirmbreite
-            const velocityThreshold = 0.3;
+        .pagination-dot.active {
+            background-color: #333;
+        }
 
-            if (Math.abs(diffX) > swipeThreshold || Math.abs(velocity) > velocityThreshold) {
-                if (diffX < 0 && currentIndex < 2) {
-                    showTable(currentIndex + 1);
-                } else if (diffX > 0 && currentIndex > 0) {
-                    showTable(currentIndex - 1);
-                } else {
-                    showTable(currentIndex);
-                }
-            } else {
-                showTable(currentIndex);
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
             }
-        });
-
-        // Restlicher JavaScript-Code unverändert
-    </script>
+            
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .back-button button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Unveränderter Body-Bereich wie in deinem Originalcode -->
+    <!-- ... (gleicher HTML-Aufbau wie zuvor) ... -->
 </body>
 </html>
