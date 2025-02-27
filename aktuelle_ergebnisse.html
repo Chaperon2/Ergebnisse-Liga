@@ -284,21 +284,6 @@
                 dot.classList.toggle('active', i === currentIndex);
             });
         }
-
-        // Swipe-Funktionalität für mobile Geräte
-        let startX = 0;
-        tableContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
-        tableContainer.addEventListener('touchend', (e) => {
-            const endX = e.changedTouches[0].clientX;
-            const diffX = startX - endX;
-            if (diffX > 50 && currentIndex < totalTables - 1) {
-                showTable(currentIndex + 1); // Nach rechts swipen
-            } else if (diffX < -50 && currentIndex > 0) {
-                showTable(currentIndex - 1); // Nach links swipen
-            }
-        });
     </script>
 </body>
 </html>
