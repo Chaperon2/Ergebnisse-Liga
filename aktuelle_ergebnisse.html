@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktuelle Ergebnisse</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: rgba(51, 51, 51, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #444444;
+        }
+        th {
+            background-color: #333333;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        tr:hover {
+            background-color: rgba(68, 68, 68, 0.8);
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .back-button button:hover {
+            background-color: #444444;
+            transform: scale(1.05);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Aktuelle Ergebnisse</h1>
+
+    <!-- Ergebnistabelle -->
+    <table>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Mannschaft</th>
+                <th>Ergebnis</th>
+                <th>Gegner</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>01.01.2024</td>
+                <td>Team A</td>
+                <td>3:2</td>
+                <td>Team B</td>
+            </tr>
+            <tr>
+                <td>08.01.2024</td>
+                <td>Team A</td>
+                <td>1:1</td>
+                <td>Team C</td>
+            </tr>
+            <tr>
+                <td>15.01.2024</td>
+                <td>Team A</td>
+                <td>2:0</td>
+                <td>Team D</td>
+            </tr>
+            <!-- Weitere Zeilen können hier hinzugefügt werden -->
+        </tbody>
+    </table>
+
+    <!-- Zurück-Button -->
+    <div class="back-button">
+        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+    </div>
+</body>
+</html>
