@@ -25,12 +25,13 @@
         .table-container {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            width: 300%; /* 3 Tabellen = 300% Breite */
         }
         .table-wrapper {
-            min-width: 100%;
+            width: 100%; /* Jede Tabelle nimmt 100% der Bildschirmbreite ein */
             box-sizing: border-box;
             padding: 20px;
-            position: relative;
+            flex-shrink: 0; /* Verhindert, dass die Tabellen schrumpfen */
         }
         table {
             width: 100%;
@@ -91,7 +92,7 @@
         }
         .nav-arrow {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             background-color: rgba(51, 51, 51, 0.8);
@@ -123,6 +124,12 @@
             }
             .nav-arrow {
                 display: none;
+            }
+            .table-container {
+                width: 300%; /* 3 Tabellen = 300% Breite */
+            }
+            .table-wrapper {
+                width: 100%; /* Jede Tabelle nimmt 100% der Bildschirmbreite ein */
             }
         }
         @media (min-width: 601px) {
