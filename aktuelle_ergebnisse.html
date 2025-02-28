@@ -16,6 +16,7 @@
             background-attachment: fixed;
             color: #ffffff;
             overflow-x: hidden; /* Verhindert horizontales Scrollen */
+            position: relative; /* Damit die Pfeile relativ zum Body positioniert werden können */
         }
         h1 {
             font-size: 2.5rem;
@@ -59,6 +60,7 @@
             right: 0;
             transform: translateY(-50%);
             pointer-events: none;
+            z-index: 10; /* Pfeile über anderen Elementen */
         }
         .nav-arrows button {
             background-color: rgba(51, 51, 51, 0.8);
@@ -76,10 +78,10 @@
             background-color: #444444;
         }
         .nav-arrows button:first-child {
-            left: -20px; /* Pfeil links außerhalb des Containers */
+            left: 10px; /* Pfeil links innerhalb des sichtbaren Bereichs */
         }
         .nav-arrows button:last-child {
-            right: -20px; /* Pfeil rechts außerhalb des Containers */
+            right: 10px; /* Pfeil rechts innerhalb des sichtbaren Bereichs */
         }
         .back-button {
             margin-top: 20px;
@@ -218,12 +220,12 @@
                 </table>
             </div>
         </div>
+    </div>
 
-        <!-- Pfeile außerhalb des Containers -->
-        <div class="nav-arrows">
-            <button onclick="prevSlide()">&#10094;</button>
-            <button onclick="nextSlide()">&#10095;</button>
-        </div>
+    <!-- Pfeile außerhalb des Containers, aber innerhalb des sichtbaren Bereichs -->
+    <div class="nav-arrows">
+        <button onclick="prevSlide()">&#10094;</button>
+        <button onclick="nextSlide()">&#10095;</button>
     </div>
 
     <!-- Schaltfläche zurück zur Startseite -->
