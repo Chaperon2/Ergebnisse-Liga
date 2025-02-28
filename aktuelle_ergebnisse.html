@@ -40,6 +40,28 @@
             max-width: 100%;
             height: auto;
             border-radius: 10px;
+            opacity: 0.7; /* Bildtransparenz */
+            transition: opacity 0.3s ease; /* Sanfter Übergang */
+        }
+        .image-slide img:hover {
+            opacity: 1; /* Volle Deckkraft beim Hover */
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 15px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button button:hover {
+            background-color: #444444;
         }
         .nav-arrows {
             display: flex;
@@ -79,6 +101,11 @@
             }
             .nav-arrows {
                 display: none;
+            }
+            .back-button button {
+                width: 90%;
+                padding: 12px 0;
+                font-size: 14px;
             }
         }
     </style>
@@ -129,17 +156,26 @@
         <div class="slider">
             <!-- Bild 1 -->
             <div class="image-slide">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/tagesergebnisse.jpg" alt="Tagesergebnisse">
+                <img src="raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/main/images/tagesergebnisse.jpg" alt="Bild 1">
+                <div class="back-button">
+                    <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+                </div>
             </div>
 
             <!-- Bild 2 -->
             <div class="image-slide">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Einzelwertung">
+                <img src="raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/main/images/Einzelwertung.jpg" alt="Einzelwertung">
+                <div class="back-button">
+                    <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+                </div>
             </div>
 
             <!-- Bild 3 -->
             <div class="image-slide">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team1.jpg" alt="Teamwertung">
+                <img src="raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/main/images/Team1.jpg" alt="Bild 3">
+                <div class="back-button">
+                    <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+                </div>
             </div>
         </div>
 
