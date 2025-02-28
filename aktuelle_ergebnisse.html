@@ -8,12 +8,14 @@
         body {
             font-family: 'Roboto', Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            margin: 0; /* Margin entfernen */
+            padding-top: 50px; /* Padding statt Margin für Abstand oben */
             background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #ffffff;
+            overflow-x: hidden; /* Verhindert horizontales Scrollen */
         }
         h1 {
             font-size: 2.5rem;
@@ -74,10 +76,10 @@
             background-color: #444444;
         }
         .nav-arrows button:first-child {
-            left: -20px; /* Pfeil links außerhalb des Containers */
+            left: -80px; /* Pfeil links außerhalb des Containers */
         }
         .nav-arrows button:last-child {
-            right: -20px; /* Pfeil rechts außerhalb des Containers */
+            right: -80px; /* Pfeil rechts außerhalb des Containers */
         }
         .back-button {
             margin-top: 20px;
