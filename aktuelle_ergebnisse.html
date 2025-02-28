@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabellenwechsel</title>
+    <title>Bilderwechsel</title>
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
@@ -23,7 +23,7 @@
         }
         .slider-container {
             position: relative;
-            width: 90%;
+            width: 80%;
             margin: 0 auto;
             overflow: hidden;
         }
@@ -31,27 +31,15 @@
             display: flex;
             transition: transform 0.5s ease;
         }
-        .table-slide {
+        .image-slide {
             min-width: 100%;
             box-sizing: border-box;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: rgba(51, 51, 51, 0.8);
-            color: #ffffff;
-        }
-        th, td {
-            padding: 15px;
-            border: 1px solid #444444;
-        }
-        th {
-            background-color: #333333;
-            font-weight: 500;
-        }
-        td {
             text-align: center;
+        }
+        .image-slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
         }
         .nav-arrows {
             display: flex;
@@ -85,9 +73,6 @@
         .nav-arrows button:last-child {
             right: 10px;
         }
-        .highlight {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
         @media (max-width: 600px) {
             .slider-container {
                 width: 95%;
@@ -103,7 +88,7 @@
 
         function showSlide(index) {
             const slider = document.querySelector('.slider');
-            const slides = document.querySelectorAll('.table-slide');
+            const slides = document.querySelectorAll('.image-slide');
             if (index >= slides.length) currentSlide = 0;
             if (index < 0) currentSlide = slides.length - 1;
             slider.style.transform = `translateX(${-currentSlide * 100}%)`;
@@ -138,92 +123,27 @@
     </script>
 </head>
 <body>
-    <h1>Tabellenwechsel</h1>
+    <h1>Bilderwechsel</h1>
 
     <div class="slider-container">
         <div class="slider">
-            <!-- Tagesergebnisse Tabelle -->
-            <div class="table-slide">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Platz</th>
-                            <th>Name</th>
-                            <th>Team</th>
-                            <th>Spiel 1</th>
-                            <th>Spiel 2</th>
-                            <th>Spiel 3</th>
-                            <th>Spiel 4</th>
-                            <th>Pins Gesamt</th>
-                            <th>Ø</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Daten aus der Tagesergebnisse-Tabelle hier einfügen -->
-                        <tr>
-                            <td>1</td>
-                            <td>Maik</td>
-                            <td>Eurofighter</td>
-                            <td>184</td>
-                            <td>191</td>
-                            <td>192</td>
-                            <td>157</td>
-                            <td>724</td>
-                            <td>181,0</td>
-                        </tr>
-                        <!-- Weitere Zeilen hier einfügen -->
-                    </tbody>
-                </table>
-                <div class="highlight">
-                    <p>Bestes Spiel: Skampy - 213</p>
-                    <p>Hausligaschnitt: 144,1</p>
-                </div>
+            <!-- Bild 1 -->
+            <div class="image-slide">
+                <img src="https://via.placeholder.com/800x400?text=Bild+1" alt="Bild 1">
             </div>
 
-            <!-- Einzelwertung Tabelle -->
-            <div class="table-slide">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Platz</th>
-                            <th>Tendenz</th>
-                            <th>Name</th>
-                            <th>Team</th>
-                            <th>Spiele</th>
-                            <th>Beste Serie</th>
-                            <th>Bestes Spiel</th>
-                            <th>Pins Gesamt</th>
-                            <th>Ø (ω)</th>
-                            <th>Ø (θ) letzte Saison</th>
-                            <th>Spiele > 200</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Daten aus der Einzelwertung-Tabelle hier einfügen -->
-                        <tr>
-                            <td>1</td>
-                            <td class="tendenz-up">+1 ↑</td>
-                            <td>Spieler 1</td>
-                            <td>Kingpins</td>
-                            <td>28</td>
-                            <td>754</td>
-                            <td>226</td>
-                            <td>5031</td>
-                            <td>179,7</td>
-                            <td>168,3</td>
-                            <td>6</td>
-                        </tr>
-                        <!-- Weitere Zeilen hier einfügen -->
-                    </tbody>
-                </table>
-                <div class="highlight">
-                    <p>Bestes Spiel: Vegas 236</p>
-                    <p>Hausligaschnitt: 149,1</p>
-                </div>
+            <!-- Bild 2 -->
+            <div class="image-slide">
+                <img src="https://github.com/Chaperon2/Ergebnisse-Liga/blob/main/images/Einzelwertung.jpg" alt="Einzelwertung">
+            </div>
+
+            <!-- Bild 3 -->
+            <div class="image-slide">
+                <img src="https://via.placeholder.com/800x400?text=Bild+3" alt="Bild 3">
             </div>
         </div>
 
-        <!-- Pfeile zum Wechseln der Tabellen -->
+        <!-- Pfeile zum Wechseln der Bilder -->
         <div class="nav-arrows">
             <button onclick="prevSlide()">&#10094;</button>
             <button onclick="nextSlide()">&#10095;</button>
