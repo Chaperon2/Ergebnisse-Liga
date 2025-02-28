@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktuelle Ergebnisse</title>
+    <title>Tabellenwechsel</title>
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
             text-align: center;
-            margin: 0; /* Margin entfernen */
-            padding-top: 50px; /* Padding statt Margin für Abstand oben */
+            margin: 0;
+            padding-top: 50px;
             background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #ffffff;
-            overflow-x: hidden; /* Verhindert horizontales Scrollen */
-            position: relative; /* Damit die Pfeile relativ zum Body positioniert werden können */
         }
         h1 {
             font-size: 2.5rem;
@@ -25,7 +23,7 @@
         }
         .slider-container {
             position: relative;
-            width: 80%;
+            width: 90%;
             margin: 0 auto;
             overflow: hidden;
         }
@@ -50,6 +48,10 @@
         }
         th {
             background-color: #333333;
+            font-weight: 500;
+        }
+        td {
+            text-align: center;
         }
         .nav-arrows {
             display: flex;
@@ -60,7 +62,7 @@
             right: 0;
             transform: translateY(-50%);
             pointer-events: none;
-            z-index: 10; /* Pfeile über anderen Elementen */
+            z-index: 10;
         }
         .nav-arrows button {
             background-color: rgba(51, 51, 51, 0.8);
@@ -78,27 +80,13 @@
             background-color: #444444;
         }
         .nav-arrows button:first-child {
-            left: 10px; /* Pfeil links innerhalb des sichtbaren Bereichs */
+            left: 10px;
         }
         .nav-arrows button:last-child {
-            right: 10px; /* Pfeil rechts innerhalb des sichtbaren Bereichs */
+            right: 10px;
         }
-        .back-button {
-            margin-top: 20px;
-        }
-        .back-button button {
-            background-color: #333333;
-            color: #ffffff;
-            padding: 15px 32px;
-            font-size: 16px;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .back-button button:hover {
-            background-color: #444444;
+        .highlight {
+            background-color: rgba(255, 255, 255, 0.1);
         }
         @media (max-width: 600px) {
             .slider-container {
@@ -106,11 +94,6 @@
             }
             .nav-arrows {
                 display: none;
-            }
-            .back-button button {
-                width: 90%;
-                padding: 12px 0;
-                font-size: 14px;
             }
         }
     </style>
@@ -155,86 +138,96 @@
     </script>
 </head>
 <body>
-        <h1>Einzelwertung</h1>
+    <h1>Tabellenwechsel</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Platz</th>
-                <th>Tendenz</th>
-                <th>Name</th>
-                <th>Team</th>
-                <th>Spiele</th>
-                <th>Beste Serie</th>
-                <th>Bestes Spiel</th>
-                <th>Pins Gesamt</th>
-                <th>Ø (ω)</th>
-                <th>Ø (θ) letzte Saison</th>
-                <th>Spiele > 200</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td class="tendenz-up">+1 ↑</td>
-                <td>Spieler 1</td>
-                <td>Kingpins</td>
-                <td>28</td>
-                <td>754</td>
-                <td>226</td>
-                <td>5031</td>
-                <td>179,7</td>
-                <td>168,3</td>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td class="tendenz-down">-1 ↓</td>
-                <td>Spieler 2</td>
-                <td>Pin Bomber</td>
-                <td>28</td>
-                <td>745</td>
-                <td>218</td>
-                <td>5025</td>
-                <td>179,5</td>
-                <td>185,1</td>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td class="tendenz-neutral">=</td>
-                <td>Spieler 3</td>
-                <td>Bowletten</td>
-                <td>25</td>
-                <td>750</td>
-                <td>236</td>
-                <td>4278</td>
-                <td>171,1</td>
-                <td>173,0</td>
-                <td>5</td>
-            </tr>
-            <!-- Weitere Zeilen hier einfügen -->
-            <tr class="highlight">
-                <td colspan="11">Bestes Spiel: Vegas 236</td>
-            </tr>
-            <tr class="highlight">
-                <td colspan="11">Hausligaschnitt: 149,1</td>
-            </tr>
+    <div class="slider-container">
+        <div class="slider">
+            <!-- Tagesergebnisse Tabelle -->
+            <div class="table-slide">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Platz</th>
+                            <th>Name</th>
+                            <th>Team</th>
+                            <th>Spiel 1</th>
+                            <th>Spiel 2</th>
+                            <th>Spiel 3</th>
+                            <th>Spiel 4</th>
+                            <th>Pins Gesamt</th>
+                            <th>Ø</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Daten aus der Tagesergebnisse-Tabelle hier einfügen -->
+                        <tr>
+                            <td>1</td>
+                            <td>Maik</td>
+                            <td>Eurofighter</td>
+                            <td>184</td>
+                            <td>191</td>
+                            <td>192</td>
+                            <td>157</td>
+                            <td>724</td>
+                            <td>181,0</td>
+                        </tr>
+                        <!-- Weitere Zeilen hier einfügen -->
                     </tbody>
                 </table>
+                <div class="highlight">
+                    <p>Bestes Spiel: Skampy - 213</p>
+                    <p>Hausligaschnitt: 144,1</p>
+                </div>
+            </div>
+
+            <!-- Einzelwertung Tabelle -->
+            <div class="table-slide">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Platz</th>
+                            <th>Tendenz</th>
+                            <th>Name</th>
+                            <th>Team</th>
+                            <th>Spiele</th>
+                            <th>Beste Serie</th>
+                            <th>Bestes Spiel</th>
+                            <th>Pins Gesamt</th>
+                            <th>Ø (ω)</th>
+                            <th>Ø (θ) letzte Saison</th>
+                            <th>Spiele > 200</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Daten aus der Einzelwertung-Tabelle hier einfügen -->
+                        <tr>
+                            <td>1</td>
+                            <td class="tendenz-up">+1 ↑</td>
+                            <td>Spieler 1</td>
+                            <td>Kingpins</td>
+                            <td>28</td>
+                            <td>754</td>
+                            <td>226</td>
+                            <td>5031</td>
+                            <td>179,7</td>
+                            <td>168,3</td>
+                            <td>6</td>
+                        </tr>
+                        <!-- Weitere Zeilen hier einfügen -->
+                    </tbody>
+                </table>
+                <div class="highlight">
+                    <p>Bestes Spiel: Vegas 236</p>
+                    <p>Hausligaschnitt: 149,1</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Pfeile außerhalb des Containers, aber innerhalb des sichtbaren Bereichs -->
-    <div class="nav-arrows">
-        <button onclick="prevSlide()">&#10094;</button>
-        <button onclick="nextSlide()">&#10095;</button>
-    </div>
-
-    <!-- Schaltfläche zurück zur Startseite -->
-    <div class="back-button">
-        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+        <!-- Pfeile zum Wechseln der Tabellen -->
+        <div class="nav-arrows">
+            <button onclick="prevSlide()">&#10094;</button>
+            <button onclick="nextSlide()">&#10095;</button>
+        </div>
     </div>
 </body>
 </html>
