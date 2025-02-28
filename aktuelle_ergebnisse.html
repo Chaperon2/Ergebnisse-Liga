@@ -45,11 +45,11 @@
             max-width: 100%;
             height: auto;
             border-radius: 10px;
-            opacity: 0.7; /* Bildtransparenz */
-            transition: opacity 0.3s ease; /* Sanfter Übergang */
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
         }
         .image-slide img:hover {
-            opacity: 1; /* Volle Deckkraft beim Hover */
+            opacity: 1;
         }
         .back-button {
             margin-top: 20px;
@@ -140,24 +140,43 @@
             showSlide(currentSlide);
 
             let touchStartX = 0;
+            let touchStartY = 0;
             let touchEndX = 0;
+            let touchEndY = 0;
 
-            document.querySelector('.slider-container').addEventListener('touchstart', (e) => {
+            const sliderContainer = document.querySelector('.slider-container');
+
+            sliderContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
             });
 
-            document.querySelector('.slider-container').addEventListener('touchend', (e) => {
+            sliderContainer.addEventListener('touchend', (e) => {
                 touchEndX = e.changedTouches[0].screenX;
-                if (touchEndX < touchStartX) nextSlide();
-                if (touchEndX > touchStartX) prevSlide();
+                touchEndY = e.changedTouches[0].screenY;
+
+                // Berechne die Differenz der X- und Y-Koordinaten
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+
+                // Prüfe, ob die Bewegung hauptsächlich horizontal ist
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    // Wenn die horizontale Bewegung größer ist als die vertikale, wechsle die Slides
+                    if (deltaX < 0) {
+                        nextSlide(); // Swipe nach links
+                    } else if (deltaX > 0) {
+                        prevSlide(); // Swipe nach rechts
+                    }
+                }
+                // Wenn die Bewegung hauptsächlich vertikal ist, tue nichts (lasse das vertikale Scrollen zu)
             });
         });
     </script>
-  <meta property="og:title" content="Spielergebnisse">
-  <meta property="og:description" content="Die Auswertung ist online :)">
-  <meta property="og:url" content="https://www.strikeclub-velten.de/aktuelle_ergebnisse.html">
-  <meta property="og:image" content="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Linkvorschau.png">
-  <meta property="og:type" content="website">
+    <meta property="og:title" content="Spielergebnisse">
+    <meta property="og:description" content="Die Auswertung ist online :)">
+    <meta property="og:url" content="https://www.strikeclub-velten.de/aktuelle_ergebnisse.html">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Linkvorschau.png">
+    <meta property="og:type" content="website">
 </head>
 <body>
     <h1>Spieltag 8  26.02.2025</h1>
