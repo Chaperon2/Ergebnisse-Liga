@@ -26,10 +26,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 70vh; /* Zentriert den Inhalt vertikal */
+            min-height: 70vh; /* Mindesthöhe für den Inhalt */
         }
         .content img {
-            max-width: 100%;
+            max-width: 80%; /* Bildbreite begrenzen */
+            max-height: 60vh; /* Bildhöhe begrenzen */
             height: auto;
             border-radius: 10px;
             opacity: 0.8; /* Leichte Transparenz */
@@ -60,7 +61,8 @@
                 font-size: 2rem;
             }
             .content img {
-                width: 90%;
+                max-width: 90%; /* Bild kleiner auf mobilen Geräten */
+                max-height: 50vh; /* Bildhöhe anpassen */
             }
             .back-button button {
                 width: 90%;
@@ -76,7 +78,7 @@
 
     <div class="content">
         <!-- Bild in der Mitte -->
-        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp" alt="Mitglieder der Hausliga Velten">
+        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp">
         
         <!-- Schaltfläche zurück zur Startseite -->
         <div class="back-button">
