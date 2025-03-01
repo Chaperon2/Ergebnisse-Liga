@@ -27,6 +27,7 @@
         }
         .dropdown-container {
             margin-bottom: 20px;
+            position: relative; /* Für den benutzerdefinierten Pfeil */
         }
         .dropdown-container select {
             background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
@@ -44,6 +45,17 @@
             -webkit-appearance: none; /* Für Safari */
             -moz-appearance: none; /* Für Firefox */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Benutzerdefinierter Pfeil */
+        .dropdown-container::after {
+            content: "▼";
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            pointer-events: none; /* Klicks auf den Pfeil ignorieren */
+            color: #f0f0f0; /* Farbe des Pfeils */
+            font-size: 12px;
         }
         .dropdown-container select:hover {
             background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
@@ -143,6 +155,9 @@
                 width: 90%;
                 font-size: 14px; /* Schriftgröße auf mobilen Geräten anpassen */
                 padding: 12px 0; /* Gleicher Abstand wie bei den Schaltflächen */
+            }
+            .dropdown-container::after {
+                right: 10px; /* Position des Pfeils anpassen */
             }
         }
         /* Animation für Schaltflächen */
