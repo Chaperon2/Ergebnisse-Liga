@@ -15,14 +15,14 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            color: #f0f0f0;
         }
         h1 {
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
-            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
-            font-weight: 700; /* Fettere Schrift */
+            color: #ffffff;
+            font-weight: 700;
         }
         .content {
             max-width: 1200px;
@@ -32,22 +32,22 @@
         .image-combination {
             display: flex;
             gap: 20px;
-            margin-bottom: 40px; /* Abstand zwischen den Kombinationen */
+            margin-bottom: 40px;
         }
         .left-column {
-            flex: 2; /* Linke Spalte nimmt mehr Platz ein */
+            flex: 2;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
         .right-column {
-            flex: 3; /* Rechte Spalte nimmt mehr Platz ein */
+            flex: 3;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
         .image-container {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für die Bilder */
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -60,25 +60,25 @@
         .image-container h2 {
             font-size: 1.5rem;
             margin: 10px 0;
-            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
+            color: #ffffff;
         }
         .sub-heading {
-            font-size: 2.5rem; /* Gleiche Schriftgröße wie h1 */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Gleicher Schatten wie h1 */
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin: 20px 0;
-            color: #ffffff; /* Weiße Schriftfarbe wie h1 */
-            font-weight: 700; /* Fettere Schrift wie h1 */
+            color: #ffffff;
+            font-weight: 700;
         }
         .back-button {
             margin-top: 20px;
             margin-bottom: 20px;
         }
         .back-button button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f0f0f0;
             padding: 15px 32px;
             font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
+            font-weight: 600;
             border: 2px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border-radius: 10px;
@@ -86,26 +86,29 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            background-color: rgba(0, 0, 0, 0.6);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
         @media (max-width: 768px) {
             .image-combination {
-                flex-direction: column; /* Auf mobilen Geräten Bilder untereinander */
+                flex-direction: column;
             }
             .left-column, .right-column {
-                flex: 1; /* Volle Breite auf mobilen Geräten */
+                flex: 1;
             }
         }
 
         /* Neue Stile für die rechte Spalte */
         .right-column .image-container {
-            height: calc(50% - 10px); /* Die Höhe der rechten Bilder wird auf die Hälfte der Spalte minus den Abstand gesetzt */
+            flex: 1; /* Jeder Container in der rechten Spalte nimmt gleich viel Platz ein */
+            display: flex;
+            flex-direction: column;
         }
         .right-column .image-container img {
-            height: 100%; /* Die Bilder füllen die gesamte Höhe des Containers */
+            flex: 1; /* Das Bild füllt den verfügbaren Platz im Container */
             object-fit: cover; /* Das Bild wird zugeschnitten, um den Container zu füllen */
+            height: 100%; /* Volle Höhe des Containers */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -139,7 +142,7 @@
             </div>
         </div>
 
-         <!-- Erste Bild-Kombination -->
+        <!-- Zweite Bild-Kombination -->
         <div class="sub-heading">Ergebnisse Saison 2 - 2023</div>
         <div class="image-combination">
             <!-- Linke Spalte: Großes Bild und kleines Bild -->
@@ -163,8 +166,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Weitere Bild-Kombinationen hier einfügen -->
     </div>
 
     <!-- Schaltfläche zurück zur Startseite -->
