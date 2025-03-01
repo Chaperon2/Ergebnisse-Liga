@@ -31,20 +31,28 @@
         .dropdown-container select {
             background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
             color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
-            padding: 10px 20px;
+            padding: 15px 32px; /* Gleicher Abstand wie bei den Schaltflächen */
             font-size: 16px; /* Schriftgröße wie bei den Schaltflächen */
-            font-weight: 500; /* Fettere Schrift */
+            font-weight: 600; /* Fettere Schrift wie bei den Schaltflächen */
             border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
+            border-radius: 10px; /* Gleiche Abrundung wie bei den Schaltflächen */
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-            width: 260px; /* Etwas breiter, um den Text vollständig anzuzeigen */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            width: 200px; /* Gleiche Breite wie die Schaltflächen */
+            text-align: center; /* Text zentrieren */
+            appearance: none; /* Standard-Dropdown-Pfeil entfernen */
+            -webkit-appearance: none; /* Für Safari */
+            -moz-appearance: none; /* Für Firefox */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .dropdown-container select:hover {
             background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-container select:focus {
+            outline: none; /* Standard-Focus-Rahmen entfernen */
         }
         .button-container {
             display: flex;
@@ -134,6 +142,7 @@
             .dropdown-container select {
                 width: 90%;
                 font-size: 14px; /* Schriftgröße auf mobilen Geräten anpassen */
+                padding: 12px 0; /* Gleicher Abstand wie bei den Schaltflächen */
             }
         }
         /* Animation für Schaltflächen */
@@ -178,7 +187,7 @@
     <!-- Dropdown-Menü für Spielergebnisse -->
     <div class="dropdown-container">
         <select onchange="location = this.value;">
-            <option value="#" selected disabled>Ergebnis-Archiv</option>
+            <option value="#" selected disabled>Spielergebnisse auswählen</option>
             <option value="ergebnisse2023.html">Spielergebnisse 2023</option>
             <option value="ergebnisse2024.html">Spielergebnisse 2024</option>
             <option value="ergebnisse2025.html">Spielergebnisse 2025</option>
