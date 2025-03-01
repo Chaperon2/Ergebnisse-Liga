@@ -15,14 +15,14 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            color: #f0f0f0;
         }
         h1 {
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
-            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
-            font-weight: 700; /* Fettere Schrift */
+            color: #ffffff;
+            font-weight: 700;
         }
         .content {
             max-width: 1200px;
@@ -31,24 +31,23 @@
         }
         .image-combination {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 20px;
-            margin-bottom: 40px; /* Abstand zwischen den Kombinationen */
+            margin-bottom: 40px;
         }
         .left-column {
-            flex: 1;
-            min-width: 300px;
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         .right-column {
-            flex: 1;
-            min-width: 300px;
+            flex: 3;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
         .image-container {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für die Bilder */
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -61,24 +60,25 @@
         .image-container h2 {
             font-size: 1.5rem;
             margin: 10px 0;
-            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
+            color: #ffffff;
         }
         .sub-heading {
-            font-size: 2rem;
-            margin: 20px 0;
-            color: #ffffff; /* Weiße Schriftfarbe für die Zwischenüberschrift */
+            font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+            color: #ffffff;
+            font-weight: 700;
         }
         .back-button {
             margin-top: 20px;
             margin-bottom: 20px;
         }
         .back-button button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f0f0f0;
             padding: 15px 32px;
             font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
+            font-weight: 600;
             border: 2px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border-radius: 10px;
@@ -86,7 +86,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            background-color: rgba(0, 0, 0, 0.6);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
@@ -95,8 +95,23 @@
                 flex-direction: column;
             }
             .left-column, .right-column {
-                min-width: 100%;
+                flex: 1;
             }
+        }
+
+        /* Neue Stile für die rechte Spalte */
+        .right-column {
+            justify-content: space-between; /* Verteilt den Platz gleichmäßig zwischen den Bildern */
+        }
+        .right-column .image-container {
+            height: calc(50% - 10px); /* Jedes Bild nimmt die Hälfte der Höhe abzüglich des Abstands ein */
+            display: flex;
+            flex-direction: column;
+        }
+        .right-column .image-container img {
+            flex: 1; /* Das Bild füllt den verfügbaren Platz im Container */
+            object-fit: cover; /* Das Bild wird zugeschnitten, um den Container zu füllen */
+            height: 100%; /* Volle Höhe des Containers */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -105,45 +120,52 @@
     <h1>Archiv 2024</h1>
 
     <div class="content">
-
-              <!-- Zwischenüberschrift -->
-        <div class="sub-heading">Endergebnisse Saison 1 - 2024</div>
-        <!-- Erste 3er Bild-Kombination -->
-        
+        <!-- Erste Bild-Kombination -->
+        <div class="sub-heading">Ergebnisse Saison 1 - 2024</div>
         <div class="image-combination">
+            <!-- Linke Spalte: Großes Bild und kleines Bild -->
             <div class="left-column">
                 <div class="image-container">
-                     <h2>Finale Endergebnisse</h2>
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 1">
+                    <h2>Einzelwertung</h2>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Einzelwertung">
+                </div>
+                <div class="image-container">
+                    <h2>Teamwertung</h2>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild">
                 </div>
             </div>
+            <!-- Rechte Spalte: Zwei mittlere Bilder ohne Überschrift -->
             <div class="right-column">
                 <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzel.jpg" alt="Kleines Bild 1">
-                  </div>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team.jpg" alt="Mittleres Bild 1">
+                </div>
                 <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team.jpg" alt="Kleines Bild 2">
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzel.jpg" alt="Mittleres Bild 2">
                 </div>
             </div>
         </div>
 
-        <!-- Zwischenüberschrift -->
-        <div class="sub-heading">Endergebnisse Saison 2 - 2024</div>
-
-        <!-- Zweite 3er Bild-Kombination -->
+        <!-- Zweite Bild-Kombination -->
+        <div class="sub-heading">Ergebnisse Saison 2 - 2024</div>
         <div class="image-combination">
+            <!-- Linke Spalte: Großes Bild und kleines Bild -->
             <div class="left-column">
                 <div class="image-container">
-                    <h2>Finale Endergebnisse</h2>
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 2">
+                    <h2>Einzelwertung</h2>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Einzelwertung">
+                </div>
+                <div class="image-container">
+                    <h2>Teamwertung</h2>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild">
                 </div>
             </div>
+            <!-- Rechte Spalte: Zwei mittlere Bilder ohne Überschrift -->
             <div class="right-column">
                 <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzel.jpg" alt="Kleines Bild 3">
-                  </div>
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team.jpg" alt="Mittleres Bild 1">
+                </div>
                 <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team.jpg" alt="Kleines Bild 4">
+                    <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzel.jpg" alt="Mittleres Bild 2">
                 </div>
             </div>
         </div>
