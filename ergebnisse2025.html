@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archiv 2025 - Strikeclub-Velten</title>
+    <style>
+        /* Allgemeine Stile */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
+            font-weight: 700; /* Fettere Schrift */
+        }
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .image-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px; /* Abstand zwischen den Zeilen */
+        }
+        .image-container {
+            flex: 1;
+            min-width: calc(50% - 10px); /* Zwei Bilder nebeneinander */
+            background-color: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für die Bilder */
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .image-container h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
+        }
+        .back-button {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .back-button button {
+            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            padding: 15px 32px;
+            font-size: 16px;
+            font-weight: 600; /* Fettere Schrift */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .back-button button:hover {
+            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 768px) {
+            .image-container {
+                min-width: 100%; /* Auf mobilen Geräten ein Bild pro Zeile */
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Archiv 2025</h1>
 
+    <div class="content">
+        <!-- Erste Zeile: Zwei Bilder nebeneinander -->
+        <div class="image-row">
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild1.webp" alt="Bild 1">
+                <h2>Überschrift für Bild 1</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild2.webp" alt="Bild 2">
+                <h2>Überschrift für Bild 2</h2>
+            </div>
+        </div>
+
+        <!-- Zweite Zeile: Zwei Bilder nebeneinander -->
+        <div class="image-row">
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild3.webp" alt="Bild 3">
+                <h2>Überschrift für Bild 3</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild4.webp" alt="Bild 4">
+                <h2>Überschrift für Bild 4</h2>
+            </div>
+        </div>
+
+        <!-- Dritte Zeile: Zwei Bilder nebeneinander -->
+        <div class="image-row">
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild5.webp" alt="Bild 5">
+                <h2>Überschrift für Bild 5</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild6.webp" alt="Bild 6">
+                <h2>Überschrift für Bild 6</h2>
+            </div>
+        </div>
+
+        <!-- Vierte Zeile: Ein Bild in der Mitte -->
+        <div class="image-row">
+            <div class="image-container" style="flex: 0 1 50%;"> <!-- Bild in der Mitte zentrieren -->
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild7.webp" alt="Bild 7">
+                <h2>Überschrift für Bild 7</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schaltfläche zurück zur Startseite -->
+    <div class="back-button">
+        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+    </div>
+</body>
+</html>
