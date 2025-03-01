@@ -25,47 +25,53 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            text-align: justify; /* Text um das Bild herum ausrichten */
+            text-align: justify;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .content img {
-            float: left; /* Bild nach links ausrichten */
-            max-width: 40%; /* Bildbreite begrenzen */
+            float: left;
+            max-width: 40%;
             height: auto;
-            margin: 0 20px 20px 0; /* Abstand rechts und unten */
+            margin: 0 20px 20px 0;
             border-radius: 10px;
-            opacity: 0.8; /* Leichte Transparenz */
+            opacity: 0.8;
             transition: opacity 0.3s ease;
         }
         .content img:hover {
-            opacity: 1; /* Volle Deckkraft beim Hover */
+            opacity: 1;
         }
         .text-content {
             font-size: 1.1rem;
             line-height: 1.6;
         }
-        .text-content span {
-            opacity: 0; /* Startwert für die Animation */
-            display: inline-block; /* Jedes Wort in einem eigenen Block */
-        }
         .text-content ul {
-            list-style-type: none; /* Keine Aufzählungszeichen */
-            padding-left: 20px; /* Einrückung für die Liste */
+            list-style-type: none;
+            padding-left: 0;
+            margin: 20px 0; /* Abstand oben und unten */
         }
         .text-content ul li {
-            margin-bottom: 10px; /* Abstand zwischen den Listenelementen */
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center; /* Symbole und Text vertikal zentrieren */
+        }
+        .text-content ul li::before {
+            content: "✅"; /* Symbol für die Liste */
+            margin-right: 10px; /* Abstand zwischen Symbol und Text */
         }
         .back-button {
             margin-top: 20px;
             width: 100%;
             text-align: center;
-            clear: both; /* Verhindert, dass die Schaltfläche vom Bild überlappt wird */
+            clear: both;
         }
         .back-button button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Hellerer Text */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f0f0f0;
             padding: 15px 32px;
             font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
+            font-weight: 600;
             border: 2px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border-radius: 10px;
@@ -73,7 +79,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            background-color: rgba(0, 0, 0, 0.6);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
@@ -82,9 +88,9 @@
                 font-size: 2rem;
             }
             .content img {
-                max-width: 90%; /* Bild kleiner auf mobilen Geräten */
-                float: none; /* Bild nicht umfließen lassen */
-                margin: 0 auto 20px; /* Bild zentrieren */
+                max-width: 90%;
+                float: none;
+                margin: 0 auto 20px;
                 display: block;
             }
             .text-content {
@@ -107,14 +113,14 @@
         <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp" alt="Teambild">
 
         <!-- Text um das Bild herum -->
-        <div class="text-content" id="animated-text">
+        <div class="text-content">
             🎳 <strong>Willkommen bei unserer Bowling-Gruppe!</strong> 🎳<br><br>
             Wir sind eine eingespielte, aber lockere Runde von Bowling-Begeisterten, die sich regelmäßig zum Spielen trifft. Uns verbindet die Freude am Bowling, der sportliche Ehrgeiz – aber vor allem der Spaß an geselligen Abenden in guter Gesellschaft.<br><br>
             🏆 <strong>Was macht uns aus?</strong><br>
             <ul>
-                <li>✅ Eine freundliche und motivierte Gruppe mit unterschiedlichen Spielniveaus</li>
-                <li>✅ Regelmäßige Treffen in entspannter Atmosphäre</li>
-                <li>✅ Spaß steht an erster Stelle – aber ein paar Strikes und Spares sind natürlich auch gern gesehen 😉</li>
+                <li>Eine freundliche und motivierte Gruppe mit unterschiedlichen Spielniveaus</li>
+                <li>Regelmäßige Treffen in entspannter Atmosphäre</li>
+                <li>Spaß steht an erster Stelle – aber ein paar Strikes und Spares sind natürlich auch gern gesehen 😉</li>
             </ul>
             <br>
             Du liebst Bowling, möchtest regelmäßig spielen und suchst eine lockere Runde mit netten Leuten? Dann bist du bei uns genau richtig! Unsere Hausliga ist eine kleine, entspannte Liga, in der der Spaß im Vordergrund steht. Egal, ob du ein erfahrener Spieler oder ein Gelegenheits-Bowler bist – hier geht es nicht um Perfektion, sondern um gemeinsame Abende voller guter Laune und sportlichem Ehrgeiz. Neue Gesichter sind immer willkommen! Falls du Lust hast, Teil unserer Runde zu werden, melde dich einfach – wir freuen uns auf dich! 🎳😃
@@ -125,41 +131,5 @@
     <div class="back-button">
         <button onclick="location.href='index.html'">Zurück zur Startseite</button>
     </div>
-
-    <script>
-        // Funktion zum Einblenden der Wörter
-        function animateText() {
-            const textElement = document.getElementById('animated-text');
-            const words = textElement.textContent.split(' '); // Text in Wörter aufteilen
-            textElement.innerHTML = ''; // Textinhalt leeren
-
-            words.forEach((word, index) => {
-                const span = document.createElement('span');
-                span.textContent = word + ' '; // Wort mit Leerzeichen hinzufügen
-                span.style.animationDelay = `${index * 0.1}s`; // Verzögerung für jedes Wort
-                span.style.animation = 'fadeInWord 0.5s ease forwards';
-                textElement.appendChild(span);
-            });
-        }
-
-        // CSS für die Wort-Animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInWord {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Animation beim Laden der Seite starten
-        document.addEventListener('DOMContentLoaded', animateText);
-    </script>
 </body>
 </html>
