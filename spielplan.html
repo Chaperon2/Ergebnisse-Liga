@@ -25,13 +25,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 70vh; /* Mindesthöhe für den Inhalt */
+            justify-content: flex-start; /* Oberen Bereich zentrieren */
+            min-height: 100vh; /* Vollständige Höhe der Seite */
         }
         .content img {
-            max-width: 90%; /* Bildbreite begrenzen */
-            max-height: 70vh; /* Bildhöhe begrenzen */
-            height: auto;
+            width: 95%; /* Bildbreite auf 95 % begrenzen */
+            height: auto; /* Höhe automatisch anpassen */
             border-radius: 10px;
             opacity: 0.8; /* Leichte Transparenz */
             transition: opacity 0.3s ease;
@@ -41,6 +40,7 @@
         }
         .back-button {
             margin-top: 20px;
+            margin-bottom: 20px; /* Abstand nach unten */
         }
         .back-button button {
             background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
@@ -64,8 +64,7 @@
                 font-size: 2rem;
             }
             .content img {
-                max-width: 95%; /* Bild kleiner auf mobilen Geräten */
-                max-height: 60vh; /* Bildhöhe anpassen */
+                width: 95%; /* Bildbreite auf 95 % begrenzen */
             }
             .back-button button {
                 width: 90%;
