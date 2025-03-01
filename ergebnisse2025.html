@@ -36,20 +36,28 @@
             gap: 20px;
             margin-bottom: 40px; /* Abstand zwischen den Zeilen */
         }
-        .image-container {
-            flex: 1;
-            min-width: calc(50% - 10px); /* Zwei Bilder nebeneinander */
+        .large-image {
+            flex: 2; /* Großes Bild nimmt mehr Platz ein */
+            min-width: 300px;
             background-color: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für die Bilder */
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .image-container img {
+        .small-image {
+            flex: 1; /* Kleines Bild nimmt weniger Platz ein */
+            min-width: 200px;
+            background-color: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für die Bilder */
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .image-row img {
             width: 100%;
             height: auto;
             border-radius: 10px;
         }
-        .image-container h2 {
+        .image-row h2 {
             font-size: 1.5rem;
             margin: 10px 0;
             color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
@@ -76,7 +84,7 @@
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
         @media (max-width: 768px) {
-            .image-container {
+            .large-image, .small-image {
                 min-width: 100%; /* Auf mobilen Geräten ein Bild pro Zeile */
             }
         }
@@ -87,47 +95,99 @@
     <h1>Archiv 2025</h1>
 
     <div class="content">
-        <!-- Erste Zeile: Zwei Bilder nebeneinander -->
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
         <div class="image-row">
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild1.webp" alt="Bild 1">
-                <h2>Überschrift für Bild 1</h2>
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
             </div>
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild2.webp" alt="Bild 2">
-                <h2>Überschrift für Bild 2</h2>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
             </div>
         </div>
 
-        <!-- Zweite Zeile: Zwei Bilder nebeneinander -->
+       <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
         <div class="image-row">
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild3.webp" alt="Bild 3">
-                <h2>Überschrift für Bild 3</h2>
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
             </div>
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild4.webp" alt="Bild 4">
-                <h2>Überschrift für Bild 4</h2>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
             </div>
         </div>
 
-        <!-- Dritte Zeile: Zwei Bilder nebeneinander -->
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
         <div class="image-row">
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild5.webp" alt="Bild 5">
-                <h2>Überschrift für Bild 5</h2>
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
             </div>
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild6.webp" alt="Bild 6">
-                <h2>Überschrift für Bild 6</h2>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
             </div>
         </div>
 
-        <!-- Vierte Zeile: Ein Bild in der Mitte -->
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
         <div class="image-row">
-            <div class="image-container" style="flex: 0 1 50%;"> <!-- Bild in der Mitte zentrieren -->
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Bild7.webp" alt="Bild 7">
-                <h2>Überschrift für Bild 7</h2>
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
+            </div>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
+            </div>
+        </div>
+
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
+        <div class="image-row">
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
+            </div>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
+            </div>
+        </div>
+
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
+        <div class="image-row">
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
+            </div>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
+            </div>
+        </div>
+
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
+        <div class="image-row">
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
+            </div>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
+            </div>
+        </div>
+
+        <!-- Dritte Zeile: Großes Bild links, kleines Bild rechts -->
+        <div class="image-row">
+            <div class="large-image">
+                <h2>Einzelwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Großes Bild 3">
+            </div>
+            <div class="small-image">
+                <h2>Teamwertung</h2>
+                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team2.jpg" alt="Kleines Bild 3">
             </div>
         </div>
     </div>
