@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termine & News - Hausliga Velten</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
+            background-image: url(https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Hintergrund2.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+        .blackboard {
+            background-color: rgba(0, 0, 0, 0.7); /* Dunkler Hintergrund für das schwarze Brett */
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .blackboard h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffcc00; /* Gelbe Schrift für Überschriften */
+        }
+        .blackboard ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+        .blackboard ul li {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #ffcc00; /* Gelber Akzent */
+            transition: background-color 0.3s ease;
+        }
+        .blackboard ul li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+            color: #f0f0f0; /* Hellerer Text */
+            padding: 15px 32px;
+            font-size: 16px;
+            font-weight: 600; /* Fettere Schrift */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .back-button button:hover {
+            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .blackboard {
+                width: 95%;
+                padding: 15px;
+            }
+            .blackboard h2 {
+                font-size: 1.5rem;
+            }
+            .back-button button {
+                width: 90%;
+                padding: 12px 0;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Termine & News - Hausliga Velten</h1>
+
+    <div class="blackboard">
+        <h2>Termine</h2>
+        <ul>
+            <li><strong>26.02.2025:</strong> Spieltag 8 - Alle Mannschaften spielen um 18:00 Uhr.</li>
+            <li><strong>05.03.2025:</strong> Spieltag 9 - Vorbereitungstreffen um 17:30 Uhr.</li>
+            <li><strong>12.03.2025:</strong> Spieltag 10 - Sonderveranstaltung: Grillabend nach den Spielen.</li>
+        </ul>
+
+        <h2>Neuigkeiten</h2>
+        <ul>
+            <li><strong>20.02.2025:</strong> Neue Mannschaftsmaskottchen vorgestellt.</li>
+            <li><strong>18.02.2025:</strong> Spielplan für die nächsten Wochen aktualisiert.</li>
+            <li><strong>15.02.2025:</strong> Erfolgreicher Charity-Abend - Vielen Dank an alle Teilnehmer!</li>
+        </ul>
+    </div>
+
+    <!-- Schaltfläche zurück zur Startseite -->
+    <div class="back-button">
+        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+    </div>
+</body>
+</html>
