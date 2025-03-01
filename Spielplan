@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spielplan - Hausliga Velten</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
+            background-image: url(https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Hintergrund2.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh; /* Mindesthöhe für den Inhalt */
+        }
+        .content img {
+            max-width: 90%; /* Bildbreite begrenzen */
+            max-height: 70vh; /* Bildhöhe begrenzen */
+            height: auto;
+            border-radius: 10px;
+            opacity: 0.8; /* Leichte Transparenz */
+            transition: opacity 0.3s ease;
+        }
+        .content img:hover {
+            opacity: 1; /* Volle Deckkraft beim Hover */
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+            color: #f0f0f0; /* Hellerer Text */
+            padding: 15px 32px;
+            font-size: 16px;
+            font-weight: 600; /* Fettere Schrift */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .back-button button:hover {
+            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .content img {
+                max-width: 95%; /* Bild kleiner auf mobilen Geräten */
+                max-height: 60vh; /* Bildhöhe anpassen */
+            }
+            .back-button button {
+                width: 90%;
+                padding: 12px 0;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Spielplan - Hausliga Velten</h1>
 
+    <div class="content">
+        <!-- Bild in der Mitte -->
+        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Spielplan.jpg" alt="Spielplan">
+        
+        <!-- Schaltfläche zurück zur Startseite -->
+        <div class="back-button">
+            <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+        </div>
+    </div>
+</body>
+</html>
