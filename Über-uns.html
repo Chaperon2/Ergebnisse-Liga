@@ -22,16 +22,16 @@
             margin-bottom: 30px;
         }
         .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 70vh; /* Mindesthöhe für den Inhalt */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: justify; /* Text um das Bild herum ausrichten */
         }
         .content img {
-            max-width: 80%; /* Bildbreite begrenzen */
-            max-height: 60vh; /* Bildhöhe begrenzen */
+            float: left; /* Bild nach links ausrichten */
+            max-width: 40%; /* Bildbreite begrenzen */
             height: auto;
+            margin: 0 20px 20px 0; /* Abstand rechts und unten */
             border-radius: 10px;
             opacity: 0.8; /* Leichte Transparenz */
             transition: opacity 0.3s ease;
@@ -39,8 +39,26 @@
         .content img:hover {
             opacity: 1; /* Volle Deckkraft beim Hover */
         }
+        .text-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .text-content span {
+            opacity: 0; /* Startwert für die Animation */
+            display: inline-block; /* Jedes Wort in einem eigenen Block */
+        }
+        .text-content ul {
+            list-style-type: none; /* Keine Aufzählungszeichen */
+            padding-left: 20px; /* Einrückung für die Liste */
+        }
+        .text-content ul li {
+            margin-bottom: 10px; /* Abstand zwischen den Listenelementen */
+        }
         .back-button {
             margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            clear: both; /* Verhindert, dass die Schaltfläche vom Bild überlappt wird */
         }
         .back-button button {
             background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
@@ -65,7 +83,12 @@
             }
             .content img {
                 max-width: 90%; /* Bild kleiner auf mobilen Geräten */
-                max-height: 50vh; /* Bildhöhe anpassen */
+                float: none; /* Bild nicht umfließen lassen */
+                margin: 0 auto 20px; /* Bild zentrieren */
+                display: block;
+            }
+            .text-content {
+                font-size: 1rem;
             }
             .back-button button {
                 width: 90%;
@@ -77,16 +100,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Hausliga Velten</h1>
+    <h1>Über uns - Hausliga Velten</h1>
 
     <div class="content">
-        <!-- Bild in der Mitte -->
-        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp">
-        
-        <!-- Schaltfläche zurück zur Startseite -->
-        <div class="back-button">
-            <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+        <!-- Bild auf der linken Seite -->
+        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp" alt="Teambild">
+
+        <!-- Text um das Bild herum -->
+        <div class="text-content" id="animated-text">
+            🎳 <strong>Willkommen bei unserer Bowling-Gruppe!</strong> 🎳<br><br>
+            Wir sind eine eingespielte, aber lockere Runde von Bowling-Begeisterten, die sich regelmäßig zum Spielen trifft. Uns verbindet die Freude am Bowling, der sportliche Ehrgeiz – aber vor allem der Spaß an geselligen Abenden in guter Gesellschaft.<br><br>
+            🏆 <strong>Was macht uns aus?</strong><br>
+            <ul>
+                <li>✅ Eine freundliche und motivierte Gruppe mit unterschiedlichen Spielniveaus</li>
+                <li>✅ Regelmäßige Treffen in entspannter Atmosphäre</li>
+                <li>✅ Spaß steht an erster Stelle – aber ein paar Strikes und Spares sind natürlich auch gern gesehen 😉</li>
+            </ul>
+            <br>
+            Du liebst Bowling, möchtest regelmäßig spielen und suchst eine lockere Runde mit netten Leuten? Dann bist du bei uns genau richtig! Unsere Hausliga ist eine kleine, entspannte Liga, in der der Spaß im Vordergrund steht. Egal, ob du ein erfahrener Spieler oder ein Gelegenheits-Bowler bist – hier geht es nicht um Perfektion, sondern um gemeinsame Abende voller guter Laune und sportlichem Ehrgeiz. Neue Gesichter sind immer willkommen! Falls du Lust hast, Teil unserer Runde zu werden, melde dich einfach – wir freuen uns auf dich! 🎳😃
         </div>
     </div>
+
+    <!-- Schaltfläche zurück zur Startseite -->
+    <div class="back-button">
+        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
+    </div>
+
+    <script>
+        // Funktion zum Einblenden der Wörter
+        function animateText() {
+            const textElement = document.getElementById('animated-text');
+            const words = textElement.textContent.split(' '); // Text in Wörter aufteilen
+            textElement.innerHTML = ''; // Textinhalt leeren
+
+            words.forEach((word, index) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' '; // Wort mit Leerzeichen hinzufügen
+                span.style.animationDelay = `${index * 0.1}s`; // Verzögerung für jedes Wort
+                span.style.animation = 'fadeInWord 0.5s ease forwards';
+                textElement.appendChild(span);
+            });
+        }
+
+        // CSS für die Wort-Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInWord {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animation beim Laden der Seite starten
+        document.addEventListener('DOMContentLoaded', animateText);
+    </script>
 </body>
 </html>
