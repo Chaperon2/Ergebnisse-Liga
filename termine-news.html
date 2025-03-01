@@ -13,8 +13,9 @@
             background-image: url(https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Hintergrund2.webp);
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: scroll; /* Geändert von fixed zu scroll */
             color: #ffffff;
+            min-height: 100vh; /* Vollständige Höhe der Seite */
         }
         h1 {
             font-size: 2.5rem;
@@ -53,6 +54,7 @@
         }
         .back-button {
             margin-top: 20px;
+            margin-bottom: 20px; /* Abstand nach unten */
         }
         .back-button button {
             background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
