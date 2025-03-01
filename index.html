@@ -15,7 +15,7 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #e0e0e0; /* Hellgraue Schriftfarbe für bessere Lesbarkeit */
+            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         h1 {
@@ -23,15 +23,17 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
             color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
+            font-weight: 700; /* Fettere Schrift */
         }
         .dropdown-container {
             margin-bottom: 20px;
         }
         .dropdown-container select {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #e0e0e0; /* Hellgraue Schriftfarbe */
+            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
             padding: 10px 20px;
             font-size: 16px;
+            font-weight: 500; /* Fettere Schrift */
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 5px;
             cursor: pointer;
@@ -40,7 +42,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .dropdown-container select:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
         }
@@ -52,12 +54,12 @@
             margin: 20px;
         }
         .button-container button {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #e0e0e0; /* Hellgraue Schriftfarbe */
+            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
             padding: 15px 32px;
             text-align: center;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600; /* Fettere Schrift */
             border: 2px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border-radius: 10px;
@@ -69,13 +71,29 @@
             animation: fadeIn 0.5s ease forwards;
         }
         .button-container button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
         .button-container button i {
             margin-right: 8px;
+        }
+        /* Icon-Farben anpassen */
+        .button-container button i.fa-users {
+            color: #007bff; /* Blau für Mitglieder */
+        }
+        .button-container button i.fa-trophy {
+            color: #ffcc00; /* Gelb für Trophäe */
+        }
+        .button-container button i.fa-calendar-alt {
+            color: #ff4444; /* Rot für Kalender */
+        }
+        .button-container button i.fa-newspaper {
+            color: #ff4444; /* Rot für News */
+        }
+        .button-container button i.fa-calendar-check {
+            color: #ffffff; /* Weiß für Spielplan */
         }
         .button-container button .tooltip {
             visibility: hidden;
@@ -133,21 +151,21 @@
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #1a1a1a;
-                color: #e0e0e0; /* Hellgraue Schriftfarbe im Dark Mode */
+                color: #f0f0f0; /* Helleres Grau im Dark Mode */
             }
             .dropdown-container select, .button-container button {
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
                 border-color: rgba(255, 255, 255, 0.2);
             }
             .dropdown-container select:hover, .button-container button:hover {
-                background-color: rgba(255, 255, 255, 0.2);
+                background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
                 border-color: rgba(255, 255, 255, 0.4);
             }
         }
     </style>
     <!-- Font Awesome für Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta property="og:title" content="Spielergebnisse">
     <meta property="og:description" content="Die Auswertung ist online :)">
     <meta property="og:url" content="https://www.strikeclub-velten.de/aktuelle_ergebnisse.html">
