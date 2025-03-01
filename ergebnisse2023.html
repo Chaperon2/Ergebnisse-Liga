@@ -98,6 +98,15 @@
                 flex: 1; /* Volle Breite auf mobilen Geräten */
             }
         }
+
+        /* Neue Stile für die rechte Spalte */
+        .right-column .image-container {
+            height: calc(50% - 10px); /* Die Höhe der rechten Bilder wird auf die Hälfte der Spalte minus den Abstand gesetzt */
+        }
+        .right-column .image-container img {
+            height: 100%; /* Die Bilder füllen die gesamte Höhe des Containers */
+            object-fit: cover; /* Das Bild wird zugeschnitten, um den Container zu füllen */
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
