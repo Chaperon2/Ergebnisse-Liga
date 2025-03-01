@@ -60,6 +60,11 @@
             content: "✅"; /* Symbol für die Liste */
             margin-right: 10px; /* Abstand zwischen Symbol und Text */
         }
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both; /* Verhindert, dass Text um das Bild herumfließt */
+        }
         .back-button {
             margin-top: 20px;
             width: 100%;
@@ -113,7 +118,7 @@
         <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp" alt="Teambild">
 
         <!-- Text um das Bild herum -->
-        <div class="text-content">
+        <div class="text-content clearfix">
             🎳 <strong>Willkommen bei unserer Bowling-Gruppe!</strong> 🎳<br><br>
             Wir sind eine eingespielte, aber lockere Runde von Bowling-Begeisterten, die sich regelmäßig zum Spielen trifft. Uns verbindet die Freude am Bowling, der sportliche Ehrgeiz – aber vor allem der Spaß an geselligen Abenden in guter Gesellschaft.<br><br>
             🏆 <strong>Was macht uns aus?</strong><br>
@@ -123,6 +128,7 @@
                 <li>Spaß steht an erster Stelle – aber ein paar Strikes und Spares sind natürlich auch gern gesehen 😉</li>
             </ul>
             <br>
+            <div class="clearfix"></div> <!-- Clearfix, um den Textfluss zu beenden -->
             Du liebst Bowling, möchtest regelmäßig spielen und suchst eine lockere Runde mit netten Leuten? Dann bist du bei uns genau richtig! Unsere Hausliga ist eine kleine, entspannte Liga, in der der Spaß im Vordergrund steht. Egal, ob du ein erfahrener Spieler oder ein Gelegenheits-Bowler bist – hier geht es nicht um Perfektion, sondern um gemeinsame Abende voller guter Laune und sportlichem Ehrgeiz. Neue Gesichter sind immer willkommen! Falls du Lust hast, Teil unserer Runde zu werden, melde dich einfach – wir freuen uns auf dich! 🎳😃
         </div>
     </div>
