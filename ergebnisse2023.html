@@ -100,8 +100,11 @@
         }
 
         /* Neue Stile für die rechte Spalte */
+        .right-column {
+            justify-content: space-between; /* Verteilt den Platz gleichmäßig zwischen den Bildern */
+        }
         .right-column .image-container {
-            flex: 1; /* Jeder Container in der rechten Spalte nimmt gleich viel Platz ein */
+            height: calc(50% - 10px); /* Jedes Bild nimmt die Hälfte der Höhe abzüglich des Abstands ein */
             display: flex;
             flex-direction: column;
         }
