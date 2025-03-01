@@ -61,11 +61,45 @@
             width: 200px;
             margin: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .button-container button:hover {
             background-color: #444444;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .button-container button i {
+            margin-right: 8px;
+        }
+        .button-container button .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position über der Schaltfläche */
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .button-container button .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        .button-container button:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
         @media (max-width: 600px) {
             .button-container button {
@@ -79,6 +113,8 @@
             }
         }
     </style>
+    <!-- Font Awesome für Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <meta property="og:title" content="Spielergebnisse">
     <meta property="og:description" content="Die Auswertung ist online :)">
@@ -99,12 +135,24 @@
         </select>
     </div>
 
-    <!-- Neue Schaltflächen -->
+    <!-- Neue Schaltflächen mit Icons und Tooltips -->
     <div class="button-container">
-        <button onclick="location.href='mitglieder.html'">Mitglieder</button>
-        <button onclick="location.href='aktuelle_ergebnisse.html'">Aktuelle Ergebnisse</button>
-        <button onclick="location.href='termine-news.html'">Termine & News</button>
-        <button onclick="location.href='spielplan.html'">Spielplan</button>
+        <button onclick="location.href='mitglieder.html'">
+            <i class="fas fa-users"></i> Mitglieder
+            <span class="tooltip">Mitgliederliste anzeigen</span>
+        </button>
+        <button onclick="location.href='aktuelle_ergebnisse.html'">
+            <i class="fas fa-trophy"></i> Aktuelle Ergebnisse
+            <span class="tooltip">Aktuelle Spielergebnisse anzeigen</span>
+        </button>
+        <button onclick="location.href='termine-news.html'">
+            <i class="fas fa-calendar-alt"></i> Termine & <i class="fas fa-newspaper"></i> News
+            <span class="tooltip">Termine und Neuigkeiten anzeigen</span>
+        </button>
+        <button onclick="location.href='spielplan.html'">
+            <i class="fas fa-calendar-check"></i> Spielplan
+            <span class="tooltip">Spielplan anzeigen</span>
+        </button>
     </div>
 </body>
 </html>
