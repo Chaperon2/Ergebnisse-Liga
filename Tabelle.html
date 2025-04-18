@@ -1,211 +1,512 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Hausliga Spieltage</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      background-color: #f8f8f8;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Liga-Tabelle | Strikeclub-Velten</title>
+    <style>
+        :root {
+            --primary-bg: rgba(20, 20, 20, 0.85);
+            --table-header-bg: rgba(10, 10, 10, 0.9);
+            --table-cell-bg: rgba(30, 30, 30, 0.8);
+            --table-border: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.95);
+            --button-primary: #2E7D32;
+            --button-hover: #1B5E20;
+            --button-secondary: #1565C0;
+            --button-copy: #6A1B9A;
+            --button-reset: #C62828;
+        }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            text-align: center;
+            -webkit-text-size-adjust: 100%;
+        }
 
-    .matchday-buttons {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        h1 {
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
+        }
 
-    .matchday-buttons button {
-      background-color: #007bff;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: var(--primary-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            overflow-x: hidden;
+        }
 
-    .matchday-buttons button:hover {
-      background-color: #0056b3;
-    }
+        .match-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            padding-bottom: 15px;
+        }
 
-    .matchday-buttons button.active {
-      background-color: #0056b3;
-      display: none;
-    }
+        .match-btn {
+            background-color: var(--button-primary);
+            color: white;
+            padding: 12px 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
 
-    table.matchday-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0 auto 20px auto;
-      background-color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        .match-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
 
-    table.matchday-table th,
-    table.matchday-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 15px 0;
+        }
 
-    table.matchday-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            background-color: var(--table-cell-bg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
 
-    input[type="number"] {
-      width: 60px;
-      padding: 5px;
-      text-align: center;
-    }
+        th, td {
+            border: 1px solid var(--table-border);
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
 
-    .save-btn {
-      display: inline-block;
-      padding: 10px 15px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-    }
+        th {
+            background-color: var(--table-header-bg);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
 
-    .save-btn:hover {
-      background-color: #218838;
-    }
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
 
-    #matchday-container {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-  </style>
+        input {
+            background-color: var(--input-bg);
+            width: 50px;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .copy-btn {
+            background-color: var(--button-copy);
+        }
+
+        .copy-btn:hover {
+            background-color: #7B1FA2;
+        }
+
+        .reset-btn {
+            background-color: var(--button-reset);
+            display: none; /* Standardmäßig versteckt */
+        }
+
+        .reset-btn:hover {
+            background-color: #D32F2F;
+        }
+
+        .save-btn {
+            background-color: var(--button-secondary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 15px 5px 0;
+            font-size: 16px;
+            display: inline-block;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 15px 5px 0;
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .button-container {
+            position: sticky;
+            bottom: 10px;
+            background-color: var(--primary-bg);
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        /* Mobile Optimierungen */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            
+            .match-buttons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .match-btn {
+                padding: 10px 5px;
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 8px 5px;
+                font-size: 13px;
+            }
+            
+            input {
+                width: 45px;
+                padding: 5px;
+                font-size: 13px;
+            }
+            
+            .action-btn {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+            
+            .save-btn, .back-button {
+                width: calc(100% - 20px);
+                padding: 10px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .match-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                min-width: 550px;
+            }
+            
+            th, td {
+                padding: 6px 3px;
+                font-size: 12px;
+            }
+            
+            input {
+                width: 40px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
+    <div class="container">
+        <h1><i class="fas fa-trophy"></i> Liga-Tabelle</h1>
+        
+        <!-- Hauptmenü mit Spieltagsauswahl -->
+        <div id="mainMenu">
+            <h2>Ergebnisse eintragen</h2>
+            <div class="match-buttons">
+                <button class="match-btn" onclick="showMatchday(1)">Spieltag 1</button>
+                <button class="match-btn" onclick="showMatchday(2)">Spieltag 2</button>
+                <button class="match-btn" onclick="showMatchday(3)">Spieltag 3</button>
+                <button class="match-btn" onclick="showMatchday(4)">Spieltag 4</button>
+                <button class="match-btn" onclick="showMatchday(5)">Spieltag 5</button>
+                <button class="match-btn" onclick="showMatchday(6)">Spieltag 6</button>
+                <button class="match-btn" onclick="showMatchday(7)">Spieltag 7</button>
+            </div>
+        </div>
 
-  <h1>🏆 Hausliga – Spieltage</h1>
+        <!-- Container für alle Spieltage -->
+        <div id="matchdaysContainer"></div>
 
-  <div class="matchday-buttons">
-    <button class="match-btn" onclick="showMatchday(1)">Spieltag 1</button>
-    <button class="match-btn" onclick="showMatchday(2)">Spieltag 2</button>
-    <button class="match-btn" onclick="showMatchday(3)">Spieltag 3</button>
-    <!-- weitere Spieltage hier -->
-  </div>
+        <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Zurück zur Übersicht</a>
+    </div>
 
-  <div id="matchday-container"></div>
+    <script>
+        // Firebase-Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBBf8PR_vGp5BUga50BT0LhZ7dZBt63j0",
+            authDomain: "liga-tabelle-33796.firebaseapp.com",
+            databaseURL: "https://liga-tabelle-33796-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "liga-tabelle-33796",
+            storageBucket: "liga-tabelle-33796.appspot.com",
+            messagingSenderId: "634280577519",
+            appId: "1:634280577519:web:2aa065959fbba66d5bce1a"
+        };
 
-  <script>
-    const players = [
-      "Spieler 1", "Spieler 2", "Spieler 3", "Spieler 4",
-      "Spieler 5", "Spieler 6", "Spieler 7", "Spieler 8"
-    ];
+        // Firebase initialisieren
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-    let currentMatchday = null;
+        // Spielerliste
+        const players = ["Spieler A", "Spieler B", "Spieler C"];
+        const totalMatchdays = 7;
+        const adminUser = "admin@example.com"; // Hier Admin-User eintragen
 
-    function showMatchday(matchday) {
-      currentMatchday = matchday;
-
-      // Button-Highlight + Verstecken
-      document.querySelectorAll('.match-btn').forEach(btn => {
-        btn.classList.remove('active');
-        btn.style.display = 'inline-block';
-      });
-      event.target.classList.add('active');
-      event.target.style.display = 'none';
-
-      loadMatchday(matchday);
-    }
-
-    function loadMatchday(matchday) {
-      const container = document.getElementById("matchday-container");
-      container.innerHTML = generateMatchdayHTML(matchday);
-    }
-
-    function generateMatchdayHTML(matchday) {
-      let html = `<table class="matchday-table" id="table-${matchday}">
-        <thead>
-          <tr><th>Spieler</th><th>Spiel 1</th><th>Spiel 2</th><th>Spiel 3</th><th>Spiel 4</th><th>Gesamt</th></tr>
-        </thead><tbody>`;
-
-      players.forEach((player, i) => {
-        html += `<tr><td>${player}</td>`;
-        for (let g = 1; g <= 4; g++) {
-          html += `<td><input type="number" min="0" max="100" value="0" id="player${i+1}-game${g}-${matchday}" onchange="calculatePlayerTotal(${i+1}, ${matchday})"></td>`;
+        // HTML für einen Spieltag generieren
+        function generateMatchdayHTML(matchday) {
+            return `
+                <div id="matchday-${matchday}" class="hidden matchday-form">
+                    <h2>Spieltag ${matchday}</h2>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn copy-btn" onclick="copyMatchdayData(${matchday})">
+                            <i class="fas fa-copy"></i> Kopieren
+                        </button>
+                        <button class="action-btn reset-btn" onclick="resetMatchday(${matchday})" id="reset-btn-${matchday}">
+                            <i class="fas fa-trash-alt"></i> Zurücksetzen
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="table-${matchday}">
+                            <thead>
+                                <tr>
+                                    <th>Spieler</th>
+                                    <th>Spiel 1</th>
+                                    <th>Spiel 2</th>
+                                    <th>Spiel 3</th>
+                                    <th>Spiel 4</th>
+                                    <th>Gesamt</th>
+                                    <th>Schnitt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${players.map((player, index) => `
+                                    <tr>
+                                        <td>${player}</td>
+                                        <td><input type="number" id="player${index+1}-game1-${matchday}" min="0" max="300" onchange="calculatePlayerTotal(${index+1}, ${matchday})"></td>
+                                        <td><input type="number" id="player${index+1}-game2-${matchday}" min="0" max="300" onchange="calculatePlayerTotal(${index+1}, ${matchday})"></td>
+                                        <td><input type="number" id="player${index+1}-game3-${matchday}" min="0" max="300" onchange="calculatePlayerTotal(${index+1}, ${matchday})"></td>
+                                        <td><input type="number" id="player${index+1}-game4-${matchday}" min="0" max="300" onchange="calculatePlayerTotal(${index+1}, ${matchday})"></td>
+                                        <td id="player${index+1}-total-${matchday}">0</td>
+                                        <td id="player${index+1}-avg-${matchday}">0</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="button-container">
+                        <button class="save-btn" onclick="saveMatchday(${matchday})"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+                        <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück</button>
+                    </div>
+                </div>
+            `;
         }
-        html += `<td><span id="player${i+1}-total-${matchday}">0</span></td></tr>`;
-      });
 
-      html += `</tbody></table>`;
-
-      // Kopieren-Button
-      html += `<button onclick="copyMatchdayToClipboard(${matchday})" class="save-btn" style="background-color:#666;">
-          <i class="fas fa-copy"></i> Ergebnisse kopieren
-        </button>`;
-
-      // Reset-Button nur bei admin
-      if (window.location.search.includes("admin=true")) {
-        html += `<button onclick="resetMatchday(${matchday})" class="save-btn" style="background-color:crimson; margin-left:10px;">
-          <i class="fas fa-trash-alt"></i> Spieltag zurücksetzen
-        </button>`;
-      }
-
-      return html;
-    }
-
-    function calculatePlayerTotal(playerNumber, matchday) {
-      let total = 0;
-      for (let g = 1; g <= 4; g++) {
-        const input = document.getElementById(`player${playerNumber}-game${g}-${matchday}`);
-        const val = parseInt(input.value) || 0;
-        total += val;
-      }
-      document.getElementById(`player${playerNumber}-total-${matchday}`).textContent = total;
-    }
-
-    function copyMatchdayToClipboard(matchday) {
-      const table = document.getElementById(`table-${matchday}`);
-      if (!table) return;
-
-      let text = '';
-      for (let row of table.rows) {
-        const rowData = Array.from(row.cells).map(cell => cell.textContent.trim()).join('\t');
-        text += rowData + '\n';
-      }
-
-      navigator.clipboard.writeText(text)
-        .then(() => alert(`Tabelle für Spieltag ${matchday} wurde kopiert.`))
-        .catch(err => alert("Fehler beim Kopieren: " + err));
-    }
-
-    function resetMatchday(matchday) {
-      if (!confirm(`Alle Einträge für Spieltag ${matchday} wirklich löschen?`)) return;
-
-      players.forEach((_, i) => {
-        for (let g = 1; g <= 4; g++) {
-          document.getElementById(`player${i+1}-game${g}-${matchday}`).value = '';
+        // Alle Spieltage initialisieren
+        function initializeMatchdays() {
+            const container = document.getElementById('matchdaysContainer');
+            for (let i = 1; i <= totalMatchdays; i++) {
+                container.innerHTML += generateMatchdayHTML(i);
+            }
+            
+            // Admin-Check (hier müsste eine echte Authentifizierung implementiert werden)
+            checkAdminStatus();
         }
-        calculatePlayerTotal(i + 1, matchday);
-      });
 
-      // Optional: Firebase reset
-      if (typeof database !== 'undefined') {
-        database.ref(`matchday_${matchday}`).remove()
-          .then(() => alert(`Daten für Spieltag ${matchday} gelöscht.`))
-          .catch((error) => alert("Fehler: " + error.message));
-      }
-    }
-  </script>
+        // Hauptmenü anzeigen
+        function showMainMenu() {
+            document.getElementById('mainMenu').classList.remove('hidden');
+            document.querySelectorAll('.matchday-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+        }
 
+        // Bestimmten Spieltag anzeigen
+        function showMatchday(matchday) {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.querySelectorAll('.matchday-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            document.getElementById(`matchday-${matchday}`).classList.remove('hidden');
+            loadMatchday(matchday);
+        }
+
+        // Spieltag-Ergebnisse laden
+        function loadMatchday(matchday) {
+            database.ref(`matchday_${matchday}`).once('value').then((snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    for (let i = 1; i <= players.length; i++) {
+                        const playerKey = `player${i}`;
+                        if (data[playerKey]) {
+                            document.getElementById(`${playerKey}-game1-${matchday}`).value = data[playerKey].game1 || '';
+                            document.getElementById(`${playerKey}-game2-${matchday}`).value = data[playerKey].game2 || '';
+                            document.getElementById(`${playerKey}-game3-${matchday}`).value = data[playerKey].game3 || '';
+                            document.getElementById(`${playerKey}-game4-${matchday}`).value = data[playerKey].game4 || '';
+                            calculatePlayerTotal(i, matchday);
+                        }
+                    }
+                }
+            });
+        }
+
+        // Spieltag speichern
+        function saveMatchday(matchday) {
+            const matchdayData = {};
+            
+            for (let i = 1; i <= players.length; i++) {
+                const playerKey = `player${i}`;
+                matchdayData[playerKey] = {
+                    name: players[i-1],
+                    game1: parseInt(document.getElementById(`${playerKey}-game1-${matchday}`).value) || 0,
+                    game2: parseInt(document.getElementById(`${playerKey}-game2-${matchday}`).value) || 0,
+                    game3: parseInt(document.getElementById(`${playerKey}-game3-${matchday}`).value) || 0,
+                    game4: parseInt(document.getElementById(`${playerKey}-game4-${matchday}`).value) || 0,
+                    total: parseInt(document.getElementById(`${playerKey}-total-${matchday}`).textContent) || 0,
+                    average: parseFloat(document.getElementById(`${playerKey}-avg-${matchday}`).textContent) || 0
+                };
+            }
+            
+            database.ref(`matchday_${matchday}`).set(matchdayData)
+                .then(() => alert(`Ergebnisse für Spieltag ${matchday} gespeichert!`))
+                .catch((error) => alert("Fehler: " + error.message));
+        }
+
+        // Gesamtpunkte und Durchschnitt berechnen
+        function calculatePlayerTotal(playerNum, matchday) {
+            const game1 = parseInt(document.getElementById(`player${playerNum}-game1-${matchday}`).value) || 0;
+            const game2 = parseInt(document.getElementById(`player${playerNum}-game2-${matchday}`).value) || 0;
+            const game3 = parseInt(document.getElementById(`player${playerNum}-game3-${matchday}`).value) || 0;
+            const game4 = parseInt(document.getElementById(`player${playerNum}-game4-${matchday}`).value) || 0;
+            
+            const total = game1 + game2 + game3 + game4;
+            const avg = (total / 4).toFixed(1);
+            
+            document.getElementById(`player${playerNum}-total-${matchday}`).textContent = total;
+            document.getElementById(`player${playerNum}-avg-${matchday}`).textContent = avg;
+        }
+
+        // Spieltagdaten kopieren
+        function copyMatchdayData(matchday) {
+            let copyText = `Spieltag ${matchday} Ergebnisse:\n\n`;
+            
+            for (let i = 1; i <= players.length; i++) {
+                const playerKey = `player${i}`;
+                const name = players[i-1];
+                const game1 = document.getElementById(`${playerKey}-game1-${matchday}`).value || '0';
+                const game2 = document.getElementById(`${playerKey}-game2-${matchday}`).value || '0';
+                const game3 = document.getElementById(`${playerKey}-game3-${matchday}`).value || '0';
+                const game4 = document.getElementById(`${playerKey}-game4-${matchday}`).value || '0';
+                const total = document.getElementById(`${playerKey}-total-${matchday}`).textContent;
+                const avg = document.getElementById(`${playerKey}-avg-${matchday}`).textContent;
+                
+                copyText += `${name}: ${game1} | ${game2} | ${game3} | ${game4} | Gesamt: ${total} | Schnitt: ${avg}\n`;
+            }
+            
+            navigator.clipboard.writeText(copyText)
+                .then(() => alert("Daten wurden in die Zwischenablage kopiert!"))
+                .catch(err => alert("Fehler beim Kopieren: " + err));
+        }
+
+        // Spieltag zurücksetzen
+        function resetMatchday(matchday) {
+            if (confirm("Möchten Sie wirklich alle Ergebnisse dieses Spieltags zurücksetzen?")) {
+                for (let i = 1; i <= players.length; i++) {
+                    const playerKey = `player${i}`;
+                    document.getElementById(`${playerKey}-game1-${matchday}`).value = '';
+                    document.getElementById(`${playerKey}-game2-${matchday}`).value = '';
+                    document.getElementById(`${playerKey}-game3-${matchday}`).value = '';
+                    document.getElementById(`${playerKey}-game4-${matchday}`).value = '';
+                    document.getElementById(`${playerKey}-total-${matchday}`).textContent = '0';
+                    document.getElementById(`${playerKey}-avg-${matchday}`).textContent = '0';
+                }
+                
+                // Optional: Auch aus Firebase löschen
+                database.ref(`matchday_${matchday}`).remove()
+                    .then(() => console.log(`Spieltag ${matchday} zurückgesetzt`))
+                    .catch(err => console.error("Fehler beim Zurücksetzen:", err));
+            }
+        }
+
+        // Admin-Status prüfen (vereinfachte Version)
+        function checkAdminStatus() {
+            // In einer echten Anwendung würden Sie hier die Firebase-Authentifizierung verwenden
+            const isAdmin = prompt("Bitte geben Sie den Admin-Code ein:") === "geheim";
+            
+            if (isAdmin) {
+                document.querySelectorAll('.reset-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+            }
+        }
+
+        // Initialisierung beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMatchdays();
+            
+            // Mobile Optimierung: Verhindert horizontales Scrollen
+            document.addEventListener('touchmove', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        });
+    </script>
 </body>
 </html>
