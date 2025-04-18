@@ -2,98 +2,211 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Liga-Tabelle | Strikeclub-Velten</title>
     <style>
+        :root {
+            --primary-bg: rgba(20, 20, 20, 0.85);
+            --table-header-bg: rgba(10, 10, 10, 0.9);
+            --table-cell-bg: rgba(30, 30, 30, 0.8);
+            --table-border: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.95);
+            --button-primary: #2E7D32;
+            --button-hover: #1B5E20;
+            --button-secondary: #1565C0;
+        }
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #f0f0f0;
+            color: var(--text-color);
             text-align: center;
+            -webkit-text-size-adjust: 100%;
         }
+
         h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         .container {
-            max-width: 1000px;
+            max-width: 100%;
             margin: 0 auto;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            background-color: var(--primary-bg);
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            overflow-x: hidden;
         }
+
         .match-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            padding-bottom: 15px;
         }
+
         .match-btn {
-            background-color: #4CAF50;
+            background-color: var(--button-primary);
             color: white;
-            padding: 15px;
+            padding: 12px 8px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
+
         .match-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 15px 0;
+            background-color: var(--table-cell-bg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+
         th, td {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 12px;
+            border: 1px solid var(--table-border);
+            padding: 10px 8px;
             text-align: center;
+            font-size: 14px;
         }
+
         th {
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: var(--table-header-bg);
             font-weight: 600;
+            position: sticky;
+            top: 0;
         }
+
         tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(0, 0, 0, 0.2);
         }
+
         input {
-            background-color: rgba(255, 255, 255, 0.9);
-            width: 60px;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
+            background-color: var(--input-bg);
+            width: 50px;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
             text-align: center;
+            font-weight: bold;
+            color: #333;
         }
+
         .save-btn {
-            background-color: #2196F3;
+            background-color: var(--button-secondary);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
+            margin: 15px 5px 0;
+            font-size: 16px;
+            display: inline-block;
+            width: calc(100% - 40px);
+            max-width: 300px;
         }
+
         .back-button {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
+            margin: 15px 5px 0;
+            padding: 10px 15px;
             background-color: #333;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: calc(100% - 40px);
+            max-width: 300px;
         }
+
         .hidden {
             display: none;
+        }
+
+        .button-container {
+            position: sticky;
+            bottom: 10px;
+            background-color: var(--primary-bg);
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        /* Mobile Optimierungen */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            
+            .match-buttons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .match-btn {
+                padding: 10px 5px;
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 8px 5px;
+                font-size: 13px;
+            }
+            
+            input {
+                width: 45px;
+                padding: 5px;
+                font-size: 13px;
+            }
+            
+            .save-btn, .back-button {
+                width: calc(100% - 20px);
+                padding: 10px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .match-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 6px 3px;
+            }
+            
+            input {
+                width: 40px;
+                font-size: 12px;
+            }
         }
     </style>
     <!-- Font Awesome für Icons -->
@@ -124,54 +237,58 @@
         <div id="matchForm" class="hidden">
             <h2 id="matchTitle">Spieltag X</h2>
             
-            <table id="resultsTable">
-                <thead>
-                    <tr>
-                        <th>Spieler</th>
-                        <th>Spiel 1</th>
-                        <th>Spiel 2</th>
-                        <th>Spiel 3</th>
-                        <th>Spiel 4</th>
-                        <th>Gesamt</th>
-                        <th>Durchschnitt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Spieler 1 -->
-                    <tr>
-                        <td>Spieler A</td>
-                        <td><input type="number" id="player1-game1" min="0" max="300"></td>
-                        <td><input type="number" id="player1-game2" min="0" max="300"></td>
-                        <td><input type="number" id="player1-game3" min="0" max="300"></td>
-                        <td><input type="number" id="player1-game4" min="0" max="300"></td>
-                        <td id="player1-total">0</td>
-                        <td id="player1-avg">0</td>
-                    </tr>
-                    <!-- Spieler 2 -->
-                    <tr>
-                        <td>Spieler B</td>
-                        <td><input type="number" id="player2-game1" min="0" max="300"></td>
-                        <td><input type="number" id="player2-game2" min="0" max="300"></td>
-                        <td><input type="number" id="player2-game3" min="0" max="300"></td>
-                        <td><input type="number" id="player2-game4" min="0" max="300"></td>
-                        <td id="player2-total">0</td>
-                        <td id="player2-avg">0</td>
-                    </tr>
-                    <!-- Spieler 3 -->
-                    <tr>
-                        <td>Spieler C</td>
-                        <td><input type="number" id="player3-game1" min="0" max="300"></td>
-                        <td><input type="number" id="player3-game2" min="0" max="300"></td>
-                        <td><input type="number" id="player3-game3" min="0" max="300"></td>
-                        <td><input type="number" id="player3-game4" min="0" max="300"></td>
-                        <td id="player3-total">0</td>
-                        <td id="player3-avg">0</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="overflow-x: auto;">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Spieler</th>
+                            <th>Spiel 1</th>
+                            <th>Spiel 2</th>
+                            <th>Spiel 3</th>
+                            <th>Spiel 4</th>
+                            <th>Gesamt</th>
+                            <th>Schnitt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Spieler 1 -->
+                        <tr>
+                            <td>Spieler A</td>
+                            <td><input type="number" id="player1-game1" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game2" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game3" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game4" min="0" max="300"></td>
+                            <td id="player1-total">0</td>
+                            <td id="player1-avg">0</td>
+                        </tr>
+                        <!-- Spieler 2 -->
+                        <tr>
+                            <td>Spieler B</td>
+                            <td><input type="number" id="player2-game1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4" min="0" max="300"></td>
+                            <td id="player2-total">0</td>
+                            <td id="player2-avg">0</td>
+                        </tr>
+                        <!-- Spieler 3 -->
+                        <tr>
+                            <td>Spieler C</td>
+                            <td><input type="number" id="player3-game1" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game2" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game3" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game4" min="0" max="300"></td>
+                            <td id="player3-total">0</td>
+                            <td id="player3-avg">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <button class="save-btn" onclick="saveMatchResults()"><i class="fas fa-save"></i> Ergebnisse speichern</button>
-            <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück zur Auswahl</button>
+            <div class="button-container">
+                <button class="save-btn" onclick="saveMatchResults()"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+                <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück</button>
+            </div>
         </div>
 
         <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Zurück zur Übersicht</a>
@@ -280,7 +397,20 @@
                 const playerNum = this.id.split('-')[0].replace('player', '');
                 calculateTotals(playerNum);
             });
+            
+            // Mobile Optimierung: Verhindert Zoomen bei Eingabe
+            input.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.focus();
+            }, { passive: false });
         });
+
+        // Mobile Optimierung: Verhindert horizontales Scrollen
+        document.addEventListener('touchmove', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
