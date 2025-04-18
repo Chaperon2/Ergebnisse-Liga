@@ -15,57 +15,56 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            color: #f0f0f0;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         h1 {
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
-            color: #ffffff; /* Weiße Schriftfarbe für die Überschrift */
-            font-weight: 700; /* Fettere Schrift */
+            color: #ffffff;
+            font-weight: 700;
         }
         .dropdown-container {
             margin-bottom: 20px;
-            position: relative; /* Für den benutzerdefinierten Pfeil */
+            position: relative;
         }
         .dropdown-container select {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
-            padding: 15px 32px; /* Gleicher Abstand wie bei den Schaltflächen */
-            font-size: 16px; /* Schriftgröße wie bei den Schaltflächen */
-            font-weight: 600; /* Fettere Schrift wie bei den Schaltflächen */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f0f0f0;
+            padding: 15px 32px;
+            font-size: 16px;
+            font-weight: 600;
             border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px; /* Gleiche Abrundung wie bei den Schaltflächen */
+            border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            width: 200px; /* Gleiche Breite wie die Schaltflächen */
-            text-align-last: center; /* Text im Dropdown zentrieren */
-            text-align: center; /* Text zentrieren */
-            appearance: none; /* Standard-Dropdown-Pfeil entfernen */
-            -webkit-appearance: none; /* Für Safari */
-            -moz-appearance: none; /* Für Firefox */
+            width: 200px;
+            text-align-last: center;
+            text-align: center;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        /* Benutzerdefinierter Pfeil */
         .dropdown-container::after {
             content: "▼";
             position: absolute;
             top: 50%;
             right: 20px;
             transform: translateY(-50%);
-            pointer-events: none; /* Klicks auf den Pfeil ignorieren */
-            color: #f0f0f0; /* Farbe des Pfeils */
+            pointer-events: none;
+            color: #f0f0f0;
             font-size: 12px;
         }
         .dropdown-container select:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            background-color: rgba(0, 0, 0, 0.6);
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
         .dropdown-container select:focus {
-            outline: none; /* Standard-Focus-Rahmen entfernen */
+            outline: none;
         }
         .button-container {
             display: flex;
@@ -75,12 +74,12 @@
             margin: 20px;
         }
         .button-container button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Helleres Grau für besseren Kontrast */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f0f0f0;
             padding: 15px 32px;
             text-align: center;
             font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
+            font-weight: 600;
             border: 2px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border-radius: 10px;
@@ -88,11 +87,11 @@
             width: 200px;
             margin: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0; /* Startwert für die Animation */
+            opacity: 0;
             animation: fadeIn 0.5s ease forwards;
         }
         .button-container button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+            background-color: rgba(0, 0, 0, 0.6);
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
@@ -102,19 +101,22 @@
         }
         /* Icon-Farben anpassen */
         .button-container button i.fa-users {
-            color: #007bff; /* Blau für Mitglieder */
+            color: #007bff;
         }
         .button-container button i.fa-trophy {
-            color: #ffcc00; /* Gelb für Trophäe */
+            color: #ffcc00;
         }
         .button-container button i.fa-calendar-alt {
-            color: #ff4444; /* Rot für Kalender */
+            color: #ff4444;
         }
         .button-container button i.fa-newspaper {
-            color: #ff4444; /* Rot für News */
+            color: #ff4444;
         }
         .button-container button i.fa-calendar-check {
-            color: #ffffff; /* Weiß für Spielplan */
+            color: #ffffff;
+        }
+        .button-container button i.fa-edit {
+            color: #28a745; /* Grün für Bearbeiten/Ergebnisse eintragen */
         }
         .button-container button .tooltip {
             visibility: hidden;
@@ -126,7 +128,7 @@
             padding: 5px;
             position: absolute;
             z-index: 1;
-            bottom: 125%; /* Position über der Schaltfläche */
+            bottom: 125%;
             left: 50%;
             margin-left: -60px;
             opacity: 0;
@@ -154,17 +156,15 @@
             }
             .dropdown-container select {
                 width: 90%;
-                font-size: 14px; /* Schriftgröße auf mobilen Geräten anpassen */
-                padding: 12px 0; /* Gleicher Abstand wie bei den Schaltflächen */
-                text-align-last: center; /* Text im Dropdown zentrieren */
-                text-align: center; /* Text zentrieren */
+                font-size: 14px;
+                padding: 12px 0;
+                text-align-last: center;
+                text-align: center;
             }
-            /* Pfeil in der mobilen Version ausblenden */
             .dropdown-container::after {
                 display: none;
             }
         }
-        /* Animation für Schaltflächen */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -175,18 +175,17 @@
                 transform: translateY(0);
             }
         }
-        /* Dark Mode */
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #1a1a1a;
-                color: #f0f0f0; /* Helleres Grau im Dark Mode */
+                color: #f0f0f0;
             }
             .dropdown-container select, .button-container button {
-                background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
+                background-color: rgba(0, 0, 0, 0.5);
                 border-color: rgba(255, 255, 255, 0.2);
             }
             .dropdown-container select:hover, .button-container button:hover {
-                background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
+                background-color: rgba(0, 0, 0, 0.6);
                 border-color: rgba(255, 255, 255, 0.4);
             }
         }
@@ -230,6 +229,10 @@
         <button onclick="location.href='spielplan.html'">
             <i class="fas fa-calendar-check"></i> Spielplan
             <span class="tooltip">Spielplan anzeigen</span>
+        </button>
+        <button onclick="location.href='tabelle.html'">
+            <i class="fas fa-edit"></i> Ergebnisse eintragen
+            <span class="tooltip">Ergebnisse für die Liga eintragen</span>
         </button>
     </div>
 </body>
