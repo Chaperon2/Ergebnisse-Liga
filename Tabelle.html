@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktuelle Ergebnisse | Strikeclub-Velten</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: rgba(0, 0, 0, 0.5);
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        input {
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 150px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+    <!-- Font Awesome für Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-trophy"></i> Aktuelle Ergebnisse</h1>
+        
+        <!-- Eingabeformular für neue Ergebnisse -->
+        <div class="form-group">
+            <input type="text" id="playerName" placeholder="Spielername" required>
+            <input type="number" id="game1" placeholder="Spiel 1" min="0" max="300">
+            <input type="number" id="game2" placeholder="Spiel 2" min="0" max="300">
+            <input type="number" id="game3" placeholder="Spiel 3" min="0" max="300">
+            <button onclick="addScore()"><i class="fas fa-save"></i> Speichern</button>
+        </div>
+
+        <!-- Tabelle mit Ergebnissen -->
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Spieler</th>
+                    <th>Spiel 1</th>
+                    <th>Spiel 2</th>
+                    <th>Spiel 3</th>
+                    <th>Durchschnitt</th>
+                    <th>Gesamt</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Bestenliste -->
+        <h2><i class="fas fa-medal"></i> Bestenliste</h2>
+        <table id="highscoresTable">
+            <thead>
+                <tr>
+                    <th>Platz</th>
+                    <th>Spieler</th>
+                    <th>Bester Einzelwert</th>
+                    <th>Durchschnitt</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Zurück zur Übersicht</a>
+    </div>
+
+    <script>
+        // Firebase-Konfiguration (aus deiner Firebase Console)
+        const firebaseConfig = {
+            apiKey: "DEINE_API_KEY",
+            authDomain: "DEIN_PROJEKT.firebaseapp.com",
+            databaseURL: "https://DEIN_PROJEKT.firebaseio.com",
+            projectId: "DEIN_PROJEKT",
+            storageBucket: "DEIN_PROJEKT.appspot.com",
+            messagingSenderId: "DEINE_SENDER_ID"
+        };
+
+        // Firebase initialisieren
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Ergebnis speichern
+        function addScore() {
+            const player = document.getElementById('playerName').value;
+            const game1 = parseInt(document.getElementById('game1').value) || 0;
+            const game2 = parseInt(document.getElementById('game2').value) || 0;
+            const game3 = parseInt(document.getElementById('game3').value) || 0;
+            
+            if (!player) return alert("Bitte Spielername eingeben!");
+
+            database.ref('bowlingResults').push({
+                player,
+                game1,
+                game2,
+                game3,
+                date: new Date().toLocaleDateString('de-DE')
+            });
+
+            // Felder leeren
+            document.getElementById('playerName').value = '';
+            document.getElementById('game1').value = '';
+            document.getElementById('game2').value = '';
+            document.getElementById('game3').value = '';
+        }
+
+        // Echtzeit-Daten abrufen und anzeigen
+        database.ref('bowlingResults').on('value', (snapshot) => {
+            const resultsBody = document.querySelector('#resultsTable tbody');
+            resultsBody.innerHTML = '';
+            const allScores = [];
+
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const total = data.game1 + data.game2 + data.game3;
+                const avg = (total / 3).toFixed(1);
+                allScores.push({ ...data, total, avg });
+
+                const row = `
+                    <tr>
+                        <td>${data.player}</td>
+                        <td>${data.game1}</td>
+                        <td>${data.game2}</td>
+                        <td>${data.game3}</td>
+                        <td>${avg}</td>
+                        <td>${total}</td>
+                        <td><button onclick="deleteScore('${childSnapshot.key}')"><i class="fas fa-trash"></i></button></td>
+                    </tr>
+                `;
+                resultsBody.innerHTML += row;
+            });
+
+            updateHighscores(allScores);
+        });
+
+        // Ergebnis löschen
+        function deleteScore(key) {
+            if (confirm("Ergebnis wirklich löschen?")) {
+                database.ref('bowlingResults/' + key).remove();
+            }
+        }
+
+        // Bestenliste berechnen
+        function updateHighscores(scores) {
+            const playerStats = {};
+            
+            scores.forEach(entry => {
+                if (!playerStats[entry.player]) {
+                    playerStats[entry.player] = {
+                        games: [],
+                        bestSingle: 0
+                    };
+                }
+                playerStats[entry.player].games.push(...[entry.game1, entry.game2, entry.game3]);
+                const best = Math.max(entry.game1, entry.game2, entry.game3);
+                if (best > playerStats[entry.player].bestSingle) {
+                    playerStats[entry.player].bestSingle = best;
+                }
+            });
+
+            const highscores = Object.keys(playerStats).map(player => ({
+                player,
+                bestSingle: playerStats[player].bestSingle,
+                avg: (playerStats[player].games.reduce((a, b) => a + b, 0) / playerStats[player].games.length
+            })).sort((a, b) => b.avg - a.avg);
+
+            const highscoresBody = document.querySelector('#highscoresTable tbody');
+            highscoresBody.innerHTML = '';
+            
+            highscores.forEach((player, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${player.player}</td>
+                        <td>${player.bestSingle}</td>
+                        <td>${player.avg.toFixed(1)}</td>
+                    </tr>
+                `;
+                highscoresBody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
