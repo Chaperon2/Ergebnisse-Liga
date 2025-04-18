@@ -29,6 +29,26 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
+        .match-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .match-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .match-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -46,27 +66,22 @@
         tr:nth-child(even) {
             background-color: rgba(255, 255, 255, 0.05);
         }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: none;
-        }
         input {
             background-color: rgba(255, 255, 255, 0.9);
-            width: 150px;
+            width: 60px;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
         }
-        button {
-            background-color: #4CAF50;
+        .save-btn {
+            background-color: #2196F3;
             color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .form-group {
-            margin: 20px 0;
+            margin-top: 20px;
         }
         .back-button {
             display: inline-block;
@@ -77,11 +92,8 @@
             text-decoration: none;
             border-radius: 5px;
         }
-        .delete-btn {
-            background-color: #f44336;
-        }
-        .delete-btn:hover {
-            background-color: #d32f2f;
+        .hidden {
+            display: none;
         }
     </style>
     <!-- Font Awesome für Icons -->
@@ -94,166 +106,181 @@
     <div class="container">
         <h1><i class="fas fa-trophy"></i> Liga-Tabelle</h1>
         
-        <!-- Eingabeformular für neue Ergebnisse -->
-        <div class="form-group">
-            <input type="text" id="playerName" placeholder="Spielername" required>
-            <input type="number" id="game1" placeholder="Spiel 1" min="0" max="300">
-            <input type="number" id="game2" placeholder="Spiel 2" min="0" max="300">
-            <input type="number" id="game3" placeholder="Spiel 3" min="0" max="300">
-            <button onclick="addScore()"><i class="fas fa-save"></i> Speichern</button>
+        <!-- Hauptmenü mit Spieltagsauswahl -->
+        <div id="mainMenu">
+            <h2>Ergebnisse eintragen</h2>
+            <div class="match-buttons">
+                <button class="match-btn" onclick="showMatchForm(1)">Spieltag 1</button>
+                <button class="match-btn" onclick="showMatchForm(2)">Spieltag 2</button>
+                <button class="match-btn" onclick="showMatchForm(3)">Spieltag 3</button>
+                <button class="match-btn" onclick="showMatchForm(4)">Spieltag 4</button>
+                <button class="match-btn" onclick="showMatchForm(5)">Spieltag 5</button>
+                <button class="match-btn" onclick="showMatchForm(6)">Spieltag 6</button>
+                <button class="match-btn" onclick="showMatchForm(7)">Spieltag 7</button>
+            </div>
         </div>
 
-        <!-- Tabelle mit Ergebnissen -->
-        <table id="resultsTable">
-            <thead>
-                <tr>
-                    <th>Spieler</th>
-                    <th>Spiel 1</th>
-                    <th>Spiel 2</th>
-                    <th>Spiel 3</th>
-                    <th>Durchschnitt</th>
-                    <th>Gesamt</th>
-                    <th>Aktion</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <!-- Eingabeformular für Spieltagsergebnisse -->
+        <div id="matchForm" class="hidden">
+            <h2 id="matchTitle">Spieltag X</h2>
+            
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Spieler</th>
+                        <th>Spiel 1</th>
+                        <th>Spiel 2</th>
+                        <th>Spiel 3</th>
+                        <th>Spiel 4</th>
+                        <th>Gesamt</th>
+                        <th>Durchschnitt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Spieler 1 -->
+                    <tr>
+                        <td>Spieler A</td>
+                        <td><input type="number" id="player1-game1" min="0" max="300"></td>
+                        <td><input type="number" id="player1-game2" min="0" max="300"></td>
+                        <td><input type="number" id="player1-game3" min="0" max="300"></td>
+                        <td><input type="number" id="player1-game4" min="0" max="300"></td>
+                        <td id="player1-total">0</td>
+                        <td id="player1-avg">0</td>
+                    </tr>
+                    <!-- Spieler 2 -->
+                    <tr>
+                        <td>Spieler B</td>
+                        <td><input type="number" id="player2-game1" min="0" max="300"></td>
+                        <td><input type="number" id="player2-game2" min="0" max="300"></td>
+                        <td><input type="number" id="player2-game3" min="0" max="300"></td>
+                        <td><input type="number" id="player2-game4" min="0" max="300"></td>
+                        <td id="player2-total">0</td>
+                        <td id="player2-avg">0</td>
+                    </tr>
+                    <!-- Spieler 3 -->
+                    <tr>
+                        <td>Spieler C</td>
+                        <td><input type="number" id="player3-game1" min="0" max="300"></td>
+                        <td><input type="number" id="player3-game2" min="0" max="300"></td>
+                        <td><input type="number" id="player3-game3" min="0" max="300"></td>
+                        <td><input type="number" id="player3-game4" min="0" max="300"></td>
+                        <td id="player3-total">0</td>
+                        <td id="player3-avg">0</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <!-- Bestenliste -->
-        <h2><i class="fas fa-medal"></i> Bestenliste</h2>
-        <table id="highscoresTable">
-            <thead>
-                <tr>
-                    <th>Platz</th>
-                    <th>Spieler</th>
-                    <th>Bester Einzelwert</th>
-                    <th>Durchschnitt</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            <button class="save-btn" onclick="saveMatchResults()"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+            <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück zur Auswahl</button>
+        </div>
 
         <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Zurück zur Übersicht</a>
     </div>
 
     <script>
-        // Firebase-Konfiguration mit deinen Daten
+        // Firebase-Konfiguration
         const firebaseConfig = {
-            apiKey: "AIzaSyCBBf8PR_vGp5BUga50BT0LhZ7dZBt63j0",  // Hier deinen API-Key aus Firebase eintragen!
+            apiKey: "AIzaSyCBBf8PR_vGp5BUga50BT0LhZ7dZBt63j0",
             authDomain: "liga-tabelle-33796.firebaseapp.com",
             databaseURL: "https://liga-tabelle-33796-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "liga-tabelle-33796",
             storageBucket: "liga-tabelle-33796.appspot.com",
             messagingSenderId: "634280577519",
-            appId: "1:634280577519:web:2aa065959fbba66d5bce1a"  // Falls vorhanden eintragen
+            appId: "1:634280577519:web:2aa065959fbba66d5bce1a"
         };
 
         // Firebase initialisieren
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Ergebnis speichern
-        function addScore() {
-            const player = document.getElementById('playerName').value.trim();
-            const game1 = parseInt(document.getElementById('game1').value) || 0;
-            const game2 = parseInt(document.getElementById('game2').value) || 0;
-            const game3 = parseInt(document.getElementById('game3').value) || 0;
-            
-            if (!player) {
-                alert("Bitte Spielername eingeben!");
-                return;
-            }
+        // Aktueller Spieltag
+        let currentMatchday = 0;
 
-            database.ref('bowlingResults').push({
-                player,
-                game1,
-                game2,
-                game3,
-                date: new Date().toLocaleDateString('de-DE')
-            });
+        // Spielerliste (kann später angepasst werden)
+        const players = ["Spieler A", "Spieler B", "Spieler C"];
 
-            // Felder leeren
-            document.getElementById('playerName').value = '';
-            document.getElementById('game1').value = '';
-            document.getElementById('game2').value = '';
-            document.getElementById('game3').value = '';
+        // Hauptmenü anzeigen
+        function showMainMenu() {
+            document.getElementById('mainMenu').classList.remove('hidden');
+            document.getElementById('matchForm').classList.add('hidden');
         }
 
-        // Echtzeit-Daten abrufen und anzeigen
-        database.ref('bowlingResults').on('value', (snapshot) => {
-            const resultsBody = document.querySelector('#resultsTable tbody');
-            resultsBody.innerHTML = '';
-            const allScores = [];
+        // Formular für bestimmten Spieltag anzeigen
+        function showMatchForm(matchday) {
+            currentMatchday = matchday;
+            document.getElementById('matchTitle').textContent = `Spieltag ${matchday}`;
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('matchForm').classList.remove('hidden');
+            
+            // Ergebnisse laden falls vorhanden
+            loadMatchResults(matchday);
+        }
 
-            snapshot.forEach((childSnapshot) => {
-                const data = childSnapshot.val();
-                const total = data.game1 + data.game2 + data.game3;
-                const avg = (total / 3).toFixed(1);
-                allScores.push({ ...data, total, avg, key: childSnapshot.key });
-
-                const row = `
-                    <tr>
-                        <td>${data.player}</td>
-                        <td>${data.game1}</td>
-                        <td>${data.game2}</td>
-                        <td>${data.game3}</td>
-                        <td>${avg}</td>
-                        <td>${total}</td>
-                        <td><button class="delete-btn" onclick="deleteScore('${childSnapshot.key}')"><i class="fas fa-trash"></i> Löschen</button></td>
-                    </tr>
-                `;
-                resultsBody.innerHTML += row;
+        // Ergebnisse laden
+        function loadMatchResults(matchday) {
+            database.ref(`matchday_${matchday}`).once('value').then((snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    for (let i = 0; i < players.length; i++) {
+                        const playerKey = `player${i+1}`;
+                        if (data[playerKey]) {
+                            document.getElementById(`${playerKey}-game1`).value = data[playerKey].game1 || '';
+                            document.getElementById(`${playerKey}-game2`).value = data[playerKey].game2 || '';
+                            document.getElementById(`${playerKey}-game3`).value = data[playerKey].game3 || '';
+                            document.getElementById(`${playerKey}-game4`).value = data[playerKey].game4 || '';
+                            calculateTotals(i+1);
+                        }
+                    }
+                }
             });
+        }
 
-            updateHighscores(allScores);
+        // Ergebnisse speichern
+        function saveMatchResults() {
+            const matchdayData = {};
+            
+            for (let i = 1; i <= 3; i++) {
+                const playerKey = `player${i}`;
+                matchdayData[playerKey] = {
+                    name: players[i-1],
+                    game1: parseInt(document.getElementById(`${playerKey}-game1`).value) || 0,
+                    game2: parseInt(document.getElementById(`${playerKey}-game2`).value) || 0,
+                    game3: parseInt(document.getElementById(`${playerKey}-game3`).value) || 0,
+                    game4: parseInt(document.getElementById(`${playerKey}-game4`).value) || 0
+                };
+                
+                // Berechnungen aktualisieren
+                calculateTotals(i);
+            }
+            
+            // In Firebase speichern
+            database.ref(`matchday_${currentMatchday}`).set(matchdayData)
+                .then(() => alert("Ergebnisse gespeichert!"))
+                .catch((error) => alert("Fehler: " + error.message));
+        }
+
+        // Gesamtpunkte und Durchschnitt berechnen
+        function calculateTotals(playerNum) {
+            const playerKey = `player${playerNum}`;
+            const game1 = parseInt(document.getElementById(`${playerKey}-game1`).value) || 0;
+            const game2 = parseInt(document.getElementById(`${playerKey}-game2`).value) || 0;
+            const game3 = parseInt(document.getElementById(`${playerKey}-game3`).value) || 0;
+            const game4 = parseInt(document.getElementById(`${playerKey}-game4`).value) || 0;
+            
+            const total = game1 + game2 + game3 + game4;
+            const avg = (total / 4).toFixed(1);
+            
+            document.getElementById(`${playerKey}-total`).textContent = total;
+            document.getElementById(`${playerKey}-avg`).textContent = avg;
+        }
+
+        // Event-Listener für automatische Berechnung
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const playerNum = this.id.split('-')[0].replace('player', '');
+                calculateTotals(playerNum);
+            });
         });
-
-        // Ergebnis löschen
-        function deleteScore(key) {
-            if (confirm("Ergebnis wirklich löschen?")) {
-                database.ref('bowlingResults/' + key).remove();
-            }
-        }
-
-        // Bestenliste berechnen
-        function updateHighscores(scores) {
-            const playerStats = {};
-            
-            scores.forEach(entry => {
-                if (!playerStats[entry.player]) {
-                    playerStats[entry.player] = {
-                        games: [],
-                        bestSingle: 0
-                    };
-                }
-                playerStats[entry.player].games.push(...[entry.game1, entry.game2, entry.game3]);
-                const best = Math.max(entry.game1, entry.game2, entry.game3);
-                if (best > playerStats[entry.player].bestSingle) {
-                    playerStats[entry.player].bestSingle = best;
-                }
-            });
-
-            const highscores = Object.keys(playerStats).map(player => ({
-                player,
-                bestSingle: playerStats[player].bestSingle,
-                avg: (playerStats[player].games.reduce((a, b) => a + b, 0) / playerStats[player].games.length).toFixed(1)
-            })).sort((a, b) => b.avg - a.avg);
-
-            const highscoresBody = document.querySelector('#highscoresTable tbody');
-            highscoresBody.innerHTML = '';
-            
-            highscores.forEach((player, index) => {
-                const row = `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${player.player}</td>
-                        <td>${player.bestSingle}</td>
-                        <td>${player.avg}</td>
-                    </tr>
-                `;
-                highscoresBody.innerHTML += row;
-            });
-        }
     </script>
 </body>
 </html>
