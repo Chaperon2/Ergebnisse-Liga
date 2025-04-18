@@ -71,10 +71,17 @@
             transform: translateY(-2px);
         }
 
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Für smooth scrolling auf iOS */
+            margin: 15px 0;
+        }
+
         table {
             width: 100%;
+            min-width: 600px; /* Mindestbreite für die Tabelle */
             border-collapse: collapse;
-            margin: 15px 0;
             background-color: var(--table-cell-bg);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
@@ -196,7 +203,7 @@
             }
             
             table {
-                font-size: 12px;
+                min-width: 550px; /* Etwas schmaler für sehr kleine Displays */
             }
             
             th, td {
@@ -233,12 +240,11 @@
             </div>
         </div>
 
-        <!-- Eingabeformular für Spieltagsergebnisse -->
-        <div id="matchForm" class="hidden">
-            <h2 id="matchTitle">Spieltag X</h2>
-            
-            <div style="overflow-x: auto;">
-                <table id="resultsTable">
+        <!-- Eingabeformulare für alle Spieltage (jeweils versteckt) -->
+        <div id="matchForm1" class="hidden match-form">
+            <h2>Spieltag 1</h2>
+            <div class="table-container">
+                <table>
                     <thead>
                         <tr>
                             <th>Spieler</th>
@@ -251,45 +257,94 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Spieler 1 -->
                         <tr>
                             <td>Spieler A</td>
-                            <td><input type="number" id="player1-game1" min="0" max="300"></td>
-                            <td><input type="number" id="player1-game2" min="0" max="300"></td>
-                            <td><input type="number" id="player1-game3" min="0" max="300"></td>
-                            <td><input type="number" id="player1-game4" min="0" max="300"></td>
-                            <td id="player1-total">0</td>
-                            <td id="player1-avg">0</td>
+                            <td><input type="number" id="player1-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player1-game4-1" min="0" max="300"></td>
+                            <td id="player1-total-1">0</td>
+                            <td id="player1-avg-1">0</td>
                         </tr>
-                        <!-- Spieler 2 -->
                         <tr>
                             <td>Spieler B</td>
-                            <td><input type="number" id="player2-game1" min="0" max="300"></td>
-                            <td><input type="number" id="player2-game2" min="0" max="300"></td>
-                            <td><input type="number" id="player2-game3" min="0" max="300"></td>
-                            <td><input type="number" id="player2-game4" min="0" max="300"></td>
-                            <td id="player2-total">0</td>
-                            <td id="player2-avg">0</td>
+                            <td><input type="number" id="player2-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4-1" min="0" max="300"></td>
+                            <td id="player2-total-1">0</td>
+                            <td id="player2-avg-1">0</td>
                         </tr>
-                        <!-- Spieler 3 -->
                         <tr>
                             <td>Spieler C</td>
-                            <td><input type="number" id="player3-game1" min="0" max="300"></td>
-                            <td><input type="number" id="player3-game2" min="0" max="300"></td>
-                            <td><input type="number" id="player3-game3" min="0" max="300"></td>
-                            <td><input type="number" id="player3-game4" min="0" max="300"></td>
-                            <td id="player3-total">0</td>
-                            <td id="player3-avg">0</td>
+                            <td><input type="number" id="player3-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player3-game4-1" min="0" max="300"></td>
+                            <td id="player3-total-1">0</td>
+                            <td id="player3-avg-1">0</td>
+                        </tr>
+                        <tr>
+                            <td>Spieler D</td>
+                            <td><input type="number" id="player2-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4-1" min="0" max="300"></td>
+                            <td id="player2-total-1">0</td>
+                            <td id="player2-avg-1">0</td>
+                        </tr>
+                        <tr>
+                            <td>Spieler E</td>
+                            <td><input type="number" id="player2-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4-1" min="0" max="300"></td>
+                            <td id="player2-total-1">0</td>
+                            <td id="player2-avg-1">0</td>
+                        </tr>
+                        <tr>
+                            <td>Spieler F</td>
+                            <td><input type="number" id="player2-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4-1" min="0" max="300"></td>
+                            <td id="player2-total-1">0</td>
+                            <td id="player2-avg-1">0</td>
+                        </tr>
+                        <tr>
+                            <td>Spieler G</td>
+                            <td><input type="number" id="player2-game1-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game2-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game3-1" min="0" max="300"></td>
+                            <td><input type="number" id="player2-game4-1" min="0" max="300"></td>
+                            <td id="player2-total-1">0</td>
+                            <td id="player2-avg-1">0</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
             <div class="button-container">
-                <button class="save-btn" onclick="saveMatchResults()"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+                <button class="save-btn" onclick="saveMatchResults(1)"><i class="fas fa-save"></i> Ergebnisse speichern</button>
                 <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück</button>
             </div>
         </div>
+
+        <!-- Wiederhole die Struktur für Spieltag 2-7 -->
+        <div id="matchForm2" class="hidden match-form">
+            <h2>Spieltag 2</h2>
+            <div class="table-container">
+                <table>
+                    <!-- Gleiche Tabellenstruktur wie oben, aber mit IDs für Spieltag 2 -->
+                    <!-- Beispiel: id="player1-game1-2" statt id="player1-game1-1" -->
+                </table>
+            </div>
+            <div class="button-container">
+                <button class="save-btn" onclick="saveMatchResults(2)"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+                <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück</button>
+            </div>
+        </div>
+
+        <!-- Füge hier die Formulare für Spieltag 3-7 ein (gleiches Muster) -->
 
         <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Zurück zur Übersicht</a>
     </div>
@@ -310,24 +365,24 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Aktueller Spieltag
-        let currentMatchday = 0;
-
-        // Spielerliste (kann später angepasst werden)
+        // Spielerliste
         const players = ["Spieler A", "Spieler B", "Spieler C"];
 
         // Hauptmenü anzeigen
         function showMainMenu() {
             document.getElementById('mainMenu').classList.remove('hidden');
-            document.getElementById('matchForm').classList.add('hidden');
+            document.querySelectorAll('.match-form').forEach(form => {
+                form.classList.add('hidden');
+            });
         }
 
         // Formular für bestimmten Spieltag anzeigen
         function showMatchForm(matchday) {
-            currentMatchday = matchday;
-            document.getElementById('matchTitle').textContent = `Spieltag ${matchday}`;
             document.getElementById('mainMenu').classList.add('hidden');
-            document.getElementById('matchForm').classList.remove('hidden');
+            document.querySelectorAll('.match-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            document.getElementById(`matchForm${matchday}`).classList.remove('hidden');
             
             // Ergebnisse laden falls vorhanden
             loadMatchResults(matchday);
@@ -341,11 +396,11 @@
                     for (let i = 0; i < players.length; i++) {
                         const playerKey = `player${i+1}`;
                         if (data[playerKey]) {
-                            document.getElementById(`${playerKey}-game1`).value = data[playerKey].game1 || '';
-                            document.getElementById(`${playerKey}-game2`).value = data[playerKey].game2 || '';
-                            document.getElementById(`${playerKey}-game3`).value = data[playerKey].game3 || '';
-                            document.getElementById(`${playerKey}-game4`).value = data[playerKey].game4 || '';
-                            calculateTotals(i+1);
+                            document.getElementById(`${playerKey}-game1-${matchday}`).value = data[playerKey].game1 || '';
+                            document.getElementById(`${playerKey}-game2-${matchday}`).value = data[playerKey].game2 || '';
+                            document.getElementById(`${playerKey}-game3-${matchday}`).value = data[playerKey].game3 || '';
+                            document.getElementById(`${playerKey}-game4-${matchday}`).value = data[playerKey].game4 || '';
+                            calculateTotals(i+1, matchday);
                         }
                     }
                 }
@@ -353,56 +408,65 @@
         }
 
         // Ergebnisse speichern
-        function saveMatchResults() {
+        function saveMatchResults(matchday) {
             const matchdayData = {};
             
             for (let i = 1; i <= 3; i++) {
                 const playerKey = `player${i}`;
                 matchdayData[playerKey] = {
                     name: players[i-1],
-                    game1: parseInt(document.getElementById(`${playerKey}-game1`).value) || 0,
-                    game2: parseInt(document.getElementById(`${playerKey}-game2`).value) || 0,
-                    game3: parseInt(document.getElementById(`${playerKey}-game3`).value) || 0,
-                    game4: parseInt(document.getElementById(`${playerKey}-game4`).value) || 0
+                    game1: parseInt(document.getElementById(`${playerKey}-game1-${matchday}`).value) || 0,
+                    game2: parseInt(document.getElementById(`${playerKey}-game2-${matchday}`).value) || 0,
+                    game3: parseInt(document.getElementById(`${playerKey}-game3-${matchday}`).value) || 0,
+                    game4: parseInt(document.getElementById(`${playerKey}-game4-${matchday}`).value) || 0
                 };
                 
                 // Berechnungen aktualisieren
-                calculateTotals(i);
+                calculateTotals(i, matchday);
             }
             
             // In Firebase speichern
-            database.ref(`matchday_${currentMatchday}`).set(matchdayData)
+            database.ref(`matchday_${matchday}`).set(matchdayData)
                 .then(() => alert("Ergebnisse gespeichert!"))
                 .catch((error) => alert("Fehler: " + error.message));
         }
 
         // Gesamtpunkte und Durchschnitt berechnen
-        function calculateTotals(playerNum) {
+        function calculateTotals(playerNum, matchday) {
             const playerKey = `player${playerNum}`;
-            const game1 = parseInt(document.getElementById(`${playerKey}-game1`).value) || 0;
-            const game2 = parseInt(document.getElementById(`${playerKey}-game2`).value) || 0;
-            const game3 = parseInt(document.getElementById(`${playerKey}-game3`).value) || 0;
-            const game4 = parseInt(document.getElementById(`${playerKey}-game4`).value) || 0;
+            const game1 = parseInt(document.getElementById(`${playerKey}-game1-${matchday}`).value) || 0;
+            const game2 = parseInt(document.getElementById(`${playerKey}-game2-${matchday}`).value) || 0;
+            const game3 = parseInt(document.getElementById(`${playerKey}-game3-${matchday}`).value) || 0;
+            const game4 = parseInt(document.getElementById(`${playerKey}-game4-${matchday}`).value) || 0;
             
             const total = game1 + game2 + game3 + game4;
             const avg = (total / 4).toFixed(1);
             
-            document.getElementById(`${playerKey}-total`).textContent = total;
-            document.getElementById(`${playerKey}-avg`).textContent = avg;
+            document.getElementById(`${playerKey}-total-${matchday}`).textContent = total;
+            document.getElementById(`${playerKey}-avg-${matchday}`).textContent = avg;
         }
 
         // Event-Listener für automatische Berechnung
-        document.querySelectorAll('input[type="number"]').forEach(input => {
-            input.addEventListener('change', function() {
-                const playerNum = this.id.split('-')[0].replace('player', '');
-                calculateTotals(playerNum);
+        function setupInputListeners() {
+            document.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const parts = this.id.split('-');
+                    const playerNum = parts[0].replace('player', '');
+                    const matchday = parts[3];
+                    calculateTotals(playerNum, matchday);
+                });
+                
+                // Mobile Optimierung: Verhindert Zoomen bei Eingabe
+                input.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.focus();
+                }, { passive: false });
             });
-            
-            // Mobile Optimierung: Verhindert Zoomen bei Eingabe
-            input.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                this.focus();
-            }, { passive: false });
+        }
+
+        // Initialisierung
+        document.addEventListener('DOMContentLoaded', function() {
+            setupInputListeners();
         });
 
         // Mobile Optimierung: Verhindert horizontales Scrollen
