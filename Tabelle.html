@@ -305,7 +305,9 @@
         // Spielerliste
         const players = ["Spieler A", "Spieler B", "Spieler C"];
         const totalMatchdays = 7;
-        const adminUser = "admin@example.com"; // Hier Admin-User eintragen
+
+        // Prüfen, ob Admin-Modus aktiv ist (über URL)
+        const isAdmin = window.location.href.includes('.adm.html');
 
         // HTML für einen Spieltag generieren
         function generateMatchdayHTML(matchday) {
@@ -313,6 +315,7 @@
                 <div id="matchday-${matchday}" class="hidden matchday-form">
                     <h2>Spieltag ${matchday}</h2>
                     
+                    ${isAdmin ? `
                     <div class="action-buttons">
                         <button class="action-btn copy-btn" onclick="copyMatchdayData(${matchday})">
                             <i class="fas fa-copy"></i> Kopieren
@@ -321,6 +324,7 @@
                             <i class="fas fa-trash-alt"></i> Zurücksetzen
                         </button>
                     </div>
+                    ` : ''}
                     
                     <div class="table-container">
                         <table id="table-${matchday}">
@@ -351,7 +355,7 @@
                         </table>
                     </div>
                     <div class="button-container">
-                        <button class="save-btn" onclick="saveMatchday(${matchday})"><i class="fas fa-save"></i> Ergebnisse speichern</button>
+                        ${isAdmin ? `<button class="save-btn" onclick="saveMatchday(${matchday})"><i class="fas fa-save"></i> Ergebnisse speichern</button>` : ''}
                         <button class="back-button" onclick="showMainMenu()"><i class="fas fa-arrow-left"></i> Zurück</button>
                     </div>
                 </div>
@@ -365,8 +369,12 @@
                 container.innerHTML += generateMatchdayHTML(i);
             }
             
-            // Admin-Check (hier müsste eine echte Authentifizierung implementiert werden)
-            checkAdminStatus();
+            // Admin-Buttons anzeigen, wenn im Admin-Modus
+            if (isAdmin) {
+                document.querySelectorAll('.reset-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+            }
         }
 
         // Hauptmenü anzeigen
@@ -442,10 +450,14 @@
             document.getElementById(`player${playerNum}-avg-${matchday}`).textContent = avg;
         }
 
-        // Spieltagdaten kopieren
+        // Spieltagdaten kopieren (tab-getrennt für Excel)
         function copyMatchdayData(matchday) {
-            let copyText = `Spieltag ${matchday} Ergebnisse:\n\n`;
+            let copyText = '';
             
+            // Kopfzeile
+            copyText += `Spieler\tSpiel 1\tSpiel 2\tSpiel 3\tSpiel 4\tGesamt\tSchnitt\n`;
+            
+            // Datenzeilen
             for (let i = 1; i <= players.length; i++) {
                 const playerKey = `player${i}`;
                 const name = players[i-1];
@@ -456,11 +468,11 @@
                 const total = document.getElementById(`${playerKey}-total-${matchday}`).textContent;
                 const avg = document.getElementById(`${playerKey}-avg-${matchday}`).textContent;
                 
-                copyText += `${name}: ${game1} | ${game2} | ${game3} | ${game4} | Gesamt: ${total} | Schnitt: ${avg}\n`;
+                copyText += `${name}\t${game1}\t${game2}\t${game3}\t${game4}\t${total}\t${avg}\n`;
             }
             
             navigator.clipboard.writeText(copyText)
-                .then(() => alert("Daten wurden in die Zwischenablage kopiert!"))
+                .then(() => alert("Daten wurden in die Zwischenablage kopiert (tab-getrennt für Excel)!"))
                 .catch(err => alert("Fehler beim Kopieren: " + err));
         }
 
@@ -484,28 +496,9 @@
             }
         }
 
-        // Admin-Status prüfen (vereinfachte Version)
-        function checkAdminStatus() {
-            // In einer echten Anwendung würden Sie hier die Firebase-Authentifizierung verwenden
-            const isAdmin = prompt("Bitte geben Sie den Admin-Code ein:") === "geheim";
-            
-            if (isAdmin) {
-                document.querySelectorAll('.reset-btn').forEach(btn => {
-                    btn.style.display = 'inline-block';
-                });
-            }
-        }
-
         // Initialisierung beim Laden der Seite
         document.addEventListener('DOMContentLoaded', function() {
             initializeMatchdays();
-            
-            // Mobile Optimierung: Verhindert horizontales Scrollen
-            document.addEventListener('touchmove', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
         });
     </script>
 </body>
