@@ -1,121 +1,123 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termine & News - Hausliga Velten</title>
-    <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding-top: 50px;
-            background-image: url(https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Hintergrund2.webp);
-            background-size: cover;
-            background-position: center;
-            background-attachment: scroll; /* Geändert von fixed zu scroll */
-            color: #ffffff;
-            min-height: 100vh; /* Vollständige Höhe der Seite */
-        }
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
-        }
-        .blackboard {
-            background-color: rgba(0, 0, 0, 0.7); /* Dunkler Hintergrund für das schwarze Brett */
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-        .blackboard h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #ffcc00; /* Gelbe Schrift für Überschriften */
-        }
-        .blackboard ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: left;
-        }
-        .blackboard ul li {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border-left: 5px solid #ffcc00; /* Gelber Akzent */
-            transition: background-color 0.3s ease;
-        }
-        .blackboard ul li:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        .back-button {
-            margin-top: 20px;
-            margin-bottom: 20px; /* Abstand nach unten */
-        }
-        .back-button button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Hellerer Text */
-            padding: 15px 32px;
-            font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .blackboard {
-                width: 95%;
-                padding: 15px;
-            }
-            .blackboard h2 {
-                font-size: 1.5rem;
-            }
-            .back-button button {
-                width: 90%;
-                padding: 12px 0;
-                font-size: 14px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>In Arbeit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Inter", Arial, sans-serif;
+      background: #090d14;
+    }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: #090d14;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+    }
+
+    .video-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8, 12, 20, 0.40), rgba(8, 12, 20, 0.60)),
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.14), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.14), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.16), transparent 30%);
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .text {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: var(--text);
+      text-shadow:
+        0 8px 28px rgba(0,0,0,0.34),
+        0 2px 8px rgba(0,0,0,0.28);
+      animation: pulseText 2.2s ease-in-out infinite;
+    }
+
+    .dots::after {
+      content: "";
+      display: inline-block;
+      width: 1.2em;
+      text-align: left;
+      animation: dots 1.6s steps(4, end) infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.88;
+      }
+      50% {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dots {
+      0%   { content: ""; }
+      25%  { content: "."; }
+      50%  { content: ".."; }
+      75%  { content: "..."; }
+      100% { content: ""; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .text,
+      .dots::after {
+        animation: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Termine & News - Hausliga Velten</h1>
+  <div class="video-bg" aria-hidden="true">
+    <video src="Rauch4.mp4" autoplay muted loop playsinline preload="auto"></video>
+  </div>
 
-    <div class="blackboard">
-        <h2>Termine</h2>
-        <ul>
-            <li><strong>16.04.2025:</strong> Zweite Saison beginnt -> S2 - 2025: <span style="color: red;">Wichtig: Start 18:00 Uhr!</span></li>
-            <li><strong>26.04.2025:</strong> Jährliche Saisonfeier auf der Bowlingbahn. (Uhrzeit folgt)</li>
-            <li><strong>26.04.2025:</strong> Danach gemeinsames Abendessen beim Griechen in Velten. (Uhrzeit folgt)</li>
-        </ul>
-
-        <h2>Neuigkeiten</h2>
-        <ul>
-            <li><strong>Neue Bowling-Regel: Individuelles Handicap für Gruppe 3 ab der nächsten Saison.</li>
-            <li><strong>Wir haben endlich Wanderpokale!!</li>
-            <li><strong>Vielen Dank für die coolen Hausliga-Shirts -> Bitte fleißig tragen :)</li>
-            <li><strong>Bitte Feedback und Verbesserungswünsche für die Seite kundtun.</li>
-        </ul>
+  <main class="content">
+    <div class="text">
+      In Arbeit<span class="dots"></span>
     </div>
-
-    <!-- Schaltfläche zurück zur Startseite -->
-    <div class="back-button">
-        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-    </div>
+  </main>
 </body>
 </html>
