@@ -317,6 +317,44 @@
       z-index: 1;
     }
 
+    .lane-link {
+  display: block;
+  width: min(100%, 450px);
+  border-radius: 40px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.lane-link:focus-visible {
+  outline: 3px solid rgba(73, 100, 255, 0.45);
+  outline-offset: 6px;
+  border-radius: 40px;
+}
+
+.lane-link:hover .preview-lane {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.76),
+    0 24px 48px rgba(35, 58, 100, 0.12);
+}
+
+.preview-lane {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+    
     .preview-lane {
       position: relative;
       width: min(100%, 450px);
@@ -901,24 +939,26 @@
         </div>
 
         <div class="hero-visual">
-          <div class="preview-lane" aria-hidden="true">
-            <div class="preview-pins">
-              <div class="preview-pin p1"></div>
-              <div class="preview-pin p2"></div>
-              <div class="preview-pin p3"></div>
-              <div class="preview-pin p4"></div>
-              <div class="preview-pin p5"></div>
-              <div class="preview-pin p6"></div>
-              <div class="preview-pin p7"></div>
-              <div class="preview-pin p8"></div>
-              <div class="preview-pin p9"></div>
-              <div class="preview-pin p10"></div>
-            </div>
-            <div class="preview-shadow"></div>
-            <div class="preview-ball"></div>
-          </div>
-        </div>
+  <a class="lane-link" href="bowling-minispiel.html" aria-label="Zum Bowling-Minispiel">
+    <span class="sr-only">Zum Bowling-Minispiel</span>
+    <div class="preview-lane" aria-hidden="true">
+      <div class="preview-pins">
+        <div class="preview-pin p1"></div>
+        <div class="preview-pin p2"></div>
+        <div class="preview-pin p3"></div>
+        <div class="preview-pin p4"></div>
+        <div class="preview-pin p5"></div>
+        <div class="preview-pin p6"></div>
+        <div class="preview-pin p7"></div>
+        <div class="preview-pin p8"></div>
+        <div class="preview-pin p9"></div>
+        <div class="preview-pin p10"></div>
       </div>
+      <div class="preview-shadow"></div>
+      <div class="preview-ball"></div>
+    </div>
+  </a>
+</div>
 
       <section class="nav-section">
         <div class="blob-grid">
@@ -1007,23 +1047,7 @@
             </div>
           </a>
 
-          <a class="blob-link shape-g theme-game" href="bowling-minispiel.html">
-            <div class="blob-shell">
-              <span class="blob-layer layer-1"></span>
-              <span class="blob-layer layer-2"></span>
-              <span class="blob-layer layer-3"></span>
-              <span class="blob-dot dot-1"></span>
-              <span class="blob-dot dot-2"></span>
-              <span class="blob-dot dot-3"></span>
-            </div>
-            <div class="blob-content">
-              <span class="blob-icon"><i class="fas fa-bowling-ball"></i></span>
-              <h3 class="blob-title">Mini-Spiel</h3>
-              <p class="blob-text">Eigene Bowling-Seite mit längerer Bahn, rollendem Ball und skillbasiertem Treffer.</p>
-              <div class="blob-tail">Öffnen</div>
-            </div>
-          </a>
-
+          
           <div class="blob-panel shape-f theme-archive">
             <div class="blob-shell">
               <span class="blob-layer layer-1"></span>
