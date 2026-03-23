@@ -1323,7 +1323,8 @@ async function testFirebaseWrite() {
         const pin = PIN_LAYOUT.find(item => item.id === Number(el.dataset.pinId));
         if (!pin) return;
         el.style.left = `${pin.x * stageWidth}px`;
-        el.style.top = `${deckTop + pin.row * rowGap}px`;
+el.style.top = `${deckTop + pin.row * rowGap}px`;
+el.style.zIndex = String(10 + pin.row);
       });
 
       positionBallAtRest();
