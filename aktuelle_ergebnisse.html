@@ -556,6 +556,13 @@
       padding-bottom: 6px;
     }
 
+    .blank-separator td {
+  padding: 0 !important;
+  height: 14px;
+  border-bottom: 0 !important;
+  background: linear-gradient(90deg, rgba(91,124,255,0.86), rgba(255,92,159,0.82), rgba(51,198,255,0.84)) !important;
+}
+
     .tendency {
       display: inline-flex;
       align-items: center;
@@ -1139,12 +1146,11 @@ Stranger Pins	460	460	460	460	1840	4`
       return "col-medium";
     }
 
-    function parseTableRaw(rawText, fallbackLabel) {
+    function parseTableRaw(rawText, fallbackLabel, options = {}) {
       const lines = rawText
-        .replace(/\r/g, "")
-        .split("\n")
-        .map(normalizeLine)
-        .filter(line => line.trim() !== "");
+  .replace(/\r/g, "")
+  .split("\n")
+  .map(normalizeLine);
 
       let sectionTitle = fallbackLabel;
       let headers = [];
@@ -1154,6 +1160,12 @@ Stranger Pins	460	460	460	460	1840	4`
       let titleConsumed = false;
 
       for (const line of lines) {
+        if (line.trim() === "") {
+  if (options.keepBlankSeparators && headers.length) {
+    rows.push({ type: "blank-separator", cells: [] });
+  }
+  continue;
+}
         if (!titleConsumed && isSingleTitleLine(line) && !line.includes("Platz")) {
           sectionTitle = line.trim();
           titleConsumed = true;
@@ -1269,8 +1281,21 @@ Stranger Pins	460	460	460	460	1840	4`
 
       parsed.rows.forEach(row => {
         const tr = document.createElement("tr");
-        tr.className = row.type === "separator" ? "separator-row" : "data-row";
 
+if (row.type === "separator") {
+  tr.className = "separator-row";
+} else if (row.type === "blank-separator") {
+  tr.className = "blank-separator";
+} else {
+  tr.className = "data-row";
+}
+if (row.type === "blank-separator") {
+  const td = document.createElement("td");
+  td.colSpan = parsed.headers.length;
+  tr.appendChild(td);
+  tbody.appendChild(tr);
+  return;
+}
         row.cells.forEach((cell, index) => {
           const currentHeader = parsed.headers[index] || "";
           const td = document.createElement("td");
@@ -1363,7 +1388,7 @@ Stranger Pins	460	460	460	460	1840	4`
 
     function createCompositeSection(section) {
       const topParsed = parseTableRaw(section.top.raw, section.top.label);
-      const bottomParsed = parseTableRaw(section.bottom.raw, section.bottom.label);
+      const bottomParsed = parseTableRaw(section.bottom.raw, section.bottom.label, { keepBlankSeparators: true });
 
       const card = document.createElement("section");
       card.className = `table-card ${section.theme} section-${section.key}`;
