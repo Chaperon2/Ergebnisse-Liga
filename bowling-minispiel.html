@@ -1142,7 +1142,9 @@
     </div>
   </div>
 </section>
-
+</div>
+</section>
+    
     <p class="footer-note">Strikeclub Velten</p>
   </main>
 
@@ -1200,21 +1202,7 @@
     }
 
     const database = firebase.database();
-    const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
-
-    const testRef = leaderboardRef.push();
-    await testRef.set({
-      name: "TEST",
-      score: 123,
-      createdAt: Date.now()
-    });
-
-    alert("Firebase-Schreibtest erfolgreich.");
-    console.log("Firebase-Schreibtest erfolgreich.");
-  } catch (error) {
-    console.error("Firebase-Schreibtest fehlgeschlagen:", error);
-    alert("Firebase-Schreibtest fehlgeschlagen: " + error.message);
-  }
+const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
 }
     const PIN_LAYOUT = [
   { id: 0, x: 0.50, row: 3 },
@@ -1681,7 +1669,6 @@ el.style.zIndex = String(10 + pin.row);
       return true;
     }
 
-    testFirebaseWrite();
     
    function startLeaderboardListener() {
   leaderboardRef.on("value", snapshot => {
