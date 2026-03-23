@@ -24,7 +24,8 @@
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
       --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
-      --max-width: 1220px;
+      --max-width: 1280px;
+      --table-font-size: 15px;
     }
 
     * {
@@ -280,7 +281,7 @@
     }
 
     .intro {
-      max-width: 62ch;
+      max-width: 64ch;
       color: var(--text-soft);
       line-height: 1.7;
       font-size: 1rem;
@@ -322,11 +323,19 @@
       padding: 18px;
     }
 
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
     .tabs {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 18px;
     }
 
     .tab-btn {
@@ -354,136 +363,164 @@
       box-shadow: 0 14px 28px rgba(91, 124, 255, 0.20);
     }
 
-    .slider-shell {
-      position: relative;
+    .table-tools {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(122,146,182,0.14);
+      color: #5e7395;
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(35, 58, 100, 0.07);
+    }
+
+    .hint-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(122,146,182,0.14);
+      color: #6a7b97;
+      font-size: 0.86rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .table-view {
+      display: none;
+    }
+
+    .table-view.active {
+      display: block;
+    }
+
+    .table-shell {
+      border-radius: 24px;
       overflow: hidden;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.74);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: 0 16px 36px rgba(35, 58, 100, 0.06);
     }
 
-    .slider {
-      display: flex;
-      transition: transform 0.45s ease;
-      will-change: transform;
-    }
-
-    .image-slide {
-      min-width: 100%;
-      padding: 22px;
-    }
-
-    .slide-meta {
+    .table-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(122,146,182,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,249,255,0.84));
     }
 
-    .slide-title {
+    .table-title {
       margin: 0;
-      font-size: clamp(1.3rem, 2vw, 2rem);
+      font-size: 1.2rem;
       font-weight: 800;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
+    }
+
+    .table-subtitle {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .table-scroll {
+      overflow: auto;
+      max-height: 70vh;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .table-scroll table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: var(--table-font-size);
+    }
+
+    .table-scroll thead th {
+      position: sticky;
+      top: 0;
+      z-index: 3;
       text-align: left;
-    }
-
-    .slide-badge {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.84);
-      border: 1px solid rgba(122,146,182,0.12);
-      color: #647791;
-      font-size: 0.86rem;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, rgba(250,252,255,0.98), rgba(242,247,255,0.96));
+      color: #4f6489;
+      font-size: 0.9em;
       font-weight: 800;
-      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid rgba(122,146,182,0.14);
+      white-space: nowrap;
     }
 
-    .image-frame {
-      position: relative;
-      border-radius: 22px;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,248,255,0.86));
-      border: 1px solid rgba(122,146,182,0.12);
-      box-shadow: 0 18px 34px rgba(35, 58, 100, 0.08);
+    .table-scroll tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(122,146,182,0.08);
+      white-space: nowrap;
+      background: rgba(255,255,255,0.88);
+      transition: background 0.18s ease;
     }
 
-    .image-frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 72vh;
-      object-fit: contain;
-      background: #fff;
+    .table-scroll tbody tr:nth-child(even) td {
+      background: rgba(247,250,255,0.88);
     }
 
-    .slider-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+    .table-scroll tbody tr:hover td {
+      background: rgba(236,243,255,0.96);
     }
 
-    .arrow-group {
-      display: flex;
-      gap: 10px;
+    .table-scroll thead th:first-child,
+    .table-scroll tbody td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: inherit;
+      box-shadow: 1px 0 0 rgba(122,146,182,0.08);
     }
 
-    .nav-btn {
-      border: 0;
-      cursor: pointer;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(122,146,182,0.14);
-      color: #5e7395;
-      font-size: 1rem;
-      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    .table-scroll thead th:first-child {
+      z-index: 4;
     }
 
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(35, 58, 100, 0.07);
-      background: rgba(255,255,255,0.94);
+    .data-row.is-selected td {
+      background: rgba(225,235,255,0.98) !important;
+      box-shadow: inset 0 0 0 1px rgba(91,124,255,0.12);
     }
 
-    .dots {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-      margin-right: auto;
+    .empty-state {
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--text-soft);
+      font-weight: 700;
     }
 
-    .dot-btn {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 0;
-      cursor: pointer;
-      background: rgba(110,127,157,0.24);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .dot-btn.active {
-      background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1));
-      transform: scale(1.2);
-    }
-
-    .back-row {
+    .actions {
       display: flex;
       justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
       margin-top: 20px;
     }
 
-    .back-home-btn {
+    .action-btn {
       border: 0;
       cursor: pointer;
       font: inherit;
@@ -496,6 +533,13 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.78);
+      color: #5e7395;
+      border: 1px solid rgba(122,146,182,0.14);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
     }
 
     .footer-note {
@@ -525,9 +569,10 @@
       75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 980px) {
       .topbar,
-      .header {
+      .header,
+      .toolbar {
         flex-direction: column;
         align-items: stretch;
       }
@@ -535,10 +580,6 @@
       .page {
         padding: 22px;
         border-radius: 26px;
-      }
-
-      .image-slide {
-        padding: 16px;
       }
     }
 
@@ -552,36 +593,33 @@
         font-size: clamp(2rem, 9vw, 3rem);
       }
 
-      .tabs {
-        gap: 10px;
+      .tabs,
+      .table-tools,
+      .actions {
+        flex-direction: column;
       }
 
-      .tab-btn {
+      .tab-btn,
+      .tool-btn,
+      .action-btn,
+      .secondary-btn {
         width: 100%;
         justify-content: center;
       }
 
-      .slider-controls {
-        justify-content: center;
+      .table-scroll {
+        max-height: 62vh;
       }
 
-      .dots {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-      }
-
-      .image-frame img {
-        max-height: 58vh;
+      .table-scroll table {
+        min-width: 720px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .glow,
-      .bg-shape,
-      .slider {
+      .bg-shape {
         animation: none !important;
-        transition: none !important;
       }
     }
   </style>
@@ -621,86 +659,46 @@
             <span>Aktuelle Ergebnisse</span>
           </div>
 
-          <h1>
-            Spieltag 8. <span class="headline-accent">Ergebnisse im Überblick.</span>
+          <h1 id="pageTitle">
+            Spieltag. <span class="headline-accent">Ergebnisse im Überblick.</span>
           </h1>
 
           <p class="intro">
-            Zwischen Tagesergebnissen, Einzelwertung und Teamwertung kannst du direkt wechseln oder auf Mobilgeräten wischen.
+            Zwischen Tagesergebnissen, Einzelwertung und Teamwertung kannst du direkt wechseln.
+            Zeilen lassen sich per Klick hervorheben.
           </p>
         </div>
 
         <div class="date-pill">
           <span class="date-label">Datum</span>
-          <div class="date-value">26.02.2025</div>
+          <div class="date-value" id="pageDate">–</div>
         </div>
       </div>
 
       <div class="results-panel">
-        <div class="tabs">
-          <button class="tab-btn active" data-slide="0">Tagesergebnisse</button>
-          <button class="tab-btn" data-slide="1">Einzelwertung</button>
-          <button class="tab-btn" data-slide="2">Teamwertung</button>
-        </div>
+        <div class="toolbar">
+          <div class="tabs" id="tabs"></div>
 
-        <div class="slider-shell">
-          <div class="slider" id="slider">
-            <section class="image-slide">
-              <div class="slide-meta">
-                <h2 class="slide-title">Tagesergebnisse</h2>
-                <span class="slide-badge">Ansicht 1 / 3</span>
-              </div>
-
-              <div class="image-frame">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/tagesergebnisse.jpg" alt="Tagesergebnisse">
-              </div>
-            </section>
-
-            <section class="image-slide">
-              <div class="slide-meta">
-                <h2 class="slide-title">Einzelwertung</h2>
-                <span class="slide-badge">Ansicht 2 / 3</span>
-              </div>
-
-              <div class="image-frame">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Einzelwertung.jpg" alt="Einzelwertung">
-              </div>
-            </section>
-
-            <section class="image-slide">
-              <div class="slide-meta">
-                <h2 class="slide-title">Teamwertung</h2>
-                <span class="slide-badge">Ansicht 3 / 3</span>
-              </div>
-
-              <div class="image-frame">
-                <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Team1.jpg" alt="Teamwertung">
-              </div>
-            </section>
+          <div class="table-tools">
+            <button class="tool-btn" id="zoomOutBtn"><i class="fa-solid fa-magnifying-glass-minus"></i> Kleiner</button>
+            <button class="tool-btn" id="zoomResetBtn"><i class="fa-solid fa-expand"></i> Standard</button>
+            <button class="tool-btn" id="zoomInBtn"><i class="fa-solid fa-magnifying-glass-plus"></i> Größer</button>
+            <button class="tool-btn" id="clearHighlightBtn"><i class="fa-solid fa-eraser"></i> Markierung löschen</button>
+            <span class="hint-pill">Zeile anklicken zum Hervorheben</span>
           </div>
         </div>
 
-        <div class="slider-controls">
-          <div class="arrow-group">
-            <button class="nav-btn" id="prevBtn" aria-label="Vorherige Ansicht">
-              <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            <button class="nav-btn" id="nextBtn" aria-label="Nächste Ansicht">
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
+        <div id="tableViews"></div>
 
-          <div class="dots" id="dots">
-            <button class="dot-btn active" data-slide="0" aria-label="Zu Ansicht 1"></button>
-            <button class="dot-btn" data-slide="1" aria-label="Zu Ansicht 2"></button>
-            <button class="dot-btn" data-slide="2" aria-label="Zu Ansicht 3"></button>
-          </div>
-        </div>
-
-        <div class="back-row">
-          <button class="back-home-btn" onclick="location.href='index.html'">
+        <div class="actions">
+          <button class="action-btn" onclick="location.href='index.html'">
             <i class="fa-solid fa-house"></i>
             <span>Zurück zur Startseite</span>
+          </button>
+
+          <button class="action-btn secondary-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+            <i class="fa-solid fa-arrow-up"></i>
+            <span>Nach oben</span>
           </button>
         </div>
       </div>
@@ -710,88 +708,229 @@
   </main>
 
   <script>
-    let currentSlide = 0;
+    /*
+      ============================================================
+      NUR DIESEN BLOCK FÜR NEUE SPIELTAGE ÄNDERN
+      ============================================================
+      Rohdaten bitte direkt aus Excel kopieren und zwischen die
+      Backticks einfügen. Excel-Tabellen werden dabei als
+      Tab-getrennter Text übernommen.
+    */
 
-    const slider = document.getElementById("slider");
-    const slides = document.querySelectorAll(".image-slide");
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const dotButtons = document.querySelectorAll(".dot-btn");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const sliderShell = document.querySelector(".slider-shell");
+    const PAGE_DATA = {
+      title: "Spieltag 8",
+      date: "26.02.2025",
+      tables: [
+        {
+          key: "tagesergebnisse",
+          label: "Tagesergebnisse",
+          raw: `Platz\tSpieler\tPins\tPunkte
+1\tMax Mustermann\t634\t10
+2\tErika Beispiel\t612\t8
+3\tTom Muster\t598\t6
+4\tLena Test\t577\t4`
+        },
+        {
+          key: "einzelwertung",
+          label: "Einzelwertung",
+          raw: `Platz\tName\tSpiele\tPins\tSchnitt
+1\tMax Mustermann\t8\t4820\t602,5
+2\tErika Beispiel\t8\t4711\t588,9
+3\tTom Muster\t8\t4592\t574,0
+4\tLena Test\t8\t4460\t557,5`
+        },
+        {
+          key: "teamwertung",
+          label: "Teamwertung",
+          raw: `Platz\tTeam\tSpieltage\tPins\tPunkte
+1\tStrike Force\t8\t9211\t64
+2\tPin Crushers\t8\t9033\t58
+3\tLane Legends\t8\t8876\t52
+4\tBowling Crew\t8\t8655\t46`
+        }
+      ]
+    };
 
-    function updateUI() {
-      slider.style.transform = `translateX(${-currentSlide * 100}%)`;
+    /*
+      ============================================================
+      AB HIER NICHTS MEHR FÜR NORMALE DATENPFLEGE ÄNDERN
+      ============================================================
+    */
 
-      tabButtons.forEach((btn, index) => {
-        btn.classList.toggle("active", index === currentSlide);
-      });
+    const pageTitle = document.getElementById("pageTitle");
+    const pageDate = document.getElementById("pageDate");
+    const tabsContainer = document.getElementById("tabs");
+    const viewsContainer = document.getElementById("tableViews");
+    const zoomOutBtn = document.getElementById("zoomOutBtn");
+    const zoomResetBtn = document.getElementById("zoomResetBtn");
+    const zoomInBtn = document.getElementById("zoomInBtn");
+    const clearHighlightBtn = document.getElementById("clearHighlightBtn");
 
-      dotButtons.forEach((btn, index) => {
-        btn.classList.toggle("active", index === currentSlide);
-      });
-    }
+    let currentTableIndex = 0;
+    let tableFontSize = 15;
 
-    function showSlide(index) {
-      if (index >= slides.length) currentSlide = 0;
-      else if (index < 0) currentSlide = slides.length - 1;
-      else currentSlide = index;
+    function parseRawTable(rawText) {
+      const lines = rawText
+        .replace(/\r/g, "")
+        .split("\n")
+        .map(line => line.trimEnd())
+        .filter(line => line.trim() !== "");
 
-      updateUI();
-    }
-
-    function nextSlide() {
-      showSlide(currentSlide + 1);
-    }
-
-    function prevSlide() {
-      showSlide(currentSlide - 1);
-    }
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        showSlide(Number(btn.dataset.slide));
-      });
-    });
-
-    dotButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        showSlide(Number(btn.dataset.slide));
-      });
-    });
-
-    prevBtn.addEventListener("click", prevSlide);
-    nextBtn.addEventListener("click", nextSlide);
-
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
-
-    sliderShell.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    sliderShell.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-
-      const deltaX = touchEndX - touchStartX;
-      const deltaY = touchEndY - touchStartY;
-
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX < -30) nextSlide();
-        if (deltaX > 30) prevSlide();
+      if (!lines.length) {
+        return { headers: [], rows: [] };
       }
-    }, { passive: true });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") prevSlide();
-      if (e.key === "ArrowRight") nextSlide();
+      const headers = lines[0].split("\t").map(cell => cell.trim());
+      const rows = lines.slice(1).map(line => {
+        const cells = line.split("\t").map(cell => cell.trim());
+
+        while (cells.length < headers.length) {
+          cells.push("");
+        }
+
+        return cells.slice(0, headers.length);
+      });
+
+      return { headers, rows };
+    }
+
+    function createTableElement(parsedTable) {
+      if (!parsedTable.headers.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.textContent = "Keine Daten vorhanden.";
+        return empty;
+      }
+
+      const table = document.createElement("table");
+
+      const thead = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+
+      parsedTable.headers.forEach(header => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+
+      parsedTable.rows.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.className = "data-row";
+
+        row.forEach(cell => {
+          const td = document.createElement("td");
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+
+        tr.addEventListener("click", () => {
+          const isSelected = tr.classList.contains("is-selected");
+          tbody.querySelectorAll(".data-row").forEach(r => r.classList.remove("is-selected"));
+          if (!isSelected) tr.classList.add("is-selected");
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      return table;
+    }
+
+    function renderTabsAndTables() {
+      pageTitle.innerHTML = `${PAGE_DATA.title}. <span class="headline-accent">Ergebnisse im Überblick.</span>`;
+      pageDate.textContent = PAGE_DATA.date;
+
+      tabsContainer.innerHTML = "";
+      viewsContainer.innerHTML = "";
+
+      PAGE_DATA.tables.forEach((tableConfig, index) => {
+        const parsedTable = parseRawTable(tableConfig.raw);
+
+        const tabBtn = document.createElement("button");
+        tabBtn.className = `tab-btn ${index === 0 ? "active" : ""}`;
+        tabBtn.textContent = tableConfig.label;
+        tabBtn.addEventListener("click", () => showTable(index));
+        tabsContainer.appendChild(tabBtn);
+
+        const view = document.createElement("section");
+        view.className = `table-view ${index === 0 ? "active" : ""}`;
+
+        const shell = document.createElement("div");
+        shell.className = "table-shell";
+
+        const head = document.createElement("div");
+        head.className = "table-head";
+
+        const titleWrap = document.createElement("div");
+
+        const title = document.createElement("h2");
+        title.className = "table-title";
+        title.textContent = tableConfig.label;
+
+        const subtitle = document.createElement("div");
+        subtitle.className = "table-subtitle";
+        subtitle.textContent = `${parsedTable.rows.length} Zeilen · ${parsedTable.headers.length} Spalten`;
+
+        titleWrap.appendChild(title);
+        titleWrap.appendChild(subtitle);
+
+        head.appendChild(titleWrap);
+
+        const scroll = document.createElement("div");
+        scroll.className = "table-scroll";
+        scroll.appendChild(createTableElement(parsedTable));
+
+        shell.appendChild(head);
+        shell.appendChild(scroll);
+        view.appendChild(shell);
+        viewsContainer.appendChild(view);
+      });
+
+      applyTableZoom();
+    }
+
+    function showTable(index) {
+      currentTableIndex = index;
+
+      document.querySelectorAll(".tab-btn").forEach((btn, i) => {
+        btn.classList.toggle("active", i === index);
+      });
+
+      document.querySelectorAll(".table-view").forEach((view, i) => {
+        view.classList.toggle("active", i === index);
+      });
+    }
+
+    function applyTableZoom() {
+      document.documentElement.style.setProperty("--table-font-size", `${tableFontSize}px`);
+    }
+
+    zoomOutBtn.addEventListener("click", () => {
+      tableFontSize = Math.max(12, tableFontSize - 1);
+      applyTableZoom();
     });
 
-    updateUI();
+    zoomResetBtn.addEventListener("click", () => {
+      tableFontSize = 15;
+      applyTableZoom();
+    });
+
+    zoomInBtn.addEventListener("click", () => {
+      tableFontSize = Math.min(22, tableFontSize + 1);
+      applyTableZoom();
+    });
+
+    clearHighlightBtn.addEventListener("click", () => {
+      document.querySelectorAll(".data-row").forEach(row => row.classList.remove("is-selected"));
+    });
+
+    renderTabsAndTables();
+    showTable(0);
   </script>
 </body>
 </html>
