@@ -1,239 +1,727 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strikeclub-Velten</title>
-    <style>
-        /* Allgemeine Stile */
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding-top: 50px;
-            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #f0f0f0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .dropdown-container {
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .dropdown-container select {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #f0f0f0;
-            padding: 15px 32px;
-            font-size: 16px;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            width: 200px;
-            text-align-last: center;
-            text-align: center;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .dropdown-container::after {
-            content: "▼";
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: #f0f0f0;
-            font-size: 12px;
-        }
-        .dropdown-container select:hover {
-            background-color: rgba(0, 0, 0, 0.6);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-        .dropdown-container select:focus {
-            outline: none;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 20px;
-        }
-        .button-container button {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #f0f0f0;
-            padding: 15px 32px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            width: 200px;
-            margin: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-        .button-container button:hover {
-            background-color: rgba(0, 0, 0, 0.6);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-        .button-container button i {
-            margin-right: 8px;
-        }
-        /* Icon-Farben anpassen */
-        .button-container button i.fa-users {
-            color: #007bff;
-        }
-        .button-container button i.fa-trophy {
-            color: #ffcc00;
-        }
-        .button-container button i.fa-calendar-alt {
-            color: #ff4444;
-        }
-        .button-container button i.fa-newspaper {
-            color: #ff4444;
-        }
-        .button-container button i.fa-calendar-check {
-            color: #ffffff;
-        }
-        .button-container button i.fa-edit {
-            color: #28a745; /* Grün für Bearbeiten/Ergebnisse eintragen */
-        }
-        .button-container button .tooltip {
-            visibility: hidden;
-            width: 120px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            text-align: center;
-            border-radius: 5px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .button-container button .tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-        }
-        .button-container button:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-        @media (max-width: 600px) {
-            .button-container button {
-                width: 90%;
-                padding: 12px 0;
-                font-size: 14px;
-            }
-            .dropdown-container select {
-                width: 90%;
-                font-size: 14px;
-                padding: 12px 0;
-                text-align-last: center;
-                text-align: center;
-            }
-            .dropdown-container::after {
-                display: none;
-            }
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a;
-                color: #f0f0f0;
-            }
-            .dropdown-container select, .button-container button {
-                background-color: rgba(0, 0, 0, 0.5);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            .dropdown-container select:hover, .button-container button:hover {
-                background-color: rgba(0, 0, 0, 0.6);
-                border-color: rgba(255, 255, 255, 0.4);
-            }
-        }
-    </style>
-    <!-- Font Awesome für Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta property="og:title" content="Spielergebnisse">
-    <meta property="og:description" content="Die Auswertung ist online :)">
-    <meta property="og:url" content="https://www.strikeclub-velten.de/aktuelle_ergebnisse.html">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Linkvorschau.png">
-    <meta property="og:type" content="website">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strikeclub-Velten</title>
+
+  <meta property="og:title" content="Spielergebnisse" />
+  <meta property="og:description" content="Die Auswertung ist online :)" />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/aktuelle_ergebnisse.html" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Linkvorschau.png" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f8fbff;
+      --bg-soft: #ffffff;
+      --surface: rgba(255, 255, 255, 0.72);
+      --surface-strong: rgba(255, 255, 255, 0.92);
+      --border: rgba(122, 146, 182, 0.16);
+      --border-strong: rgba(122, 146, 182, 0.24);
+      --text: #0f172a;
+      --text-soft: #50607b;
+      --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
+      --shadow-lg: 0 20px 50px rgba(35, 58, 100, 0.10);
+      --shadow-md: 0 12px 28px rgba(35, 58, 100, 0.08);
+      --accent: #5b7cff;
+      --accent-2: #8a5cff;
+      --accent-3: #ff5c9f;
+      --accent-4: #33c6ff;
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.10), transparent 30%),
+        radial-gradient(circle at 90% 8%, rgba(255, 92, 159, 0.10), transparent 26%),
+        radial-gradient(circle at 85% 82%, rgba(51, 198, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f5f9ff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.45;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .glow.one {
+      width: 320px;
+      height: 320px;
+      left: -60px;
+      top: 40px;
+      background: rgba(91, 124, 255, 0.16);
+    }
+
+    .glow.two {
+      width: 280px;
+      height: 280px;
+      right: -40px;
+      top: 120px;
+      background: rgba(255, 92, 159, 0.12);
+      animation-delay: -6s;
+    }
+
+    .glow.three {
+      width: 360px;
+      height: 360px;
+      right: 18%;
+      bottom: -80px;
+      background: rgba(51, 198, 255, 0.14);
+      animation-delay: -11s;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.55;
+      filter: blur(0.2px);
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .ball {
+      width: var(--size, 120px);
+      height: var(--size, 120px);
+      left: var(--x, 10%);
+      top: var(--y, 10%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 28%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
+        radial-gradient(circle at 60% 48%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
+        linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff));
+      box-shadow:
+        inset -18px -18px 30px rgba(255, 255, 255, 0.28),
+        inset 18px 18px 28px rgba(255, 255, 255, 0.20),
+        0 16px 32px rgba(65, 85, 130, 0.14);
+      animation-name: floatBall;
+      animation-duration: var(--dur, 18s);
+      animation-delay: var(--delay, 0s);
+    }
+
+    .ball::after {
+      content: "";
+      position: absolute;
+      inset: 8% 10% auto auto;
+      width: 34%;
+      height: 34%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.08) 70%, transparent 72%);
+      transform: rotate(12deg);
+      opacity: 0.8;
+    }
+
+    .pin {
+      width: var(--w, 56px);
+      height: var(--h, 164px);
+      left: var(--x, 15%);
+      top: var(--y, 20%);
+      border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(150, 170, 205, 0.18),
+        0 16px 32px rgba(65, 85, 130, 0.10);
+      animation-name: swayPin;
+      animation-duration: var(--dur, 16s);
+      animation-delay: var(--delay, 0s);
+      transform-origin: center 82%;
+    }
+
+    .pin::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 8px;
+      right: 8px;
+      height: 18px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          rgba(255, 92, 159, 0.92) 0%,
+          rgba(255, 92, 159, 0.92) 42%,
+          transparent 42%,
+          transparent 58%,
+          rgba(255, 104, 142, 0.88) 58%,
+          rgba(255, 104, 142, 0.88) 100%);
+      opacity: 0.9;
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 56%;
+      height: 20px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(240,246,255,0.82));
+      box-shadow: inset 0 0 0 1px rgba(150, 170, 205, 0.14);
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(122, 146, 182, 0.16);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(91, 124, 255, 0.28);
+    }
+
+    .status-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(122, 146, 182, 0.16);
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+    }
+
+    .hero {
+      position: relative;
+      padding: 34px;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(91, 124, 255, 0.10), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.08), transparent 22%),
+        radial-gradient(circle at 70% 100%, rgba(51, 198, 255, 0.10), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(122, 146, 182, 0.14);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #36507a;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3bc7ff, #7a5cff);
+      box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+      max-width: 10ch;
+    }
+
+    .headline-accent {
+      background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      max-width: 60ch;
+      font-size: 1.06rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+
+    .hero-panel {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .archive-card,
+    .info-card {
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(18px);
+    }
+
+    .card-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #66789a;
+      margin-bottom: 10px;
+    }
+
+    .archive-select-wrap {
+      position: relative;
+    }
+
+    .archive-select {
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      padding: 16px 52px 16px 16px;
+      font: inherit;
+      font-weight: 600;
+      background: #fff;
+      color: var(--text);
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .archive-select:hover,
+    .archive-select:focus {
+      border-color: rgba(91, 124, 255, 0.35);
+      box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .archive-select-wrap::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6e7f9d;
+      pointer-events: none;
+    }
+
+    .info-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-title {
+      margin: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+
+    .mini-text {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.65;
+    }
+
+    .nav-section {
+      margin-top: 24px;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .nav-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      min-height: 172px;
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .nav-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% -46% auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(91,124,255,0.18) 0%, rgba(91,124,255,0.02) 72%, transparent 74%);
+      z-index: -1;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(35, 58, 100, 0.12);
+      border-color: rgba(91, 124, 255, 0.24);
+      background: rgba(255,255,255,0.96);
+    }
+
+    .nav-icon {
+      width: 54px;
+      height: 54px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 18px;
+      font-size: 1.2rem;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(91, 124, 255, 0.22);
+    }
+
+    .nav-icon.blue { background: linear-gradient(135deg, #5b7cff, #33c6ff); }
+    .nav-icon.gold { background: linear-gradient(135deg, #ffb84d, #ff7f50); }
+    .nav-icon.pink { background: linear-gradient(135deg, #ff5c9f, #ff7b72); }
+    .nav-icon.purple { background: linear-gradient(135deg, #8a5cff, #5b7cff); }
+    .nav-icon.green { background: linear-gradient(135deg, #37c997, #31b6ff); }
+
+    .nav-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-align: left;
+    }
+
+    .nav-text {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.6;
+      text-align: left;
+      font-size: 0.96rem;
+    }
+
+    .nav-arrow {
+      margin-top: auto;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #5570ff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: #6c7b96;
+      font-size: 0.92rem;
+      padding: 0 8px;
+    }
+
+    @keyframes floatBall {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); }
+      50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); }
+      75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); }
+    }
+
+    @keyframes swayPin {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      25% { transform: translate3d(14px, -22px, 0) rotate(3deg); }
+      50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); }
+      75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
+    }
+
+    @media (max-width: 1100px) {
+      .nav-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 14ch;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-top: 16px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 10vw, 3.4rem);
+        max-width: 100%;
+      }
+
+      .hero-copy p {
+        font-size: 0.98rem;
+      }
+
+      .nav-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-card {
+        min-height: auto;
+      }
+
+      .shape {
+        opacity: 0.32;
+      }
+
+      .ball {
+        width: calc(var(--size, 120px) * 0.72);
+        height: calc(var(--size, 120px) * 0.72);
+      }
+
+      .pin {
+        width: calc(var(--w, 56px) * 0.72);
+        height: calc(var(--h, 164px) * 0.72);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .shape,
+      .glow {
+        animation: none !important;
+      }
+
+      .nav-card,
+      .archive-select {
+        transition: none !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Strikeclub-Velten Übersicht</h1>
+  <div class="scene" aria-hidden="true">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
 
-    <!-- Dropdown-Menü für Spielergebnisse -->
-    <div class="dropdown-container">
-        <select onchange="location = this.value;">
-            <option value="#" selected disabled>Ergebnis-Archiv</option>
-            <option value="ergebnisse2023.html">Archiv 2023</option>
-            <option value="ergebnisse2024.html">Archiv 2024</option>
-            <option value="ergebnisse2025.html">Archiv 2025</option>
-        </select>
+    <div class="shape ball" style="--size: 170px; --x: 6%; --y: 18%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="shape ball" style="--size: 120px; --x: 82%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="shape ball" style="--size: 140px; --x: 76%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+    <div class="shape ball" style="--size: 96px; --x: 14%; --y: 76%; --c1:#9d7bff; --c2:#ff68a0; --dur:17s; --delay:-11s;"></div>
+
+    <div class="shape pin" style="--x: 22%; --y: 12%; --dur:18s; --delay:-4s;"></div>
+    <div class="shape pin" style="--x: 90%; --y: 36%; --dur:15s; --delay:-8s; --w:52px; --h:154px;"></div>
+    <div class="shape pin" style="--x: 5%; --y: 60%; --dur:20s; --delay:-10s; --w:50px; --h:146px;"></div>
+    <div class="shape pin" style="--x: 63%; --y: 6%; --dur:17s; --delay:-6s; --w:58px; --h:170px;"></div>
+  </div>
+
+  <main class="site">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span>Strikeclub Velten</span>
+      </div>
+      <div class="status-pill">Liga · Ergebnisse · Termine · Archiv</div>
     </div>
 
-    <!-- Neue Schaltflächen mit Icons und Tooltips -->
-    <div class="button-container">
-        <button onclick="location.href='Über-uns.html'">
-            <i class="fas fa-users"></i> Über uns
-            <span class="tooltip">Wer sind wir?</span>
-        </button>
-        <button onclick="location.href='aktuelle_ergebnisse.html'">
-            <i class="fas fa-trophy"></i> Aktuelle Ergebnisse
-            <span class="tooltip">Aktuelle Spielergebnisse anzeigen</span>
-        </button>
-        <button onclick="location.href='termine-news.html'">
-            <i class="fas fa-calendar-alt"></i> Termine & <i class="fas fa-newspaper"></i> News
-            <span class="tooltip">Termine und Neuigkeiten anzeigen</span>
-        </button>
-        <button onclick="location.href='spielplan.html'">
-            <i class="fas fa-calendar-check"></i> Spielplan
-            <span class="tooltip">Spielplan anzeigen</span>
-        </button>
-        <button onclick="location.href='Tabelle.html'">
-            <i class="fas fa-edit"></i> Ergebnisse eintragen
-            <span class="tooltip">Ergebnisse für die Liga eintragen</span>
-        </button>
-    </div>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>Übersicht & Einstieg</span>
+          </div>
+
+          <h1>
+            Bowling. <span class="headline-accent">Klar, modern, direkt.</span>
+          </h1>
+
+          <p>
+            Alles Wichtige an einem Ort: aktuelle Ergebnisse, Termine, Spielplan,
+            Archiv und Eintragungen. Heller, ruhiger und deutlich moderner als das alte Layout.
+          </p>
+        </div>
+
+        <div class="hero-panel">
+          <div class="archive-card">
+            <label class="card-label" for="archiv">Ergebnis-Archiv</label>
+            <div class="archive-select-wrap">
+              <select id="archiv" class="archive-select" onchange="if(this.value) window.location.href=this.value;">
+                <option value="" selected disabled>Archiv auswählen</option>
+                <option value="ergebnisse2023.html">Archiv 2023</option>
+                <option value="ergebnisse2024.html">Archiv 2024</option>
+                <option value="ergebnisse2025.html">Archiv 2025</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <span class="card-label">Hinweis</span>
+            <h2 class="mini-title">Neue Startseite mit mehr Fokus</h2>
+            <p class="mini-text">
+              Die Navigation ist jetzt klarer strukturiert, die Hintergründe sind lebendig,
+              aber absichtlich dezent gehalten.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <section class="nav-section">
+        <div class="nav-grid">
+          <a class="nav-card" href="Über-uns.html">
+            <span class="nav-icon blue"><i class="fas fa-users"></i></span>
+            <h3 class="nav-title">Über uns</h3>
+            <p class="nav-text">Wer wir sind, wofür wir stehen und was den Strikeclub Velten ausmacht.</p>
+            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          </a>
+
+          <a class="nav-card" href="aktuelle_ergebnisse.html">
+            <span class="nav-icon gold"><i class="fas fa-trophy"></i></span>
+            <h3 class="nav-title">Aktuelle Ergebnisse</h3>
+            <p class="nav-text">Schneller Zugriff auf die neuesten Resultate und den aktuellen Stand.</p>
+            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          </a>
+
+          <a class="nav-card" href="termine-news.html">
+            <span class="nav-icon pink"><i class="fas fa-calendar-alt"></i></span>
+            <h3 class="nav-title">Termine & News</h3>
+            <p class="nav-text">Anstehende Termine, wichtige Infos und aktuelle Neuigkeiten gesammelt.</p>
+            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          </a>
+
+          <a class="nav-card" href="spielplan.html">
+            <span class="nav-icon purple"><i class="fas fa-calendar-check"></i></span>
+            <h3 class="nav-title">Spielplan</h3>
+            <p class="nav-text">Alle Spieltage und Begegnungen übersichtlich und ohne Umwege erreichbar.</p>
+            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          </a>
+
+          <a class="nav-card" href="Tabelle.html">
+            <span class="nav-icon green"><i class="fas fa-pen-to-square"></i></span>
+            <h3 class="nav-title">Ergebnisse eintragen</h3>
+            <p class="nav-text">Zum Eintragen und Pflegen der Resultate für die Liga in der Tabelle.</p>
+            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      Strikeclub Velten – modernisierte Startseite mit animierten Bowling-Elementen im Hintergrund.
+    </p>
+  </main>
 </body>
 </html>
