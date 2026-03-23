@@ -605,32 +605,32 @@
       border-radius: 50%;
       background: rgba(43, 59, 94, 0.16);
       filter: blur(10px);
+      z-index: 20;
       pointer-events: none;
     }
 
     .ball {
-      position: absolute;
-      left: 50%;
-      bottom: 44px;
-      width: 90px;
-      height: 90px;
-      margin-left: -45px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 38% 35%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
-        radial-gradient(circle at 55% 28%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
-        radial-gradient(circle at 60% 48%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
-        linear-gradient(145deg, #5b7cff, #9a5cff 55%, #ff6aa8 100%);
-      box-shadow:
-        inset -14px -14px 24px rgba(255,255,255,0.24),
-        inset 12px 12px 22px rgba(255,255,255,0.14),
-        0 16px 26px rgba(65,85,130,0.18);
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      z-index: 3;
-    }
-
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  width: 90px;
+  height: 90px;
+  margin-left: -45px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 35%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+    radial-gradient(circle at 55% 28%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+    radial-gradient(circle at 60% 48%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+    linear-gradient(145deg, #5b7cff, #9a5cff 55%, #ff6aa8 100%);
+  box-shadow:
+    inset -14px -14px 24px rgba(255,255,255,0.24),
+    inset 12px 12px 22px rgba(255,255,255,0.14),
+    0 16px 26px rgba(65,85,130,0.18);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  z-index: 30;
+}
     .ball::after {
       content: "";
       position: absolute;
@@ -716,66 +716,66 @@
       border: 1px solid rgba(122,146,182,0.14);
     }
 
-    .-wrap {
-      padding: 12px;
-    }
+    .leaderboard-wrap {
+  padding: 12px;
+}
 
-    .-list {
-      display: grid;
-      gap: 8px;
-    }
+.leaderboard-list {
+  display: grid;
+  gap: 8px;
+}
 
-    .-row {
-      display: grid;
-      grid-template-columns: 52px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
-      border: 1px solid rgba(122,146,182,0.10);
-      box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04);
-    }
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+  border: 1px solid rgba(122,146,182,0.10);
+  box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04);
+}
 
-    .-rank {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(91,124,255,0.16), rgba(255,92,159,0.14));
-      color: #415996;
-      font-weight: 900;
-      font-size: 0.92rem;
-    }
+.leaderboard-rank {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(91,124,255,0.16), rgba(255,92,159,0.14));
+  color: #415996;
+  font-weight: 900;
+  font-size: 0.92rem;
+}
 
-    .-name {
-      font-weight: 800;
-      color: #1d355c;
-      overflow-wrap: anywhere;
-    }
+.leaderboard-name {
+  font-weight: 800;
+  color: #1d355c;
+  overflow-wrap: anywhere;
+}
 
-    .-score {
-      font-weight: 900;
-      font-size: 1rem;
-      color: #16203d;
-    }
+.leaderboard-score {
+  font-weight: 900;
+  font-size: 1rem;
+  color: #16203d;
+}
 
-    .-empty {
-      padding: 16px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
-      border: 1px solid rgba(122,146,182,0.10);
-      color: #667997;
-      font-weight: 700;
-    }
+.leaderboard-empty {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+  border: 1px solid rgba(122,146,182,0.10);
+  color: #667997;
+  font-weight: 700;
+}
 
-    .-note {
-      margin-top: 10px;
-      color: #7384a0;
-      font-size: 0.84rem;
-      line-height: 1.45;
-    }
+.leaderboard-note {
+  margin-top: 10px;
+  color: #7384a0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
 
     .modal-overlay {
       position: fixed;
@@ -828,30 +828,29 @@
       font-size: 0.96rem;
     }
 
-    .-form {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
+    .leaderboard-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
 
-    .-input {
-      width: 100%;
-      border: 1px solid rgba(122,146,182,0.16);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font: inherit;
-      font-weight: 700;
-      color: #16203d;
-      background: rgba(255,255,255,0.92);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.76);
-      outline: none;
-    }
+.leaderboard-input {
+  width: 100%;
+  border: 1px solid rgba(122,146,182,0.16);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font: inherit;
+  font-weight: 700;
+  color: #16203d;
+  background: rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.76);
+  outline: none;
+}
 
-    .-input:focus {
-      border-color: rgba(91, 124, 255, 0.35);
-      box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
-    }
-
+.leaderboard-input:focus {
+  border-color: rgba(91, 124, 255, 0.35);
+  box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
+}
     .modal-actions {
       display: flex;
       flex-wrap: wrap;
@@ -997,9 +996,9 @@
         font-size: 0.78rem;
       }
 
-      .-row {
-        grid-template-columns: 44px 1fr auto;
-      }
+      .leaderboard-row {
+  grid-template-columns: 44px 1fr auto;
+}
 
       .lane-footer,
       .modal-actions {
@@ -1056,11 +1055,11 @@
             <span>Mini-Spiel</span>
           </div>
 
-          <h1>Echte Frames. <span class="headline-accent">Gemeinsames .</span></h1>
+          <h1>Echte Frames. <span class="headline-accent">Gemeinsames Leaderboard.</span></h1>
 
           <p class="intro">
-            Die Punktetafel sitzt jetzt direkt oben über der Bahn. Das  wird gemeinsam über Firebase gespeichert und live aktualisiert.
-          </p>
+  Die Punktetafel sitzt jetzt direkt oben über der Bahn. Das Leaderboard wird gemeinsam über Firebase gespeichert und live aktualisiert.
+</p>
         </div>
 
         <div class="info-pill">
@@ -1128,23 +1127,21 @@
         </section>
 
         <section class="card">
-          <div class="card-head">
-            <div class="card-title-wrap">
-              <h2 class="card-title"></h2>
-              <div class="card-subtitle">Top 10 aller Spieler</div>
-            </div>
-            <div class="badge" id="Badge">live</div>
-          </div>
+  <div class="card-head">
+    <div class="card-title-wrap">
+      <h2 class="card-title">Leaderboard</h2>
+      <div class="card-subtitle">Top 10 aller Spieler</div>
+    </div>
+    <div class="badge" id="leaderboardBadge">live</div>
+  </div>
 
-          <div class="-wrap">
-            <div class="-list" id="List"></div>
-            <div class="leaderboard-note" id="leaderboardNote">
-              Gemeinsames Leaderboard über Firebase. Wenn hier nichts gespeichert wird, blockieren sehr wahrscheinlich deine Realtime-Database-Rules die Zugriffe.
-            </div>
-          </div>
-        </section>
-      </div>
-    </section>
+  <div class="leaderboard-wrap">
+    <div class="leaderboard-list" id="leaderboardList"></div>
+    <div class="leaderboard-note" id="leaderboardNote">
+      Gemeinsames Leaderboard über Firebase. Wenn hier nichts gespeichert wird, blockieren sehr wahrscheinlich deine Realtime-Database-Rules die Zugriffe.
+    </div>
+  </div>
+</section>
 
     <p class="footer-note">Strikeclub Velten</p>
   </main>
@@ -1204,8 +1201,7 @@
 
     const database = firebase.database();
     const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
-async function testFirebaseWrite() {
-  try {
+
     const testRef = leaderboardRef.push();
     await testRef.set({
       name: "TEST",
@@ -1900,46 +1896,59 @@ el.style.zIndex = String(10 + pin.row);
     }
 
     function animateThrow() {
-      const targetX = aimNorm;
-      const laneLeft = stageWidth * 0.20;
-      const laneRight = stageWidth * 0.80;
-      const startX = laneLeft + (laneRight - laneLeft) * ((aimNorm - 0.20) / 0.60);
-      const endX = stageWidth * targetX;
-      const startY = stageHeight - 92;
-      const endY = 118;
-      const start = performance.now();
+  const targetX = aimNorm;
+  const laneLeft = stageWidth * 0.20;
+  const laneRight = stageWidth * 0.80;
+  const startX = laneLeft + (laneRight - laneLeft) * ((aimNorm - 0.20) / 0.60);
+  const endX = stageWidth * targetX;
+  const startY = stageHeight - 92;
+  const endY = 118;
+  const start = performance.now();
 
-      isAnimating = true;
-      updateStatus();
+  isAnimating = true;
+  updateStatus();
 
-      const knockedPins = simulateThrow(targetX);
+  const knockedPins = simulateThrow(targetX);
+  let impactTriggered = false;
 
-      function frame(now) {
-        const t = clamp((now - start) / 1050, 0, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const x = startX + (endX - startX) * eased;
-        const y = startY + (endY - startY) * eased;
-        const scale = 1 - 0.55 * eased;
-        const rotation = 760 * eased;
+  function triggerImpact() {
+    if (impactTriggered) return;
+    impactTriggered = true;
 
-        setBallVisual(x, y, scale, rotation);
+    standingPins = new Set([...standingPins].filter(id => !knockedPins.includes(id)));
+    renderPins(knockedPins);
+  }
 
-        if (t < 1) {
-          requestAnimationFrame(frame);
-          return;
-        }
+  function frame(now) {
+    const t = clamp((now - start) / 950, 0, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const x = startX + (endX - startX) * eased;
+    const y = startY + (endY - startY) * eased;
+    const scale = 1 - 0.55 * eased;
+    const rotation = 760 * eased;
 
-        standingPins = new Set([...standingPins].filter(id => !knockedPins.includes(id)));
-        renderPins(knockedPins);
+    setBallVisual(x, y, scale, rotation);
 
-        setTimeout(() => {
-          isAnimating = false;
-          handlePostThrowState(knockedPins.length);
-        }, 720);
-      }
-
-      requestAnimationFrame(frame);
+    if (!impactTriggered && t >= 0.88) {
+      triggerImpact();
     }
+
+    if (t < 1) {
+      requestAnimationFrame(frame);
+      return;
+    }
+
+    triggerImpact();
+
+    isAnimating = false;
+
+    setTimeout(() => {
+      handlePostThrowState(knockedPins.length);
+    }, 120);
+  }
+
+  requestAnimationFrame(frame);
+}
 
     function startNewGame() {
       frames = createEmptyFrames();
