@@ -1,141 +1,123 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Über uns - Hausliga Velten</title>
-    <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding-top: 50px;
-            background-image: url(https://i.postimg.cc/3RqB8PWX/31b0e779-f07b-4aaf-9f7c-639b9ba73142.webp);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #ffffff;
-        }
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
-        }
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: justify;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-        .content img {
-            float: left;
-            max-width: 40%;
-            height: auto;
-            margin: 0 20px 20px 0;
-            border-radius: 10px;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-        .content img:hover {
-            opacity: 1;
-        }
-        .text-content {
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        .text-content ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 20px 0; /* Abstand oben und unten */
-        }
-        .text-content ul li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center; /* Symbole und Text vertikal zentrieren */
-        }
-        .text-content ul li::before {
-            content: "✅"; /* Symbol für die Liste */
-            margin-right: 10px; /* Abstand zwischen Symbol und Text */
-        }
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both; /* Verhindert, dass Text um das Bild herumfließt */
-        }
-        .back-button {
-            margin-top: 20px;
-            width: 100%;
-            text-align: center;
-            clear: both;
-        }
-        .back-button button {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #f0f0f0;
-            padding: 15px 32px;
-            font-size: 16px;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .content img {
-                max-width: 90%;
-                float: none;
-                margin: 0 auto 20px;
-                display: block;
-            }
-            .text-content {
-                font-size: 1rem;
-            }
-            .back-button button {
-                width: 90%;
-                padding: 12px 0;
-                font-size: 14px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>In Arbeit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Inter", Arial, sans-serif;
+      background: #090d14;
+    }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: #090d14;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+    }
+
+    .video-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8, 12, 20, 0.40), rgba(8, 12, 20, 0.60)),
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.14), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.14), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.16), transparent 30%);
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .text {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: var(--text);
+      text-shadow:
+        0 8px 28px rgba(0,0,0,0.34),
+        0 2px 8px rgba(0,0,0,0.28);
+      animation: pulseText 2.2s ease-in-out infinite;
+    }
+
+    .dots::after {
+      content: "";
+      display: inline-block;
+      width: 1.2em;
+      text-align: left;
+      animation: dots 1.6s steps(4, end) infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.88;
+      }
+      50% {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dots {
+      0%   { content: ""; }
+      25%  { content: "."; }
+      50%  { content: ".."; }
+      75%  { content: "..."; }
+      100% { content: ""; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .text,
+      .dots::after {
+        animation: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Über uns - Hausliga Velten</h1>
+  <div class="video-bg" aria-hidden="true">
+    <video src="Rauch4.mp4" autoplay muted loop playsinline preload="auto"></video>
+  </div>
 
-    <div class="content">
-        <!-- Bild auf der linken Seite -->
-        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Teambild.webp" alt="Teambild">
-
-        <!-- Text um das Bild herum -->
-        <div class="text-content clearfix">
-            🎳 <strong>Willkommen bei unserer Bowling-Gruppe!</strong> 🎳<br><br>
-            Wir sind eine eingespielte, aber lockere Runde von Bowling-Begeisterten, die sich regelmäßig zum Spielen trifft. Uns verbindet die Freude am Bowling, der sportliche Ehrgeiz – aber vor allem der Spaß an geselligen Abenden in guter Gesellschaft.<br><br>
-            🏆 <strong>Was macht uns aus?</strong><br>
-            <ul>
-                <li>Eine freundliche und motivierte Gruppe mit unterschiedlichen Spielniveaus</li>
-                <li>Regelmäßige Treffen in entspannter Atmosphäre</li>
-                <li>Spaß steht an erster Stelle – aber ein paar Strikes und Spares sind natürlich auch gern gesehen 😉</li>
-            </ul>
-            <br>
-            <div class="clearfix"></div> <!-- Clearfix, um den Textfluss zu beenden -->
-            Du liebst Bowling, möchtest regelmäßig spielen und suchst eine lockere Runde mit netten Leuten? Dann bist du bei uns genau richtig! Unsere Hausliga ist eine kleine, entspannte Liga, in der der Spaß im Vordergrund steht. Egal, ob du ein erfahrener Spieler oder ein Gelegenheits-Bowler bist – hier geht es nicht um Perfektion, sondern um gemeinsame Abende voller guter Laune und sportlichem Ehrgeiz. Neue Gesichter sind immer willkommen! Falls du Lust hast, Teil unserer Runde zu werden, melde dich einfach unter <a href="mailto:info@strikeclub-velten.de" style="color: #ffcc00; text-decoration: underline;">info@strikeclub-velten.de</a>. Wir freuen uns auf dich! 🎳😃
-        </div>
+  <main class="content">
+    <div class="text">
+      In Arbeit<span class="dots"></span>
     </div>
-
-    <!-- Schaltfläche zurück zur Startseite -->
-    <div class="back-button">
-        <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-    </div>
+  </main>
 </body>
 </html>
