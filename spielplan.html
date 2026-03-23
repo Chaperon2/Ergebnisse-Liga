@@ -1,91 +1,518 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spielplan - Hausliga Velten</title>
-    <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding-top: 50px;
-            background-image: url(https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Hintergrund2.webp);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #ffffff;
-        }
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
-        }
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start; /* Oberen Bereich zentrieren */
-            min-height: 100vh; /* Vollständige Höhe der Seite */
-        }
-        .content img {
-            max-width: 70%; /* Bildbreite auf 70 % der Containerbreite begrenzen */
-            height: auto; /* Höhe automatisch anpassen */
-            border-radius: 10px;
-            opacity: 0.8; /* Leichte Transparenz */
-            transition: opacity 0.3s ease;
-        }
-        .content img:hover {
-            opacity: 1; /* Volle Deckkraft beim Hover */
-        }
-        .back-button {
-            margin-top: 20px;
-            margin-bottom: 20px; /* Abstand nach unten */
-        }
-        .back-button button {
-            background-color: rgba(0, 0, 0, 0.5); /* Dunklerer Hintergrund */
-            color: #f0f0f0; /* Hellerer Text */
-            padding: 15px 32px;
-            font-size: 16px;
-            font-weight: 600; /* Fettere Schrift */
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .back-button button:hover {
-            background-color: rgba(0, 0, 0, 0.6); /* Dunklerer Hintergrund beim Hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .content img {
-                max-width: 95%; /* Bildbreite auf 95 % der Containerbreite begrenzen */
-            }
-            .back-button button {
-                width: 90%;
-                padding: 12px 0;
-                font-size: 14px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spielplan - Hausliga Velten</title>
+
+  <meta property="og:title" content="Spielplan - Hausliga Velten" />
+  <meta property="og:description" content="Der aktuelle Spielplan der Hausliga Velten." />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/spielplan.html" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Spielplan.jpg" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text: #0f172a;
+      --text-soft: #60728f;
+      --border: rgba(119, 145, 185, 0.14);
+      --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
+      --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
+      --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.10), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.10), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      opacity: 0.42;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .glow.one {
+      width: 320px;
+      height: 320px;
+      left: -70px;
+      top: 40px;
+      background: rgba(91, 124, 255, 0.16);
+    }
+
+    .glow.two {
+      width: 280px;
+      height: 280px;
+      right: -30px;
+      top: 140px;
+      background: rgba(255, 92, 159, 0.12);
+      animation-delay: -6s;
+    }
+
+    .glow.three {
+      width: 360px;
+      height: 360px;
+      right: 16%;
+      bottom: -90px;
+      background: rgba(51, 198, 255, 0.14);
+      animation-delay: -11s;
+    }
+
+    .bg-shape {
+      position: absolute;
+      opacity: 0.24;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .ball-bg {
+      width: var(--size, 120px);
+      height: var(--size, 120px);
+      left: var(--x, 10%);
+      top: var(--y, 10%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 28%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 60% 48%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff));
+      box-shadow:
+        inset -18px -18px 30px rgba(255,255,255,0.24),
+        inset 18px 18px 28px rgba(255,255,255,0.14),
+        0 16px 32px rgba(65, 85, 130, 0.10);
+      animation-name: floatBall;
+      animation-duration: var(--dur, 18s);
+      animation-delay: var(--delay, 0s);
+    }
+
+    .pin-bg {
+      width: var(--w, 56px);
+      height: var(--h, 164px);
+      left: var(--x, 15%);
+      top: var(--y, 20%);
+      border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(150, 170, 205, 0.14),
+        0 16px 32px rgba(65, 85, 130, 0.08);
+      animation-name: swayPin;
+      animation-duration: var(--dur, 16s);
+      animation-delay: var(--delay, 0s);
+      transform-origin: center 82%;
+    }
+
+    .pin-bg::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 8px;
+      right: 8px;
+      height: 18px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          rgba(255, 92, 159, 0.84) 0%,
+          rgba(255, 92, 159, 0.84) 42%,
+          transparent 42%,
+          transparent 58%,
+          rgba(255, 104, 142, 0.74) 58%,
+          rgba(255, 104, 142, 0.74) 100%);
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(122, 146, 182, 0.14);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24);
+    }
+
+    .back-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(122, 146, 182, 0.14);
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      font-weight: 700;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page {
+      position: relative;
+      padding: 30px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(91, 124, 255, 0.08), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.06), transparent 22%),
+        radial-gradient(circle at 70% 100%, rgba(51, 198, 255, 0.08), transparent 28%);
+      pointer-events: none;
+    }
+
+    .header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(122, 146, 182, 0.12);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #36507a;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3bc7ff, #7a5cff);
+      box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+    }
+
+    .headline-accent {
+      background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .intro {
+      max-width: 60ch;
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 1rem;
+      margin: 14px 0 0;
+    }
+
+    .info-pill {
+      padding: 14px 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(122,146,182,0.14);
+      box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
+      min-width: 220px;
+    }
+
+    .info-label {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #6a7b97;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .info-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .plan-panel {
+      position: relative;
+      z-index: 1;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: var(--shadow-lg);
+      padding: 18px;
+    }
+
+    .plan-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,248,255,0.86));
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: 0 18px 34px rgba(35, 58, 100, 0.08);
+    }
+
+    .plan-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 78vh;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .action-btn {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #5b7cff, #ff5c9f);
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(91, 124, 255, 0.20);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.78);
+      color: #5e7395;
+      border: 1px solid rgba(122,146,182,0.14);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: #6c7b96;
+      font-size: 0.92rem;
+      padding: 0 8px;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
+    }
+
+    @keyframes floatBall {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); }
+      50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); }
+      75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); }
+    }
+
+    @keyframes swayPin {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      25% { transform: translate3d(14px, -22px, 0) rotate(3deg); }
+      50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); }
+      75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .page {
+        padding: 22px;
+        border-radius: 26px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .site {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-top: 16px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 9vw, 3rem);
+      }
+
+      .plan-frame img {
+        max-height: 60vh;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .action-btn,
+      .secondary-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow,
+      .bg-shape {
+        animation: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Spielplan - Hausliga Velten</h1>
+  <div class="scene" aria-hidden="true">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
 
-    <div class="content">
-        <!-- Bild in der Mitte -->
-        <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Spielplan.jpg" alt="Spielplan">
-        
-        <!-- Schaltfläche zurück zur Startseite -->
-        <div class="back-button">
-            <button onclick="location.href='index.html'">Zurück zur Startseite</button>
-        </div>
+    <div class="bg-shape ball-bg" style="--size: 150px; --x: 8%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 12%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 132px; --x: 80%; --y: 76%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+
+    <div class="bg-shape pin-bg" style="--x: 18%; --y: 12%; --dur:18s; --delay:-4s;"></div>
+    <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
+  </div>
+
+  <main class="site">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span>Strikeclub Velten</span>
+      </div>
+
+      <a class="back-link" href="index.html">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Zurück zur Übersicht</span>
+      </a>
     </div>
+
+    <section class="page">
+      <div class="header">
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>Spielplan</span>
+          </div>
+
+          <h1>
+            Hausliga Velten. <span class="headline-accent">Alle Spieltage auf einen Blick.</span>
+          </h1>
+
+          <p class="intro">
+            Der aktuelle Spielplan der Hausliga übersichtlich in einer Ansicht.
+          </p>
+        </div>
+
+        <div class="info-pill">
+          <span class="info-label">Bereich</span>
+          <div class="info-value">Spielplan</div>
+        </div>
+      </div>
+
+      <div class="plan-panel">
+        <div class="plan-frame">
+          <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Spielplan.jpg" alt="Spielplan">
+        </div>
+
+        <div class="actions">
+          <button class="action-btn" onclick="location.href='index.html'">
+            <i class="fa-solid fa-house"></i>
+            <span>Zurück zur Startseite</span>
+          </button>
+
+          <button class="action-btn secondary-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+            <i class="fa-solid fa-arrow-up"></i>
+            <span>Nach oben</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Strikeclub Velten</p>
+  </main>
 </body>
 </html>
