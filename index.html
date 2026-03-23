@@ -20,12 +20,12 @@
     :root {
       --bg: #f8fbff;
       --bg-soft: #ffffff;
-      --surface: rgba(255, 255, 255, 0.72);
-      --surface-strong: rgba(255, 255, 255, 0.92);
+      --surface: rgba(255, 255, 255, 0.74);
+      --surface-strong: rgba(255, 255, 255, 0.88);
       --border: rgba(122, 146, 182, 0.16);
       --border-strong: rgba(122, 146, 182, 0.24);
       --text: #0f172a;
-      --text-soft: #50607b;
+      --text-soft: #55657f;
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
       --shadow-lg: 0 20px 50px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 12px 28px rgba(35, 58, 100, 0.08);
@@ -33,9 +33,10 @@
       --accent-2: #8a5cff;
       --accent-3: #ff5c9f;
       --accent-4: #33c6ff;
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
+      --accent-5: #ffb84d;
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
       --max-width: 1180px;
     }
 
@@ -54,9 +55,9 @@
       color: var(--text);
       background:
         radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.10), transparent 30%),
-        radial-gradient(circle at 90% 8%, rgba(255, 92, 159, 0.10), transparent 26%),
-        radial-gradient(circle at 85% 82%, rgba(51, 198, 255, 0.12), transparent 30%),
-        linear-gradient(180deg, #fbfdff 0%, #f5f9ff 100%);
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.10), transparent 24%),
+        radial-gradient(circle at 85% 85%, rgba(51, 198, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
       overflow-x: hidden;
     }
 
@@ -76,7 +77,7 @@
     .glow {
       position: absolute;
       border-radius: 50%;
-      filter: blur(70px);
+      filter: blur(72px);
       opacity: 0.45;
       animation: drift 18s ease-in-out infinite;
     }
@@ -84,7 +85,7 @@
     .glow.one {
       width: 320px;
       height: 320px;
-      left: -60px;
+      left: -70px;
       top: 40px;
       background: rgba(91, 124, 255, 0.16);
     }
@@ -92,8 +93,8 @@
     .glow.two {
       width: 280px;
       height: 280px;
-      right: -40px;
-      top: 120px;
+      right: -30px;
+      top: 140px;
       background: rgba(255, 92, 159, 0.12);
       animation-delay: -6s;
     }
@@ -101,60 +102,57 @@
     .glow.three {
       width: 360px;
       height: 360px;
-      right: 18%;
-      bottom: -80px;
+      right: 16%;
+      bottom: -90px;
       background: rgba(51, 198, 255, 0.14);
       animation-delay: -11s;
     }
 
     .shape {
       position: absolute;
-      opacity: 0.55;
-      filter: blur(0.2px);
+      opacity: 0.52;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
 
-    .ball {
+    .ball-bg {
       width: var(--size, 120px);
       height: var(--size, 120px);
       left: var(--x, 10%);
       top: var(--y, 10%);
       border-radius: 50%;
       background:
-        radial-gradient(circle at 38% 35%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
-        radial-gradient(circle at 55% 28%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
-        radial-gradient(circle at 60% 48%, rgba(16, 24, 40, 0.20) 0 6px, transparent 7px),
+        radial-gradient(circle at 38% 35%, rgba(16,24,40,0.18) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 28%, rgba(16,24,40,0.18) 0 6px, transparent 7px),
+        radial-gradient(circle at 60% 48%, rgba(16,24,40,0.18) 0 6px, transparent 7px),
         linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff));
       box-shadow:
-        inset -18px -18px 30px rgba(255, 255, 255, 0.28),
-        inset 18px 18px 28px rgba(255, 255, 255, 0.20),
+        inset -18px -18px 30px rgba(255,255,255,0.30),
+        inset 18px 18px 28px rgba(255,255,255,0.18),
         0 16px 32px rgba(65, 85, 130, 0.14);
       animation-name: floatBall;
       animation-duration: var(--dur, 18s);
       animation-delay: var(--delay, 0s);
     }
 
-    .ball::after {
+    .ball-bg::after {
       content: "";
       position: absolute;
-      inset: 8% 10% auto auto;
+      inset: 10% 11% auto auto;
       width: 34%;
       height: 34%;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.08) 70%, transparent 72%);
-      transform: rotate(12deg);
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
-    .pin {
+    .pin-bg {
       width: var(--w, 56px);
       height: var(--h, 164px);
       left: var(--x, 15%);
       top: var(--y, 20%);
       border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
-      background:
-        linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
       box-shadow:
         inset 0 0 0 1px rgba(150, 170, 205, 0.18),
         0 16px 32px rgba(65, 85, 130, 0.10);
@@ -164,7 +162,7 @@
       transform-origin: center 82%;
     }
 
-    .pin::before {
+    .pin-bg::before {
       content: "";
       position: absolute;
       top: 16px;
@@ -180,10 +178,9 @@
           transparent 58%,
           rgba(255, 104, 142, 0.88) 58%,
           rgba(255, 104, 142, 0.88) 100%);
-      opacity: 0.9;
     }
 
-    .pin::after {
+    .pin-bg::after {
       content: "";
       position: absolute;
       left: 50%;
@@ -253,8 +250,7 @@
       position: relative;
       padding: 34px;
       border-radius: 34px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
       border: 1px solid var(--border);
       backdrop-filter: blur(24px);
       box-shadow: var(--shadow-xl);
@@ -275,15 +271,15 @@
     .hero-grid {
       position: relative;
       display: grid;
-      grid-template-columns: 1.35fr 0.85fr;
-      gap: 26px;
-      align-items: stretch;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
     }
 
     .hero-copy {
-      text-align: left;
       position: relative;
       z-index: 1;
+      text-align: left;
     }
 
     .eyebrow {
@@ -311,11 +307,11 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-size: clamp(2.6rem, 5vw, 5rem);
       line-height: 0.94;
       letter-spacing: -0.06em;
       font-weight: 800;
-      max-width: 10ch;
+      max-width: 11ch;
     }
 
     .headline-accent {
@@ -327,65 +323,335 @@
 
     .hero-copy p {
       margin: 18px 0 0;
-      max-width: 60ch;
+      max-width: 58ch;
       font-size: 1.06rem;
-      line-height: 1.7;
+      line-height: 1.72;
       color: var(--text-soft);
     }
 
-    .hero-panel {
+    .hero-visual {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .lane-wrap {
+      position: relative;
+      width: min(100%, 420px);
+      height: 320px;
+      display: grid;
+      place-items: center;
+    }
+
+    .lane {
+      position: absolute;
+      inset: 14px 6px 8px 6px;
+      border-radius: 38px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.90), rgba(245,249,255,0.76)),
+        linear-gradient(90deg, rgba(91,124,255,0.06), rgba(255,92,159,0.04));
+      border: 1px solid rgba(122, 146, 182, 0.16);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.7),
+        0 16px 40px rgba(35, 58, 100, 0.08);
+      overflow: hidden;
+    }
+
+    .lane::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border-radius: 28px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(91,124,255,0.05) 0 18px,
+          rgba(255,255,255,0.0) 18px 36px
+        );
+      opacity: 0.5;
+    }
+
+    .lane::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180%;
+      top: -40%;
+      left: -30%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      transform: rotate(12deg);
+      animation: shine 8s linear infinite;
+    }
+
+    .pins-hero {
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 112px;
+    }
+
+    .pin-hero {
+      position: absolute;
+      width: 34px;
+      height: 92px;
+      border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 36%, #edf4ff 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(150,170,205,0.16),
+        0 10px 18px rgba(35, 58, 100, 0.08);
+      animation: heroPinBounce 4.8s ease-in-out infinite;
+      transform-origin: center 86%;
+    }
+
+    .pin-hero::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 5px;
+      right: 5px;
+      height: 13px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          rgba(255,92,159,0.95) 0%,
+          rgba(255,92,159,0.95) 40%,
+          transparent 40%,
+          transparent 58%,
+          rgba(255,104,142,0.9) 58%,
+          rgba(255,104,142,0.9) 100%);
+    }
+
+    .pin-hero.p1 { left: 64px; top: 0; }
+    .pin-hero.p2 { left: 42px; top: 28px; animation-delay: -0.6s; }
+    .pin-hero.p3 { left: 86px; top: 28px; animation-delay: -1.1s; }
+    .pin-hero.p4 { left: 20px; top: 56px; animation-delay: -0.8s; }
+    .pin-hero.p5 { left: 64px; top: 56px; animation-delay: -1.4s; }
+    .pin-hero.p6 { left: 108px; top: 56px; animation-delay: -0.3s; }
+
+    .rolling-ball {
+      position: absolute;
+      bottom: 30px;
+      left: 38px;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+        radial-gradient(circle at 55% 28%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+        radial-gradient(circle at 60% 48%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
+        linear-gradient(145deg, #5b7cff, #9a5cff 55%, #ff6aa8 100%);
+      box-shadow:
+        inset -14px -14px 24px rgba(255,255,255,0.24),
+        inset 12px 12px 22px rgba(255,255,255,0.14),
+        0 16px 26px rgba(65,85,130,0.18);
+      animation: rollAcross 7.6s ease-in-out infinite;
+    }
+
+    .rolling-ball::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.74), rgba(255,255,255,0.10) 72%, transparent 74%);
+    }
+
+    .ball-shadow {
+      position: absolute;
+      bottom: 18px;
+      left: 48px;
+      width: 78px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(43, 59, 94, 0.14);
+      filter: blur(8px);
+      animation: shadowRoll 7.6s ease-in-out infinite;
+    }
+
+    .nav-section {
+      margin-top: 28px;
       position: relative;
       z-index: 1;
+    }
+
+    .nav-grid {
       display: grid;
-      gap: 16px;
-      align-content: start;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
 
-    .archive-card,
-    .info-card {
-      background: var(--surface-strong);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 20px;
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(18px);
-    }
-
-    .card-label {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: #66789a;
-      margin-bottom: 10px;
-    }
-
-    .archive-select-wrap {
+    .lane-link {
       position: relative;
+      min-height: 122px;
+      padding: 22px 26px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.72));
+      border: 1px solid rgba(122, 146, 182, 0.16);
+      box-shadow: 0 18px 34px rgba(35, 58, 100, 0.08);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+      animation: laneFloat var(--floatDur, 7s) ease-in-out infinite;
+      animation-delay: var(--floatDelay, 0s);
+    }
+
+    .lane-link:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 24px 44px rgba(35, 58, 100, 0.12);
+      border-color: rgba(91, 124, 255, 0.25);
+    }
+
+    .lane-link::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg,
+          rgba(91,124,255,0.05),
+          rgba(255,255,255,0.20),
+          rgba(255,92,159,0.05));
+      z-index: -2;
+    }
+
+    .lane-link::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180%;
+      top: -40%;
+      left: -28%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.56), transparent);
+      transform: rotate(12deg);
+      animation: laneSweep 7s linear infinite;
+      animation-delay: var(--sweepDelay, 0s);
+      z-index: -1;
+    }
+
+    .lane-ball {
+      flex: 0 0 74px;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      position: relative;
+      box-shadow:
+        inset -10px -10px 18px rgba(255,255,255,0.24),
+        inset 10px 10px 18px rgba(255,255,255,0.14),
+        0 12px 22px rgba(65,85,130,0.16);
+      animation: iconBallTilt 6s ease-in-out infinite;
+    }
+
+    .lane-ball::before,
+    .lane-ball::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(15,23,42,0.18);
+    }
+
+    .lane-ball::before {
+      width: 7px;
+      height: 7px;
+      left: 25px;
+      top: 22px;
+      box-shadow:
+        14px -4px 0 rgba(15,23,42,0.18),
+        18px 13px 0 rgba(15,23,42,0.18);
+    }
+
+    .lane-ball.blue { background: linear-gradient(145deg, #5b7cff, #33c6ff); }
+    .lane-ball.gold { background: linear-gradient(145deg, #ffb84d, #ff7f50); }
+    .lane-ball.purple { background: linear-gradient(145deg, #8a5cff, #5b7cff); }
+    .lane-ball.pink { background: linear-gradient(145deg, #ff5c9f, #ff7b72); }
+    .lane-ball.green { background: linear-gradient(145deg, #37c997, #31b6ff); }
+
+    .lane-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      min-width: 0;
+    }
+
+    .lane-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .lane-text {
+      margin: 6px 0 0;
+      color: var(--text-soft);
+      line-height: 1.55;
+      font-size: 0.95rem;
+      max-width: 44ch;
+    }
+
+    .lane-arrow {
+      margin-left: auto;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(122, 146, 182, 0.16);
+      color: #5570ff;
+      box-shadow: 0 8px 18px rgba(35, 58, 100, 0.08);
+      flex: 0 0 auto;
+    }
+
+    .archive-inline {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .archive-inline label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #66789a;
     }
 
     .archive-select {
-      width: 100%;
       border: 1px solid var(--border-strong);
-      border-radius: 18px;
-      padding: 16px 52px 16px 16px;
+      border-radius: 999px;
+      padding: 12px 44px 12px 16px;
       font: inherit;
       font-weight: 600;
-      background: #fff;
       color: var(--text);
+      background: #fff;
       appearance: none;
       -webkit-appearance: none;
       outline: none;
+      min-width: 210px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .archive-select:hover,
     .archive-select:focus {
       border-color: rgba(91, 124, 255, 0.35);
       box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
-      transform: translateY(-1px);
+    }
+
+    .archive-select-wrap {
+      position: relative;
+      display: inline-block;
     }
 
     .archive-select-wrap::after {
@@ -393,116 +659,12 @@
       font-family: "Font Awesome 6 Free";
       font-weight: 900;
       position: absolute;
-      right: 18px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: #6e7f9d;
       pointer-events: none;
-    }
-
-    .info-card {
-      display: grid;
-      gap: 10px;
-    }
-
-    .mini-title {
-      margin: 0;
-      font-size: 1.15rem;
-      letter-spacing: -0.03em;
-    }
-
-    .mini-text {
-      margin: 0;
-      color: var(--text-soft);
-      line-height: 1.65;
-    }
-
-    .nav-section {
-      margin-top: 24px;
-    }
-
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .nav-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-      min-height: 172px;
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.84);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .nav-card::before {
-      content: "";
-      position: absolute;
-      inset: auto -10% -46% auto;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(91,124,255,0.18) 0%, rgba(91,124,255,0.02) 72%, transparent 74%);
-      z-index: -1;
-    }
-
-    .nav-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 48px rgba(35, 58, 100, 0.12);
-      border-color: rgba(91, 124, 255, 0.24);
-      background: rgba(255,255,255,0.96);
-    }
-
-    .nav-icon {
-      width: 54px;
-      height: 54px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 18px;
-      font-size: 1.2rem;
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(91, 124, 255, 0.22);
-    }
-
-    .nav-icon.blue { background: linear-gradient(135deg, #5b7cff, #33c6ff); }
-    .nav-icon.gold { background: linear-gradient(135deg, #ffb84d, #ff7f50); }
-    .nav-icon.pink { background: linear-gradient(135deg, #ff5c9f, #ff7b72); }
-    .nav-icon.purple { background: linear-gradient(135deg, #8a5cff, #5b7cff); }
-    .nav-icon.green { background: linear-gradient(135deg, #37c997, #31b6ff); }
-
-    .nav-title {
-      margin: 0;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      text-align: left;
-    }
-
-    .nav-text {
-      margin: 0;
-      color: var(--text-soft);
-      line-height: 1.6;
-      text-align: left;
-      font-size: 0.96rem;
-    }
-
-    .nav-arrow {
-      margin-top: auto;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #5570ff;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 0.85rem;
     }
 
     .footer-note {
@@ -532,12 +694,55 @@
       50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
     }
 
+    @keyframes shine {
+      0% { left: -36%; }
+      100% { left: 120%; }
+    }
+
+    @keyframes rollAcross {
+      0%   { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+      25%  { transform: translateX(70px) translateY(-4px) rotate(120deg) scale(1.01); }
+      50%  { transform: translateX(150px) translateY(0) rotate(240deg) scale(0.98); }
+      75%  { transform: translateX(220px) translateY(-3px) rotate(360deg) scale(1.01); }
+      100% { transform: translateX(280px) translateY(0) rotate(480deg) scale(1); }
+    }
+
+    @keyframes shadowRoll {
+      0%   { transform: translateX(0) scale(1); opacity: 0.18; }
+      25%  { transform: translateX(70px) scale(1.03); opacity: 0.16; }
+      50%  { transform: translateX(150px) scale(0.96); opacity: 0.14; }
+      75%  { transform: translateX(220px) scale(1.02); opacity: 0.16; }
+      100% { transform: translateX(280px) scale(1); opacity: 0.18; }
+    }
+
+    @keyframes heroPinBounce {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      20% { transform: rotate(1.2deg) translateY(-2px); }
+      50% { transform: rotate(-1.8deg) translateY(3px); }
+      75% { transform: rotate(1deg) translateY(-1px); }
+    }
+
+    @keyframes laneSweep {
+      0% { left: -30%; }
+      100% { left: 120%; }
+    }
+
+    @keyframes laneFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes iconBallTilt {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(8deg) scale(1.02); }
+    }
+
     @media (max-width: 1100px) {
-      .nav-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+      .hero-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-grid {
+      .nav-grid {
         grid-template-columns: 1fr;
       }
 
@@ -563,7 +768,7 @@
       }
 
       h1 {
-        font-size: clamp(2.2rem, 10vw, 3.4rem);
+        font-size: clamp(2.2rem, 10vw, 3.5rem);
         max-width: 100%;
       }
 
@@ -571,24 +776,60 @@
         font-size: 0.98rem;
       }
 
-      .nav-grid {
-        grid-template-columns: 1fr;
+      .hero-visual {
+        min-height: 290px;
       }
 
-      .nav-card {
+      .lane-link {
         min-height: auto;
+        border-radius: 34px;
+        padding: 18px 18px 18px 18px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+      }
+
+      .lane-link::before {
+        border-radius: 28px;
+      }
+
+      .lane-ball {
+        width: 62px;
+        height: 62px;
+        flex-basis: 62px;
+      }
+
+      .lane-title {
+        font-size: 1rem;
+      }
+
+      .lane-text {
+        font-size: 0.92rem;
+      }
+
+      .archive-inline {
+        align-items: stretch;
+      }
+
+      .archive-select {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .archive-select-wrap {
+        width: 100%;
       }
 
       .shape {
-        opacity: 0.32;
+        opacity: 0.3;
       }
 
-      .ball {
+      .ball-bg {
         width: calc(var(--size, 120px) * 0.72);
         height: calc(var(--size, 120px) * 0.72);
       }
 
-      .pin {
+      .pin-bg {
         width: calc(var(--w, 56px) * 0.72);
         height: calc(var(--h, 164px) * 0.72);
       }
@@ -596,11 +837,18 @@
 
     @media (prefers-reduced-motion: reduce) {
       .shape,
-      .glow {
+      .glow,
+      .lane-link,
+      .lane-link::after,
+      .rolling-ball,
+      .ball-shadow,
+      .pin-hero,
+      .lane-ball,
+      .lane::after {
         animation: none !important;
       }
 
-      .nav-card,
+      .lane-link,
       .archive-select {
         transition: none !important;
       }
@@ -617,15 +865,15 @@
     <div class="glow two"></div>
     <div class="glow three"></div>
 
-    <div class="shape ball" style="--size: 170px; --x: 6%; --y: 18%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
-    <div class="shape ball" style="--size: 120px; --x: 82%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
-    <div class="shape ball" style="--size: 140px; --x: 76%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
-    <div class="shape ball" style="--size: 96px; --x: 14%; --y: 76%; --c1:#9d7bff; --c2:#ff68a0; --dur:17s; --delay:-11s;"></div>
+    <div class="shape ball-bg" style="--size: 170px; --x: 6%; --y: 18%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="shape ball-bg" style="--size: 120px; --x: 82%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="shape ball-bg" style="--size: 140px; --x: 76%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+    <div class="shape ball-bg" style="--size: 96px; --x: 14%; --y: 76%; --c1:#9d7bff; --c2:#ff68a0; --dur:17s; --delay:-11s;"></div>
 
-    <div class="shape pin" style="--x: 22%; --y: 12%; --dur:18s; --delay:-4s;"></div>
-    <div class="shape pin" style="--x: 90%; --y: 36%; --dur:15s; --delay:-8s; --w:52px; --h:154px;"></div>
-    <div class="shape pin" style="--x: 5%; --y: 60%; --dur:20s; --delay:-10s; --w:50px; --h:146px;"></div>
-    <div class="shape pin" style="--x: 63%; --y: 6%; --dur:17s; --delay:-6s; --w:58px; --h:170px;"></div>
+    <div class="shape pin-bg" style="--x: 22%; --y: 12%; --dur:18s; --delay:-4s;"></div>
+    <div class="shape pin-bg" style="--x: 90%; --y: 36%; --dur:15s; --delay:-8s; --w:52px; --h:154px;"></div>
+    <div class="shape pin-bg" style="--x: 5%; --y: 60%; --dur:20s; --delay:-10s; --w:50px; --h:146px;"></div>
+    <div class="shape pin-bg" style="--x: 63%; --y: 6%; --dur:17s; --delay:-6s; --w:58px; --h:170px;"></div>
   </div>
 
   <main class="site">
@@ -634,7 +882,7 @@
         <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
         <span>Strikeclub Velten</span>
       </div>
-      <div class="status-pill">Liga · Ergebnisse · Termine · Archiv</div>
+      <div class="status-pill">Liga · Ergebnisse · Spielplan · Archiv</div>
     </div>
 
     <section class="hero">
@@ -642,85 +890,112 @@
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="dot"></span>
-            <span>Übersicht & Einstieg</span>
+            <span>Bowling-Liga Übersicht</span>
           </div>
 
           <h1>
-            Bowling. <span class="headline-accent">Klar, modern, direkt.</span>
+            Bowling. <span class="headline-accent">Leichter, klarer, lebendiger.</span>
           </h1>
 
           <p>
-            Alles Wichtige an einem Ort: aktuelle Ergebnisse, Termine, Spielplan,
-            Archiv und Eintragungen. Heller, ruhiger und deutlich moderner als das alte Layout.
+            Alle wichtigen Bereiche an einem Ort – mit mehr Bowling-Charakter,
+            aber ohne die Seite visuell zu überladen. Die Bewegungen sind bewusst subtil,
+            damit das Design modern bleibt und nicht verspielt wirkt.
           </p>
         </div>
 
-        <div class="hero-panel">
-          <div class="archive-card">
-            <label class="card-label" for="archiv">Ergebnis-Archiv</label>
-            <div class="archive-select-wrap">
-              <select id="archiv" class="archive-select" onchange="if(this.value) window.location.href=this.value;">
-                <option value="" selected disabled>Archiv auswählen</option>
-                <option value="ergebnisse2023.html">Archiv 2023</option>
-                <option value="ergebnisse2024.html">Archiv 2024</option>
-                <option value="ergebnisse2025.html">Archiv 2025</option>
-              </select>
-            </div>
-          </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="lane-wrap">
+            <div class="lane"></div>
 
-          <div class="info-card">
-            <span class="card-label">Hinweis</span>
-            <h2 class="mini-title">Neue Startseite mit mehr Fokus</h2>
-            <p class="mini-text">
-              Die Navigation ist jetzt klarer strukturiert, die Hintergründe sind lebendig,
-              aber absichtlich dezent gehalten.
-            </p>
+            <div class="pins-hero">
+              <div class="pin-hero p1"></div>
+              <div class="pin-hero p2"></div>
+              <div class="pin-hero p3"></div>
+              <div class="pin-hero p4"></div>
+              <div class="pin-hero p5"></div>
+              <div class="pin-hero p6"></div>
+            </div>
+
+            <div class="ball-shadow"></div>
+            <div class="rolling-ball"></div>
           </div>
         </div>
       </div>
 
       <section class="nav-section">
         <div class="nav-grid">
-          <a class="nav-card" href="Über-uns.html">
-            <span class="nav-icon blue"><i class="fas fa-users"></i></span>
-            <h3 class="nav-title">Über uns</h3>
-            <p class="nav-text">Wer wir sind, wofür wir stehen und was den Strikeclub Velten ausmacht.</p>
-            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          <a class="lane-link" href="Über-uns.html" style="--floatDur:7.4s; --floatDelay:-1.3s; --sweepDelay:-0.9s;">
+            <span class="lane-ball blue"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Über uns</h3>
+              <p class="lane-text">Wer wir sind, wofür wir stehen und was den Strikeclub Velten ausmacht.</p>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-arrow-right"></i></span>
           </a>
 
-          <a class="nav-card" href="aktuelle_ergebnisse.html">
-            <span class="nav-icon gold"><i class="fas fa-trophy"></i></span>
-            <h3 class="nav-title">Aktuelle Ergebnisse</h3>
-            <p class="nav-text">Schneller Zugriff auf die neuesten Resultate und den aktuellen Stand.</p>
-            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          <a class="lane-link" href="aktuelle_ergebnisse.html" style="--floatDur:8.1s; --floatDelay:-3.1s; --sweepDelay:-1.7s;">
+            <span class="lane-ball gold"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Aktuelle Ergebnisse</h3>
+              <p class="lane-text">Direkt zu den neuesten Resultaten und zum aktuellen Stand der Liga.</p>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-arrow-right"></i></span>
           </a>
 
-          <a class="nav-card" href="termine-news.html">
-            <span class="nav-icon pink"><i class="fas fa-calendar-alt"></i></span>
-            <h3 class="nav-title">Termine & News</h3>
-            <p class="nav-text">Anstehende Termine, wichtige Infos und aktuelle Neuigkeiten gesammelt.</p>
-            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          <a class="lane-link" href="spielplan.html" style="--floatDur:7.7s; --floatDelay:-2.1s; --sweepDelay:-2.4s;">
+            <span class="lane-ball purple"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Spielplan</h3>
+              <p class="lane-text">Alle Spieltage und Begegnungen übersichtlich und schnell erreichbar.</p>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-arrow-right"></i></span>
           </a>
 
-          <a class="nav-card" href="spielplan.html">
-            <span class="nav-icon purple"><i class="fas fa-calendar-check"></i></span>
-            <h3 class="nav-title">Spielplan</h3>
-            <p class="nav-text">Alle Spieltage und Begegnungen übersichtlich und ohne Umwege erreichbar.</p>
-            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          <a class="lane-link" href="termine-news.html" style="--floatDur:8.4s; --floatDelay:-4.2s; --sweepDelay:-0.2s;">
+            <span class="lane-ball pink"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Termine & News</h3>
+              <p class="lane-text">Anstehende Termine, wichtige Hinweise und aktuelle Neuigkeiten gesammelt.</p>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-arrow-right"></i></span>
           </a>
 
-          <a class="nav-card" href="Tabelle.html">
-            <span class="nav-icon green"><i class="fas fa-pen-to-square"></i></span>
-            <h3 class="nav-title">Ergebnisse eintragen</h3>
-            <p class="nav-text">Zum Eintragen und Pflegen der Resultate für die Liga in der Tabelle.</p>
-            <span class="nav-arrow">Öffnen <i class="fas fa-arrow-right"></i></span>
+          <a class="lane-link" href="Tabelle.html" style="--floatDur:7.9s; --floatDelay:-1.8s; --sweepDelay:-1.2s;">
+            <span class="lane-ball green"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Ergebnisse eintragen</h3>
+              <p class="lane-text">Zum Eintragen und Pflegen der Resultate für die Liga und Tabelle.</p>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-arrow-right"></i></span>
           </a>
+
+          <div class="lane-link" style="--floatDur:8.8s; --floatDelay:-3.5s; --sweepDelay:-2.8s;">
+            <span class="lane-ball blue"></span>
+            <div class="lane-content">
+              <h3 class="lane-title">Ergebnis-Archiv</h3>
+              <p class="lane-text">Frühere Jahre direkt anwählen. Das Archiv steht jetzt bewusst zuletzt.</p>
+
+              <div class="archive-inline">
+                <label for="archiv">Archiv wählen</label>
+                <div class="archive-select-wrap">
+                  <select id="archiv" class="archive-select" onchange="if(this.value) window.location.href=this.value;">
+                    <option value="" selected disabled>Archiv auswählen</option>
+                    <option value="ergebnisse2023.html">Archiv 2023</option>
+                    <option value="ergebnisse2024.html">Archiv 2024</option>
+                    <option value="ergebnisse2025.html">Archiv 2025</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <span class="lane-arrow"><i class="fas fa-clock-rotate-left"></i></span>
+          </div>
         </div>
       </section>
     </section>
 
     <p class="footer-note">
-      Strikeclub Velten – modernisierte Startseite mit animierten Bowling-Elementen im Hintergrund.
+      Strikeclub Velten – moderne Startseite mit dezenten Bowling-Animationen.
     </p>
   </main>
 </body>
