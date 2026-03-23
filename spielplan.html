@@ -241,6 +241,12 @@
       margin-bottom: 18px;
     }
 
+	  .header-side {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+	  
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -312,6 +318,25 @@
       letter-spacing: -0.03em;
     }
 
+	  .jump-btn {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #16203d, #4964ff);
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 14px 28px rgba(35, 58, 100, 0.16);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jump-btn:hover {
+  filter: brightness(1.04);
+}
+	  
     .schedule-panel {
       position: relative;
       z-index: 1;
@@ -440,6 +465,17 @@
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.05);
     }
 
+	  .matchday-card {
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.matchday-card.pulse-target {
+  box-shadow:
+    0 0 0 2px rgba(73,100,255,0.34),
+    0 18px 40px rgba(35, 58, 100, 0.12);
+  transform: translateY(-2px);
+}
+	  
     .matchday-card::before {
       content: "";
       position: absolute;
@@ -618,6 +654,9 @@
       .matchday-grid {
         grid-template-columns: 1fr;
       }
+		.header-side {
+  justify-items: stretch;
+}
     }
 
     @media (max-width: 700px) {
@@ -666,6 +705,10 @@
         padding: 10px;
       }
 
+		.jump-btn {
+  width: 100%;
+  justify-content: center;
+}
       .vs-row {
   grid-template-columns: 1fr auto 1fr;
   gap: 8px;
@@ -742,11 +785,17 @@
           </p>
         </div>
 
-        <div class="info-pill">
-          <span class="info-label">Ansicht</span>
-          <div class="info-value">Spielplan 2026</div>
-        </div>
-      </div>
+        <div class="header-side">
+  <div class="info-pill">
+    <span class="info-label">Ansicht</span>
+    <div class="info-value">Spielplan 2026</div>
+  </div>
+
+  <button class="jump-btn" id="jumpToCurrentBtn" type="button">
+    <i class="fa-solid fa-location-arrow"></i>
+    <span>Zum relevanten Datum</span>
+  </button>
+</div>
 
       <div class="schedule-panel">
         <div class="warning-pill" id="warningPill">
@@ -777,37 +826,37 @@
     const PAGE_DATA = {
       raw: `Hinrunde
 Datum	Ansetzung		Bahn
-04.03.2026	Die 3 Blinden	Die Abräumer	1+2
+07.01.2026	Die 3 Blinden	Die Abräumer	1+2
 	Gummibande	PIN FIGHTER	3+4
 	Pitchers	Pin Bomber	5+6
 	Stranger Pins	Donnerbälle	7+8
 Datum	Ansetzung		Bahn
-11.03.2026	Stranger Pins	Gummibande	1+2
+14.01.2026	Stranger Pins	Gummibande	1+2
 	Pitchers	Die Abräumer	3+4
 	Donnerbälle	Die 3 Blinden	5+6
 	PIN FIGHTER	Pin Bomber	7+8
 Datum	Ansetzung		Bahn
-18.03.2026	Donnerbälle	PIN FIGHTER	1+2
+21.01.2026	Donnerbälle	PIN FIGHTER	1+2
 	Stranger Pins	Pin Bomber	3+4
 	Pitchers	Die 3 Blinden	5+6
 	Die Abräumer	Gummibande	7+8
 Datum	Ansetzung		Bahn
-25.03.2026	Stranger Pins	Pitchers	1+2
+28.01.2026	Stranger Pins	Pitchers	1+2
 	PIN FIGHTER	Die 3 Blinden	3+4
 	Gummibande	Pin Bomber	5+6
 	Donnerbälle	Die Abräumer	7+8
 Datum	Ansetzung		Bahn
-01.04.2026	Donnerbälle	Pin Bomber	1+2
+04.02.2026	Donnerbälle	Pin Bomber	1+2
 	Stranger Pins	Die 3 Blinden	3+4
 	Die Abräumer	PIN FIGHTER	5+6
 	Gummibande	Pitchers	7+8
 Datum	Ansetzung		Bahn
-08.04.2026	Pitchers	PIN FIGHTER	1+2
+11.02.2026	Pitchers	PIN FIGHTER	1+2
 	Stranger Pins	Die Abräumer	3+4
 	Donnerbälle	Gummibande	5+6
 	Pin Bomber	Die 3 Blinden	7+8
 Datum	Ansetzung		Bahn
-15.04.2026	Die 3 Blinden	Gummibande	1+2
+18.02.2026	Die 3 Blinden	Gummibande	1+2
 	Donnerbälle	Pitchers	3+4
 	Stranger Pins	PIN FIGHTER	5+6
 	Pin Bomber	Die Abräumer	7+8
@@ -852,8 +901,9 @@ Datum	Ansetzung		Bahn
     };
 
     const phaseGrid = document.getElementById("phaseGrid");
-    const warningPill = document.getElementById("warningPill");
-    const warningText = document.getElementById("warningText");
+const warningPill = document.getElementById("warningPill");
+const warningText = document.getElementById("warningText");
+const jumpToCurrentBtn = document.getElementById("jumpToCurrentBtn");
 
     function normalizeLine(line) {
       return line.replace(/\u00A0/g, " ").trimEnd();
@@ -1036,25 +1086,27 @@ function applyTeamColors(element, teamName) {
 }
 
     function createMatchdayCard(matchday) {
-      const card = document.createElement("article");
-      card.className = "matchday-card";
+  const card = document.createElement("article");
+  card.className = "matchday-card";
+  card.dataset.date = matchday.date;
+  card.id = `matchday-${matchday.date.replace(/\./g, "-")}`;
 
-      const dateBar = document.createElement("div");
-      dateBar.className = "matchday-date-bar";
-      dateBar.textContent = matchday.date;
+  const dateBar = document.createElement("div");
+  dateBar.className = "matchday-date-bar";
+  dateBar.textContent = matchday.date;
 
-      const content = document.createElement("div");
-      content.className = "matchday-content";
+  const content = document.createElement("div");
+  content.className = "matchday-content";
 
-      matchday.matches.forEach((match, index) => {
-        content.appendChild(createLaneBlock(match, index === matchday.matches.length - 1));
-      });
+  matchday.matches.forEach((match, index) => {
+    content.appendChild(createLaneBlock(match, index === matchday.matches.length - 1));
+  });
 
-      card.appendChild(dateBar);
-      card.appendChild(content);
+  card.appendChild(dateBar);
+  card.appendChild(content);
 
-      return card;
-    }
+  return card;
+}
 
     function createPhaseCard(phase, themeClass) {
       const card = document.createElement("section");
@@ -1094,13 +1146,105 @@ function applyTeamColors(element, teamName) {
       });
 
       if (parsed.warnings.length) {
-        warningText.textContent = parsed.warnings[0];
-        warningPill.classList.add("show");
-      } else {
-        warningPill.classList.remove("show");
-      }
+  warningText.textContent = parsed.warnings[0];
+  warningPill.classList.add("show");
+} else {
+  warningPill.classList.remove("show");
+}
+
+updateJumpButtonLabel();
+
+jumpToCurrentBtn.onclick = scrollToRelevantMatchday;
     }
 
+	  function dateStringToKey(dateStr) {
+  const [day, month, year] = String(dateStr).split(".");
+  return `${year}-${month}-${day}`;
+}
+
+function getBerlinNow() {
+  const formatter = new Intl.DateTimeFormat("de-DE", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+
+  const parts = Object.fromEntries(
+    formatter
+      .formatToParts(new Date())
+      .filter(part => part.type !== "literal")
+      .map(part => [part.type, part.value])
+  );
+
+  return {
+    key: `${parts.year}-${parts.month}-${parts.day}`,
+    hour: Number(parts.hour),
+    minute: Number(parts.minute)
+  };
+}
+
+function getRelevantMatchdayCard() {
+  const cards = Array.from(document.querySelectorAll(".matchday-card[data-date]"));
+  if (!cards.length) return null;
+
+  const schedule = cards.map(card => ({
+    card,
+    date: card.dataset.date,
+    key: dateStringToKey(card.dataset.date)
+  }));
+
+  const now = getBerlinNow();
+  const currentMinutes = now.hour * 60 + now.minute;
+  const cutoffMinutes = 18 * 60 + 45;
+
+  const sameDay = schedule.find(item => item.key === now.key);
+
+  if (sameDay && currentMinutes <= cutoffMinutes) {
+    return sameDay.card;
+  }
+
+  const nextFuture = schedule.find(item => item.key > now.key);
+  if (nextFuture) {
+    return nextFuture.card;
+  }
+
+  if (sameDay) {
+    return sameDay.card;
+  }
+
+  return schedule[schedule.length - 1].card;
+}
+
+function updateJumpButtonLabel() {
+  const target = getRelevantMatchdayCard();
+  if (!target) return;
+
+  const label = target.dataset.date;
+  const span = jumpToCurrentBtn.querySelector("span");
+  if (span) {
+    span.textContent = `Zum ${label}`;
+  }
+}
+
+function scrollToRelevantMatchday() {
+  const target = getRelevantMatchdayCard();
+  if (!target) return;
+
+  target.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  target.classList.add("pulse-target");
+  window.setTimeout(() => {
+    target.classList.remove("pulse-target");
+  }, 1800);
+}
+	  
     renderPage();
   </script>
 </body>
