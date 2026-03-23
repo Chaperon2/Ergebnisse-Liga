@@ -19,13 +19,15 @@
   <style>
     :root {
       --text: #0f172a;
-      --text-soft: #60728f;
+      --text-soft: #5f718d;
       --border: rgba(119, 145, 185, 0.14);
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
       --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
-      --max-width: 1280px;
-      --table-font-size: 15px;
+      --max-width: 1440px;
+      --table-font-size: 13px;
+      --table-cell-padding-y: 8px;
+      --table-cell-padding-x: 8px;
     }
 
     * {
@@ -38,10 +40,10 @@
       font-family: "Inter", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.10), transparent 30%),
-        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.10), transparent 24%),
-        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.12), transparent 30%),
-        linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
       overflow-x: hidden;
     }
 
@@ -61,40 +63,40 @@
     .glow {
       position: absolute;
       border-radius: 50%;
-      filter: blur(72px);
-      opacity: 0.42;
+      filter: blur(76px);
+      opacity: 0.44;
       animation: drift 18s ease-in-out infinite;
     }
 
     .glow.one {
-      width: 320px;
-      height: 320px;
-      left: -70px;
+      width: 340px;
+      height: 340px;
+      left: -80px;
       top: 40px;
       background: rgba(91, 124, 255, 0.16);
     }
 
     .glow.two {
-      width: 280px;
-      height: 280px;
+      width: 290px;
+      height: 290px;
       right: -30px;
       top: 140px;
-      background: rgba(255, 92, 159, 0.12);
+      background: rgba(255, 92, 159, 0.14);
       animation-delay: -6s;
     }
 
     .glow.three {
-      width: 360px;
-      height: 360px;
-      right: 16%;
-      bottom: -90px;
-      background: rgba(51, 198, 255, 0.14);
+      width: 380px;
+      height: 380px;
+      right: 14%;
+      bottom: -100px;
+      background: rgba(51, 198, 255, 0.16);
       animation-delay: -11s;
     }
 
     .bg-shape {
       position: absolute;
-      opacity: 0.24;
+      opacity: 0.22;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
@@ -156,17 +158,17 @@
     .site {
       position: relative;
       z-index: 2;
-      width: min(var(--max-width), calc(100% - 32px));
+      width: min(var(--max-width), calc(100% - 24px));
       margin: 0 auto;
-      padding: 28px 0 56px;
+      padding: 16px 0 40px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .brand {
@@ -175,7 +177,7 @@
       gap: 12px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.74);
       border: 1px solid rgba(122, 146, 182, 0.14);
       backdrop-filter: blur(14px);
       box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
@@ -197,10 +199,10 @@
     .back-link {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.74);
       border: 1px solid rgba(122, 146, 182, 0.14);
       color: var(--text-soft);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 700;
       backdrop-filter: blur(14px);
       box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
@@ -211,9 +213,9 @@
 
     .page {
       position: relative;
-      padding: 30px;
-      border-radius: 34px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+      padding: 22px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.78));
       border: 1px solid var(--border);
       backdrop-filter: blur(24px);
       box-shadow: var(--shadow-xl);
@@ -225,9 +227,9 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 14% 10%, rgba(91, 124, 255, 0.08), transparent 26%),
-        radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.06), transparent 22%),
-        radial-gradient(circle at 70% 100%, rgba(51, 198, 255, 0.08), transparent 28%);
+        radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%),
+        radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%);
       pointer-events: none;
     }
 
@@ -236,10 +238,10 @@
       z-index: 1;
       display: flex;
       justify-content: space-between;
-      gap: 18px;
+      gap: 14px;
       align-items: end;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .eyebrow {
@@ -248,12 +250,12 @@
       gap: 10px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.12);
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #36507a;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
     }
 
@@ -267,7 +269,7 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3.6rem);
       line-height: 0.96;
       letter-spacing: -0.06em;
       font-weight: 800;
@@ -281,24 +283,24 @@
     }
 
     .intro {
-      max-width: 64ch;
+      max-width: 72ch;
       color: var(--text-soft);
-      line-height: 1.7;
-      font-size: 1rem;
-      margin: 14px 0 0;
+      line-height: 1.6;
+      font-size: 0.98rem;
+      margin: 12px 0 0;
     }
 
     .date-pill {
       padding: 14px 18px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.72);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122,146,182,0.14);
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
       min-width: 220px;
     }
 
     .date-label {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: #6a7b97;
       text-transform: uppercase;
@@ -308,7 +310,7 @@
     }
 
     .date-value {
-      font-size: 1.35rem;
+      font-size: 1.24rem;
       font-weight: 800;
       letter-spacing: -0.04em;
     }
@@ -316,193 +318,224 @@
     .results-panel {
       position: relative;
       z-index: 1;
-      border-radius: 30px;
+      border-radius: 26px;
       background: rgba(255,255,255,0.58);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: var(--shadow-lg);
-      padding: 18px;
+      padding: 14px;
     }
 
-    .toolbar {
+    .hint-row {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
       gap: 12px;
-    }
-
-    .tab-btn {
-      border: 0;
-      cursor: pointer;
-      font: inherit;
-      padding: 12px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(122,146,182,0.14);
-      color: #5f728f;
-      font-weight: 700;
-      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
-    }
-
-    .tab-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(35, 58, 100, 0.06);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(91,124,255,0.92), rgba(255,92,159,0.88));
-      color: #fff;
-      box-shadow: 0 14px 28px rgba(91, 124, 255, 0.20);
-    }
-
-    .table-tools {
-      display: flex;
-      gap: 10px;
-      align-items: center;
       flex-wrap: wrap;
-    }
-
-    .tool-btn {
-      border: 0;
-      cursor: pointer;
-      font: inherit;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(122,146,182,0.14);
-      color: #5e7395;
-      font-size: 0.92rem;
-      font-weight: 700;
-      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .tool-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(35, 58, 100, 0.07);
+      margin-bottom: 14px;
     }
 
     .hint-pill {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.76);
+      background: rgba(255,255,255,0.78);
       border: 1px solid rgba(122,146,182,0.14);
-      color: #6a7b97;
+      color: #667997;
       font-size: 0.86rem;
       font-weight: 700;
       box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
     }
 
-    .table-view {
+    .warning-pill {
       display: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 184, 77, 0.18);
+      border: 1px solid rgba(255, 184, 77, 0.28);
+      color: #8a5a00;
+      font-size: 0.86rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
     }
 
-    .table-view.active {
-      display: block;
+    .warning-pill.show {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .table-shell {
+    .sections-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .table-card {
+      position: relative;
       border-radius: 24px;
       overflow: hidden;
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.78);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: 0 16px 36px rgba(35, 58, 100, 0.06);
     }
 
+    .table-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 8% 15%, var(--accent-a), transparent 24%),
+        radial-gradient(circle at 90% 20%, var(--accent-b), transparent 22%),
+        radial-gradient(circle at 78% 88%, var(--accent-c), transparent 26%);
+      opacity: 0.7;
+    }
+
+    .theme-1 {
+      --accent-a: rgba(91,124,255,0.18);
+      --accent-b: rgba(255,92,159,0.14);
+      --accent-c: rgba(51,198,255,0.14);
+    }
+
+    .theme-2 {
+      --accent-a: rgba(255,184,77,0.18);
+      --accent-b: rgba(255,92,159,0.14);
+      --accent-c: rgba(138,92,255,0.14);
+    }
+
+    .theme-3 {
+      --accent-a: rgba(55,201,151,0.18);
+      --accent-b: rgba(49,182,255,0.14);
+      --accent-c: rgba(91,124,255,0.14);
+    }
+
     .table-head {
+      position: relative;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
-      padding: 16px 18px;
-      border-bottom: 1px solid rgba(122,146,182,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,249,255,0.84));
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid rgba(122,146,182,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(248,251,255,0.60));
+      backdrop-filter: blur(8px);
+    }
+
+    .table-title-wrap {
+      display: grid;
+      gap: 4px;
     }
 
     .table-title {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.12rem;
       font-weight: 800;
       letter-spacing: -0.03em;
     }
 
     .table-subtitle {
       color: var(--text-soft);
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 700;
     }
 
-    .table-scroll {
-      overflow: auto;
-      max-height: 70vh;
+    .stats-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(122,146,182,0.12);
+      color: #596f93;
+      font-size: 0.84rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .table-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 0;
+    }
+
+    .table-wrap table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: var(--table-font-size);
       user-select: text;
       -webkit-user-select: text;
     }
 
-    .table-scroll table {
-      width: max-content;
-      min-width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-size: var(--table-font-size);
-    }
-
-    .table-scroll thead th {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-      text-align: left;
-      padding: 14px 16px;
+    .table-wrap thead th {
+      text-align: center;
+      padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
       background: linear-gradient(180deg, rgba(250,252,255,0.98), rgba(242,247,255,0.96));
       color: #4f6489;
       font-size: 0.9em;
       font-weight: 800;
-      letter-spacing: 0.02em;
-      border-bottom: 1px solid rgba(122,146,182,0.14);
-      white-space: nowrap;
+      letter-spacing: 0.01em;
+      border-bottom: 1px solid rgba(122,146,182,0.12);
+      border-right: 1px solid rgba(122,146,182,0.06);
+      vertical-align: middle;
+      line-height: 1.2;
+      word-break: break-word;
     }
 
-    .table-scroll tbody td {
-      padding: 14px 16px;
+    .table-wrap tbody td {
+      padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
       border-bottom: 1px solid rgba(122,146,182,0.08);
-      white-space: nowrap;
+      border-right: 1px solid rgba(122,146,182,0.05);
       background: rgba(255,255,255,0.88);
       transition: background 0.18s ease;
+      vertical-align: middle;
+      line-height: 1.2;
+      word-break: break-word;
+      text-align: center;
     }
 
-    .table-scroll tbody tr:nth-child(even) td {
-      background: rgba(247,250,255,0.88);
+    .table-wrap tbody tr:nth-child(even) td {
+      background: rgba(246,250,255,0.90);
     }
 
-    .table-scroll tbody tr:hover td {
-      background: rgba(236,243,255,0.96);
+    .table-wrap tbody tr:hover td {
+      background: rgba(236,243,255,0.98);
     }
 
-    .table-scroll thead th:first-child,
-    .table-scroll tbody td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 2;
-      background: inherit;
-      box-shadow: 1px 0 0 rgba(122,146,182,0.08);
+    .table-wrap tbody tr.is-selected td {
+      background: rgba(223,235,255,0.98) !important;
+      box-shadow: inset 0 0 0 1px rgba(91,124,255,0.14);
     }
 
-    .table-scroll thead th:first-child {
-      z-index: 4;
+    .table-wrap td.text-left,
+    .table-wrap th.text-left {
+      text-align: left;
     }
 
-    .data-row.is-selected td {
-      background: rgba(225,235,255,0.98) !important;
-      box-shadow: inset 0 0 0 1px rgba(91,124,255,0.12);
+    .table-wrap td.rank,
+    .table-wrap th.rank {
+      font-weight: 800;
+      width: 6%;
+    }
+
+    .table-wrap td.name-col,
+    .table-wrap th.name-col {
+      width: 16%;
+    }
+
+    .table-wrap td.team-col,
+    .table-wrap th.team-col {
+      width: 18%;
+    }
+
+    .table-wrap td.numeric,
+    .table-wrap th.numeric {
+      width: 8.5%;
     }
 
     .empty-state {
@@ -517,7 +550,7 @@
       justify-content: center;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
     .action-btn {
@@ -536,14 +569,14 @@
     }
 
     .secondary-btn {
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.80);
       color: #5e7395;
       border: 1px solid rgba(122,146,182,0.14);
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
     }
 
     .footer-note {
-      margin-top: 18px;
+      margin-top: 16px;
       text-align: center;
       color: #6c7b96;
       font-size: 0.92rem;
@@ -572,47 +605,129 @@
     @media (max-width: 980px) {
       .topbar,
       .header,
-      .toolbar {
+      .hint-row {
         flex-direction: column;
         align-items: stretch;
       }
 
+      .site {
+        width: min(var(--max-width), calc(100% - 14px));
+      }
+
       .page {
-        padding: 22px;
-        border-radius: 26px;
+        padding: 16px;
+        border-radius: 22px;
       }
     }
 
     @media (max-width: 700px) {
+      :root {
+        --table-font-size: 10.5px;
+        --table-cell-padding-y: 6px;
+        --table-cell-padding-x: 4px;
+      }
+
       .site {
-        width: min(var(--max-width), calc(100% - 20px));
-        padding-top: 16px;
+        width: 100%;
+        padding: 0 0 26px;
+      }
+
+      .topbar {
+        padding: 10px 10px 0;
+        margin-bottom: 10px;
+      }
+
+      .page {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 12px 8px 16px;
       }
 
       h1 {
-        font-size: clamp(2rem, 9vw, 3rem);
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
       }
 
-      .tabs,
-      .table-tools,
+      .intro {
+        font-size: 0.92rem;
+      }
+
+      .results-panel {
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      .table-card {
+        border-radius: 18px;
+      }
+
+      .table-head {
+        padding: 12px 12px 10px;
+      }
+
+      .table-title {
+        font-size: 1rem;
+      }
+
+      .table-subtitle {
+        font-size: 0.8rem;
+      }
+
+      .stats-chips {
+        gap: 6px;
+      }
+
+      .stat-chip {
+        font-size: 0.76rem;
+        padding: 7px 10px;
+      }
+
+      .hint-pill,
+      .warning-pill {
+        font-size: 0.78rem;
+      }
+
+      .table-wrap td.name-col,
+      .table-wrap th.name-col {
+        width: 17%;
+      }
+
+      .table-wrap td.team-col,
+      .table-wrap th.team-col {
+        width: 19%;
+      }
+
+      .table-wrap td.numeric,
+      .table-wrap th.numeric {
+        width: 8.2%;
+      }
+
       .actions {
         flex-direction: column;
       }
 
-      .tab-btn,
-      .tool-btn,
       .action-btn,
       .secondary-btn {
         width: 100%;
         justify-content: center;
       }
+    }
 
-      .table-scroll {
-        max-height: 62vh;
+    @media (max-width: 430px) {
+      :root {
+        --table-font-size: 9.5px;
+        --table-cell-padding-y: 5px;
+        --table-cell-padding-x: 3px;
       }
 
-      .table-scroll table {
-        min-width: 720px;
+      .brand,
+      .back-link {
+        font-size: 0.86rem;
+      }
+
+      .table-wrap thead th,
+      .table-wrap tbody td {
+        letter-spacing: 0;
       }
     }
 
@@ -664,8 +779,7 @@
           </h1>
 
           <p class="intro">
-            Zwischen Tagesergebnissen, Einzelwertung und Teamwertung kannst du direkt wechseln.
-            Zeilen lassen sich per Klick hervorheben.
+            Alle Tabellen werden direkt untereinander angezeigt. Zeilen lassen sich per Klick hervorheben.
           </p>
         </div>
 
@@ -676,19 +790,12 @@
       </div>
 
       <div class="results-panel">
-        <div class="toolbar">
-          <div class="tabs" id="tabs"></div>
-
-          <div class="table-tools">
-            <button class="tool-btn" id="zoomOutBtn"><i class="fa-solid fa-magnifying-glass-minus"></i> Kleiner</button>
-            <button class="tool-btn" id="zoomResetBtn"><i class="fa-solid fa-expand"></i> Standard</button>
-            <button class="tool-btn" id="zoomInBtn"><i class="fa-solid fa-magnifying-glass-plus"></i> Größer</button>
-            <button class="tool-btn" id="clearHighlightBtn"><i class="fa-solid fa-eraser"></i> Markierung löschen</button>
-            <span class="hint-pill">Zeile anklicken zum Hervorheben</span>
-          </div>
+        <div class="hint-row">
+          <span class="hint-pill">Rohdaten aus Excel direkt einfügen – Tabs oder mehrere Leerzeichen werden erkannt</span>
+          <span class="warning-pill" id="warningPill"><i class="fa-solid fa-triangle-exclamation"></i><span id="warningText"></span></span>
         </div>
 
-        <div id="tableViews"></div>
+        <div class="sections-grid" id="sectionsGrid"></div>
 
         <div class="actions">
           <button class="action-btn" onclick="location.href='index.html'">
@@ -712,19 +819,22 @@
       ============================================================
       NUR DIESEN BLOCK FÜR NEUE SPIELTAGE ÄNDERN
       ============================================================
-      Rohdaten bitte direkt aus Excel kopieren und zwischen die
-      Backticks einfügen. Excel-Tabellen werden dabei als
-      Tab-getrennter Text übernommen.
+      Du kannst hier Excel-Rohdaten direkt einfügen.
+      Unterstützt:
+      - Tabs aus Excel
+      - mehrere Leerzeichen
+      - Zeilen wie "Spieltag 10"
+      - Zusatzinfos wie "Bestes Spiel:" und "Hausligaschnitt:"
     */
 
     const PAGE_DATA = {
-      title: "Spieltag 8",
-      date: "26.02.2025",
-      tables: [
+      title: "Spieltag 10",
+      date: "bitte eintragen",
+      sections: [
         {
-          key: "tagesergebnisse",
           label: "Tagesergebnisse",
-          raw: `Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
+          raw: `Spieltag 10								
+Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
 1	Tomber	Pin Bomber	214	179	180	159	732	183,0
 2	Benno	Die Abräumer	168	203	179	167	717	179,3
 3	Skampy	PIN FIGHTER	163	184	198	171	716	179,0
@@ -749,75 +859,163 @@
 22								
 23								
 24								
-
+Bestes Spiel:					Rene	223		
+Hausligaschnitt:					154,8			
 `
         },
         {
-          key: "einzelwertung",
           label: "Einzelwertung",
-          raw: `Platz\tName\tSpiele\tPins\tSchnitt
-1\tMax Mustermann\t8\t4820\t602,5
-2\tErika Beispiel\t8\t4711\t588,9
-3\tTom Muster\t8\t4592\t574,0
-4\tLena Test\t8\t4460\t557,5`
+          raw: `Platz	Name	Spiele	Pins Gesamt	⌀
+1	Max Mustermann	10	6020	602,0
+2	Erika Beispiel	10	5880	588,0`
         },
         {
-          key: "teamwertung",
           label: "Teamwertung",
-          raw: `Platz\tTeam\tSpieltage\tPins\tPunkte
-1\tStrike Force\t8\t9211\t64
-2\tPin Crushers\t8\t9033\t58
-3\tLane Legends\t8\t8876\t52
-4\tBowling Crew\t8\t8655\t46`
+          raw: `Platz	Team	Spieltage	Pins Gesamt	Punkte
+1	Pin Bomber	10	9211	64
+2	Die Abräumer	10	9033	58`
         }
       ]
     };
 
     /*
       ============================================================
-      AB HIER NICHTS MEHR FÜR NORMALE DATENPFLEGE ÄNDERN
+      AB HIER FÜR NORMALE DATENPFLEGE NICHTS ÄNDERN
       ============================================================
     */
 
     const pageTitle = document.getElementById("pageTitle");
     const pageDate = document.getElementById("pageDate");
-    const tabsContainer = document.getElementById("tabs");
-    const viewsContainer = document.getElementById("tableViews");
-    const zoomOutBtn = document.getElementById("zoomOutBtn");
-    const zoomResetBtn = document.getElementById("zoomResetBtn");
-    const zoomInBtn = document.getElementById("zoomInBtn");
-    const clearHighlightBtn = document.getElementById("clearHighlightBtn");
+    const sectionsGrid = document.getElementById("sectionsGrid");
+    const warningPill = document.getElementById("warningPill");
+    const warningText = document.getElementById("warningText");
 
-    let currentTableIndex = 0;
-    let tableFontSize = 15;
+    function normalizeLine(line) {
+      return line.replace(/\u00A0/g, " ").trimEnd();
+    }
 
-    function parseRawTable(rawText) {
+    function splitColumns(line) {
+      if (line.includes("\t")) {
+        return line.split("\t").map(cell => cell.trim());
+      }
+      return line.trim().split(/\s{2,}/).map(cell => cell.trim());
+    }
+
+    function isMostlyEmptyRow(cells) {
+      const filled = cells.filter(cell => cell !== "");
+      return filled.length <= 1 && /^\d+$/.test(filled[0] || "");
+    }
+
+    function isSingleTitleLine(line) {
+      const trimmed = line.trim();
+      return /^Spieltag\b/i.test(trimmed) && !trimmed.includes("\t") && !/\s{2,}/.test(trimmed);
+    }
+
+    function parseStatLine(line) {
+      const parts = splitColumns(line).filter(Boolean);
+      if (!parts.length) return null;
+
+      const first = parts[0].replace(/:$/, "").trim();
+
+      if (/^Bestes Spiel$/i.test(first)) {
+        return {
+          label: "Bestes Spiel",
+          value: parts.slice(1).join(" · ")
+        };
+      }
+
+      if (/^Hausligaschnitt$/i.test(first)) {
+        return {
+          label: "Hausligaschnitt",
+          value: parts.slice(1).join(" · ")
+        };
+      }
+
+      return null;
+    }
+
+    function guessColumnClass(header, index, totalCols) {
+      const h = header.toLowerCase();
+
+      if (index === 0 || h.includes("platz")) return "rank";
+      if (h.includes("name")) return "name-col text-left";
+      if (h.includes("team")) return "team-col text-left";
+
+      if (
+        h.includes("spiel") ||
+        h.includes("pins") ||
+        h.includes("schnitt") ||
+        h.includes("⌀") ||
+        h.includes("punkte") ||
+        h.includes("gesamt") ||
+        h.includes("spiele") ||
+        /^\d+$/.test(h)
+      ) {
+        return "numeric";
+      }
+
+      if (totalCols >= 7 && index > 2) return "numeric";
+      return "text-left";
+    }
+
+    function parseSection(rawText, fallbackLabel) {
       const lines = rawText
         .replace(/\r/g, "")
         .split("\n")
-        .map(line => line.trimEnd())
+        .map(normalizeLine)
         .filter(line => line.trim() !== "");
 
-      if (!lines.length) {
-        return { headers: [], rows: [] };
-      }
+      let sectionTitle = fallbackLabel;
+      let headers = [];
+      let rows = [];
+      let stats = [];
+      let warnings = [];
 
-      const headers = lines[0].split("\t").map(cell => cell.trim());
-      const rows = lines.slice(1).map(line => {
-        const cells = line.split("\t").map(cell => cell.trim());
-
-        while (cells.length < headers.length) {
-          cells.push("");
+      for (const line of lines) {
+        if (isSingleTitleLine(line)) {
+          sectionTitle = line.trim();
+          continue;
         }
 
-        return cells.slice(0, headers.length);
-      });
+        const stat = parseStatLine(line);
+        if (stat) {
+          stats.push(stat);
+          continue;
+        }
 
-      return { headers, rows };
+        const cells = splitColumns(line);
+
+        if (!cells.length) continue;
+        if (isMostlyEmptyRow(cells)) continue;
+
+        if (!headers.length) {
+          headers = cells.filter(cell => cell !== "");
+          continue;
+        }
+
+        let cleanCells = cells.slice();
+
+        while (cleanCells.length < headers.length) {
+          cleanCells.push("");
+        }
+
+        if (cleanCells.length > headers.length) {
+          warnings.push(`Zeile mit zu vielen Werten gefunden in „${fallbackLabel}“.`);
+          cleanCells = cleanCells.slice(0, headers.length);
+        }
+
+        rows.push(cleanCells);
+      }
+
+      if (!headers.length) {
+        warnings.push(`Keine Kopfzeile erkannt in „${fallbackLabel}“.`);
+      }
+
+      return { sectionTitle, headers, rows, stats, warnings };
     }
 
-    function createTableElement(parsedTable) {
-      if (!parsedTable.headers.length) {
+    function createTableElement(parsed) {
+      if (!parsed.headers.length) {
         const empty = document.createElement("div");
         empty.className = "empty-state";
         empty.textContent = "Keine Daten vorhanden.";
@@ -827,33 +1025,34 @@
       const table = document.createElement("table");
 
       const thead = document.createElement("thead");
-      const headerRow = document.createElement("tr");
+      const headRow = document.createElement("tr");
 
-      parsedTable.headers.forEach(header => {
+      parsed.headers.forEach((header, index) => {
         const th = document.createElement("th");
         th.textContent = header;
-        headerRow.appendChild(th);
+        th.className = guessColumnClass(header, index, parsed.headers.length);
+        headRow.appendChild(th);
       });
 
-      thead.appendChild(headerRow);
+      thead.appendChild(headRow);
       table.appendChild(thead);
 
       const tbody = document.createElement("tbody");
 
-      parsedTable.rows.forEach(row => {
+      parsed.rows.forEach(row => {
         const tr = document.createElement("tr");
-        tr.className = "data-row";
 
-        row.forEach(cell => {
+        row.forEach((cell, index) => {
           const td = document.createElement("td");
           td.textContent = cell;
+          td.className = guessColumnClass(parsed.headers[index] || "", index, parsed.headers.length);
           tr.appendChild(td);
         });
 
         tr.addEventListener("click", () => {
-          const isSelected = tr.classList.contains("is-selected");
-          tbody.querySelectorAll(".data-row").forEach(r => r.classList.remove("is-selected"));
-          if (!isSelected) tr.classList.add("is-selected");
+          const selected = tr.classList.contains("is-selected");
+          tbody.querySelectorAll("tr").forEach(r => r.classList.remove("is-selected"));
+          if (!selected) tr.classList.add("is-selected");
         });
 
         tbody.appendChild(tr);
@@ -863,96 +1062,76 @@
       return table;
     }
 
-    function renderTabsAndTables() {
+    function createSectionCard(parsed, themeClass) {
+      const card = document.createElement("section");
+      card.className = `table-card ${themeClass}`;
+
+      const head = document.createElement("div");
+      head.className = "table-head";
+
+      const titleWrap = document.createElement("div");
+      titleWrap.className = "table-title-wrap";
+
+      const title = document.createElement("h2");
+      title.className = "table-title";
+      title.textContent = parsed.sectionTitle;
+
+      const subtitle = document.createElement("div");
+      subtitle.className = "table-subtitle";
+      subtitle.textContent = `${parsed.rows.length} Zeilen · ${parsed.headers.length} Spalten`;
+
+      titleWrap.appendChild(title);
+      titleWrap.appendChild(subtitle);
+      head.appendChild(titleWrap);
+
+      if (parsed.stats.length) {
+        const statsWrap = document.createElement("div");
+        statsWrap.className = "stats-chips";
+
+        parsed.stats.forEach(stat => {
+          const chip = document.createElement("div");
+          chip.className = "stat-chip";
+          chip.textContent = `${stat.label}: ${stat.value}`;
+          statsWrap.appendChild(chip);
+        });
+
+        head.appendChild(statsWrap);
+      }
+
+      const wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      wrap.appendChild(createTableElement(parsed));
+
+      card.appendChild(head);
+      card.appendChild(wrap);
+
+      return card;
+    }
+
+    function renderPage() {
       pageTitle.innerHTML = `${PAGE_DATA.title}. <span class="headline-accent">Ergebnisse im Überblick.</span>`;
       pageDate.textContent = PAGE_DATA.date;
 
-      tabsContainer.innerHTML = "";
-      viewsContainer.innerHTML = "";
+      sectionsGrid.innerHTML = "";
 
-      PAGE_DATA.tables.forEach((tableConfig, index) => {
-        const parsedTable = parseRawTable(tableConfig.raw);
+      const themes = ["theme-1", "theme-2", "theme-3"];
+      const allWarnings = [];
 
-        const tabBtn = document.createElement("button");
-        tabBtn.className = `tab-btn ${index === 0 ? "active" : ""}`;
-        tabBtn.textContent = tableConfig.label;
-        tabBtn.addEventListener("click", () => showTable(index));
-        tabsContainer.appendChild(tabBtn);
-
-        const view = document.createElement("section");
-        view.className = `table-view ${index === 0 ? "active" : ""}`;
-
-        const shell = document.createElement("div");
-        shell.className = "table-shell";
-
-        const head = document.createElement("div");
-        head.className = "table-head";
-
-        const titleWrap = document.createElement("div");
-
-        const title = document.createElement("h2");
-        title.className = "table-title";
-        title.textContent = tableConfig.label;
-
-        const subtitle = document.createElement("div");
-        subtitle.className = "table-subtitle";
-        subtitle.textContent = `${parsedTable.rows.length} Zeilen · ${parsedTable.headers.length} Spalten`;
-
-        titleWrap.appendChild(title);
-        titleWrap.appendChild(subtitle);
-
-        head.appendChild(titleWrap);
-
-        const scroll = document.createElement("div");
-        scroll.className = "table-scroll";
-        scroll.appendChild(createTableElement(parsedTable));
-
-        shell.appendChild(head);
-        shell.appendChild(scroll);
-        view.appendChild(shell);
-        viewsContainer.appendChild(view);
+      PAGE_DATA.sections.forEach((section, index) => {
+        const parsed = parseSection(section.raw, section.label);
+        allWarnings.push(...parsed.warnings);
+        sectionsGrid.appendChild(createSectionCard(parsed, themes[index % themes.length]));
       });
 
-      applyTableZoom();
+      if (allWarnings.length) {
+        warningText.textContent = allWarnings[0];
+        warningPill.classList.add("show");
+      } else {
+        warningPill.classList.remove("show");
+      }
     }
 
-    function showTable(index) {
-      currentTableIndex = index;
-
-      document.querySelectorAll(".tab-btn").forEach((btn, i) => {
-        btn.classList.toggle("active", i === index);
-      });
-
-      document.querySelectorAll(".table-view").forEach((view, i) => {
-        view.classList.toggle("active", i === index);
-      });
-    }
-
-    function applyTableZoom() {
-      document.documentElement.style.setProperty("--table-font-size", `${tableFontSize}px`);
-    }
-
-    zoomOutBtn.addEventListener("click", () => {
-      tableFontSize = Math.max(12, tableFontSize - 1);
-      applyTableZoom();
-    });
-
-    zoomResetBtn.addEventListener("click", () => {
-      tableFontSize = 15;
-      applyTableZoom();
-    });
-
-    zoomInBtn.addEventListener("click", () => {
-      tableFontSize = Math.min(22, tableFontSize + 1);
-      applyTableZoom();
-    });
-
-    clearHighlightBtn.addEventListener("click", () => {
-      document.querySelectorAll(".data-row").forEach(row => row.classList.remove("is-selected"));
-    });
-
-    renderTabsAndTables();
-    showTable(0);
+    renderPage();
   </script>
 </body>
 </html>
