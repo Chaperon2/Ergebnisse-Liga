@@ -19,12 +19,12 @@
   <style>
     :root {
       --text: #0f172a;
-      --text-soft: #60728f;
+      --text-soft: #5f718d;
       --border: rgba(119, 145, 185, 0.14);
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
       --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
-      --max-width: 1180px;
+      --max-width: 1440px;
     }
 
     * {
@@ -37,10 +37,10 @@
       font-family: "Inter", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.10), transparent 30%),
-        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.10), transparent 24%),
-        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.12), transparent 30%),
-        linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
       overflow-x: hidden;
     }
 
@@ -60,40 +60,40 @@
     .glow {
       position: absolute;
       border-radius: 50%;
-      filter: blur(72px);
-      opacity: 0.42;
+      filter: blur(76px);
+      opacity: 0.44;
       animation: drift 18s ease-in-out infinite;
     }
 
     .glow.one {
-      width: 320px;
-      height: 320px;
-      left: -70px;
+      width: 340px;
+      height: 340px;
+      left: -80px;
       top: 40px;
       background: rgba(91, 124, 255, 0.16);
     }
 
     .glow.two {
-      width: 280px;
-      height: 280px;
+      width: 290px;
+      height: 290px;
       right: -30px;
       top: 140px;
-      background: rgba(255, 92, 159, 0.12);
+      background: rgba(255, 92, 159, 0.14);
       animation-delay: -6s;
     }
 
     .glow.three {
-      width: 360px;
-      height: 360px;
-      right: 16%;
-      bottom: -90px;
-      background: rgba(51, 198, 255, 0.14);
+      width: 380px;
+      height: 380px;
+      right: 14%;
+      bottom: -100px;
+      background: rgba(51, 198, 255, 0.16);
       animation-delay: -11s;
     }
 
     .bg-shape {
       position: absolute;
-      opacity: 0.24;
+      opacity: 0.22;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
@@ -155,17 +155,17 @@
     .site {
       position: relative;
       z-index: 2;
-      width: min(var(--max-width), calc(100% - 32px));
+      width: min(var(--max-width), calc(100% - 22px));
       margin: 0 auto;
-      padding: 28px 0 56px;
+      padding: 14px 0 34px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .brand {
@@ -174,7 +174,7 @@
       gap: 12px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.14);
       backdrop-filter: blur(14px);
       box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
@@ -196,10 +196,10 @@
     .back-link {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.14);
       color: var(--text-soft);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 700;
       backdrop-filter: blur(14px);
       box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
@@ -210,9 +210,9 @@
 
     .page {
       position: relative;
-      padding: 30px;
-      border-radius: 34px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+      padding: 20px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80));
       border: 1px solid var(--border);
       backdrop-filter: blur(24px);
       box-shadow: var(--shadow-xl);
@@ -224,9 +224,9 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 14% 10%, rgba(91, 124, 255, 0.08), transparent 26%),
-        radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.06), transparent 22%),
-        radial-gradient(circle at 70% 100%, rgba(51, 198, 255, 0.08), transparent 28%);
+        radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%),
+        radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%);
       pointer-events: none;
     }
 
@@ -235,10 +235,10 @@
       z-index: 1;
       display: flex;
       justify-content: space-between;
-      gap: 18px;
+      gap: 14px;
       align-items: end;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .eyebrow {
@@ -247,12 +247,12 @@
       gap: 10px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.12);
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #36507a;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
     }
 
@@ -266,7 +266,7 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3.6rem);
       line-height: 0.96;
       letter-spacing: -0.06em;
       font-weight: 800;
@@ -280,24 +280,24 @@
     }
 
     .intro {
-      max-width: 60ch;
+      max-width: 72ch;
       color: var(--text-soft);
-      line-height: 1.7;
-      font-size: 1rem;
-      margin: 14px 0 0;
+      line-height: 1.55;
+      font-size: 0.96rem;
+      margin: 12px 0 0;
     }
 
     .info-pill {
       padding: 14px 18px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.72);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.78);
       border: 1px solid rgba(122,146,182,0.14);
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
       min-width: 220px;
     }
 
     .info-label {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: #6a7b97;
       text-transform: uppercase;
@@ -307,37 +307,242 @@
     }
 
     .info-value {
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       font-weight: 800;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
     }
 
-    .plan-panel {
+    .schedule-panel {
       position: relative;
       z-index: 1;
-      border-radius: 30px;
-      background: rgba(255,255,255,0.58);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.60);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: var(--shadow-lg);
-      padding: 18px;
+      padding: 12px;
     }
 
-    .plan-frame {
+    .warning-pill {
+      display: none;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 184, 77, 0.18);
+      border: 1px solid rgba(255, 184, 77, 0.28);
+      color: #8a5a00;
+      font-size: 0.86rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .warning-pill.show {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phase-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .phase-card {
       position: relative;
-      border-radius: 24px;
+      border-radius: 22px;
       overflow: hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,248,255,0.86));
+      background: rgba(255,255,255,0.80);
       border: 1px solid rgba(122,146,182,0.12);
-      box-shadow: 0 18px 34px rgba(35, 58, 100, 0.08);
+      box-shadow: 0 16px 36px rgba(35, 58, 100, 0.06);
     }
 
-    .plan-frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 78vh;
-      object-fit: contain;
-      background: #fff;
+    .phase-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 8% 15%, var(--accent-a), transparent 24%),
+        radial-gradient(circle at 90% 20%, var(--accent-b), transparent 22%),
+        radial-gradient(circle at 78% 88%, var(--accent-c), transparent 26%);
+      opacity: 0.78;
+    }
+
+    .theme-hinrunde {
+      --accent-a: rgba(91,124,255,0.22);
+      --accent-b: rgba(255,92,159,0.16);
+      --accent-c: rgba(51,198,255,0.16);
+    }
+
+    .theme-rueckrunde {
+      --accent-a: rgba(55,201,151,0.22);
+      --accent-b: rgba(255,184,77,0.16);
+      --accent-c: rgba(138,92,255,0.16);
+    }
+
+    .phase-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid rgba(122,146,182,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(248,251,255,0.64));
+      backdrop-filter: blur(8px);
+    }
+
+    .phase-title-wrap {
+      display: grid;
+      gap: 4px;
+    }
+
+    .phase-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .phase-subtitle {
+      color: var(--text-soft);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .phase-count {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(122,146,182,0.12);
+      color: #596f93;
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .matchday-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .matchday-card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(122,146,182,0.10);
+      box-shadow: 0 12px 28px rgba(35, 58, 100, 0.05);
+    }
+
+    .matchday-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(91,124,255,0.08), transparent 34%),
+        linear-gradient(315deg, rgba(255,92,159,0.06), transparent 34%);
+    }
+
+    .matchday-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid rgba(122,146,182,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,251,255,0.68));
+    }
+
+    .matchday-date {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .matchday-badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(122,146,182,0.10);
+      color: #5f7498;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .match-list {
+      position: relative;
+      z-index: 1;
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 10px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.90));
+      border: 1px solid rgba(122,146,182,0.08);
+    }
+
+    .team-box {
+      min-width: 0;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(122,146,182,0.08);
+      font-weight: 700;
+      line-height: 1.2;
+      box-shadow: 0 6px 16px rgba(35, 58, 100, 0.04);
+    }
+
+    .team-box.home {
+      background: linear-gradient(180deg, rgba(91,124,255,0.13), rgba(91,124,255,0.06));
+      color: #294f97;
+    }
+
+    .team-box.away {
+      background: linear-gradient(180deg, rgba(255,92,159,0.13), rgba(255,92,159,0.06));
+      color: #933a69;
+    }
+
+    .vs {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(91,124,255,0.18), rgba(255,92,159,0.16));
+      color: #4d6297;
+      font-size: 0.82rem;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.30);
+    }
+
+    .lane-pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(51,198,255,0.16), rgba(138,92,255,0.12));
+      color: #2f6094;
+      font-size: 0.8rem;
+      font-weight: 800;
+      border: 1px solid rgba(122,146,182,0.08);
+      white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22);
     }
 
     .actions {
@@ -345,7 +550,7 @@
       justify-content: center;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
     .action-btn {
@@ -364,14 +569,14 @@
     }
 
     .secondary-btn {
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.80);
       color: #5e7395;
       border: 1px solid rgba(122,146,182,0.14);
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
     }
 
     .footer-note {
-      margin-top: 18px;
+      margin-top: 16px;
       text-align: center;
       color: #6c7b96;
       font-size: 0.92rem;
@@ -397,31 +602,83 @@
       75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 980px) {
       .topbar,
       .header {
         flex-direction: column;
         align-items: stretch;
       }
 
+      .site {
+        width: min(var(--max-width), calc(100% - 12px));
+      }
+
       .page {
-        padding: 22px;
-        border-radius: 26px;
+        padding: 14px;
+      }
+
+      .matchday-grid {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 700px) {
       .site {
-        width: min(var(--max-width), calc(100% - 20px));
-        padding-top: 16px;
+        width: 100%;
+        padding: 0 0 22px;
+      }
+
+      .topbar {
+        padding: 10px 8px 0;
+        margin-bottom: 8px;
+      }
+
+      .page {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 10px 4px 14px;
       }
 
       h1 {
-        font-size: clamp(2rem, 9vw, 3rem);
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
       }
 
-      .plan-frame img {
-        max-height: 60vh;
+      .intro {
+        font-size: 0.9rem;
+      }
+
+      .schedule-panel {
+        padding: 8px 4px;
+        border-radius: 16px;
+      }
+
+      .phase-card {
+        border-radius: 16px;
+      }
+
+      .phase-head,
+      .matchday-head {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .matchday-grid {
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .match-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .vs {
+        justify-self: center;
+      }
+
+      .lane-pill {
+        justify-self: start;
       }
 
       .actions {
@@ -449,11 +706,11 @@
     <div class="glow two"></div>
     <div class="glow three"></div>
 
-    <div class="bg-shape ball-bg" style="--size: 150px; --x: 8%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
-    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 12%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
-    <div class="bg-shape ball-bg" style="--size: 132px; --x: 80%; --y: 76%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
 
-    <div class="bg-shape pin-bg" style="--x: 18%; --y: 12%; --dur:18s; --delay:-4s;"></div>
+    <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div>
     <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
   </div>
 
@@ -478,25 +735,28 @@
             <span>Spielplan</span>
           </div>
 
-          <h1>
-            Hausliga Velten. <span class="headline-accent">Alle Spieltage auf einen Blick.</span>
+          <h1 id="pageTitle">
+            Hausliga Velten. <span class="headline-accent">Alle Spieltage im Überblick.</span>
           </h1>
 
           <p class="intro">
-            Der aktuelle Spielplan der Hausliga übersichtlich in einer Ansicht.
+            Hinrunde und Rückrunde werden direkt untereinander angezeigt. Jeder Spieltag ist als eigene Karte aufgebaut und kann einfach nach unten durchgescrollt werden.
           </p>
         </div>
 
         <div class="info-pill">
-          <span class="info-label">Bereich</span>
-          <div class="info-value">Spielplan</div>
+          <span class="info-label">Ansicht</span>
+          <div class="info-value">Spielplan 2026</div>
         </div>
       </div>
 
-      <div class="plan-panel">
-        <div class="plan-frame">
-          <img src="https://raw.githubusercontent.com/Chaperon2/Ergebnisse-Liga/refs/heads/main/images/Spielplan.jpg" alt="Spielplan">
+      <div class="schedule-panel">
+        <div class="warning-pill" id="warningPill">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span id="warningText"></span>
         </div>
+
+        <div class="phase-grid" id="phaseGrid"></div>
 
         <div class="actions">
           <button class="action-btn" onclick="location.href='index.html'">
@@ -514,5 +774,286 @@
 
     <p class="footer-note">Strikeclub Velten</p>
   </main>
+
+  <script>
+    const PAGE_DATA = {
+      title: "Spielplan 2026",
+      info: "Hausliga Velten",
+      raw: `Hinrunde
+Datum	Ansetzung		Bahn
+04.03.2026	Die 3 Blinden	Die Abräumer	1+2
+	Gummibande	PIN FIGHTER	3+4
+	Pitchers	Pin Bomber	5+6
+	Stranger Pins	Donnerbälle	7+8
+Datum	Ansetzung		Bahn
+11.03.2026	Stranger Pins	Gummibande	1+2
+	Pitchers	Die Abräumer	3+4
+	Donnerbälle	Die 3 Blinden	5+6
+	PIN FIGHTER	Pin Bomber	7+8
+Datum	Ansetzung		Bahn
+18.03.2026	Donnerbälle	PIN FIGHTER	1+2
+	Stranger Pins	Pin Bomber	3+4
+	Pitchers	Die 3 Blinden	5+6
+	Die Abräumer	Gummibande	7+8
+Datum	Ansetzung		Bahn
+25.03.2026	Stranger Pins	Pitchers	1+2
+	PIN FIGHTER	Die 3 Blinden	3+4
+	Gummibande	Pin Bomber	5+6
+	Donnerbälle	Die Abräumer	7+8
+Datum	Ansetzung		Bahn
+01.04.2026	Donnerbälle	Pin Bomber	1+2
+	Stranger Pins	Die 3 Blinden	3+4
+	Die Abräumer	PIN FIGHTER	5+6
+	Gummibande	Pitchers	7+8
+Datum	Ansetzung		Bahn
+08.04.2026	Pitchers	PIN FIGHTER	1+2
+	Stranger Pins	Die Abräumer	3+4
+	Donnerbälle	Gummibande	5+6
+	Pin Bomber	Die 3 Blinden	7+8
+Datum	Ansetzung		Bahn
+15.04.2026	Die 3 Blinden	Gummibande	1+2
+	Donnerbälle	Pitchers	3+4
+	Stranger Pins	PIN FIGHTER	5+6
+	Pin Bomber	Die Abräumer	7+8
+
+Rückrunde
+
+Datum	Ansetzung		Bahn
+04.03.2026	Die 3 Blinden	Die Abräumer	1+2
+	Gummibande	PIN FIGHTER	3+4
+	Pitchers	Pin Bomber	5+6
+	Stranger Pins	Donnerbälle	7+8
+Datum	Ansetzung		Bahn
+11.03.2026	Stranger Pins	Gummibande	1+2
+	Pitchers	Die Abräumer	3+4
+	Donnerbälle	Die 3 Blinden	5+6
+	PIN FIGHTER	Pin Bomber	7+8
+Datum	Ansetzung		Bahn
+18.03.2026	Donnerbälle	PIN FIGHTER	1+2
+	Stranger Pins	Pin Bomber	3+4
+	Pitchers	Die 3 Blinden	5+6
+	Die Abräumer	Gummibande	7+8
+Datum	Ansetzung		Bahn
+25.03.2026	Stranger Pins	Pitchers	1+2
+	PIN FIGHTER	Die 3 Blinden	3+4
+	Gummibande	Pin Bomber	5+6
+	Donnerbälle	Die Abräumer	7+8
+Datum	Ansetzung		Bahn
+01.04.2026	Donnerbälle	Pin Bomber	1+2
+	Stranger Pins	Die 3 Blinden	3+4
+	Die Abräumer	PIN FIGHTER	5+6
+	Gummibande	Pitchers	7+8
+Datum	Ansetzung		Bahn
+08.04.2026	Pitchers	PIN FIGHTER	1+2
+	Stranger Pins	Die Abräumer	3+4
+	Donnerbälle	Gummibande	5+6
+	Pin Bomber	Die 3 Blinden	7+8
+Datum	Ansetzung		Bahn
+15.04.2026	Die 3 Blinden	Gummibande	1+2
+	Donnerbälle	Pitchers	3+4
+	Stranger Pins	PIN FIGHTER	5+6
+	Pin Bomber	Die Abräumer	7+8`
+    };
+
+    const phaseGrid = document.getElementById("phaseGrid");
+    const warningPill = document.getElementById("warningPill");
+    const warningText = document.getElementById("warningText");
+
+    function normalizeLine(line) {
+      return line.replace(/\u00A0/g, " ").trimEnd();
+    }
+
+    function splitColumns(line) {
+      if (line.includes("\t")) {
+        return line.split("\t").map(cell => cell.trim());
+      }
+      return line.trim().split(/\s{2,}/).map(cell => cell.trim());
+    }
+
+    function isPhaseTitle(line) {
+      return /^(Hinrunde|Rückrunde)$/i.test(line.trim());
+    }
+
+    function isHeaderLine(cells) {
+      return (cells[0] || "").toLowerCase() === "datum";
+    }
+
+    function isDate(value) {
+      return /^\d{2}\.\d{2}\.\d{4}$/.test((value || "").trim());
+    }
+
+    function parseSchedule(raw) {
+      const lines = raw
+        .replace(/\r/g, "")
+        .split("\n")
+        .map(normalizeLine);
+
+      const phases = [];
+      let currentPhase = null;
+      let currentMatchday = null;
+      const warnings = [];
+
+      for (const rawLine of lines) {
+        const line = rawLine.trimEnd();
+
+        if (line.trim() === "") {
+          continue;
+        }
+
+        if (isPhaseTitle(line)) {
+          currentPhase = {
+            title: line.trim(),
+            matchdays: []
+          };
+          phases.push(currentPhase);
+          currentMatchday = null;
+          continue;
+        }
+
+        const cells = splitColumns(line);
+
+        if (!cells.length) {
+          continue;
+        }
+
+        if (isHeaderLine(cells)) {
+          continue;
+        }
+
+        if (!currentPhase) {
+          currentPhase = {
+            title: "Spielplan",
+            matchdays: []
+          };
+          phases.push(currentPhase);
+        }
+
+        let date = cells[0] || "";
+        let teamA = cells[1] || "";
+        let teamB = cells[2] || "";
+        let lane = cells[3] || "";
+
+        if (cells.length === 3 && currentMatchday) {
+          date = "";
+          teamA = cells[0] || "";
+          teamB = cells[1] || "";
+          lane = cells[2] || "";
+        }
+
+        if (isDate(date)) {
+          currentMatchday = {
+            date,
+            matches: []
+          };
+          currentPhase.matchdays.push(currentMatchday);
+        } else if (!currentMatchday) {
+          warnings.push("Einige Spielplan-Zeilen konnten keinem Datum zugeordnet werden.");
+          continue;
+        }
+
+        if (!isDate(date) && !currentMatchday) {
+          continue;
+        }
+
+        if (!teamA || !teamB || !lane) {
+          warnings.push(`Unvollständige Ansetzung in ${currentPhase.title} erkannt.`);
+          continue;
+        }
+
+        currentMatchday.matches.push({
+          teamA,
+          teamB,
+          lane
+        });
+      }
+
+      return { phases, warnings };
+    }
+
+    function createMatchRow(match) {
+      const row = document.createElement("div");
+      row.className = "match-row";
+
+      row.innerHTML = `
+        <div class="team-box home">${match.teamA}</div>
+        <div class="vs">VS</div>
+        <div class="team-box away">${match.teamB}</div>
+        <div class="lane-pill">Bahn ${match.lane}</div>
+      `;
+
+      return row;
+    }
+
+    function createMatchdayCard(matchday) {
+      const card = document.createElement("article");
+      card.className = "matchday-card";
+
+      const head = document.createElement("div");
+      head.className = "matchday-head";
+      head.innerHTML = `
+        <div class="matchday-date">${matchday.date}</div>
+        <div class="matchday-badge">${matchday.matches.length} Paarungen</div>
+      `;
+
+      const list = document.createElement("div");
+      list.className = "match-list";
+
+      matchday.matches.forEach(match => {
+        list.appendChild(createMatchRow(match));
+      });
+
+      card.appendChild(head);
+      card.appendChild(list);
+
+      return card;
+    }
+
+    function createPhaseCard(phase, themeClass) {
+      const card = document.createElement("section");
+      card.className = `phase-card ${themeClass}`;
+
+      const head = document.createElement("div");
+      head.className = "phase-head";
+      head.innerHTML = `
+        <div class="phase-title-wrap">
+          <h2 class="phase-title">${phase.title}</h2>
+          <div class="phase-subtitle">${phase.matchdays.length} Spieltage</div>
+        </div>
+        <div class="phase-count">${phase.matchdays.reduce((sum, d) => sum + d.matches.length, 0)} Paarungen</div>
+      `;
+
+      const grid = document.createElement("div");
+      grid.className = "matchday-grid";
+
+      phase.matchdays.forEach(matchday => {
+        grid.appendChild(createMatchdayCard(matchday));
+      });
+
+      card.appendChild(head);
+      card.appendChild(grid);
+
+      return card;
+    }
+
+    function renderPage() {
+      const parsed = parseSchedule(PAGE_DATA.raw);
+      phaseGrid.innerHTML = "";
+
+      const themes = ["theme-hinrunde", "theme-rueckrunde"];
+
+      parsed.phases.forEach((phase, index) => {
+        phaseGrid.appendChild(createPhaseCard(phase, themes[index % themes.length]));
+      });
+
+      if (parsed.warnings.length) {
+        warningText.textContent = parsed.warnings[0];
+        warningPill.classList.add("show");
+      } else {
+        warningPill.classList.remove("show");
+      }
+    }
+
+    renderPage();
+  </script>
 </body>
 </html>
