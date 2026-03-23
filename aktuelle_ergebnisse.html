@@ -25,9 +25,9 @@
       --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
       --max-width: 1440px;
-      --table-font-size: 13px;
+      --table-font-size: 12.8px;
       --table-cell-padding-y: 8px;
-      --table-cell-padding-x: 8px;
+      --table-cell-padding-x: 7px;
     }
 
     * {
@@ -158,9 +158,9 @@
     .site {
       position: relative;
       z-index: 2;
-      width: min(var(--max-width), calc(100% - 24px));
+      width: min(var(--max-width), calc(100% - 22px));
       margin: 0 auto;
-      padding: 16px 0 40px;
+      padding: 14px 0 34px;
     }
 
     .topbar {
@@ -177,7 +177,7 @@
       gap: 12px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.14);
       backdrop-filter: blur(14px);
       box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
@@ -199,7 +199,7 @@
     .back-link {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.76);
       border: 1px solid rgba(122, 146, 182, 0.14);
       color: var(--text-soft);
       font-size: 0.94rem;
@@ -213,9 +213,9 @@
 
     .page {
       position: relative;
-      padding: 22px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.78));
+      padding: 20px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80));
       border: 1px solid var(--border);
       backdrop-filter: blur(24px);
       box-shadow: var(--shadow-xl);
@@ -285,15 +285,15 @@
     .intro {
       max-width: 72ch;
       color: var(--text-soft);
-      line-height: 1.6;
-      font-size: 0.98rem;
+      line-height: 1.55;
+      font-size: 0.96rem;
       margin: 12px 0 0;
     }
 
     .date-pill {
       padding: 14px 18px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.76);
+      background: rgba(255,255,255,0.78);
       border: 1px solid rgba(122,146,182,0.14);
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
       min-width: 220px;
@@ -310,7 +310,7 @@
     }
 
     .date-value {
-      font-size: 1.24rem;
+      font-size: 1.22rem;
       font-weight: 800;
       letter-spacing: -0.04em;
     }
@@ -318,35 +318,16 @@
     .results-panel {
       position: relative;
       z-index: 1;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.58);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.60);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: var(--shadow-lg);
-      padding: 14px;
-    }
-
-    .hint-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .hint-pill {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(122,146,182,0.14);
-      color: #667997;
-      font-size: 0.86rem;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+      padding: 12px;
     }
 
     .warning-pill {
       display: none;
+      margin-bottom: 12px;
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255, 184, 77, 0.18);
@@ -365,14 +346,14 @@
 
     .sections-grid {
       display: grid;
-      gap: 16px;
+      gap: 14px;
     }
 
     .table-card {
       position: relative;
-      border-radius: 24px;
+      border-radius: 22px;
       overflow: hidden;
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.80);
       border: 1px solid rgba(122,146,182,0.12);
       box-shadow: 0 16px 36px rgba(35, 58, 100, 0.06);
     }
@@ -386,25 +367,25 @@
         radial-gradient(circle at 8% 15%, var(--accent-a), transparent 24%),
         radial-gradient(circle at 90% 20%, var(--accent-b), transparent 22%),
         radial-gradient(circle at 78% 88%, var(--accent-c), transparent 26%);
-      opacity: 0.7;
+      opacity: 0.78;
     }
 
-    .theme-1 {
-      --accent-a: rgba(91,124,255,0.18);
-      --accent-b: rgba(255,92,159,0.14);
-      --accent-c: rgba(51,198,255,0.14);
+    .theme-spieltag {
+      --accent-a: rgba(91,124,255,0.22);
+      --accent-b: rgba(255,92,159,0.16);
+      --accent-c: rgba(51,198,255,0.16);
     }
 
-    .theme-2 {
-      --accent-a: rgba(255,184,77,0.18);
-      --accent-b: rgba(255,92,159,0.14);
-      --accent-c: rgba(138,92,255,0.14);
+    .theme-einzel {
+      --accent-a: rgba(255,184,77,0.22);
+      --accent-b: rgba(255,92,159,0.16);
+      --accent-c: rgba(138,92,255,0.16);
     }
 
-    .theme-3 {
-      --accent-a: rgba(55,201,151,0.18);
-      --accent-b: rgba(49,182,255,0.14);
-      --accent-c: rgba(91,124,255,0.14);
+    .theme-team {
+      --accent-a: rgba(55,201,151,0.22);
+      --accent-b: rgba(49,182,255,0.16);
+      --accent-c: rgba(91,124,255,0.16);
     }
 
     .table-head {
@@ -412,12 +393,12 @@
       z-index: 1;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
       flex-wrap: wrap;
-      padding: 16px 18px 14px;
+      padding: 14px 16px 12px;
       border-bottom: 1px solid rgba(122,146,182,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(248,251,255,0.60));
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(248,251,255,0.64));
       backdrop-filter: blur(8px);
     }
 
@@ -428,14 +409,14 @@
 
     .table-title {
       margin: 0;
-      font-size: 1.12rem;
+      font-size: 1.08rem;
       font-weight: 800;
       letter-spacing: -0.03em;
     }
 
     .table-subtitle {
       color: var(--text-soft);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
     }
 
@@ -448,12 +429,46 @@
     .stat-chip {
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.86);
+      background: rgba(255,255,255,0.88);
       border: 1px solid rgba(122,146,182,0.12);
       color: #596f93;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 800;
       box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .stacked-tables {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      padding: 0 0 2px;
+    }
+
+    .subtable-shell {
+      border-top: 1px solid rgba(122,146,182,0.08);
+    }
+
+    .subtable-shell:first-child {
+      border-top: 0;
+    }
+
+    .subtable-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 12px 16px 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.76), rgba(247,250,255,0.58));
+      border-bottom: 1px solid rgba(122,146,182,0.08);
+    }
+
+    .subtable-title {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .table-wrap {
@@ -470,6 +485,7 @@
       font-size: var(--table-font-size);
       user-select: text;
       -webkit-user-select: text;
+      font-variant-numeric: tabular-nums;
     }
 
     .table-wrap thead th {
@@ -483,7 +499,7 @@
       border-bottom: 1px solid rgba(122,146,182,0.12);
       border-right: 1px solid rgba(122,146,182,0.06);
       vertical-align: middle;
-      line-height: 1.2;
+      line-height: 1.15;
       word-break: break-word;
     }
 
@@ -492,11 +508,11 @@
       border-bottom: 1px solid rgba(122,146,182,0.08);
       border-right: 1px solid rgba(122,146,182,0.05);
       background: rgba(255,255,255,0.88);
-      transition: background 0.18s ease;
       vertical-align: middle;
-      line-height: 1.2;
+      line-height: 1.15;
       word-break: break-word;
       text-align: center;
+      transition: filter 0.18s ease, box-shadow 0.18s ease;
     }
 
     .table-wrap tbody tr:nth-child(even) td {
@@ -504,12 +520,11 @@
     }
 
     .table-wrap tbody tr:hover td {
-      background: rgba(236,243,255,0.98);
+      filter: brightness(0.985);
     }
 
     .table-wrap tbody tr.is-selected td {
-      background: rgba(223,235,255,0.98) !important;
-      box-shadow: inset 0 0 0 1px rgba(91,124,255,0.14);
+      box-shadow: inset 0 0 0 1px rgba(91,124,255,0.18), inset 0 0 0 999px rgba(91,124,255,0.05);
     }
 
     .table-wrap td.text-left,
@@ -517,32 +532,148 @@
       text-align: left;
     }
 
-    .table-wrap td.rank,
-    .table-wrap th.rank {
+    .table-wrap .col-rank { width: 5.5%; font-weight: 800; }
+    .table-wrap .col-trend { width: 6%; }
+    .table-wrap .col-name { width: 12%; }
+    .table-wrap .col-team { width: 14%; }
+    .table-wrap .col-short { width: 7%; }
+    .table-wrap .col-medium { width: 8%; }
+    .table-wrap .col-long { width: 9%; }
+    .table-wrap .col-round { width: 10%; }
+    .table-wrap .col-result { width: 7%; font-weight: 800; }
+
+    .table-wrap .muted-cell {
+      color: #9aa7bc;
+    }
+
+    .separator-row td {
+      font-size: 0.95em;
       font-weight: 800;
-      width: 6%;
+      color: #7587a7;
+      background: linear-gradient(180deg, rgba(243,248,255,0.92), rgba(238,245,255,0.92)) !important;
+      letter-spacing: 0.08em;
+      padding-top: 6px;
+      padding-bottom: 6px;
     }
 
-    .table-wrap td.name-col,
-    .table-wrap th.name-col {
-      width: 16%;
+    .tendency {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.9em;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28);
     }
 
-    .table-wrap td.team-col,
-    .table-wrap th.team-col {
-      width: 18%;
+    .tendency.up {
+      background: linear-gradient(135deg, rgba(55,201,151,0.22), rgba(49,182,255,0.16));
+      color: #107357;
     }
 
-    .table-wrap td.numeric,
-    .table-wrap th.numeric {
-      width: 8.5%;
+    .tendency.down {
+      background: linear-gradient(135deg, rgba(255,92,159,0.20), rgba(255,127,80,0.14));
+      color: #a33a63;
     }
 
-    .empty-state {
-      padding: 28px 18px;
-      text-align: center;
-      color: var(--text-soft);
-      font-weight: 700;
+    .tendency.flat {
+      background: linear-gradient(135deg, rgba(91,124,255,0.18), rgba(138,92,255,0.12));
+      color: #4d62a7;
+    }
+
+    .section-spieltag .table-wrap th.col-game,
+    .section-spieltag .table-wrap td.col-game {
+      background: linear-gradient(180deg, rgba(122, 181, 255, 0.34), rgba(122, 181, 255, 0.18)) !important;
+      color: #184b8f;
+      font-weight: 800;
+    }
+
+    .section-spieltag .table-wrap th.col-total,
+    .section-spieltag .table-wrap td.col-total {
+      background: linear-gradient(180deg, rgba(166, 122, 255, 0.24), rgba(166, 122, 255, 0.10)) !important;
+      color: #6642a3;
+      font-weight: 800;
+    }
+
+    .section-spieltag .table-wrap th.col-average,
+    .section-spieltag .table-wrap td.col-average {
+      background: linear-gradient(180deg, rgba(255, 132, 196, 0.22), rgba(255, 132, 196, 0.10)) !important;
+      color: #a13c73;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-series,
+    .section-einzel .table-wrap td.col-series {
+      background: linear-gradient(180deg, rgba(255, 206, 92, 0.26), rgba(255, 206, 92, 0.10)) !important;
+      color: #946300;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-best,
+    .section-einzel .table-wrap td.col-best {
+      background: linear-gradient(180deg, rgba(255, 132, 196, 0.24), rgba(255, 132, 196, 0.10)) !important;
+      color: #a13c73;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-total,
+    .section-einzel .table-wrap td.col-total {
+      background: linear-gradient(180deg, rgba(91,124,255,0.22), rgba(91,124,255,0.10)) !important;
+      color: #35579c;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-average,
+    .section-einzel .table-wrap td.col-average {
+      background: linear-gradient(180deg, rgba(51,198,255,0.22), rgba(51,198,255,0.10)) !important;
+      color: #0e6e95;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-average-last,
+    .section-einzel .table-wrap td.col-average-last {
+      background: linear-gradient(180deg, rgba(55,201,151,0.22), rgba(55,201,151,0.10)) !important;
+      color: #177355;
+      font-weight: 800;
+    }
+
+    .section-einzel .table-wrap th.col-200,
+    .section-einzel .table-wrap td.col-200 {
+      background: linear-gradient(180deg, rgba(255,184,77,0.22), rgba(255,184,77,0.10)) !important;
+      color: #945b00;
+      font-weight: 800;
+    }
+
+    .section-team .table-wrap th.col-points,
+    .section-team .table-wrap td.col-points,
+    .section-team .table-wrap th.col-result,
+    .section-team .table-wrap td.col-result {
+      background: linear-gradient(180deg, rgba(255,184,77,0.24), rgba(255,184,77,0.10)) !important;
+      color: #945b00;
+      font-weight: 800;
+    }
+
+    .section-team .table-wrap th.col-total,
+    .section-team .table-wrap td.col-total {
+      background: linear-gradient(180deg, rgba(138,92,255,0.22), rgba(138,92,255,0.10)) !important;
+      color: #6642a3;
+      font-weight: 800;
+    }
+
+    .section-team .table-wrap th.col-average,
+    .section-team .table-wrap td.col-average {
+      background: linear-gradient(180deg, rgba(255,132,196,0.22), rgba(255,132,196,0.10)) !important;
+      color: #a13c73;
+      font-weight: 800;
+    }
+
+    .section-team .table-wrap th.col-round,
+    .section-team .table-wrap td.col-round {
+      background: linear-gradient(180deg, rgba(51,198,255,0.24), rgba(51,198,255,0.10)) !important;
+      color: #0e6e95;
+      font-weight: 800;
     }
 
     .actions {
@@ -604,44 +735,42 @@
 
     @media (max-width: 980px) {
       .topbar,
-      .header,
-      .hint-row {
+      .header {
         flex-direction: column;
         align-items: stretch;
       }
 
       .site {
-        width: min(var(--max-width), calc(100% - 14px));
+        width: min(var(--max-width), calc(100% - 12px));
       }
 
       .page {
-        padding: 16px;
-        border-radius: 22px;
+        padding: 14px;
       }
     }
 
     @media (max-width: 700px) {
       :root {
-        --table-font-size: 10.5px;
-        --table-cell-padding-y: 6px;
-        --table-cell-padding-x: 4px;
+        --table-font-size: 9.6px;
+        --table-cell-padding-y: 5px;
+        --table-cell-padding-x: 3px;
       }
 
       .site {
         width: 100%;
-        padding: 0 0 26px;
+        padding: 0 0 22px;
       }
 
       .topbar {
-        padding: 10px 10px 0;
-        margin-bottom: 10px;
+        padding: 10px 8px 0;
+        margin-bottom: 8px;
       }
 
       .page {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        padding: 12px 8px 16px;
+        padding: 10px 4px 14px;
       }
 
       h1 {
@@ -649,58 +778,43 @@
       }
 
       .intro {
-        font-size: 0.92rem;
+        font-size: 0.9rem;
       }
 
       .results-panel {
-        padding: 10px;
-        border-radius: 18px;
+        padding: 8px 4px;
+        border-radius: 16px;
       }
 
       .table-card {
-        border-radius: 18px;
+        border-radius: 16px;
       }
 
-      .table-head {
-        padding: 12px 12px 10px;
+      .table-head,
+      .subtable-head {
+        padding-left: 8px;
+        padding-right: 8px;
       }
 
       .table-title {
-        font-size: 1rem;
+        font-size: 0.98rem;
       }
 
-      .table-subtitle {
-        font-size: 0.8rem;
-      }
-
-      .stats-chips {
-        gap: 6px;
-      }
-
-      .stat-chip {
-        font-size: 0.76rem;
-        padding: 7px 10px;
-      }
-
-      .hint-pill,
+      .table-subtitle,
+      .stat-chip,
       .warning-pill {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
       }
 
-      .table-wrap td.name-col,
-      .table-wrap th.name-col {
-        width: 17%;
-      }
-
-      .table-wrap td.team-col,
-      .table-wrap th.team-col {
-        width: 19%;
-      }
-
-      .table-wrap td.numeric,
-      .table-wrap th.numeric {
-        width: 8.2%;
-      }
+      .table-wrap .col-rank { width: 5%; }
+      .table-wrap .col-trend { width: 5.5%; }
+      .table-wrap .col-name { width: 12.5%; }
+      .table-wrap .col-team { width: 14.5%; }
+      .table-wrap .col-short { width: 7%; }
+      .table-wrap .col-medium { width: 8%; }
+      .table-wrap .col-long { width: 8.5%; }
+      .table-wrap .col-round { width: 9.5%; }
+      .table-wrap .col-result { width: 6.5%; }
 
       .actions {
         flex-direction: column;
@@ -715,19 +829,24 @@
 
     @media (max-width: 430px) {
       :root {
-        --table-font-size: 9.5px;
-        --table-cell-padding-y: 5px;
-        --table-cell-padding-x: 3px;
+        --table-font-size: 8.35px;
+        --table-cell-padding-y: 4px;
+        --table-cell-padding-x: 2px;
       }
 
       .brand,
       .back-link {
-        font-size: 0.86rem;
+        font-size: 0.84rem;
       }
 
       .table-wrap thead th,
       .table-wrap tbody td {
         letter-spacing: 0;
+      }
+
+      .tendency {
+        min-width: 26px;
+        padding: 3px 5px;
       }
     }
 
@@ -790,9 +909,9 @@
       </div>
 
       <div class="results-panel">
-        <div class="hint-row">
-          <span class="hint-pill">Rohdaten aus Excel direkt einfügen – Tabs oder mehrere Leerzeichen werden erkannt</span>
-          <span class="warning-pill" id="warningPill"><i class="fa-solid fa-triangle-exclamation"></i><span id="warningText"></span></span>
+        <div class="warning-pill" id="warningPill">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span id="warningText"></span>
         </div>
 
         <div class="sections-grid" id="sectionsGrid"></div>
@@ -815,36 +934,27 @@
   </main>
 
   <script>
-    /*
-      ============================================================
-      NUR DIESEN BLOCK FÜR NEUE SPIELTAGE ÄNDERN
-      ============================================================
-      Du kannst hier Excel-Rohdaten direkt einfügen.
-      Unterstützt:
-      - Tabs aus Excel
-      - mehrere Leerzeichen
-      - Zeilen wie "Spieltag 10"
-      - Zusatzinfos wie "Bestes Spiel:" und "Hausligaschnitt:"
-    */
-
     const PAGE_DATA = {
       title: "Spieltag 10",
-      date: "bitte eintragen",
+      date: "18.03.2026",
       sections: [
         {
-          label: "Tagesergebnisse",
-          raw: `Spieltag 10								
+          type: "table",
+          key: "spieltag",
+          theme: "theme-spieltag",
+          label: "Spieltag 10",
+          raw: `Spieltag 10
 Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
 1	Tomber	Pin Bomber	214	179	180	159	732	183,0
 2	Benno	Die Abräumer	168	203	179	167	717	179,3
 3	Skampy	PIN FIGHTER	163	184	198	171	716	179,0
 4	Rene	Die Abräumer	152	223	138	202	715	178,8
-5	Vegas	Pitchers	161	182	157	170	670	167,5
-6	Thomas	Pitchers	158	142	178	178	170	164,0
-7	Micha	Pin Bomber	154	139	195	163	651	162,8
-8	Maik	Die 3 Blinden	138	202	146	157	643	160,8
-9	Diana	Die Abräumer	149	181	168	145	643	160,8
-10	Rainsen	Donnerbälle	158	189	139	154	640	160,0
+5	Vegas	Pitchers	161	182	157	180	680	170,0
+6	Micha	Pin Bomber	154	139	195	163	651	162,8
+7	Maik	Die 3 Blinden	138	202	146	157	643	160,8
+8	Diana	Die Abräumer	149	181	168	145	643	160,8
+9	Rainsen	Donnerbälle	158	189	139	154	640	160,0
+10	Thomas	Pitchers	158	142	0	178	478	159,3
 11	Karola	PIN FIGHTER	173	158	132	159	622	155,5
 12	Günni	Die 3 Blinden	140	148	150	159	597	149,3
 13	Ralf	Donnerbälle	173	133	118	170	594	148,5
@@ -853,36 +963,85 @@ Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
 16	Ismene	Donnerbälle	137	125	130	112	504	126,0
 17	Simone	Gummibande	126	112	112	126	476	119,0
 18	Dirk	PIN FIGHTER	122	107	0	0	229	114,5
-19								
-20								
-21								
-22								
-23								
-24								
-Bestes Spiel:					Rene	223		
-Hausligaschnitt:					154,8			
-`
+19
+20
+21
+22
+23
+24
+Bestes Spiel:					Rene	223
+Hausligaschnitt:					154,6`
         },
         {
+          type: "table",
+          key: "einzel",
+          theme: "theme-einzel",
           label: "Einzelwertung",
-          raw: `Platz	Name	Spiele	Pins Gesamt	⌀
-1	Max Mustermann	10	6020	602,0
-2	Erika Beispiel	10	5880	588,0`
+          raw: `Einzelwertung
+Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
+1	0	Skampy	PIN FIGHTER	28	775	224	4988	178,1	171,1	7
+2	0	Rainsen	Donnerbälle	36	774	224	6177	171,6	170,4	4
+3	0	Rene	Die Abräumer	36	758	223	6111	169,8	170,0	5
+4	1	Vegas	Pitchers	36	788	243	6013	167,0	161,4	2
+5	-1	Maik	Die 3 Blinden	40	744	239	6662	166,6	169,7	6
+6	0	Tomber	Pin Bomber	35	732	214	5778	165,1	180,3	2
+7	0	Micha	Pin Bomber	36	696	199	5776	160,4	0,0
+8	0	Toni	Die 3 Blinden	16	665	207	2562	160,1	156,4	1
+9	0	Diana	Die Abräumer	40	698	201	6403	160,1	159,6	1
+10	1	Thomas	Pitchers	40	677	191	6369	159,2	147,8
+11	-1	Karola	PIN FIGHTER	40	703	202	6346	158,7	154,2	1
+12	1	Detlef	Stranger Pins	16	663	178	2406	150,4	0,0
+13	-1	Ismene	Donnerbälle	36	655	212	5395	149,9	141,8	2
+14	4	Benno	Die Abräumer	36	717	203	5362	148,9	144,3	1
+15	-1	Günni	Die 3 Blinden	40	690	199	5957	148,9	145,4
+16	-2	Ralf	Donnerbälle	40	673	182	5954	148,9	147,2
+17	-1	Günter	Gummibande	40	634	195	5866	146,7	153,6
+18	-1	Tom	Stranger Pins	24	723	248	3501	145,9	150,3	1
+19	0	Dirk	PIN FIGHTER	34	660	186	4870	143,2	133,2
+20	0	Ingolf	Pin Bomber	36	671	184	4983	138,4	142,1
+21	0	Dieter	Pitchers	32	620	180	4400	137,5	143,8
+22	0	Simone	Gummibande	32	528	151	3803	118,8	112,7
+23	0	Denise	Stranger Pins	24	453	142	2606	108,6	0,0
+24
+Bestes Spiel:		Tom	248
+Hausligaschnitt:		152,3`
         },
         {
+          type: "composite",
+          key: "team",
+          theme: "theme-team",
           label: "Teamwertung",
-          raw: `Platz	Team	Spieltage	Pins Gesamt	Punkte
-1	Pin Bomber	10	9211	64
-2	Die Abräumer	10	9033	58`
+          top: {
+            label: "Mannschaftswertung",
+            raw: `Platz	Tendenz	Team	Punkte	Pins	Spieltage	⌀
+1	0	Die Abräumer	72	19096	10	159,1
+2	0	PIN FIGHTER	68	19024	10	158,5
+3	0	Pin Bomber	60	18542	10	154,5
+4	0	Pitchers	58	18562	10	154,7
+5	0	Die 3 Blinden	50	18901	10	157,5
+6	0	Donnerbälle	44	18754	10	156,3
+7	0	Gummibande	27	17389	10	144,9
+8	0	Stranger Pins	21	17620	10	146,8`
+          },
+          bottom: {
+            label: "10. Spieltag · 18.03.2026",
+            raw: `Team	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
+PIN FIGHTER	458 + 18	449 + 20	470	470	1885	10
+⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	⚔️
+Donnerbälle	468 + 3	447 + 15	387 + 10	436 + 20	1786	0
+Pitchers	459	464	475	488	1886	8
+⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	⚔️
+Die 3 Blinden	433	505	451	471	1860	2
+Die Abräumer	469	607	485	514	2075	10
+⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	⚔️
+Gummibande	416 + 14	421 + 20	428 + 20	462 + 14	1795	0
+Pin Bomber	481 + 20	457 + 1	533	429 + 20	1941	6
+⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	⚔️
+Stranger Pins	460	460	460	460	1840	4`
+          }
         }
       ]
     };
-
-    /*
-      ============================================================
-      AB HIER FÜR NORMALE DATENPFLEGE NICHTS ÄNDERN
-      ============================================================
-    */
 
     const pageTitle = document.getElementById("pageTitle");
     const pageDate = document.getElementById("pageDate");
@@ -908,14 +1067,19 @@ Hausligaschnitt:					154,8
 
     function isSingleTitleLine(line) {
       const trimmed = line.trim();
-      return /^Spieltag\b/i.test(trimmed) && !trimmed.includes("\t") && !/\s{2,}/.test(trimmed);
+      return !trimmed.includes("\t") && !/\s{2,}/.test(trimmed) && /[A-Za-zÄÖÜäöü]/.test(trimmed);
+    }
+
+    function isSeparatorRow(cells) {
+      const filled = cells.filter(Boolean);
+      return filled.length > 0 && filled.every(cell => /^⚔️+$|^⚔️$/u.test(cell));
     }
 
     function parseStatLine(line) {
       const parts = splitColumns(line).filter(Boolean);
       if (!parts.length) return null;
 
-      const first = parts[0].replace(/:$/, "").trim();
+      const first = (parts[0] || "").replace(/:$/, "").trim();
 
       if (/^Bestes Spiel$/i.test(first)) {
         return {
@@ -934,31 +1098,34 @@ Hausligaschnitt:					154,8
       return null;
     }
 
-    function guessColumnClass(header, index, totalCols) {
-      const h = header.toLowerCase();
-
-      if (index === 0 || h.includes("platz")) return "rank";
-      if (h.includes("name")) return "name-col text-left";
-      if (h.includes("team")) return "team-col text-left";
-
-      if (
-        h.includes("spiel") ||
-        h.includes("pins") ||
-        h.includes("schnitt") ||
-        h.includes("⌀") ||
-        h.includes("punkte") ||
-        h.includes("gesamt") ||
-        h.includes("spiele") ||
-        /^\d+$/.test(h)
-      ) {
-        return "numeric";
-      }
-
-      if (totalCols >= 7 && index > 2) return "numeric";
-      return "text-left";
+    function headerKey(value) {
+      return (value || "").toLowerCase().trim();
     }
 
-    function parseSection(rawText, fallbackLabel) {
+    function getColumnClass(sectionKey, header) {
+      const h = headerKey(header);
+
+      if (h.includes("platz")) return "col-rank";
+      if (h.includes("tendenz")) return "col-trend";
+      if (h === "name") return "col-name text-left";
+      if (h === "team") return "col-team text-left";
+      if (h.startsWith("spiel ")) return "col-game col-short";
+      if (h.startsWith("runde ")) return "col-round";
+      if (h.includes("beste serie")) return "col-series col-medium";
+      if (h.includes("bestes spiel")) return "col-best col-medium";
+      if (h.includes("pins gesamt")) return "col-total col-long";
+      if (h === "pins") return "col-total col-long";
+      if (h.includes("gesamt")) return "col-total col-long";
+      if (h === "punkte") return "col-points col-medium";
+      if (h === "ergebnis") return "col-result";
+      if (h.includes("letzte saison")) return "col-average-last col-medium";
+      if (h.includes("> 200")) return "col-200 col-medium";
+      if (h.includes("⌀") || h.includes("schnitt")) return "col-average col-medium";
+      if (h === "spiele" || h === "spieltage") return "col-short";
+      return "col-medium";
+    }
+
+    function parseTableRaw(rawText, fallbackLabel) {
       const lines = rawText
         .replace(/\r/g, "")
         .split("\n")
@@ -970,10 +1137,12 @@ Hausligaschnitt:					154,8
       let rows = [];
       let stats = [];
       let warnings = [];
+      let titleConsumed = false;
 
       for (const line of lines) {
-        if (isSingleTitleLine(line)) {
+        if (!titleConsumed && isSingleTitleLine(line) && !line.includes("Platz")) {
           sectionTitle = line.trim();
+          titleConsumed = true;
           continue;
         }
 
@@ -988,6 +1157,15 @@ Hausligaschnitt:					154,8
         if (!cells.length) continue;
         if (isMostlyEmptyRow(cells)) continue;
 
+        if (isSeparatorRow(cells)) {
+          if (headers.length) {
+            const normalized = [...cells];
+            while (normalized.length < headers.length) normalized.push("⚔️");
+            rows.push({ type: "separator", cells: normalized.slice(0, headers.length) });
+          }
+          continue;
+        }
+
         if (!headers.length) {
           headers = cells.filter(cell => cell !== "");
           continue;
@@ -1000,11 +1178,11 @@ Hausligaschnitt:					154,8
         }
 
         if (cleanCells.length > headers.length) {
-          warnings.push(`Zeile mit zu vielen Werten gefunden in „${fallbackLabel}“.`);
+          warnings.push(`Zeile mit zu vielen Werten in „${fallbackLabel}“ erkannt.`);
           cleanCells = cleanCells.slice(0, headers.length);
         }
 
-        rows.push(cleanCells);
+        rows.push({ type: "data", cells: cleanCells });
       }
 
       if (!headers.length) {
@@ -1014,7 +1192,43 @@ Hausligaschnitt:					154,8
       return { sectionTitle, headers, rows, stats, warnings };
     }
 
-    function createTableElement(parsed) {
+    function renderTendency(value) {
+      const num = Number(String(value).replace(",", "."));
+      const span = document.createElement("span");
+      span.className = "tendency";
+
+      if (num > 0) {
+        span.classList.add("up");
+        span.textContent = `+${num}`;
+      } else if (num < 0) {
+        span.classList.add("down");
+        span.textContent = `${num}`;
+      } else {
+        span.classList.add("flat");
+        span.textContent = "0";
+      }
+
+      return span;
+    }
+
+    function createCellContent(sectionKey, header, value) {
+      const h = headerKey(header);
+
+      if (h.includes("tendenz") && value !== "") {
+        return renderTendency(value);
+      }
+
+      const span = document.createElement("span");
+      span.textContent = value;
+
+      if (value === "" || value === "0,0") {
+        span.classList.add("muted-cell");
+      }
+
+      return span;
+    }
+
+    function createTableElement(parsed, sectionKey) {
       if (!parsed.headers.length) {
         const empty = document.createElement("div");
         empty.className = "empty-state";
@@ -1027,10 +1241,10 @@ Hausligaschnitt:					154,8
       const thead = document.createElement("thead");
       const headRow = document.createElement("tr");
 
-      parsed.headers.forEach((header, index) => {
+      parsed.headers.forEach(header => {
         const th = document.createElement("th");
         th.textContent = header;
-        th.className = guessColumnClass(header, index, parsed.headers.length);
+        th.className = getColumnClass(sectionKey, header);
         headRow.appendChild(th);
       });
 
@@ -1041,19 +1255,28 @@ Hausligaschnitt:					154,8
 
       parsed.rows.forEach(row => {
         const tr = document.createElement("tr");
+        tr.className = row.type === "separator" ? "separator-row" : "data-row";
 
-        row.forEach((cell, index) => {
+        row.cells.forEach((cell, index) => {
           const td = document.createElement("td");
-          td.textContent = cell;
-          td.className = guessColumnClass(parsed.headers[index] || "", index, parsed.headers.length);
+          td.className = getColumnClass(sectionKey, parsed.headers[index] || "");
+
+          if (row.type === "separator") {
+            td.textContent = cell || "⚔️";
+          } else {
+            td.appendChild(createCellContent(sectionKey, parsed.headers[index] || "", cell));
+          }
+
           tr.appendChild(td);
         });
 
-        tr.addEventListener("click", () => {
-          const selected = tr.classList.contains("is-selected");
-          tbody.querySelectorAll("tr").forEach(r => r.classList.remove("is-selected"));
-          if (!selected) tr.classList.add("is-selected");
-        });
+        if (row.type === "data") {
+          tr.addEventListener("click", () => {
+            const selected = tr.classList.contains("is-selected");
+            tbody.querySelectorAll(".data-row").forEach(r => r.classList.remove("is-selected"));
+            if (!selected) tr.classList.add("is-selected");
+          });
+        }
 
         tbody.appendChild(tr);
       });
@@ -1062,9 +1285,27 @@ Hausligaschnitt:					154,8
       return table;
     }
 
-    function createSectionCard(parsed, themeClass) {
+    function createStatsChips(stats) {
+      if (!stats.length) return null;
+
+      const wrap = document.createElement("div");
+      wrap.className = "stats-chips";
+
+      stats.forEach(stat => {
+        const chip = document.createElement("div");
+        chip.className = "stat-chip";
+        chip.textContent = `${stat.label}: ${stat.value}`;
+        wrap.appendChild(chip);
+      });
+
+      return wrap;
+    }
+
+    function createStandardSection(section) {
+      const parsed = parseTableRaw(section.raw, section.label);
+
       const card = document.createElement("section");
-      card.className = `table-card ${themeClass}`;
+      card.className = `table-card ${section.theme} section-${section.key}`;
 
       const head = document.createElement("div");
       head.className = "table-head";
@@ -1078,34 +1319,92 @@ Hausligaschnitt:					154,8
 
       const subtitle = document.createElement("div");
       subtitle.className = "table-subtitle";
-      subtitle.textContent = `${parsed.rows.length} Zeilen · ${parsed.headers.length} Spalten`;
+      subtitle.textContent = `${parsed.rows.filter(r => r.type === "data").length} Zeilen · ${parsed.headers.length} Spalten`;
 
       titleWrap.appendChild(title);
       titleWrap.appendChild(subtitle);
       head.appendChild(titleWrap);
 
-      if (parsed.stats.length) {
-        const statsWrap = document.createElement("div");
-        statsWrap.className = "stats-chips";
-
-        parsed.stats.forEach(stat => {
-          const chip = document.createElement("div");
-          chip.className = "stat-chip";
-          chip.textContent = `${stat.label}: ${stat.value}`;
-          statsWrap.appendChild(chip);
-        });
-
-        head.appendChild(statsWrap);
-      }
+      const stats = createStatsChips(parsed.stats);
+      if (stats) head.appendChild(stats);
 
       const wrap = document.createElement("div");
       wrap.className = "table-wrap";
-      wrap.appendChild(createTableElement(parsed));
+      wrap.appendChild(createTableElement(parsed, section.key));
 
       card.appendChild(head);
       card.appendChild(wrap);
 
-      return card;
+      return { element: card, warnings: parsed.warnings };
+    }
+
+    function createCompositeSection(section) {
+      const topParsed = parseTableRaw(section.top.raw, section.top.label);
+      const bottomParsed = parseTableRaw(section.bottom.raw, section.bottom.label);
+
+      const card = document.createElement("section");
+      card.className = `table-card ${section.theme} section-${section.key}`;
+
+      const head = document.createElement("div");
+      head.className = "table-head";
+
+      const titleWrap = document.createElement("div");
+      titleWrap.className = "table-title-wrap";
+
+      const title = document.createElement("h2");
+      title.className = "table-title";
+      title.textContent = section.label;
+
+      const subtitle = document.createElement("div");
+      subtitle.className = "table-subtitle";
+      subtitle.textContent = "Mannschaftswertung und Spieltagsduelle";
+
+      titleWrap.appendChild(title);
+      titleWrap.appendChild(subtitle);
+      head.appendChild(titleWrap);
+
+      card.appendChild(head);
+
+      const stacked = document.createElement("div");
+      stacked.className = "stacked-tables";
+
+      const topShell = document.createElement("div");
+      topShell.className = "subtable-shell";
+
+      const topHead = document.createElement("div");
+      topHead.className = "subtable-head";
+      topHead.innerHTML = `<h3 class="subtable-title">${topParsed.sectionTitle}</h3>`;
+
+      const topWrap = document.createElement("div");
+      topWrap.className = "table-wrap";
+      topWrap.appendChild(createTableElement(topParsed, section.key));
+
+      topShell.appendChild(topHead);
+      topShell.appendChild(topWrap);
+
+      const bottomShell = document.createElement("div");
+      bottomShell.className = "subtable-shell";
+
+      const bottomHead = document.createElement("div");
+      bottomHead.className = "subtable-head";
+      bottomHead.innerHTML = `<h3 class="subtable-title">${section.bottom.label}</h3>`;
+
+      const bottomWrap = document.createElement("div");
+      bottomWrap.className = "table-wrap";
+      bottomWrap.appendChild(createTableElement(bottomParsed, section.key));
+
+      bottomShell.appendChild(bottomHead);
+      bottomShell.appendChild(bottomWrap);
+
+      stacked.appendChild(topShell);
+      stacked.appendChild(bottomShell);
+
+      card.appendChild(stacked);
+
+      return {
+        element: card,
+        warnings: [...topParsed.warnings, ...bottomParsed.warnings]
+      };
     }
 
     function renderPage() {
@@ -1114,17 +1413,23 @@ Hausligaschnitt:					154,8
 
       sectionsGrid.innerHTML = "";
 
-      const themes = ["theme-1", "theme-2", "theme-3"];
-      const allWarnings = [];
+      const warnings = [];
 
-      PAGE_DATA.sections.forEach((section, index) => {
-        const parsed = parseSection(section.raw, section.label);
-        allWarnings.push(...parsed.warnings);
-        sectionsGrid.appendChild(createSectionCard(parsed, themes[index % themes.length]));
+      PAGE_DATA.sections.forEach(section => {
+        let built;
+
+        if (section.type === "composite") {
+          built = createCompositeSection(section);
+        } else {
+          built = createStandardSection(section);
+        }
+
+        warnings.push(...built.warnings);
+        sectionsGrid.appendChild(built.element);
       });
 
-      if (allWarnings.length) {
-        warningText.textContent = allWarnings[0];
+      if (warnings.length) {
+        warningText.textContent = warnings[0];
         warningPill.classList.add("show");
       } else {
         warningPill.classList.remove("show");
