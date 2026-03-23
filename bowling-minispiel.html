@@ -716,16 +716,16 @@
       border: 1px solid rgba(122,146,182,0.14);
     }
 
-    .leaderboard-wrap {
+    .-wrap {
       padding: 12px;
     }
 
-    .leaderboard-list {
+    .-list {
       display: grid;
       gap: 8px;
     }
 
-    .leaderboard-row {
+    .-row {
       display: grid;
       grid-template-columns: 52px 1fr auto;
       gap: 10px;
@@ -737,7 +737,7 @@
       box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04);
     }
 
-    .leaderboard-rank {
+    .-rank {
       width: 40px;
       height: 40px;
       display: grid;
@@ -749,19 +749,19 @@
       font-size: 0.92rem;
     }
 
-    .leaderboard-name {
+    .-name {
       font-weight: 800;
       color: #1d355c;
       overflow-wrap: anywhere;
     }
 
-    .leaderboard-score {
+    .-score {
       font-weight: 900;
       font-size: 1rem;
       color: #16203d;
     }
 
-    .leaderboard-empty {
+    .-empty {
       padding: 16px;
       border-radius: 16px;
       background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
@@ -770,7 +770,7 @@
       font-weight: 700;
     }
 
-    .leaderboard-note {
+    .-note {
       margin-top: 10px;
       color: #7384a0;
       font-size: 0.84rem;
@@ -828,13 +828,13 @@
       font-size: 0.96rem;
     }
 
-    .leaderboard-form {
+    .-form {
       display: grid;
       gap: 10px;
       margin-top: 16px;
     }
 
-    .leaderboard-input {
+    .-input {
       width: 100%;
       border: 1px solid rgba(122,146,182,0.16);
       border-radius: 16px;
@@ -847,7 +847,7 @@
       outline: none;
     }
 
-    .leaderboard-input:focus {
+    .-input:focus {
       border-color: rgba(91, 124, 255, 0.35);
       box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
     }
@@ -997,7 +997,7 @@
         font-size: 0.78rem;
       }
 
-      .leaderboard-row {
+      .-row {
         grid-template-columns: 44px 1fr auto;
       }
 
@@ -1056,15 +1056,15 @@
             <span>Mini-Spiel</span>
           </div>
 
-          <h1>Echte Frames. <span class="headline-accent">Gemeinsames Leaderboard.</span></h1>
+          <h1>Echte Frames. <span class="headline-accent">Gemeinsames .</span></h1>
 
           <p class="intro">
-            Die Punktetafel sitzt jetzt direkt oben über der Bahn. Das Leaderboard wird gemeinsam über Firebase gespeichert und live aktualisiert.
+            Die Punktetafel sitzt jetzt direkt oben über der Bahn. Das  wird gemeinsam über Firebase gespeichert und live aktualisiert.
           </p>
         </div>
 
         <div class="info-pill">
-          <span class="info-label">Leaderboard</span>
+          <span class="info-label"></span>
           <div class="info-value">Top 10 · gemeinsam</div>
         </div>
       </div>
@@ -1130,14 +1130,14 @@
         <section class="card">
           <div class="card-head">
             <div class="card-title-wrap">
-              <h2 class="card-title">Leaderboard</h2>
+              <h2 class="card-title"></h2>
               <div class="card-subtitle">Top 10 aller Spieler</div>
             </div>
-            <div class="badge" id="leaderboardBadge">live</div>
+            <div class="badge" id="Badge">live</div>
           </div>
 
-          <div class="leaderboard-wrap">
-            <div class="leaderboard-list" id="leaderboardList"></div>
+          <div class="-wrap">
+            <div class="-list" id="List"></div>
             <div class="leaderboard-note" id="leaderboardNote">
               Gemeinsames Leaderboard über Firebase. Wenn hier nichts gespeichert wird, blockieren sehr wahrscheinlich deine Realtime-Database-Rules die Zugriffe.
             </div>
@@ -1204,7 +1204,22 @@
 
     const database = firebase.database();
     const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
+async function testFirebaseWrite() {
+  try {
+    const testRef = leaderboardRef.push();
+    await testRef.set({
+      name: "TEST",
+      score: 123,
+      createdAt: Date.now()
+    });
 
+    alert("Firebase-Schreibtest erfolgreich.");
+    console.log("Firebase-Schreibtest erfolgreich.");
+  } catch (error) {
+    console.error("Firebase-Schreibtest fehlgeschlagen:", error);
+    alert("Firebase-Schreibtest fehlgeschlagen: " + error.message);
+  }
+}
     const PIN_LAYOUT = [
   { id: 0, x: 0.50, row: 3 },
   { id: 1, x: 0.46, row: 2 },
@@ -1669,16 +1684,21 @@
       return true;
     }
 
-    function startLeaderboardListener() {
-      leaderboardRef.on("value", snapshot => {
-        leaderboardEntries = normalizeLeaderboardEntries(snapshot.val());
-        renderLeaderboard();
-        leaderboardBadge.textContent = "live";
-      }, error => {
-        leaderboardBadge.textContent = "Fehler";
-        leaderboardNote.textContent = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
-      });
-    }
+    testFirebaseWrite();
+    
+   function startLeaderboardListener() {
+  leaderboardRef.on("value", snapshot => {
+    console.log("Leaderboard-Daten empfangen:", snapshot.val());
+    leaderboardEntries = normalizeLeaderboardEntries(snapshot.val());
+    renderLeaderboard();
+    leaderboardBadge.textContent = "live";
+  }, error => {
+    console.error("Leaderboard-Listener fehlgeschlagen:", error);
+    leaderboardBadge.textContent = "Fehler";
+    leaderboardNote.textContent = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
+    alert("Leaderboard-Lesen fehlgeschlagen: " + error.message);
+  });
+}
 
     function showModal(title, text, allowForm) {
       modalTitle.textContent = title;
@@ -1967,31 +1987,40 @@
     }
 
     leaderboardForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
+  event.preventDefault();
 
-      const name = leaderboardNameInput.value.trim();
-      const score = getFinalScore();
+  const name = leaderboardNameInput.value.trim();
+  const score = getFinalScore();
 
-      if (!name) {
-        leaderboardNameInput.focus();
-        return;
-      }
+  if (!name) {
+    alert("Bitte einen Namen eingeben.");
+    leaderboardNameInput.focus();
+    return;
+  }
 
-      try {
-        const saved = await submitLeaderboardEntry(name, score);
+  try {
+    console.log("Submit gestartet", { name, score });
 
-        if (!saved) {
-          hideModal();
-          showFlash("ZU WENIG PUNKTE");
-          return;
-        }
+    const saved = await submitLeaderboardEntry(name, score);
 
-        hideModal();
-        showFlash("EINGETRAGEN");
-      } catch (error) {
-        modalText.textContent = `Speichern fehlgeschlagen: ${error.message}`;
-      }
-    });
+    if (!saved) {
+      console.warn("Nicht fürs Leaderboard qualifiziert.", { name, score });
+      hideModal();
+      showFlash("ZU WENIG PUNKTE");
+      alert("Nicht genug Punkte für die Top 10.");
+      return;
+    }
+
+    console.log("Leaderboard-Eintrag gespeichert.", { name, score });
+    hideModal();
+    showFlash("EINGETRAGEN");
+    alert("Eintrag gespeichert.");
+  } catch (error) {
+    console.error("Leaderboard-Speichern fehlgeschlagen:", error);
+    modalText.textContent = `Speichern fehlgeschlagen: ${error.message}`;
+    alert("Firebase-Fehler: " + error.message);
+  }
+});
 
     playAgainBtn.addEventListener("click", () => {
       hideModal();
