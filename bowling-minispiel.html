@@ -645,21 +645,21 @@
     .ball.dragging { cursor: grabbing; }
 
     .flash-message {
-      position: absolute;
-      left: 50%;
-      top: 214px;
-      transform: translateX(-50%) scale(0.9);
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(91,124,255,0.92), rgba(255,92,159,0.88));
-      color: #fff;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      box-shadow: 0 16px 28px rgba(35, 58, 100, 0.16);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 4;
-    }
+  position: absolute;
+  left: 50%;
+  top: 214px;
+  transform: translateX(-50%) scale(0.9);
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(91,124,255,0.96), rgba(255,92,159,0.92));
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  box-shadow: 0 16px 28px rgba(35, 58, 100, 0.16);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 80;
+}
 
     .flash-message.show { animation: messagePop 1.2s ease forwards; }
 
@@ -1257,6 +1257,53 @@ const PIN_LAYOUT = [
     let stageWidth = 800;
     let stageHeight = 620;
     let leaderboardEntries = [];
+    let audioCtx = null;
+
+function ensureAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+}
+
+function playTone(frequency, duration, type = "sine", volume = 0.04, delay = 0) {
+  if (!audioCtx) return;
+
+  const now = audioCtx.currentTime + delay;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = type;
+  osc.frequency.setValueAtTime(frequency, now);
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + duration + 0.03);
+}
+
+function playHitSound() {
+  playTone(180, 0.08, "triangle", 0.05, 0);
+  playTone(120, 0.12, "sine", 0.03, 0.02);
+}
+
+function playStrikeSound() {
+  playTone(440, 0.10, "triangle", 0.05, 0.00);
+  playTone(660, 0.12, "triangle", 0.05, 0.08);
+  playTone(880, 0.16, "triangle", 0.05, 0.18);
+}
+
+function playSpareSound() {
+  playTone(420, 0.10, "sine", 0.05, 0.00);
+  playTone(560, 0.14, "sine", 0.05, 0.10);
+}
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -1812,6 +1859,7 @@ el.style.zIndex = String(10 + pin.row);
         if (frame.throws.length === 1) {
           if (pinsDown === 10) {
             showFlash("STRIKE");
+            playStrikeSound();
             standingPins = fullRackSet();
             renderPins([]);
             setTimeout(() => advanceToNextFrame(), 820);
@@ -1825,6 +1873,7 @@ el.style.zIndex = String(10 + pin.row);
 
         if (frame.throws[0] + frame.throws[1] === 10) {
           showFlash("SPARE");
+          playSpareSound();
         }
 
         standingPins = fullRackSet();
@@ -1899,12 +1948,13 @@ el.style.zIndex = String(10 + pin.row);
   let impactTriggered = false;
 
   function triggerImpact() {
-    if (impactTriggered) return;
-    impactTriggered = true;
+  if (impactTriggered) return;
+  impactTriggered = true;
 
-    standingPins = new Set([...standingPins].filter(id => !knockedPins.includes(id)));
-    renderPins(knockedPins);
-  }
+  standingPins = new Set([...standingPins].filter(id => !knockedPins.includes(id)));
+  renderPins(knockedPins);
+  playHitSound();
+}
 
   function frame(now) {
     const t = clamp((now - start) / 950, 0, 1);
@@ -1954,6 +2004,8 @@ el.style.zIndex = String(10 + pin.row);
     }
 
     function handlePointerDown(event) {
+      ensureAudio();
+      
       if (!canThrow()) return;
       isDragging = true;
       dragPointerId = event.pointerId;
