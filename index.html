@@ -18,29 +18,15 @@
 
   <style>
     :root {
-      --bg: #f7fbff;
       --text: #0f172a;
       --text-soft: #60728f;
       --border: rgba(119, 145, 185, 0.14);
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
-      --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
       --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08);
       --max-width: 1180px;
-      --accent-blue: rgba(91, 124, 255, 0.48);
-      --accent-cyan: rgba(51, 198, 255, 0.42);
-      --accent-pink: rgba(255, 92, 159, 0.48);
-      --accent-purple: rgba(138, 92, 255, 0.46);
-      --accent-gold: rgba(255, 184, 77, 0.42);
-      --accent-green: rgba(55, 201, 151, 0.42);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -104,7 +90,7 @@
 
     .bg-shape {
       position: absolute;
-      opacity: 0.34;
+      opacity: 0.26;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
@@ -323,33 +309,18 @@
       color: var(--text-soft);
     }
 
-    .hero-mini {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(122, 146, 182, 0.12);
-      font-size: 0.94rem;
-      font-weight: 700;
-      color: #4d6288;
-      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
-    }
-
     .hero-visual {
       position: relative;
-      min-height: 388px;
+      min-height: 360px;
       display: grid;
       place-items: center;
       z-index: 1;
     }
 
-    .lane-game {
+    .preview-lane {
       position: relative;
       width: min(100%, 450px);
-      height: 346px;
+      height: 310px;
       border-radius: 40px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.94), rgba(245,249,255,0.78)),
@@ -359,11 +330,9 @@
         inset 0 1px 0 rgba(255,255,255,0.76),
         0 18px 40px rgba(35, 58, 100, 0.08);
       overflow: hidden;
-      user-select: none;
-      touch-action: none;
     }
 
-    .lane-game::before {
+    .preview-lane::before {
       content: "";
       position: absolute;
       inset: 16px;
@@ -377,7 +346,7 @@
       opacity: 0.55;
     }
 
-    .lane-game::after {
+    .preview-lane::after {
       content: "";
       position: absolute;
       width: 180px;
@@ -387,20 +356,18 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
       transform: rotate(12deg);
       animation: shine 8s linear infinite;
-      pointer-events: none;
     }
 
-    .pins-target {
+    .preview-pins {
       position: absolute;
-      top: 26px;
+      top: 28px;
       left: 50%;
       transform: translateX(-50%);
       width: 196px;
       height: 146px;
-      pointer-events: none;
     }
 
-    .game-pin {
+    .preview-pin {
       position: absolute;
       width: 28px;
       height: 76px;
@@ -410,10 +377,10 @@
         inset 0 0 0 1px rgba(150,170,205,0.14),
         0 8px 14px rgba(35, 58, 100, 0.06);
       transform-origin: center 86%;
-      transition: transform 0.7s cubic-bezier(.2,.8,.2,1), opacity 0.6s ease;
+      animation: pinBump 4.8s ease-in-out infinite;
     }
 
-    .game-pin::before {
+    .preview-pin::before {
       content: "";
       position: absolute;
       top: 10px;
@@ -431,80 +398,23 @@
           rgba(255,104,142,0.82) 100%);
     }
 
-    .game-pin.p1  { left: 84px;  top: 0; }
-    .game-pin.p2  { left: 63px;  top: 20px; }
-    .game-pin.p3  { left: 105px; top: 20px; }
-    .game-pin.p4  { left: 42px;  top: 40px; }
-    .game-pin.p5  { left: 84px;  top: 40px; }
-    .game-pin.p6  { left: 126px; top: 40px; }
-    .game-pin.p7  { left: 21px;  top: 60px; }
-    .game-pin.p8  { left: 63px;  top: 60px; }
-    .game-pin.p9  { left: 105px; top: 60px; }
-    .game-pin.p10 { left: 147px; top: 60px; }
+    .preview-pin.p1  { left: 84px;  top: 0; }
+    .preview-pin.p2  { left: 63px;  top: 20px; animation-delay: -.3s; }
+    .preview-pin.p3  { left: 105px; top: 20px; animation-delay: -.6s; }
+    .preview-pin.p4  { left: 42px;  top: 40px; animation-delay: -.8s; }
+    .preview-pin.p5  { left: 84px;  top: 40px; animation-delay: -.4s; }
+    .preview-pin.p6  { left: 126px; top: 40px; animation-delay: -.7s; }
+    .preview-pin.p7  { left: 21px;  top: 60px; animation-delay: -1s; }
+    .preview-pin.p8  { left: 63px;  top: 60px; animation-delay: -.2s; }
+    .preview-pin.p9  { left: 105px; top: 60px; animation-delay: -.5s; }
+    .preview-pin.p10 { left: 147px; top: 60px; animation-delay: -.9s; }
 
-    .game-pin.bump {
-      animation: pinBump 0.55s ease;
-    }
-
-    .fall-left  { transform: translate(-24px, 20px) rotate(-64deg) scale(0.94); opacity: 0.72; }
-    .fall-right { transform: translate(24px, 20px) rotate(64deg) scale(0.94); opacity: 0.72; }
-    .fall-back  { transform: translate(0, 26px) rotate(18deg) scale(0.90); opacity: 0.66; }
-    .fall-spin  { transform: translate(10px, 28px) rotate(108deg) scale(0.86); opacity: 0.62; }
-
-    .fx-layer {
+    .preview-ball {
       position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .spark {
-      position: absolute;
-      left: var(--x);
-      top: var(--y);
-      font-size: var(--size);
-      color: var(--color);
-      text-shadow: 0 0 14px rgba(255,255,255,0.55);
-      opacity: 0;
-      animation: burst 1100ms ease-out forwards;
-      transform: translate(-50%, -50%);
-    }
-
-    .result-badge {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) scale(0.74);
-      padding: 14px 20px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(122, 146, 182, 0.16);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 16px 32px rgba(35, 58, 100, 0.10);
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      color: #60728f;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      white-space: nowrap;
-      z-index: 4;
-    }
-
-    .result-badge.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      animation: resultPulse 0.8s ease;
-    }
-
-    .result-badge.strike {
-      color: #ff5c9f;
-    }
-
-    .game-ball {
-      position: absolute;
-      width: 84px;
-      height: 84px;
+      left: 44px;
+      bottom: 34px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       background:
         radial-gradient(circle at 38% 35%, rgba(15,23,42,0.22) 0 5px, transparent 6px),
@@ -515,13 +425,10 @@
         inset -14px -14px 24px rgba(255,255,255,0.24),
         inset 12px 12px 22px rgba(255,255,255,0.14),
         0 16px 26px rgba(65,85,130,0.18);
-      cursor: grab;
-      z-index: 3;
-      transition: left 0.25s ease, top 0.25s ease, transform 0.25s ease;
-      touch-action: none;
+      animation: previewRoll 7s ease-in-out infinite;
     }
 
-    .game-ball::after {
+    .preview-ball::after {
       content: "";
       position: absolute;
       top: 12px;
@@ -532,38 +439,16 @@
       background: radial-gradient(circle, rgba(255,255,255,0.76), rgba(255,255,255,0.10) 72%, transparent 74%);
     }
 
-    .game-ball.dragging {
-      cursor: grabbing;
-      transform: scale(1.04);
-      transition: none;
-    }
-
-    .ball-shadow {
+    .preview-shadow {
       position: absolute;
-      width: 72px;
+      left: 52px;
+      bottom: 22px;
+      width: 70px;
       height: 14px;
       border-radius: 50%;
       background: rgba(43, 59, 94, 0.14);
       filter: blur(8px);
-      z-index: 1;
-      transition: left 0.25s ease, top 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
-    }
-
-    .helper-text {
-      position: absolute;
-      left: 50%;
-      bottom: 12px;
-      transform: translateX(-50%);
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(122, 146, 182, 0.12);
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #647791;
-      backdrop-filter: blur(12px);
-      z-index: 4;
-      white-space: nowrap;
+      animation: previewShadow 7s ease-in-out infinite;
     }
 
     .nav-section {
@@ -574,7 +459,7 @@
 
     .blob-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 26px 20px;
     }
 
@@ -601,10 +486,7 @@
 
     .blob-layer {
       position: absolute;
-      inset: auto;
-      display: block;
       opacity: 1;
-      filter: saturate(1.08);
       transform-origin: center;
       will-change: transform, border-radius;
       box-shadow: 0 12px 34px rgba(35, 58, 100, 0.05);
@@ -639,75 +521,26 @@
       animation-delay: -3.6s;
     }
 
-    .shape-a .layer-1,
-    .shape-a .layer-2,
-    .shape-a .layer-3 {
-      border-radius: 48% 52% 58% 42% / 44% 38% 62% 56%;
-    }
-
-    .shape-b .layer-1,
-    .shape-b .layer-2,
-    .shape-b .layer-3 {
-      border-radius: 58% 42% 46% 54% / 48% 61% 39% 52%;
-    }
-
-    .shape-c .layer-1,
-    .shape-c .layer-2,
-    .shape-c .layer-3 {
-      border-radius: 43% 57% 52% 48% / 57% 42% 58% 43%;
-    }
-
-    .shape-d .layer-1,
-    .shape-d .layer-2,
-    .shape-d .layer-3 {
-      border-radius: 54% 46% 40% 60% / 50% 54% 46% 50%;
-    }
-
-    .shape-e .layer-1,
-    .shape-e .layer-2,
-    .shape-e .layer-3 {
-      border-radius: 47% 53% 61% 39% / 41% 56% 44% 59%;
-    }
-
-    .shape-f .layer-1,
-    .shape-f .layer-2,
-    .shape-f .layer-3 {
-      border-radius: 57% 43% 49% 51% / 60% 41% 59% 40%;
-    }
+    .shape-a .layer-1, .shape-a .layer-2, .shape-a .layer-3 { border-radius: 48% 52% 58% 42% / 44% 38% 62% 56%; }
+    .shape-b .layer-1, .shape-b .layer-2, .shape-b .layer-3 { border-radius: 58% 42% 46% 54% / 48% 61% 39% 52%; }
+    .shape-c .layer-1, .shape-c .layer-2, .shape-c .layer-3 { border-radius: 43% 57% 52% 48% / 57% 42% 58% 43%; }
+    .shape-d .layer-1, .shape-d .layer-2, .shape-d .layer-3 { border-radius: 54% 46% 40% 60% / 50% 54% 46% 50%; }
+    .shape-e .layer-1, .shape-e .layer-2, .shape-e .layer-3 { border-radius: 47% 53% 61% 39% / 41% 56% 44% 59%; }
+    .shape-f .layer-1, .shape-f .layer-2, .shape-f .layer-3 { border-radius: 57% 43% 49% 51% / 60% 41% 59% 40%; }
+    .shape-g .layer-1, .shape-g .layer-2, .shape-g .layer-3 { border-radius: 52% 48% 56% 44% / 46% 56% 44% 54%; }
 
     .blob-dot {
       position: absolute;
-      display: block;
       border-radius: 50%;
       background: var(--blob-dot);
       opacity: 0.9;
-      filter: blur(0.2px);
       box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04);
       animation: dotFloat 6.8s ease-in-out infinite;
     }
 
-    .blob-dot.dot-1 {
-      width: 18px;
-      height: 18px;
-      left: 2%;
-      top: 34%;
-    }
-
-    .blob-dot.dot-2 {
-      width: 28px;
-      height: 28px;
-      right: 6%;
-      top: 18%;
-      animation-delay: -1.4s;
-    }
-
-    .blob-dot.dot-3 {
-      width: 14px;
-      height: 14px;
-      left: 24%;
-      bottom: 10%;
-      animation-delay: -2.4s;
-    }
+    .blob-dot.dot-1 { width: 18px; height: 18px; left: 2%; top: 34%; }
+    .blob-dot.dot-2 { width: 28px; height: 28px; right: 6%; top: 18%; animation-delay: -1.4s; }
+    .blob-dot.dot-3 { width: 14px; height: 14px; left: 24%; bottom: 10%; animation-delay: -2.4s; }
 
     .blob-content {
       position: relative;
@@ -795,6 +628,13 @@
       --blob-main-soft: rgba(49,182,255,0.26);
       --blob-main-faint: rgba(55,201,151,0.20);
       --blob-dot: rgba(55,201,151,0.38);
+    }
+
+    .theme-game {
+      --blob-main: rgba(88,111,255,0.46);
+      --blob-main-soft: rgba(255,92,159,0.26);
+      --blob-main-faint: rgba(51,198,255,0.20);
+      --blob-dot: rgba(255,92,159,0.36);
     }
 
     .theme-archive {
@@ -917,24 +757,20 @@
       50% { transform: translateY(-6px) scale(1.08); }
     }
 
-    @keyframes burst {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.4);
-      }
-      18% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)) scale(1.2);
-      }
+    @keyframes previewRoll {
+      0%   { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+      25%  { transform: translateX(62px) translateY(-4px) rotate(160deg) scale(1.01); }
+      50%  { transform: translateX(128px) translateY(0) rotate(320deg) scale(0.98); }
+      75%  { transform: translateX(196px) translateY(-3px) rotate(520deg) scale(1.01); }
+      100% { transform: translateX(250px) translateY(-8px) rotate(720deg) scale(0.84); }
     }
 
-    @keyframes resultPulse {
-      0% { transform: translate(-50%, -50%) scale(0.72); }
-      55% { transform: translate(-50%, -50%) scale(1.08); }
-      100% { transform: translate(-50%, -50%) scale(1); }
+    @keyframes previewShadow {
+      0%   { transform: translateX(0) scale(1); opacity: 0.16; }
+      25%  { transform: translateX(62px) scale(1.03); opacity: 0.14; }
+      50%  { transform: translateX(128px) scale(0.98); opacity: 0.12; }
+      75%  { transform: translateX(196px) scale(0.94); opacity: 0.10; }
+      100% { transform: translateX(250px) scale(0.86); opacity: 0.08; }
     }
 
     @keyframes pinBump {
@@ -946,10 +782,6 @@
 
     @media (max-width: 1100px) {
       .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .blob-grid {
         grid-template-columns: 1fr;
       }
 
@@ -984,11 +816,7 @@
       }
 
       .hero-visual {
-        min-height: 340px;
-      }
-
-      .lane-game {
-        height: 324px;
+        min-height: 320px;
       }
 
       .blob-link,
@@ -1013,25 +841,6 @@
         width: 100%;
         min-width: 0;
       }
-
-      .helper-text {
-        font-size: 0.78rem;
-        bottom: 10px;
-      }
-
-      .bg-shape {
-        opacity: 0.26;
-      }
-
-      .ball-bg {
-        width: calc(var(--size, 120px) * 0.72);
-        height: calc(var(--size, 120px) * 0.72);
-      }
-
-      .pin-bg {
-        width: calc(var(--w, 56px) * 0.72);
-        height: calc(var(--h, 164px) * 0.72);
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1039,12 +848,11 @@
       .bg-shape,
       .blob-layer,
       .blob-dot,
-      .lane-game::after {
+      .preview-ball,
+      .preview-shadow,
+      .preview-pin,
+      .preview-lane::after {
         animation: none !important;
-      }
-
-      html {
-        scroll-behavior: auto;
       }
     }
   </style>
@@ -1090,34 +898,24 @@
           <p>
             Alle wichtigen Bereiche direkt erreichbar – vom aktuellen Stand bis zum Archiv.
           </p>
-
-          <div class="hero-mini">
-            <i class="fa-solid fa-hand-pointer"></i>
-            <span>Ball ziehen und die Pocket treffen</span>
-          </div>
         </div>
 
         <div class="hero-visual">
-          <div class="lane-game" id="laneGame" aria-label="Bowling-Mini-Spiel">
-            <div class="pins-target" id="pinsTarget">
-              <div class="game-pin p1"></div>
-              <div class="game-pin p2"></div>
-              <div class="game-pin p3"></div>
-              <div class="game-pin p4"></div>
-              <div class="game-pin p5"></div>
-              <div class="game-pin p6"></div>
-              <div class="game-pin p7"></div>
-              <div class="game-pin p8"></div>
-              <div class="game-pin p9"></div>
-              <div class="game-pin p10"></div>
+          <div class="preview-lane" aria-hidden="true">
+            <div class="preview-pins">
+              <div class="preview-pin p1"></div>
+              <div class="preview-pin p2"></div>
+              <div class="preview-pin p3"></div>
+              <div class="preview-pin p4"></div>
+              <div class="preview-pin p5"></div>
+              <div class="preview-pin p6"></div>
+              <div class="preview-pin p7"></div>
+              <div class="preview-pin p8"></div>
+              <div class="preview-pin p9"></div>
+              <div class="preview-pin p10"></div>
             </div>
-
-            <div class="fx-layer" id="fxLayer"></div>
-            <div class="result-badge" id="resultBadge"></div>
-
-            <div class="ball-shadow" id="ballShadow"></div>
-            <div class="game-ball" id="gameBall" role="button" aria-label="Bowlingball ziehen"></div>
-            <div class="helper-text" id="helperText">Hochziehen und loslassen</div>
+            <div class="preview-shadow"></div>
+            <div class="preview-ball"></div>
           </div>
         </div>
       </div>
@@ -1209,6 +1007,23 @@
             </div>
           </a>
 
+          <a class="blob-link shape-g theme-game" href="bowling-minispiel.html">
+            <div class="blob-shell">
+              <span class="blob-layer layer-1"></span>
+              <span class="blob-layer layer-2"></span>
+              <span class="blob-layer layer-3"></span>
+              <span class="blob-dot dot-1"></span>
+              <span class="blob-dot dot-2"></span>
+              <span class="blob-dot dot-3"></span>
+            </div>
+            <div class="blob-content">
+              <span class="blob-icon"><i class="fas fa-bowling-ball"></i></span>
+              <h3 class="blob-title">Mini-Spiel</h3>
+              <p class="blob-text">Eigene Bowling-Seite mit längerer Bahn, rollendem Ball und skillbasiertem Treffer.</p>
+              <div class="blob-tail">Öffnen</div>
+            </div>
+          </a>
+
           <div class="blob-panel shape-f theme-archive">
             <div class="blob-shell">
               <span class="blob-layer layer-1"></span>
@@ -1242,353 +1057,5 @@
 
     <p class="footer-note">Strikeclub Velten</p>
   </main>
-
-  <script>
-    (function () {
-      const lane = document.getElementById("laneGame");
-      const ball = document.getElementById("gameBall");
-      const shadow = document.getElementById("ballShadow");
-      const pinsTarget = document.getElementById("pinsTarget");
-      const pins = Array.from(document.querySelectorAll(".game-pin"));
-      const fxLayer = document.getElementById("fxLayer");
-      const resultBadge = document.getElementById("resultBadge");
-      const helperText = document.getElementById("helperText");
-
-      let dragging = false;
-      let locked = false;
-      let offsetX = 0;
-      let offsetY = 0;
-      let currentX = 0;
-      let currentY = 0;
-      let trail = [];
-
-      const ballSize = 84;
-      const fallClasses = ["fall-left", "fall-right", "fall-back", "fall-spin"];
-
-      let startX = 24;
-      let startY = 244;
-
-      function clamp(value, min, max) {
-        return Math.max(min, Math.min(max, value));
-      }
-
-      function laneMetrics() {
-        const laneRect = lane.getBoundingClientRect();
-        const targetRect = pinsTarget.getBoundingClientRect();
-
-        const targetCenterX = targetRect.left - laneRect.left + targetRect.width / 2;
-        const targetCenterY = targetRect.top - laneRect.top + targetRect.height / 2;
-
-        return {
-          width: lane.clientWidth,
-          height: lane.clientHeight,
-          targetCenterX,
-          targetCenterY,
-          targetX: targetCenterX - ballSize / 2,
-          targetY: targetCenterY - ballSize / 2 + 8
-        };
-      }
-
-      function setBallPosition(x, y, instant = false) {
-        currentX = x;
-        currentY = y;
-
-        if (instant) {
-          ball.style.transition = "none";
-          shadow.style.transition = "none";
-        } else {
-          ball.style.transition = "left 0.28s ease, top 0.28s ease, transform 0.28s ease";
-          shadow.style.transition = "left 0.28s ease, top 0.28s ease, transform 0.28s ease, opacity 0.28s ease";
-        }
-
-        ball.style.left = `${x}px`;
-        ball.style.top = `${y}px`;
-        ball.style.transform = "scale(1)";
-
-        shadow.style.left = `${x + 7}px`;
-        shadow.style.top = `${y + 64}px`;
-        shadow.style.opacity = "0.16";
-        shadow.style.transform = "scale(1)";
-      }
-
-      function resetPins() {
-        pins.forEach(pin => {
-          pin.classList.remove("bump", "fall-left", "fall-right", "fall-back", "fall-spin");
-        });
-      }
-
-      function clearEffects() {
-        fxLayer.innerHTML = "";
-        resultBadge.classList.remove("show", "strike");
-        resultBadge.textContent = "";
-      }
-
-      function resetGame(immediate = false) {
-        clearEffects();
-        resetPins();
-        locked = false;
-        dragging = false;
-        trail = [];
-        ball.classList.remove("dragging");
-        helperText.style.opacity = "1";
-        setBallPosition(startX, startY, immediate);
-      }
-
-      function createStrikeEffects() {
-        const colors = ["#ff5c9f", "#5b7cff", "#33c6ff", "#ffb84d", "#ffffff"];
-        const symbols = ["✦", "✶", "★", "•", "✷"];
-
-        for (let i = 0; i < 28; i++) {
-          const spark = document.createElement("span");
-          spark.className = "spark";
-          spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-          spark.style.setProperty("--x", "50%");
-          spark.style.setProperty("--y", "34%");
-          spark.style.setProperty("--dx", `${(Math.random() - 0.5) * 280}px`);
-          spark.style.setProperty("--dy", `${(Math.random() - 0.5) * 190}px`);
-          spark.style.setProperty("--rot", `${(Math.random() - 0.5) * 220}deg`);
-          spark.style.setProperty("--size", `${12 + Math.random() * 22}px`);
-          spark.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
-          spark.style.animationDelay = `${Math.random() * 120}ms`;
-          fxLayer.appendChild(spark);
-        }
-      }
-
-      function recordPoint(x, y) {
-        trail.push({ x, y, t: performance.now() });
-        if (trail.length > 6) trail.shift();
-      }
-
-      function getReleaseData() {
-        if (trail.length < 2) {
-          return { vx: 0, vy: 0, speed: 0 };
-        }
-
-        const first = trail[0];
-        const last = trail[trail.length - 1];
-        const dt = Math.max(16, last.t - first.t);
-
-        const vx = (last.x - first.x) / dt;
-        const vy = (first.y - last.y) / dt;
-        const speed = Math.hypot(vx, vy);
-
-        return { vx, vy, speed };
-      }
-
-      function evaluateShot() {
-        const metrics = laneMetrics();
-        const ballCenterX = currentX + ballSize / 2;
-        const ballCenterY = currentY + ballSize / 2;
-
-        const release = getReleaseData();
-
-        const pocketX = metrics.targetCenterX + 18;
-        const xDiff = Math.abs(ballCenterX - pocketX);
-
-        const accuracy = clamp(1 - xDiff / 110, 0, 1);
-        const progress = clamp((metrics.height - ballCenterY) / 210, 0, 1);
-        const upwardSpeed = clamp(release.vy / 1.15, 0, 1);
-        const straightness = clamp(1 - Math.abs(release.vx) / 1.15, 0, 1);
-
-        const skill =
-          accuracy * 0.52 +
-          progress * 0.23 +
-          upwardSpeed * 0.15 +
-          straightness * 0.10;
-
-        let count = 0;
-        let label = "DANEBEN";
-        let strike = false;
-
-        if (progress < 0.18) {
-          count = 0;
-        } else if (skill >= 0.86 && xDiff < 32 && progress > 0.50) {
-          count = 10;
-          strike = true;
-          label = "STRIKE!";
-        } else if (skill >= 0.76) {
-          count = 9;
-          label = "9 PINS";
-        } else if (skill >= 0.68) {
-          count = 8;
-          label = "8 PINS";
-        } else if (skill >= 0.60) {
-          count = 7;
-          label = "7 PINS";
-        } else if (skill >= 0.52) {
-          count = 6;
-          label = "6 PINS";
-        } else if (skill >= 0.44) {
-          count = 5;
-          label = "5 PINS";
-        } else if (skill >= 0.36) {
-          count = 4;
-          label = "4 PINS";
-        } else if (skill >= 0.28) {
-          count = 3;
-          label = "3 PINS";
-        } else if (skill >= 0.20) {
-          count = 2;
-          label = "2 PINS";
-        } else if (skill >= 0.12) {
-          count = 1;
-          label = "1 PIN";
-        }
-
-        return { count, strike, label, skill, xDiff, progress, pocketX };
-      }
-
-      function applyPinAnimation(count) {
-        const order = [0, 1, 2, 4, 3, 5, 7, 8, 6, 9];
-
-        if (count <= 0) {
-          pins.forEach((pin, index) => {
-            setTimeout(() => pin.classList.add("bump"), index * 24);
-          });
-          return;
-        }
-
-        order.slice(0, count).forEach((pinIndex, i) => {
-          const pin = pins[pinIndex];
-          const fallClass = fallClasses[i % fallClasses.length];
-          setTimeout(() => pin.classList.add(fallClass), i * 42);
-        });
-
-        order.slice(count).forEach((pinIndex, i) => {
-          const pin = pins[pinIndex];
-          setTimeout(() => pin.classList.add("bump"), i * 18);
-        });
-      }
-
-      function showResult(text, isStrike) {
-        resultBadge.textContent = text;
-        resultBadge.classList.toggle("strike", isStrike);
-        resultBadge.classList.add("show");
-      }
-
-      function finishThrow(result) {
-        locked = true;
-        helperText.style.opacity = "0";
-
-        applyPinAnimation(result.count);
-        showResult(result.label, result.strike);
-
-        if (result.strike) {
-          createStrikeEffects();
-        }
-
-        setTimeout(() => {
-          resetGame(false);
-        }, result.strike ? 2400 : 1650);
-      }
-
-      function animateToPins(result) {
-        const metrics = laneMetrics();
-        const ballCenterX = currentX + ballSize / 2;
-        const horizontalOffset = clamp((ballCenterX - result.pocketX) * 0.18, -28, 28);
-
-        const targetX = metrics.targetX + horizontalOffset;
-        const targetY = metrics.targetY;
-
-        ball.style.transition = "left 0.58s cubic-bezier(.2,.8,.2,1), top 0.58s cubic-bezier(.2,.8,.2,1), transform 0.58s cubic-bezier(.2,.8,.2,1)";
-        shadow.style.transition = "left 0.58s cubic-bezier(.2,.8,.2,1), top 0.58s cubic-bezier(.2,.8,.2,1), transform 0.58s cubic-bezier(.2,.8,.2,1), opacity 0.58s ease";
-
-        ball.style.left = `${targetX}px`;
-        ball.style.top = `${targetY}px`;
-        ball.style.transform = "scale(0.84) rotate(420deg)";
-
-        shadow.style.left = `${targetX + 4}px`;
-        shadow.style.top = `${targetY + 58}px`;
-        shadow.style.opacity = "0.08";
-        shadow.style.transform = "scale(0.82)";
-
-        currentX = targetX;
-        currentY = targetY;
-
-        setTimeout(() => {
-          ball.style.transform = "scale(0.9)";
-          finishThrow(result);
-        }, 600);
-      }
-
-      function onPointerDown(event) {
-        if (locked) return;
-
-        dragging = true;
-        clearEffects();
-        resetPins();
-        trail = [];
-        ball.classList.add("dragging");
-        helperText.style.opacity = "0.36";
-
-        const laneRect = lane.getBoundingClientRect();
-        const ballRect = ball.getBoundingClientRect();
-
-        offsetX = event.clientX - ballRect.left;
-        offsetY = event.clientY - ballRect.top;
-
-        ball.setPointerCapture(event.pointerId);
-        ball.style.transition = "none";
-        shadow.style.transition = "none";
-
-        recordPoint(event.clientX - laneRect.left, event.clientY - laneRect.top);
-      }
-
-      function onPointerMove(event) {
-        if (!dragging || locked) return;
-
-        const laneRect = lane.getBoundingClientRect();
-        const maxX = lane.clientWidth - ballSize - 12;
-        const maxY = lane.clientHeight - ballSize - 18;
-
-        const nextX = clamp(event.clientX - laneRect.left - offsetX, 12, maxX);
-        const nextY = clamp(event.clientY - laneRect.top - offsetY, 16, maxY);
-
-        currentX = nextX;
-        currentY = nextY;
-
-        ball.style.left = `${nextX}px`;
-        ball.style.top = `${nextY}px`;
-        ball.style.transform = "scale(1.04)";
-
-        shadow.style.left = `${nextX + 7}px`;
-        shadow.style.top = `${nextY + 64}px`;
-        shadow.style.opacity = "0.13";
-        shadow.style.transform = "scale(1.06)";
-
-        recordPoint(event.clientX - laneRect.left, event.clientY - laneRect.top);
-      }
-
-      function onPointerUp(event) {
-        if (!dragging || locked) return;
-
-        dragging = false;
-        ball.classList.remove("dragging");
-
-        try {
-          ball.releasePointerCapture(event.pointerId);
-        } catch (e) {}
-
-        const result = evaluateShot();
-
-        if (result.progress < 0.18) {
-          resetGame(false);
-          return;
-        }
-
-        animateToPins(result);
-      }
-
-      ball.addEventListener("pointerdown", onPointerDown);
-      window.addEventListener("pointermove", onPointerMove);
-      window.addEventListener("pointerup", onPointerUp);
-
-      window.addEventListener("resize", () => {
-        resetGame(true);
-      });
-
-      resetGame(true);
-    })();
-  </script>
 </body>
 </html>
