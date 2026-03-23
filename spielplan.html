@@ -435,7 +435,7 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      background: rgba(255,255,255,0.84);
+      background: rgba(255,255,255,0.86);
       border: 1px solid rgba(122,146,182,0.10);
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.05);
     }
@@ -450,62 +450,60 @@
         linear-gradient(315deg, rgba(255,92,159,0.06), transparent 34%);
     }
 
-    .matchday-head {
+    .matchday-date-bar {
       position: relative;
       z-index: 1;
-      display: flex;
-      justify-content: space-between;
+      padding: 13px 14px 11px;
+      background: linear-gradient(135deg, rgba(91,124,255,0.96), rgba(255,92,159,0.90));
+      color: #fff;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.18);
+    }
+
+    .matchday-content {
+      position: relative;
+      z-index: 1;
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .lane-block {
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.92));
+      border: 1px solid rgba(122,146,182,0.08);
+      box-shadow: 0 6px 16px rgba(35, 58, 100, 0.04);
+    }
+
+    .lane-title {
+      padding: 10px 12px 8px;
+      background: linear-gradient(135deg, rgba(51,198,255,0.22), rgba(138,92,255,0.18));
+      color: #244f87;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(122,146,182,0.08);
+    }
+
+    .vs-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      padding: 12px 14px 10px;
-      border-bottom: 1px solid rgba(122,146,182,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,251,255,0.68));
-    }
-
-    .matchday-date {
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .matchday-badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(122,146,182,0.10);
-      color: #5f7498;
-      font-size: 0.78rem;
-      font-weight: 800;
-      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
-    }
-
-    .match-list {
-      position: relative;
-      z-index: 1;
-      padding: 8px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .match-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto;
-      gap: 8px;
-      align-items: center;
-      padding: 10px 10px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.90));
-      border: 1px solid rgba(122,146,182,0.08);
+      padding: 12px;
     }
 
     .team-box {
       min-width: 0;
-      padding: 8px 10px;
+      padding: 10px 12px;
       border-radius: 12px;
       background: rgba(255,255,255,0.88);
       border: 1px solid rgba(122,146,182,0.08);
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1.2;
       box-shadow: 0 6px 16px rgba(35, 58, 100, 0.04);
     }
@@ -521,28 +519,28 @@
     }
 
     .vs {
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
       display: inline-grid;
       place-items: center;
       border-radius: 50%;
       background: linear-gradient(135deg, rgba(91,124,255,0.18), rgba(255,92,159,0.16));
       color: #4d6297;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 900;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.30);
     }
 
-    .lane-pill {
-      padding: 8px 10px;
+    .divider {
+      height: 8px;
+      margin: 0 10px 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(51,198,255,0.16), rgba(138,92,255,0.12));
-      color: #2f6094;
-      font-size: 0.8rem;
-      font-weight: 800;
-      border: 1px solid rgba(122,146,182,0.08);
-      white-space: nowrap;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22);
+      background: linear-gradient(90deg, rgba(91,124,255,0.88), rgba(255,92,159,0.82), rgba(51,198,255,0.84));
+      box-shadow: 0 8px 20px rgba(91,124,255,0.12);
+    }
+
+    .lane-block:last-child .divider {
+      display: none;
     }
 
     .actions {
@@ -658,7 +656,7 @@
       }
 
       .phase-head,
-      .matchday-head {
+      .matchday-date-bar {
         padding-left: 10px;
         padding-right: 10px;
       }
@@ -668,17 +666,13 @@
         padding: 10px;
       }
 
-      .match-row {
+      .vs-row {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 8px;
       }
 
       .vs {
         justify-self: center;
-      }
-
-      .lane-pill {
-        justify-self: start;
       }
 
       .actions {
@@ -735,12 +729,10 @@
             <span>Spielplan</span>
           </div>
 
-          <h1 id="pageTitle">
-            Hausliga Velten. <span class="headline-accent">Alle Spieltage im Überblick.</span>
-          </h1>
+          <h1>Hausliga Velten. <span class="headline-accent">Alle Spieltage im Überblick.</span></h1>
 
           <p class="intro">
-            Hinrunde und Rückrunde werden direkt untereinander angezeigt. Jeder Spieltag ist als eigene Karte aufgebaut und kann einfach nach unten durchgescrollt werden.
+            Jeder Spieltag ist in klare Begegnungen aufgeteilt: Datum, Bahn und die jeweilige Paarung direkt darunter.
           </p>
         </div>
 
@@ -777,8 +769,6 @@
 
   <script>
     const PAGE_DATA = {
-      title: "Spielplan 2026",
-      info: "Hausliga Velten",
       raw: `Hinrunde
 Datum	Ansetzung		Bahn
 04.03.2026	Die 3 Blinden	Die Abräumer	1+2
@@ -896,35 +886,21 @@ Datum	Ansetzung		Bahn
       for (const rawLine of lines) {
         const line = rawLine.trimEnd();
 
-        if (line.trim() === "") {
-          continue;
-        }
+        if (line.trim() === "") continue;
 
         if (isPhaseTitle(line)) {
-          currentPhase = {
-            title: line.trim(),
-            matchdays: []
-          };
+          currentPhase = { title: line.trim(), matchdays: [] };
           phases.push(currentPhase);
           currentMatchday = null;
           continue;
         }
 
         const cells = splitColumns(line);
-
-        if (!cells.length) {
-          continue;
-        }
-
-        if (isHeaderLine(cells)) {
-          continue;
-        }
+        if (!cells.length) continue;
+        if (isHeaderLine(cells)) continue;
 
         if (!currentPhase) {
-          currentPhase = {
-            title: "Spielplan",
-            matchdays: []
-          };
+          currentPhase = { title: "Spielplan", matchdays: [] };
           phases.push(currentPhase);
         }
 
@@ -941,17 +917,10 @@ Datum	Ansetzung		Bahn
         }
 
         if (isDate(date)) {
-          currentMatchday = {
-            date,
-            matches: []
-          };
+          currentMatchday = { date, matches: [] };
           currentPhase.matchdays.push(currentMatchday);
         } else if (!currentMatchday) {
           warnings.push("Einige Spielplan-Zeilen konnten keinem Datum zugeordnet werden.");
-          continue;
-        }
-
-        if (!isDate(date) && !currentMatchday) {
           continue;
         }
 
@@ -960,50 +929,46 @@ Datum	Ansetzung		Bahn
           continue;
         }
 
-        currentMatchday.matches.push({
-          teamA,
-          teamB,
-          lane
-        });
+        currentMatchday.matches.push({ teamA, teamB, lane });
       }
 
       return { phases, warnings };
     }
 
-    function createMatchRow(match) {
-      const row = document.createElement("div");
-      row.className = "match-row";
+    function createLaneBlock(match, isLast) {
+      const block = document.createElement("div");
+      block.className = "lane-block";
 
-      row.innerHTML = `
-        <div class="team-box home">${match.teamA}</div>
-        <div class="vs">VS</div>
-        <div class="team-box away">${match.teamB}</div>
-        <div class="lane-pill">Bahn ${match.lane}</div>
+      block.innerHTML = `
+        <div class="lane-title">Bahn ${match.lane}</div>
+        <div class="vs-row">
+          <div class="team-box home">${match.teamA}</div>
+          <div class="vs">VS</div>
+          <div class="team-box away">${match.teamB}</div>
+        </div>
+        ${isLast ? "" : '<div class="divider"></div>'}
       `;
 
-      return row;
+      return block;
     }
 
     function createMatchdayCard(matchday) {
       const card = document.createElement("article");
       card.className = "matchday-card";
 
-      const head = document.createElement("div");
-      head.className = "matchday-head";
-      head.innerHTML = `
-        <div class="matchday-date">${matchday.date}</div>
-        <div class="matchday-badge">${matchday.matches.length} Paarungen</div>
-      `;
+      const dateBar = document.createElement("div");
+      dateBar.className = "matchday-date-bar";
+      dateBar.textContent = matchday.date;
 
-      const list = document.createElement("div");
-      list.className = "match-list";
+      const content = document.createElement("div");
+      content.className = "matchday-content";
 
-      matchday.matches.forEach(match => {
-        list.appendChild(createMatchRow(match));
+      matchday.matches.forEach((match, index) => {
+        content.appendChild(createLaneBlock(match, index === matchday.matches.length - 1));
       });
 
-      card.appendChild(head);
-      card.appendChild(list);
+      card.appendChild(dateBar);
+      card.appendChild(content);
 
       return card;
     }
