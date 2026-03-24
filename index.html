@@ -601,14 +601,17 @@
       box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
     }
 
-    .footer-note {
-      margin-top: 20px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.92rem;
-      padding: 0 8px;
-      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
-    }
+    .footer-note a {
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.28);
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-note a:hover {
+  opacity: 1;
+  border-bottom-color: rgba(255,255,255,0.7);
+}
 
     .refresh-fab {
       position: fixed;
@@ -1023,7 +1026,9 @@
       </section>
     </section>
 
-    <p class="footer-note">Strikeclub Velten</p>
+   <p class="footer-note">
+  Strikeclub Velten · <a href="impressum.html">Impressum</a>
+</p>
   </main>
 
   <button
