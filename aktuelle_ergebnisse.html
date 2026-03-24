@@ -785,7 +785,16 @@
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
       50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
     }
-
+    
+@keyframes refreshSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  
+  to {
+    transform: rotate(360deg);
+  }
+}
     @keyframes backPulse {
   0%, 100% {
     transform: translateX(0);
