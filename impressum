@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum - Strikeclub Velten</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text: #ffffff;
+      --text-soft: rgba(255, 255, 255, 0.88);
+      --max-width: 900px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background: #090d14;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(91, 124, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 80% 18%, rgba(255, 92, 159, 0.16), transparent 24%),
+        radial-gradient(circle at 80% 84%, rgba(51, 198, 255, 0.16), transparent 30%),
+        #090d14;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+    }
+
+    .video-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8, 12, 20, 0.40), rgba(8, 12, 20, 0.62)),
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.14), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.14), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.16), transparent 30%);
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24);
+    }
+
+    .back-link {
+      color: rgba(255,255,255,0.92);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+    }
+
+    .card {
+      position: relative;
+      padding: 30px 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.22);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.94);
+      margin-bottom: 18px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3bc7ff, #7a5cff);
+      box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.34);
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+    }
+
+    .block h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.96);
+    }
+
+    .block p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-soft);
+      text-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: rgba(255,255,255,0.74);
+      font-size: 0.92rem;
+      padding: 0 8px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.20);
+    }
+
+    @media (max-width: 760px) {
+      .site {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-top: 16px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-bg" aria-hidden="true">
+    <video src="Rauch4.mp4" autoplay muted loop playsinline preload="auto"></video>
+  </div>
+
+  <main class="site">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span>Strikeclub Velten</span>
+      </div>
+
+      <a class="back-link" href="index.html">
+        <i class="fa-solid fa-arrow-left"></i> Zurück
+      </a>
+    </div>
+
+    <section class="card">
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span>Rechtliche Angaben</span>
+      </div>
+
+      <h1>Impressum</h1>
+
+      <div class="content">
+        <div class="block">
+          <h2>Angaben gemäß § 18 MStV</h2>
+          <p>
+            [Vorname Nachname]<br>
+            [Straße Hausnummer]<br>
+            [PLZ Ort]
+          </p>
+        </div>
+
+        <div class="block">
+          <h2>Kontakt</h2>
+          <p>
+            E-Mail: [deine-mail@example.de]
+          </p>
+        </div>
+
+        <div class="block">
+          <h2>Hinweis</h2>
+          <p>
+            Private Website zur Organisation und Darstellung von Informationen rund um die Hausliga / Strikeclub Velten.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Strikeclub Velten</p>
+  </main>
+</body>
+</html>
