@@ -143,13 +143,15 @@
       height: 18px;
       border-radius: 999px;
       background:
-        linear-gradient(180deg,
+        linear-gradient(
+          180deg,
           rgba(255, 92, 159, 0.84) 0%,
           rgba(255, 92, 159, 0.84) 42%,
           transparent 42%,
           transparent 58%,
           rgba(255, 104, 142, 0.74) 58%,
-          rgba(255, 104, 142, 0.74) 100%);
+          rgba(255, 104, 142, 0.74) 100%
+        );
     }
 
     .site {
@@ -193,21 +195,6 @@
       box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24);
     }
 
-    .back-link {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.76);
-      border: 1px solid rgba(122, 146, 182, 0.14);
-      color: var(--text-soft);
-      font-size: 0.94rem;
-      font-weight: 700;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
     .page {
       position: relative;
       padding: 20px;
@@ -241,12 +228,12 @@
       margin-bottom: 18px;
     }
 
-	  .header-side {
-  display: grid;
-  gap: 10px;
-  justify-items: end;
-}
-	  
+    .header-side {
+      display: grid;
+      gap: 10px;
+      justify-items: end;
+    }
+
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -318,25 +305,25 @@
       letter-spacing: -0.03em;
     }
 
-	  .jump-btn {
-  border: 0;
-  cursor: pointer;
-  font: inherit;
-  padding: 12px 16px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #16203d, #4964ff);
-  color: #ffffff;
-  font-weight: 800;
-  box-shadow: 0 14px 28px rgba(35, 58, 100, 0.16);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
+    .jump-btn {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #16203d, #4964ff);
+      color: #ffffff;
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(35, 58, 100, 0.16);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.jump-btn:hover {
-  filter: brightness(1.04);
-}
-	  
+    .jump-btn:hover {
+      filter: brightness(1.04);
+    }
+
     .schedule-panel {
       position: relative;
       z-index: 1;
@@ -463,19 +450,16 @@
       background: rgba(255,255,255,0.86);
       border: 1px solid rgba(122,146,182,0.10);
       box-shadow: 0 12px 28px rgba(35, 58, 100, 0.05);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
 
-	  .matchday-card {
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-}
+    .matchday-card.pulse-target {
+      box-shadow:
+        0 0 0 2px rgba(73,100,255,0.34),
+        0 18px 40px rgba(35, 58, 100, 0.12);
+      transform: translateY(-2px);
+    }
 
-.matchday-card.pulse-target {
-  box-shadow:
-    0 0 0 2px rgba(73,100,255,0.34),
-    0 18px 40px rgba(35, 58, 100, 0.12);
-  transform: translateY(-2px);
-}
-	  
     .matchday-card::before {
       content: "";
       position: absolute;
@@ -534,38 +518,38 @@
     }
 
     .team-box {
-  min-width: 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, var(--team-bg-1, rgba(255,255,255,0.94)), var(--team-bg-2, rgba(245,248,255,0.92)));
-  border: 1px solid var(--team-border, rgba(122,146,182,0.14));
-  color: var(--team-text, #1f3b63);
-  font-weight: 900;
-  line-height: 1.2;
-  box-shadow: 0 8px 18px rgba(35, 58, 100, 0.07);
-  text-align: center;
-  overflow-wrap: anywhere;
-}
+      min-width: 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--team-bg-1, rgba(255,255,255,0.94)), var(--team-bg-2, rgba(245,248,255,0.92)));
+      border: 1px solid var(--team-border, rgba(122,146,182,0.14));
+      color: var(--team-text, #1f3b63);
+      font-weight: 900;
+      line-height: 1.2;
+      box-shadow: 0 8px 18px rgba(35, 58, 100, 0.07);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
 
-.team-box.home,
-.team-box.away {
-  color: var(--team-text, #1f3b63);
-}
+    .team-box.home,
+    .team-box.away {
+      color: var(--team-text, #1f3b63);
+    }
 
-.vs {
-  width: 42px;
-  height: 42px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(22, 32, 61, 0.92), rgba(73, 100, 255, 0.88));
-  color: #ffffff;
-  font-size: 0.84rem;
-  font-weight: 900;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.18),
-    0 8px 18px rgba(35, 58, 100, 0.16);
-}
+    .vs {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(22, 32, 61, 0.92), rgba(73, 100, 255, 0.88));
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 900;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.18),
+        0 8px 18px rgba(35, 58, 100, 0.16);
+    }
 
     .divider {
       height: 8px;
@@ -617,6 +601,79 @@
       padding: 0 8px;
     }
 
+    .footer-note a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(108, 123, 150, 0.34);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-note a:hover {
+      opacity: 1;
+      border-bottom-color: rgba(108, 123, 150, 0.75);
+    }
+
+    .refresh-fab,
+    .back-fab {
+      position: fixed;
+      bottom: 18px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92));
+      box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .refresh-fab {
+      right: 18px;
+    }
+
+    .back-fab {
+      left: 18px;
+    }
+
+    .refresh-fab i {
+      font-size: 1rem;
+      animation: refreshSpin 2.4s linear infinite;
+    }
+
+    .back-fab i {
+      font-size: 1rem;
+      animation: backPulse 1.6s ease-in-out infinite;
+    }
+
+    .refresh-fab:hover,
+    .back-fab:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: saturate(1.08);
+      box-shadow:
+        0 14px 28px rgba(15, 23, 42, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .refresh-fab:hover i {
+      animation-duration: 0.9s;
+    }
+
+    .back-fab:hover i {
+      animation-duration: 0.8s;
+    }
+
+    .refresh-fab:active,
+    .back-fab:active {
+      transform: scale(0.96);
+    }
+
     @keyframes drift {
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
       50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
@@ -634,6 +691,24 @@
       25% { transform: translate3d(14px, -22px, 0) rotate(3deg); }
       50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); }
       75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
+    }
+
+    @keyframes refreshSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes backPulse {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-4px);
+      }
     }
 
     @media (max-width: 980px) {
@@ -654,9 +729,10 @@
       .matchday-grid {
         grid-template-columns: 1fr;
       }
-		.header-side {
-  justify-items: stretch;
-}
+
+      .header-side {
+        justify-items: stretch;
+      }
     }
 
     @media (max-width: 700px) {
@@ -705,24 +781,25 @@
         padding: 10px;
       }
 
-		.jump-btn {
-  width: 100%;
-  justify-content: center;
-}
+      .jump-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
       .vs-row {
-  grid-template-columns: 1fr auto 1fr;
-  gap: 8px;
-  align-items: center;
-}
+        grid-template-columns: 1fr auto 1fr;
+        gap: 8px;
+        align-items: center;
+      }
 
-.vs {
-  justify-self: center;
-}
+      .vs {
+        justify-self: center;
+      }
 
-.team-box {
-  padding: 9px 8px;
-  font-size: 0.9rem;
-}
+      .team-box {
+        padding: 9px 8px;
+        font-size: 0.9rem;
+      }
 
       .actions {
         flex-direction: column;
@@ -733,11 +810,33 @@
         width: 100%;
         justify-content: center;
       }
+
+      .refresh-fab,
+      .back-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 14px;
+      }
+
+      .refresh-fab {
+        right: 14px;
+      }
+
+      .back-fab {
+        left: 14px;
+      }
+
+      .refresh-fab i,
+      .back-fab i {
+        font-size: 0.95rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .glow,
-      .bg-shape {
+      .bg-shape,
+      .refresh-fab i,
+      .back-fab i {
         animation: none !important;
       }
     }
@@ -763,11 +862,6 @@
         <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
         <span>Strikeclub Velten</span>
       </div>
-
-      <a class="back-link" href="index.html">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>Zurück zur Übersicht</span>
-      </a>
     </div>
 
     <section class="page">
@@ -786,16 +880,17 @@
         </div>
 
         <div class="header-side">
-  <div class="info-pill">
-    <span class="info-label">Ansicht</span>
-    <div class="info-value">Spielplan 2026</div>
-  </div>
+          <div class="info-pill">
+            <span class="info-label">Ansicht</span>
+            <div class="info-value">Spielplan 2026</div>
+          </div>
 
-  <button class="jump-btn" id="jumpToCurrentBtn" type="button">
-    <i class="fa-solid fa-location-arrow"></i>
-    <span>Zum relevanten Datum</span>
-  </button>
-</div>
+          <button class="jump-btn" id="jumpToCurrentBtn" type="button">
+            <i class="fa-solid fa-location-arrow"></i>
+            <span>Zum relevanten Datum</span>
+          </button>
+        </div>
+      </div>
 
       <div class="schedule-panel">
         <div class="warning-pill" id="warningPill">
@@ -806,11 +901,6 @@
         <div class="phase-grid" id="phaseGrid"></div>
 
         <div class="actions">
-          <button class="action-btn" onclick="location.href='index.html'">
-            <i class="fa-solid fa-house"></i>
-            <span>Zurück zur Startseite</span>
-          </button>
-
           <button class="action-btn secondary-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
             <i class="fa-solid fa-arrow-up"></i>
             <span>Nach oben</span>
@@ -819,8 +909,30 @@
       </div>
     </section>
 
-    <p class="footer-note">Strikeclub Velten</p>
+    <p class="footer-note">
+      Strikeclub Velten · <a href="impressum.html">Impressum</a>
+    </p>
   </main>
+
+  <button
+    class="back-fab"
+    type="button"
+    aria-label="Zurück zur Startseite"
+    title="Zurück zur Startseite"
+    onclick="location.href='index.html'"
+  >
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <button
+    class="refresh-fab"
+    type="button"
+    aria-label="Seite aktualisieren"
+    title="Seite aktualisieren"
+    onclick="window.location.reload()"
+  >
+    <i class="fa-solid fa-rotate-right"></i>
+  </button>
 
   <script>
     const PAGE_DATA = {
@@ -901,9 +1013,9 @@ Datum	Ansetzung		Bahn
     };
 
     const phaseGrid = document.getElementById("phaseGrid");
-const warningPill = document.getElementById("warningPill");
-const warningText = document.getElementById("warningText");
-const jumpToCurrentBtn = document.getElementById("jumpToCurrentBtn");
+    const warningPill = document.getElementById("warningPill");
+    const warningText = document.getElementById("warningText");
+    const jumpToCurrentBtn = document.getElementById("jumpToCurrentBtn");
 
     function normalizeLine(line) {
       return line.replace(/\u00A0/g, " ").trimEnd();
@@ -990,123 +1102,125 @@ const jumpToCurrentBtn = document.getElementById("jumpToCurrentBtn");
 
       return { phases, warnings };
     }
-function normalizeTeamName(name) {
-  return String(name || "")
-    .toLowerCase()
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
-const TEAM_COLORS = {
-  "die 3 blinden": {
-    bg1: "rgba(91,124,255,0.34)",
-    bg2: "rgba(91,124,255,0.16)",
-    border: "rgba(91,124,255,0.34)",
-    text: "#123f8a"
-  },
-  "die abräumer": {
-    bg1: "rgba(255,92,159,0.34)",
-    bg2: "rgba(255,92,159,0.16)",
-    border: "rgba(255,92,159,0.34)",
-    text: "#8f2457"
-  },
-  "gummibande": {
-    bg1: "rgba(255,184,77,0.34)",
-    bg2: "rgba(255,184,77,0.16)",
-    border: "rgba(255,184,77,0.34)",
-    text: "#8a5600"
-  },
-  "pin fighter": {
-    bg1: "rgba(138,92,255,0.34)",
-    bg2: "rgba(138,92,255,0.16)",
-    border: "rgba(138,92,255,0.34)",
-    text: "#5a2f9b"
-  },
-  "pin bomber": {
-    bg1: "rgba(55,201,151,0.34)",
-    bg2: "rgba(55,201,151,0.16)",
-    border: "rgba(55,201,151,0.34)",
-    text: "#0d6b4c"
-  },
-  "pitchers": {
-    bg1: "rgba(51,198,255,0.34)",
-    bg2: "rgba(51,198,255,0.16)",
-    border: "rgba(51,198,255,0.34)",
-    text: "#0d678c"
-  },
-  "stranger pins": {
-    bg1: "rgba(255,127,80,0.34)",
-    bg2: "rgba(255,127,80,0.16)",
-    border: "rgba(255,127,80,0.34)",
-    text: "#93411f"
-  },
-  "donnerbälle": {
-    bg1: "rgba(122,181,255,0.34)",
-    bg2: "rgba(122,181,255,0.16)",
-    border: "rgba(122,181,255,0.34)",
-    text: "#1b4f96"
-  }
-};
+    function normalizeTeamName(name) {
+      return String(name || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
-function applyTeamColors(element, teamName) {
-  const key = normalizeTeamName(teamName);
-  const color = TEAM_COLORS[key];
+    const TEAM_COLORS = {
+      "die 3 blinden": {
+        bg1: "rgba(91,124,255,0.34)",
+        bg2: "rgba(91,124,255,0.16)",
+        border: "rgba(91,124,255,0.34)",
+        text: "#123f8a"
+      },
+      "die abräumer": {
+        bg1: "rgba(255,92,159,0.34)",
+        bg2: "rgba(255,92,159,0.16)",
+        border: "rgba(255,92,159,0.34)",
+        text: "#8f2457"
+      },
+      "gummibande": {
+        bg1: "rgba(255,184,77,0.34)",
+        bg2: "rgba(255,184,77,0.16)",
+        border: "rgba(255,184,77,0.34)",
+        text: "#8a5600"
+      },
+      "pin fighter": {
+        bg1: "rgba(138,92,255,0.34)",
+        bg2: "rgba(138,92,255,0.16)",
+        border: "rgba(138,92,255,0.34)",
+        text: "#5a2f9b"
+      },
+      "pin bomber": {
+        bg1: "rgba(55,201,151,0.34)",
+        bg2: "rgba(55,201,151,0.16)",
+        border: "rgba(55,201,151,0.34)",
+        text: "#0d6b4c"
+      },
+      "pitchers": {
+        bg1: "rgba(51,198,255,0.34)",
+        bg2: "rgba(51,198,255,0.16)",
+        border: "rgba(51,198,255,0.34)",
+        text: "#0d678c"
+      },
+      "stranger pins": {
+        bg1: "rgba(255,127,80,0.34)",
+        bg2: "rgba(255,127,80,0.16)",
+        border: "rgba(255,127,80,0.34)",
+        text: "#93411f"
+      },
+      "donnerbälle": {
+        bg1: "rgba(122,181,255,0.34)",
+        bg2: "rgba(122,181,255,0.16)",
+        border: "rgba(122,181,255,0.34)",
+        text: "#1b4f96"
+      }
+    };
 
-  if (!color) return;
+    function applyTeamColors(element, teamName) {
+      const key = normalizeTeamName(teamName);
+      const color = TEAM_COLORS[key];
 
-  element.style.setProperty("--team-bg-1", color.bg1);
-  element.style.setProperty("--team-bg-2", color.bg2);
-  element.style.setProperty("--team-border", color.border);
-  element.style.setProperty("--team-text", color.text);
-}
+      if (!color) return;
+
+      element.style.setProperty("--team-bg-1", color.bg1);
+      element.style.setProperty("--team-bg-2", color.bg2);
+      element.style.setProperty("--team-border", color.border);
+      element.style.setProperty("--team-text", color.text);
+    }
+
     function createLaneBlock(match, isLast) {
-  const block = document.createElement("div");
-  block.className = "lane-block";
+      const block = document.createElement("div");
+      block.className = "lane-block";
 
-  const homeClass = normalizeTeamName(match.teamA).replace(/\s+/g, "-");
-  const awayClass = normalizeTeamName(match.teamB).replace(/\s+/g, "-");
+      const homeClass = normalizeTeamName(match.teamA).replace(/\s+/g, "-");
+      const awayClass = normalizeTeamName(match.teamB).replace(/\s+/g, "-");
 
-  block.innerHTML = `
-    <div class="lane-title">Bahn ${match.lane}</div>
-    <div class="vs-row">
-      <div class="team-box home team-${homeClass}">${match.teamA}</div>
-      <div class="vs">VS</div>
-      <div class="team-box away team-${awayClass}">${match.teamB}</div>
-    </div>
-    ${isLast ? "" : '<div class="divider"></div>'}
-  `;
+      block.innerHTML = `
+        <div class="lane-title">Bahn ${match.lane}</div>
+        <div class="vs-row">
+          <div class="team-box home team-${homeClass}">${match.teamA}</div>
+          <div class="vs">VS</div>
+          <div class="team-box away team-${awayClass}">${match.teamB}</div>
+        </div>
+        ${isLast ? "" : '<div class="divider"></div>'}
+      `;
 
-  const homeBox = block.querySelector(".team-box.home");
-  const awayBox = block.querySelector(".team-box.away");
+      const homeBox = block.querySelector(".team-box.home");
+      const awayBox = block.querySelector(".team-box.away");
 
-  applyTeamColors(homeBox, match.teamA);
-  applyTeamColors(awayBox, match.teamB);
+      applyTeamColors(homeBox, match.teamA);
+      applyTeamColors(awayBox, match.teamB);
 
-  return block;
-}
+      return block;
+    }
 
     function createMatchdayCard(matchday) {
-  const card = document.createElement("article");
-  card.className = "matchday-card";
-  card.dataset.date = matchday.date;
-  card.id = `matchday-${matchday.date.replace(/\./g, "-")}`;
+      const card = document.createElement("article");
+      card.className = "matchday-card";
+      card.dataset.date = matchday.date;
+      card.id = `matchday-${matchday.date.replace(/\./g, "-")}`;
 
-  const dateBar = document.createElement("div");
-  dateBar.className = "matchday-date-bar";
-  dateBar.textContent = matchday.date;
+      const dateBar = document.createElement("div");
+      dateBar.className = "matchday-date-bar";
+      dateBar.textContent = matchday.date;
 
-  const content = document.createElement("div");
-  content.className = "matchday-content";
+      const content = document.createElement("div");
+      content.className = "matchday-content";
 
-  matchday.matches.forEach((match, index) => {
-    content.appendChild(createLaneBlock(match, index === matchday.matches.length - 1));
-  });
+      matchday.matches.forEach((match, index) => {
+        content.appendChild(createLaneBlock(match, index === matchday.matches.length - 1));
+      });
 
-  card.appendChild(dateBar);
-  card.appendChild(content);
+      card.appendChild(dateBar);
+      card.appendChild(content);
 
-  return card;
-}
+      return card;
+    }
 
     function createPhaseCard(phase, themeClass) {
       const card = document.createElement("section");
@@ -1146,105 +1260,104 @@ function applyTeamColors(element, teamName) {
       });
 
       if (parsed.warnings.length) {
-  warningText.textContent = parsed.warnings[0];
-  warningPill.classList.add("show");
-} else {
-  warningPill.classList.remove("show");
-}
+        warningText.textContent = parsed.warnings[0];
+        warningPill.classList.add("show");
+      } else {
+        warningPill.classList.remove("show");
+      }
 
-updateJumpButtonLabel();
-
-jumpToCurrentBtn.onclick = scrollToRelevantMatchday;
+      updateJumpButtonLabel();
+      jumpToCurrentBtn.onclick = scrollToRelevantMatchday;
     }
 
-	  function dateStringToKey(dateStr) {
-  const [day, month, year] = String(dateStr).split(".");
-  return `${year}-${month}-${day}`;
-}
+    function dateStringToKey(dateStr) {
+      const [day, month, year] = String(dateStr).split(".");
+      return `${year}-${month}-${day}`;
+    }
 
-function getBerlinNow() {
-  const formatter = new Intl.DateTimeFormat("de-DE", {
-    timeZone: "Europe/Berlin",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  });
+    function getBerlinNow() {
+      const formatter = new Intl.DateTimeFormat("de-DE", {
+        timeZone: "Europe/Berlin",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
 
-  const parts = Object.fromEntries(
-    formatter
-      .formatToParts(new Date())
-      .filter(part => part.type !== "literal")
-      .map(part => [part.type, part.value])
-  );
+      const parts = Object.fromEntries(
+        formatter
+          .formatToParts(new Date())
+          .filter(part => part.type !== "literal")
+          .map(part => [part.type, part.value])
+      );
 
-  return {
-    key: `${parts.year}-${parts.month}-${parts.day}`,
-    hour: Number(parts.hour),
-    minute: Number(parts.minute)
-  };
-}
+      return {
+        key: `${parts.year}-${parts.month}-${parts.day}`,
+        hour: Number(parts.hour),
+        minute: Number(parts.minute)
+      };
+    }
 
-function getRelevantMatchdayCard() {
-  const cards = Array.from(document.querySelectorAll(".matchday-card[data-date]"));
-  if (!cards.length) return null;
+    function getRelevantMatchdayCard() {
+      const cards = Array.from(document.querySelectorAll(".matchday-card[data-date]"));
+      if (!cards.length) return null;
 
-  const schedule = cards.map(card => ({
-    card,
-    date: card.dataset.date,
-    key: dateStringToKey(card.dataset.date)
-  }));
+      const schedule = cards.map(card => ({
+        card,
+        date: card.dataset.date,
+        key: dateStringToKey(card.dataset.date)
+      }));
 
-  const now = getBerlinNow();
-  const currentMinutes = now.hour * 60 + now.minute;
-  const cutoffMinutes = 18 * 60 + 45;
+      const now = getBerlinNow();
+      const currentMinutes = now.hour * 60 + now.minute;
+      const cutoffMinutes = 18 * 60 + 45;
 
-  const sameDay = schedule.find(item => item.key === now.key);
+      const sameDay = schedule.find(item => item.key === now.key);
 
-  if (sameDay && currentMinutes <= cutoffMinutes) {
-    return sameDay.card;
-  }
+      if (sameDay && currentMinutes <= cutoffMinutes) {
+        return sameDay.card;
+      }
 
-  const nextFuture = schedule.find(item => item.key > now.key);
-  if (nextFuture) {
-    return nextFuture.card;
-  }
+      const nextFuture = schedule.find(item => item.key > now.key);
+      if (nextFuture) {
+        return nextFuture.card;
+      }
 
-  if (sameDay) {
-    return sameDay.card;
-  }
+      if (sameDay) {
+        return sameDay.card;
+      }
 
-  return schedule[schedule.length - 1].card;
-}
+      return schedule[schedule.length - 1].card;
+    }
 
-function updateJumpButtonLabel() {
-  const target = getRelevantMatchdayCard();
-  if (!target) return;
+    function updateJumpButtonLabel() {
+      const target = getRelevantMatchdayCard();
+      if (!target) return;
 
-  const label = target.dataset.date;
-  const span = jumpToCurrentBtn.querySelector("span");
-  if (span) {
-    span.textContent = `Zum ${label}`;
-  }
-}
+      const label = target.dataset.date;
+      const span = jumpToCurrentBtn.querySelector("span");
+      if (span) {
+        span.textContent = `Zum ${label}`;
+      }
+    }
 
-function scrollToRelevantMatchday() {
-  const target = getRelevantMatchdayCard();
-  if (!target) return;
+    function scrollToRelevantMatchday() {
+      const target = getRelevantMatchdayCard();
+      if (!target) return;
 
-  target.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
-  target.classList.add("pulse-target");
-  window.setTimeout(() => {
-    target.classList.remove("pulse-target");
-  }, 1800);
-}
-	  
+      target.classList.add("pulse-target");
+      window.setTimeout(() => {
+        target.classList.remove("pulse-target");
+      }, 1800);
+    }
+
     renderPage();
   </script>
 </body>
