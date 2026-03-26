@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
   <style>
     :root {
@@ -25,6 +26,11 @@
       overflow: hidden;
       font-family: "Inter", Arial, sans-serif;
       background: #090d14;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .video-bg {
@@ -82,6 +88,94 @@
       animation: dots 1.6s steps(4, end) infinite;
     }
 
+    .footer-note {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: rgba(255,255,255,0.84);
+      font-size: 0.92rem;
+      text-align: center;
+      text-shadow:
+        0 4px 18px rgba(0,0,0,0.34),
+        0 1px 3px rgba(0,0,0,0.28);
+      padding: 0 12px;
+    }
+
+    .footer-note a {
+      color: rgba(255,255,255,0.92);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.28);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-note a:hover {
+      opacity: 1;
+      border-bottom-color: rgba(255,255,255,0.70);
+    }
+
+    .refresh-fab,
+    .back-fab {
+      position: fixed;
+      bottom: 18px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92));
+      box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .refresh-fab {
+      right: 18px;
+    }
+
+    .back-fab {
+      left: 18px;
+    }
+
+    .refresh-fab i {
+      font-size: 1rem;
+      animation: refreshSpin 2.4s linear infinite;
+    }
+
+    .back-fab i {
+      font-size: 1rem;
+      animation: backPulse 1.6s ease-in-out infinite;
+    }
+
+    .refresh-fab:hover,
+    .back-fab:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: saturate(1.08);
+      box-shadow:
+        0 14px 28px rgba(15, 23, 42, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .refresh-fab:hover i {
+      animation-duration: 0.9s;
+    }
+
+    .back-fab:hover i {
+      animation-duration: 0.8s;
+    }
+
+    .refresh-fab:active,
+    .back-fab:active {
+      transform: scale(0.96);
+    }
+
     @keyframes pulseText {
       0%, 100% {
         transform: scale(1);
@@ -101,10 +195,57 @@
       100% { content: ""; }
     }
 
+    @keyframes refreshSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes backPulse {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-4px);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .refresh-fab,
+      .back-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 14px;
+      }
+
+      .refresh-fab {
+        right: 14px;
+      }
+
+      .back-fab {
+        left: 14px;
+      }
+
+      .refresh-fab i,
+      .back-fab i {
+        font-size: 0.95rem;
+      }
+
+      .footer-note {
+        bottom: 74px;
+        font-size: 0.88rem;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .text,
-      .dots::after {
-        animation: none;
+      .dots::after,
+      .refresh-fab i,
+      .back-fab i {
+        animation: none !important;
       }
     }
   </style>
@@ -119,5 +260,29 @@
       In Arbeit<span class="dots"></span>
     </div>
   </main>
+
+  <p class="footer-note">
+    Strikeclub Velten · <a href="impressum.html">Impressum</a>
+  </p>
+
+  <button
+    class="back-fab"
+    type="button"
+    aria-label="Zurück zur Startseite"
+    title="Zurück zur Startseite"
+    onclick="location.href='index.html'"
+  >
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <button
+    class="refresh-fab"
+    type="button"
+    aria-label="Seite aktualisieren"
+    title="Seite aktualisieren"
+    onclick="window.location.reload()"
+  >
+    <i class="fa-solid fa-rotate-right"></i>
+  </button>
 </body>
 </html>
