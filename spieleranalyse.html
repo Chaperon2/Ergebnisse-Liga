@@ -1,1 +1,1208 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Spieleranalyse - Strikeclub Velten</title> <meta property="og:title" content="Spieleranalyse - Strikeclub Velten" /> <meta property="og:description" content="Verlauf, Form und Saisonentwicklung der Spieler im Überblick." /> <meta property="og:url" content="https://www.strikeclub-velten.de/spieleranalyse.html" /> <meta property="og:type" content="website" /> <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" /> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" /> <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script> <style> :root { --text: #0f172a; --text-soft: #5f718d; --border: rgba(119, 145, 185, 0.14); --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14); --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10); --shadow-md: 0 10px 28px rgba(35, 58, 100, 0.08); --max-width: 1440px; } * { box-sizing: border-box; } body { margin: 0; min-height: 100vh; font-family: "Inter", Arial, sans-serif; color: var(--text); background: radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%), radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%), radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%), linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%); overflow-x: hidden; } a { color: inherit; text-decoration: none; } .scene { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; } .glow { position: absolute; border-radius: 50%; filter: blur(76px); opacity: 0.44; animation: drift 18s ease-in-out infinite; } .glow.one { width: 340px; height: 340px; left: -80px; top: 40px; background: rgba(91, 124, 255, 0.16); } .glow.two { width: 290px; height: 290px; right: -30px; top: 140px; background: rgba(255, 92, 159, 0.14); animation-delay: -6s; } .glow.three { width: 380px; height: 380px; right: 14%; bottom: -100px; background: rgba(51, 198, 255, 0.16); animation-delay: -11s; } .bg-shape { position: absolute; opacity: 0.22; animation-timing-function: ease-in-out; animation-iteration-count: infinite; } .ball-bg { width: var(--size, 120px); height: var(--size, 120px); left: var(--x, 10%); top: var(--y, 10%); border-radius: 50%; background: radial-gradient(circle at 38% 35%, rgba(16,24,40,0.14) 0 6px, transparent 7px), radial-gradient(circle at 55% 28%, rgba(16,24,40,0.14) 0 6px, transparent 7px), radial-gradient(circle at 60% 48%, rgba(16,24,40,0.14) 0 6px, transparent 7px), linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff)); box-shadow: inset -18px -18px 30px rgba(255,255,255,0.24), inset 18px 18px 28px rgba(255,255,255,0.14), 0 16px 32px rgba(65, 85, 130, 0.10); animation-name: floatBall; animation-duration: var(--dur, 18s); animation-delay: var(--delay, 0s); } .pin-bg { width: var(--w, 56px); height: var(--h, 164px); left: var(--x, 15%); top: var(--y, 20%); border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%); box-shadow: inset 0 0 0 1px rgba(150, 170, 205, 0.14), 0 16px 32px rgba(65, 85, 130, 0.08); animation-name: swayPin; animation-duration: var(--dur, 16s); animation-delay: var(--delay, 0s); transform-origin: center 82%; } .pin-bg::before { content: ""; position: absolute; top: 16px; left: 8px; right: 8px; height: 18px; border-radius: 999px; background: linear-gradient(180deg, rgba(255, 92, 159, 0.84) 0%, rgba(255, 92, 159, 0.84) 42%, transparent 42%, transparent 58%, rgba(255, 104, 142, 0.74) 58%, rgba(255, 104, 142, 0.74) 100%); } .site { position: relative; z-index: 2; width: min(var(--max-width), calc(100% - 22px)); margin: 0 auto; padding: 14px 0 34px; } .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; } .brand { display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.76); border: 1px solid rgba(122, 146, 182, 0.14); backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06); font-weight: 700; letter-spacing: -0.02em; } .brand-mark { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1)); color: #fff; box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24); } .page { position: relative; padding: 20px; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80)); border: 1px solid var(--border); backdrop-filter: blur(24px); box-shadow: var(--shadow-xl); overflow: hidden; } .page::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%), radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); pointer-events: none; } .header { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 14px; align-items: end; flex-wrap: wrap; margin-bottom: 18px; } .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.76); border: 1px solid rgba(122, 146, 182, 0.12); font-weight: 700; font-size: 0.9rem; color: #36507a; margin-bottom: 14px; box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #3bc7ff, #7a5cff); box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08); } h1 { margin: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.06em; font-weight: 800; } .headline-accent { background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; } .intro { max-width: 72ch; color: var(--text-soft); line-height: 1.58; font-size: 0.96rem; margin: 12px 0 0; } .header-side { display: grid; gap: 10px; justify-items: end; } .info-pill { padding: 14px 18px; border-radius: 22px; background: rgba(255,255,255,0.78); border: 1px solid rgba(122,146,182,0.14); box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06); min-width: 240px; } .info-label { font-size: 0.82rem; font-weight: 800; color: #6a7b97; text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 6px; } .info-value { font-size: 1.08rem; font-weight: 800; letter-spacing: -0.03em; } .analysis-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.45fr 0.9fr; gap: 14px; } .panel { border-radius: 24px; background: rgba(255,255,255,0.68); border: 1px solid rgba(122,146,182,0.12); box-shadow: var(--shadow-lg); overflow: hidden; } .panel-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; padding: 14px 16px 12px; border-bottom: 1px solid rgba(122,146,182,0.10); background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(248,251,255,0.64)); backdrop-filter: blur(8px); } .panel-title-wrap { display: grid; gap: 4px; } .panel-title { margin: 0; font-size: 1.08rem; font-weight: 800; letter-spacing: -0.03em; } .panel-subtitle { color: var(--text-soft); font-size: 0.86rem; font-weight: 700; } .panel-body { padding: 14px; } .control-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end; margin-bottom: 14px; } .field { display: grid; gap: 8px; } .field label { font-size: 0.84rem; font-weight: 800; color: #5b7092; } .player-select { width: 100%; border: 1px solid rgba(122,146,182,0.16); border-radius: 16px; padding: 13px 16px; font: inherit; font-weight: 700; color: #16203d; background: rgba(255,255,255,0.92); outline: none; appearance: none; -webkit-appearance: none; box-shadow: inset 0 1px 0 rgba(255,255,255,0.76); } .player-select:focus { border-color: rgba(91, 124, 255, 0.35); box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08); } .chip-note { padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,0.88); border: 1px solid rgba(122,146,182,0.12); color: #596f93; font-size: 0.82rem; font-weight: 800; white-space: nowrap; box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04); } .stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; } .stat-card { padding: 14px 14px; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90)); border: 1px solid rgba(122,146,182,0.10); box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .stat-label { display: block; font-size: 0.72rem; font-weight: 800; color: #6b7d99; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 7px; } .stat-value { font-size: 1.12rem; font-weight: 900; color: #16203d; letter-spacing: -0.03em; } .chart-wrap { padding: 14px; border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90)); border: 1px solid rgba(122,146,182,0.10); box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .legend-note { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; color: #667997; font-size: 0.84rem; font-weight: 700; } .legend-item { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,0.84); border: 1px solid rgba(122,146,182,0.10); } .legend-line, .legend-dash, .legend-gap { width: 16px; height: 0; border-top: 3px solid #4964ff; border-radius: 999px; } .legend-dash { border-top-style: dashed; border-top-color: #ff5c9f; } .legend-gap { border-top-style: dotted; border-top-color: #94a3b8; } .status-grid { display: grid; gap: 10px; } .status-card { padding: 12px 14px; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90)); border: 1px solid rgba(122,146,182,0.10); box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .status-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; } .status-date { font-size: 0.92rem; font-weight: 900; color: #18355f; } .status-badge { padding: 7px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 900; letter-spacing: 0.03em; text-transform: uppercase; } .status-badge.played { background: linear-gradient(135deg, rgba(55,201,151,0.22), rgba(49,182,255,0.14)); color: #107357; } .status-badge.absent { background: linear-gradient(135deg, rgba(255,184,77,0.22), rgba(255,127,80,0.14)); color: #9a5b00; } .status-values { display: flex; gap: 8px; flex-wrap: wrap; } .status-chip { padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,0.88); border: 1px solid rgba(122,146,182,0.10); color: #5e7395; font-size: 0.78rem; font-weight: 800; } .insight-list { display: grid; gap: 10px; } .insight-item { padding: 12px 14px; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90)); border: 1px solid rgba(122,146,182,0.10); box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); color: #334a70; line-height: 1.5; font-size: 0.92rem; font-weight: 700; } .footer-note { margin-top: 16px; text-align: center; color: #6c7b96; font-size: 0.92rem; padding: 0 8px; } .footer-note a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(108, 123, 150, 0.34); transition: opacity 0.2s ease, border-color 0.2s ease; } .footer-note a:hover { opacity: 1; border-bottom-color: rgba(108, 123, 150, 0.75); } .refresh-fab, .back-fab { position: fixed; bottom: 18px; z-index: 9999; width: 52px; height: 52px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92)); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28); backdrop-filter: blur(10px); transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease; } .refresh-fab { right: 18px; } .back-fab { left: 18px; } .refresh-fab i { font-size: 1rem; animation: refreshSpin 2.4s linear infinite; } .back-fab i { font-size: 1rem; animation: backPulse 1.6s ease-in-out infinite; } .refresh-fab:hover, .back-fab:hover { transform: translateY(-2px) scale(1.05); filter: saturate(1.08); box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.32); } .refresh-fab:hover i { animation-duration: 0.9s; } .back-fab:hover i { animation-duration: 0.8s; } .refresh-fab:active, .back-fab:active { transform: scale(0.96); } @keyframes drift { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(24px, -18px, 0) scale(1.08); } } @keyframes floatBall { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); } 25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); } 50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); } 75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); } } @keyframes swayPin { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(14px, -22px, 0) rotate(3deg); } 50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); } 75% { transform: translate3d(16px, -10px, 0) rotate(2deg); } } @keyframes refreshSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes backPulse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } } @media (max-width: 1180px) { .analysis-grid { grid-template-columns: 1fr; } } @media (max-width: 980px) { .topbar, .header { flex-direction: column; align-items: stretch; } .site { width: min(var(--max-width), calc(100% - 12px)); } .page { padding: 14px; } .header-side { justify-items: stretch; } } @media (max-width: 760px) { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .control-row { grid-template-columns: 1fr; } } @media (max-width: 700px) { .site { width: 100%; padding: 0 0 22px; } .topbar { padding: 10px 8px 0; margin-bottom: 8px; } .page { border-radius: 0; border-left: 0; border-right: 0; padding: 10px 4px 14px; } h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); } .intro { font-size: 0.9rem; } .panel-body, .chart-wrap { padding: 10px; } .refresh-fab, .back-fab { width: 48px; height: 48px; bottom: 14px; } .refresh-fab { right: 14px; } .back-fab { left: 14px; } .refresh-fab i, .back-fab i { font-size: 0.95rem; } } @media (max-width: 430px) { .stats-grid { grid-template-columns: 1fr; } } @media (prefers-reduced-motion: reduce) { .glow, .bg-shape, .refresh-fab i, .back-fab i { animation: none !important; } } </style> </head> <body> <div class="scene" aria-hidden="true"> <div class="glow one"></div> <div class="glow two"></div> <div class="glow three"></div> <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div> <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div> <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div> <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div> <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div> </div> <main class="site"> <div class="topbar"> <div class="brand"> <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span> <span>Strikeclub Velten</span> </div> </div> <section class="page"> <div class="header"> <div> <div class="eyebrow"> <span class="dot"></span> <span>Spieleranalyse</span> </div> <h1>Form. <span class="headline-accent">Verlauf der Saison.</span></h1> <p class="intro"> Die blaue Linie zeigt die echten Ergebnisse pro Spieltag. Bei Abwesenheit bleibt dort bewusst eine Lücke. Die pinke Linie zeigt den laufenden Saison-Schnitt und läuft durch, solange keine neuen Werte dazukommen. </p> </div> <div class="header-side"> <div class="info-pill"> <span class="info-label">Ansicht</span> <div class="info-value" id="seasonInfo">Saison 2026</div> </div> </div> </div> <div class="analysis-grid"> <section class="panel"> <div class="panel-head"> <div class="panel-title-wrap"> <h2 class="panel-title">Verlauf</h2> <div class="panel-subtitle">Pins pro Spieltag und laufender Schnitt</div> </div> <div class="chip-note" id="playerChip">Spieler: –</div> </div> <div class="panel-body"> <div class="control-row"> <div class="field"> <label for="playerSelect">Spieler auswählen</label> <select id="playerSelect" class="player-select"></select> </div> <div class="chip-note" id="playedInfo">0 Spieltage erfasst</div> </div> <div class="stats-grid"> <div class="stat-card"> <span class="stat-label">Aktueller Schnitt</span> <div class="stat-value" id="statAverage">–</div> </div> <div class="stat-card"> <span class="stat-label">Bestes Ergebnis</span> <div class="stat-value" id="statBest">–</div> </div> <div class="stat-card"> <span class="stat-label">Gespielte Tage</span> <div class="stat-value" id="statPlayed">–</div> </div> <div class="stat-card"> <span class="stat-label">Fehlzeiten</span> <div class="stat-value" id="statAbsent">–</div> </div> </div> <div class="chart-wrap"> <canvas id="playerChart" height="120"></canvas> <div class="legend-note"> <span class="legend-item"><span class="legend-line"></span>Echte Spieltagswerte</span> <span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span> <span class="legend-item"><span class="legend-gap"></span>Lücke = nicht gespielt</span> </div> </div> </div> </section> <section class="panel"> <div class="panel-head"> <div class="panel-title-wrap"> <h2 class="panel-title">Einordnung</h2> <div class="panel-subtitle">Status und kurze Hinweise</div> </div> </div> <div class="panel-body"> <div class="insight-list" id="insightList"></div> <div style="height: 12px;"></div> <div class="status-grid" id="statusGrid"></div> </div> </section> </div> </section> <p class="footer-note"> Strikeclub Velten · <a href="impressum.html">Impressum</a> </p> </main> <button class="back-fab" type="button" aria-label="Zurück zur Startseite" title="Zurück zur Startseite" onclick="location.href='index.html'" > <i class="fa-solid fa-arrow-left"></i> </button> <button class="refresh-fab" type="button" aria-label="Seite aktualisieren" title="Seite aktualisieren" onclick="window.location.reload()" > <i class="fa-solid fa-rotate-right"></i> </button> <script> /* Datenformat: - played: true => echter Spieltag mit Wert - played: false => nicht da / kein Wert - pins: Gesamtpins des Spieltags (z. B. 4 Spiele zusammen) */ const SEASON_LABEL = "Saison 2026"; const PLAYER_DATA = { "Skampy": [ { spieltag: 1, datum: "07.01.2026", pins: 688, played: true }, { spieltag: 2, datum: "14.01.2026", pins: 712, played: true }, { spieltag: 3, datum: "21.01.2026", pins: 674, played: true }, { spieltag: 4, datum: "28.01.2026", pins: 701, played: true }, { spieltag: 5, datum: "04.02.2026", pins: null, played: false }, { spieltag: 6, datum: "11.02.2026", pins: 689, played: true }, { spieltag: 7, datum: "18.02.2026", pins: 721, played: true }, { spieltag: 8, datum: "04.03.2026", pins: 667, played: true }, { spieltag: 9, datum: "11.03.2026", pins: 690, played: true }, { spieltag: 10, datum: "18.03.2026", pins: 704, played: true }, { spieltag: 11, datum: "25.03.2026", pins: 681, played: true } ], "Diana": [ { spieltag: 1, datum: "07.01.2026", pins: 618, played: true }, { spieltag: 2, datum: "14.01.2026", pins: 631, played: true }, { spieltag: 3, datum: "21.01.2026", pins: null, played: false }, { spieltag: 4, datum: "28.01.2026", pins: 644, played: true }, { spieltag: 5, datum: "04.02.2026", pins: 659, played: true }, { spieltag: 6, datum: "11.02.2026", pins: 636, played: true }, { spieltag: 7, datum: "18.02.2026", pins: 648, played: true }, { spieltag: 8, datum: "04.03.2026", pins: 672, played: true }, { spieltag: 9, datum: "11.03.2026", pins: 655, played: true }, { spieltag: 10, datum: "18.03.2026", pins: 643, played: true }, { spieltag: 11, datum: "25.03.2026", pins: 762, played: true } ], "Rainsen": [ { spieltag: 1, datum: "07.01.2026", pins: 655, played: true }, { spieltag: 2, datum: "14.01.2026", pins: 690, played: true }, { spieltag: 3, datum: "21.01.2026", pins: 676, played: true }, { spieltag: 4, datum: "28.01.2026", pins: 701, played: true }, { spieltag: 5, datum: "04.02.2026", pins: 643, played: true }, { spieltag: 6, datum: "11.02.2026", pins: null, played: false }, { spieltag: 7, datum: "18.02.2026", pins: 698, played: true }, { spieltag: 8, datum: "04.03.2026", pins: 661, played: true }, { spieltag: 9, datum: "11.03.2026", pins: 688, played: true }, { spieltag: 10, datum: "18.03.2026", pins: 640, played: true }, { spieltag: 11, datum: "25.03.2026", pins: 714, played: true } ] }; const playerSelect = document.getElementById("playerSelect"); const seasonInfo = document.getElementById("seasonInfo"); const playerChip = document.getElementById("playerChip"); const playedInfo = document.getElementById("playedInfo"); const statAverage = document.getElementById("statAverage"); const statBest = document.getElementById("statBest"); const statPlayed = document.getElementById("statPlayed"); const statAbsent = document.getElementById("statAbsent"); const insightList = document.getElementById("insightList"); const statusGrid = document.getElementById("statusGrid"); seasonInfo.textContent = SEASON_LABEL; const players = Object.keys(PLAYER_DATA).sort((a, b) => a.localeCompare(b, "de")); players.forEach(name => { const option = document.createElement("option"); option.value = name; option.textContent = name; playerSelect.appendChild(option); }); function formatNumber(value) { return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value); } function getProcessedData(entries) { let runningTotal = 0; let playedCount = 0; let lastAverage = null; return entries.map(entry => { if (entry.played && typeof entry.pins === "number") { runningTotal += entry.pins; playedCount += 1; lastAverage = runningTotal / playedCount; return { ...entry, average: lastAverage }; } return { ...entry, average: lastAverage }; }); } function getStats(processed) { const played = processed.filter(item => item.played && typeof item.pins === "number"); const absent = processed.filter(item => !item.played).length; const best = played.length ? Math.max(...played.map(item => item.pins)) : null; const currentAverage = played.length ? played.reduce((sum, item) => sum + item.pins, 0) / played.length : null; return { playedCount: played.length, absentCount: absent, best, currentAverage }; } function getInsights(name, processed) { const played = processed.filter(item => item.played && typeof item.pins === "number"); const absent = processed.filter(item => !item.played); const insights = []; if (!played.length) { insights.push(`${name} hat in den erfassten Daten noch keinen gültigen Spieltag.`); return insights; } const latestPlayed = played[played.length - 1]; const previousPlayed = played.length > 1 ? played[played.length - 2] : null; if (previousPlayed) { const diff = latestPlayed.pins - previousPlayed.pins; if (diff > 0) { insights.push(`Zuletzt ging es nach oben: ${latestPlayed.pins} Pins, also ${diff} mehr als am vorherigen gespielten Spieltag.`); } else if (diff < 0) { insights.push(`Der letzte gespielte Tag war schwächer: ${latestPlayed.pins} Pins, also ${Math.abs(diff)} weniger als davor.`); } else { insights.push(`Die letzten beiden gespielten Spieltage waren exakt gleich stark.`); } } else { insights.push(`Bisher gibt es nur einen gespielten Spieltag. Für Trend-Aussagen ist das noch zu dünn.`); } const best = played.reduce((bestEntry, current) => current.pins > bestEntry.pins ? current : bestEntry, played[0]); insights.push(`Bestes bisher erfasstes Ergebnis: ${best.pins} Pins an Spieltag ${best.spieltag} (${best.datum}).`); const lastThree = played.slice(-3); if (lastThree.length >= 2) { const avgLastThree = lastThree.reduce((sum, item) => sum + item.pins, 0) / lastThree.length; insights.push(`Formkurve der letzten ${lastThree.length} gespielten Spieltage: ${formatNumber(avgLastThree)} Pins im Schnitt.`); } if (absent.length) { insights.push(`Erfasste Fehlzeiten in der Saison: ${absent.length}. Diese Tage werden im Leistungsdiagramm bewusst nicht künstlich aufgefüllt.`); } else { insights.push(`Bisher keine erfasste Abwesenheit. Die Datenreihe ist vollständig.`); } return insights; } function renderStatusCards(processed) { statusGrid.innerHTML = ""; processed.forEach(entry => { const card = document.createElement("div"); card.className = "status-card"; const statusClass = entry.played ? "played" : "absent"; const statusText = entry.played ? "gespielt" : "abwesend"; const chips = entry.played ? ` <span class="status-chip">Spieltag ${entry.spieltag}</span> <span class="status-chip">${entry.pins} Pins</span> <span class="status-chip">Schnitt bis hier: ${entry.average ? formatNumber(entry.average) : "–"}</span> ` : ` <span class="status-chip">Spieltag ${entry.spieltag}</span> <span class="status-chip">Kein Wert</span> <span class="status-chip">Schnitt bleibt: ${entry.average ? formatNumber(entry.average) : "–"}</span> `; card.innerHTML = ` <div class="status-head"> <div class="status-date">${entry.datum}</div> <div class="status-badge ${statusClass}">${statusText}</div> </div> <div class="status-values">${chips}</div> `; statusGrid.appendChild(card); }); } function renderInsights(items) { insightList.innerHTML = items.map(text => `<div class="insight-item">${text}</div>`).join(""); } let chart; function buildChart(processed, playerName) { const labels = processed.map(item => `SpT ${item.spieltag}`); const pinsData = processed.map(item => item.played ? item.pins : null); const averageData = processed.map(item => item.average ?? null); const ctx = document.getElementById("playerChart").getContext("2d"); if (chart) { chart.destroy(); } chart = new Chart(ctx, { type: "line", data: { labels, datasets: [ { label: "Pins pro Spieltag", data: pinsData, borderColor: "#4964ff", backgroundColor: "rgba(73, 100, 255, 0.14)", borderWidth: 3, pointRadius: 4, pointHoverRadius: 5, pointBackgroundColor: "#4964ff", pointBorderColor: "#ffffff", pointBorderWidth: 2, tension: 0.28, spanGaps: false }, { label: "Laufender Saison-Schnitt", data: averageData, borderColor: "#ff5c9f", backgroundColor: "rgba(255, 92, 159, 0.08)", borderWidth: 3, borderDash: [8, 6], pointRadius: 3, pointHoverRadius: 4, pointBackgroundColor: "#ff5c9f", pointBorderColor: "#ffffff", pointBorderWidth: 2, tension: 0.22, spanGaps: true } ] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { backgroundColor: "rgba(15, 23, 42, 0.92)", titleColor: "#ffffff", bodyColor: "#e5eefc", borderColor: "rgba(122,146,182,0.16)", borderWidth: 1, padding: 12, callbacks: { title(items) { const index = items[0].dataIndex; const entry = processed[index]; return `Spieltag ${entry.spieltag} · ${entry.datum}`; }, label(context) { const entry = processed[context.dataIndex]; if (context.datasetIndex === 0) { return entry.played ? `Pins: ${entry.pins}` : "Nicht gespielt"; } return entry.average != null ? `Schnitt bis hier: ${formatNumber(entry.average)}` : "Noch kein Schnitt"; } } } }, interaction: { intersect: false, mode: "index" }, scales: { x: { grid: { color: "rgba(122,146,182,0.08)" }, ticks: { color: "#5d7190", font: { weight: 700 } } }, y: { beginAtZero: false, suggestedMin: 500, suggestedMax: 800, grid: { color: "rgba(122,146,182,0.10)" }, ticks: { color: "#5d7190", font: { weight: 700 } } } } } }); playerChip.textContent = `Spieler: ${playerName}`; } function updateView(playerName) { const processed = getProcessedData(PLAYER_DATA[playerName]); const stats = getStats(processed); const insights = getInsights(playerName, processed); buildChart(processed, playerName); renderStatusCards(processed); renderInsights(insights); playedInfo.textContent = `${stats.playedCount} Spieltage gespielt · ${stats.absentCount} Fehlzeiten`; statAverage.textContent = stats.currentAverage != null ? formatNumber(stats.currentAverage) : "–"; statBest.textContent = stats.best != null ? `${stats.best}` : "–"; statPlayed.textContent = String(stats.playedCount); statAbsent.textContent = String(stats.absentCount); } playerSelect.addEventListener("change", () => { updateView(playerSelect.value); }); if (players.length) { playerSelect.value = players[0]; updateView(players[0]); } </script> </body> </html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spieleranalyse - Strikeclub Velten</title>
+
+  <meta property="og:title" content="Spieleranalyse - Strikeclub Velten" />
+  <meta property="og:description" content="Verlauf und Saisonentwicklung der Spieler im Überblick." />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/spieleranalyse.html" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --text: #0f172a;
+      --text-soft: #5f718d;
+      --border: rgba(119, 145, 185, 0.14);
+      --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
+      --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
+      --max-width: 1440px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(76px);
+      opacity: 0.44;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .glow.one {
+      width: 340px;
+      height: 340px;
+      left: -80px;
+      top: 40px;
+      background: rgba(91, 124, 255, 0.16);
+    }
+
+    .glow.two {
+      width: 290px;
+      height: 290px;
+      right: -30px;
+      top: 140px;
+      background: rgba(255, 92, 159, 0.14);
+      animation-delay: -6s;
+    }
+
+    .glow.three {
+      width: 380px;
+      height: 380px;
+      right: 14%;
+      bottom: -100px;
+      background: rgba(51, 198, 255, 0.16);
+      animation-delay: -11s;
+    }
+
+    .bg-shape {
+      position: absolute;
+      opacity: 0.22;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .ball-bg {
+      width: var(--size, 120px);
+      height: var(--size, 120px);
+      left: var(--x, 10%);
+      top: var(--y, 10%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 28%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 60% 48%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff));
+      box-shadow:
+        inset -18px -18px 30px rgba(255,255,255,0.24),
+        inset 18px 18px 28px rgba(255,255,255,0.14),
+        0 16px 32px rgba(65, 85, 130, 0.10);
+      animation-name: floatBall;
+      animation-duration: var(--dur, 18s);
+      animation-delay: var(--delay, 0s);
+    }
+
+    .pin-bg {
+      width: var(--w, 56px);
+      height: var(--h, 164px);
+      left: var(--x, 15%);
+      top: var(--y, 20%);
+      border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(150, 170, 205, 0.14),
+        0 16px 32px rgba(65, 85, 130, 0.08);
+      animation-name: swayPin;
+      animation-duration: var(--dur, 16s);
+      animation-delay: var(--delay, 0s);
+      transform-origin: center 82%;
+    }
+
+    .pin-bg::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 8px;
+      right: 8px;
+      height: 18px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          rgba(255, 92, 159, 0.84) 0%,
+          rgba(255, 92, 159, 0.84) 42%,
+          transparent 42%,
+          transparent 58%,
+          rgba(255, 104, 142, 0.74) 58%,
+          rgba(255, 104, 142, 0.74) 100%);
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max-width), calc(100% - 22px));
+      margin: 0 auto;
+      padding: 14px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(122, 146, 182, 0.14);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24);
+    }
+
+    .page {
+      position: relative;
+      padding: 20px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%),
+        radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%);
+      pointer-events: none;
+    }
+
+    .header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(122, 146, 182, 0.12);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #36507a;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3bc7ff, #7a5cff);
+      box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+    }
+
+    .headline-accent {
+      background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .analysis-panel {
+      position: relative;
+      z-index: 1;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid rgba(122,146,182,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(248,251,255,0.64));
+      backdrop-filter: blur(8px);
+    }
+
+    .panel-title-wrap {
+      display: grid;
+      gap: 4px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .panel-subtitle {
+      color: var(--text-soft);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .panel-body {
+      padding: 14px;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #5b7092;
+    }
+
+    .player-select {
+      width: 100%;
+      border: 1px solid rgba(122,146,182,0.16);
+      border-radius: 16px;
+      padding: 13px 16px;
+      font: inherit;
+      font-weight: 700;
+      color: #16203d;
+      background: rgba(255,255,255,0.92);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.76);
+    }
+
+    .player-select:focus {
+      border-color: rgba(91, 124, 255, 0.35);
+      box-shadow: 0 0 0 5px rgba(91, 124, 255, 0.08);
+    }
+
+    .chip-note {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(122,146,182,0.12);
+      color: #596f93;
+      font-size: 0.82rem;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      padding: 14px 14px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+      border: 1px solid rgba(122,146,182,0.10);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #6b7d99;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 7px;
+    }
+
+    .stat-value {
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: #16203d;
+      letter-spacing: -0.03em;
+    }
+
+    .chart-wrap {
+      padding: 14px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+      border: 1px solid rgba(122,146,182,0.10);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .legend-note {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: #667997;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(122,146,182,0.10);
+    }
+
+    .legend-line,
+    .legend-dash,
+    .legend-gap {
+      width: 16px;
+      height: 0;
+      border-top: 3px solid #4964ff;
+      border-radius: 999px;
+    }
+
+    .legend-dash {
+      border-top-style: dashed;
+      border-top-color: #ff5c9f;
+    }
+
+    .legend-gap {
+      border-top-style: dotted;
+      border-top-color: #94a3b8;
+    }
+
+    .status-section {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-headline {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #1f3b63;
+    }
+
+    .status-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-card {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+      border: 1px solid rgba(122,146,182,0.10);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .status-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .status-date {
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: #18355f;
+    }
+
+    .status-badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .status-badge.played {
+      background: linear-gradient(135deg, rgba(55,201,151,0.22), rgba(49,182,255,0.14));
+      color: #107357;
+    }
+
+    .status-badge.absent {
+      background: linear-gradient(135deg, rgba(255,184,77,0.22), rgba(255,127,80,0.14));
+      color: #9a5b00;
+    }
+
+    .status-values {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .status-chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(122,146,182,0.10);
+      color: #5e7395;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      text-align: center;
+      color: #6c7b96;
+      font-size: 0.92rem;
+      padding: 0 8px;
+    }
+
+    .footer-note a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(108, 123, 150, 0.34);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-note a:hover {
+      opacity: 1;
+      border-bottom-color: rgba(108, 123, 150, 0.75);
+    }
+
+    .refresh-fab,
+    .back-fab {
+      position: fixed;
+      bottom: 18px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92));
+      box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .refresh-fab { right: 18px; }
+    .back-fab { left: 18px; }
+
+    .refresh-fab i {
+      font-size: 1rem;
+      animation: refreshSpin 2.4s linear infinite;
+    }
+
+    .back-fab i {
+      font-size: 1rem;
+      animation: backPulse 1.6s ease-in-out infinite;
+    }
+
+    .refresh-fab:hover,
+    .back-fab:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: saturate(1.08);
+      box-shadow:
+        0 14px 28px rgba(15, 23, 42, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .refresh-fab:hover i { animation-duration: 0.9s; }
+    .back-fab:hover i { animation-duration: 0.8s; }
+
+    .refresh-fab:active,
+    .back-fab:active {
+      transform: scale(0.96);
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
+    }
+
+    @keyframes floatBall {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); }
+      50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); }
+      75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); }
+    }
+
+    @keyframes swayPin {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      25% { transform: translate3d(14px, -22px, 0) rotate(3deg); }
+      50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); }
+      75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
+    }
+
+    @keyframes refreshSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes backPulse {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-4px); }
+    }
+
+    @media (max-width: 980px) {
+      .topbar,
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .site {
+        width: min(var(--max-width), calc(100% - 12px));
+      }
+
+      .page {
+        padding: 14px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .site {
+        width: 100%;
+        padding: 0 0 22px;
+      }
+
+      .topbar {
+        padding: 10px 8px 0;
+        margin-bottom: 8px;
+      }
+
+      .page {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 10px 4px 14px;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+      }
+
+      .panel-body,
+      .chart-wrap {
+        padding: 10px;
+      }
+
+      .refresh-fab,
+      .back-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 14px;
+      }
+
+      .refresh-fab { right: 14px; }
+      .back-fab { left: 14px; }
+
+      .refresh-fab i,
+      .back-fab i {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow,
+      .bg-shape,
+      .refresh-fab i,
+      .back-fab i {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
+
+    <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+
+    <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div>
+    <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
+  </div>
+
+  <main class="site">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span>Strikeclub Velten</span>
+      </div>
+    </div>
+
+    <section class="page">
+      <div class="header">
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>Spieleranalyse</span>
+          </div>
+
+          <h1>Form. <span class="headline-accent">Verlauf der Saison.</span></h1>
+        </div>
+      </div>
+
+      <section class="analysis-panel">
+        <div class="panel-head">
+          <div class="panel-title-wrap">
+            <h2 class="panel-title">Verlauf</h2>
+            <div class="panel-subtitle">Spieltag-Schnitt und laufender Saison-Schnitt</div>
+          </div>
+          <div class="chip-note" id="playerChip">Spieler: –</div>
+        </div>
+
+        <div class="panel-body">
+          <div class="control-row">
+            <div class="field">
+              <label for="playerSelect">Spieler auswählen</label>
+              <select id="playerSelect" class="player-select"></select>
+            </div>
+
+            <div class="chip-note" id="playedInfo">0 Spieltage erfasst</div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Aktueller Schnitt</span>
+              <div class="stat-value" id="statAverage">–</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Bester Tagesschnitt</span>
+              <div class="stat-value" id="statBest">–</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Spiele gesamt</span>
+              <div class="stat-value" id="statPlayed">–</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Fehlzeiten</span>
+              <div class="stat-value" id="statAbsent">–</div>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="playerChart" height="145"></canvas>
+
+            <div class="legend-note">
+              <span class="legend-item"><span class="legend-line"></span>Spieltag-Schnitt</span>
+              <span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span>
+              <span class="legend-item"><span class="legend-gap"></span>Lücke = nicht gespielt</span>
+            </div>
+          </div>
+
+          <div class="status-section">
+            <h3 class="status-headline">Erfasste Spieltage</h3>
+            <div class="status-grid" id="statusGrid"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      Strikeclub Velten · <a href="impressum.html">Impressum</a>
+    </p>
+  </main>
+
+  <button
+    class="back-fab"
+    type="button"
+    aria-label="Zurück zur Startseite"
+    title="Zurück zur Startseite"
+    onclick="location.href='index.html'"
+  >
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <button
+    class="refresh-fab"
+    type="button"
+    aria-label="Seite aktualisieren"
+    title="Seite aktualisieren"
+    onclick="window.location.reload()"
+  >
+    <i class="fa-solid fa-rotate-right"></i>
+  </button>
+
+  <script>
+    const PLAYER_DATA = {
+      "Skampy": [
+        { spieltag: 1, datum: "07.01.2026", pins: 688, games: 4, played: true },
+        { spieltag: 2, datum: "14.01.2026", pins: 712, games: 4, played: true },
+        { spieltag: 3, datum: "21.01.2026", pins: 674, games: 4, played: true },
+        { spieltag: 4, datum: "28.01.2026", pins: 701, games: 4, played: true },
+        { spieltag: 5, datum: "04.02.2026", pins: null, games: 0, played: false },
+        { spieltag: 6, datum: "11.02.2026", pins: 689, games: 4, played: true },
+        { spieltag: 7, datum: "18.02.2026", pins: 721, games: 4, played: true },
+        { spieltag: 8, datum: "04.03.2026", pins: 667, games: 4, played: true },
+        { spieltag: 9, datum: "11.03.2026", pins: 690, games: 4, played: true },
+        { spieltag: 10, datum: "18.03.2026", pins: 704, games: 4, played: true },
+        { spieltag: 11, datum: "25.03.2026", pins: 681, games: 4, played: true }
+      ],
+      "Diana": [
+        { spieltag: 1, datum: "07.01.2026", pins: 618, games: 4, played: true },
+        { spieltag: 2, datum: "14.01.2026", pins: 631, games: 4, played: true },
+        { spieltag: 3, datum: "21.01.2026", pins: null, games: 0, played: false },
+        { spieltag: 4, datum: "28.01.2026", pins: 644, games: 4, played: true },
+        { spieltag: 5, datum: "04.02.2026", pins: 659, games: 4, played: true },
+        { spieltag: 6, datum: "11.02.2026", pins: 636, games: 4, played: true },
+        { spieltag: 7, datum: "18.02.2026", pins: 648, games: 4, played: true },
+        { spieltag: 8, datum: "04.03.2026", pins: 672, games: 4, played: true },
+        { spieltag: 9, datum: "11.03.2026", pins: 655, games: 4, played: true },
+        { spieltag: 10, datum: "18.03.2026", pins: 643, games: 4, played: true },
+        { spieltag: 11, datum: "25.03.2026", pins: 762, games: 4, played: true }
+      ],
+      "Rainsen": [
+        { spieltag: 1, datum: "07.01.2026", pins: 655, games: 4, played: true },
+        { spieltag: 2, datum: "14.01.2026", pins: 690, games: 4, played: true },
+        { spieltag: 3, datum: "21.01.2026", pins: 676, games: 4, played: true },
+        { spieltag: 4, datum: "28.01.2026", pins: 701, games: 4, played: true },
+        { spieltag: 5, datum: "04.02.2026", pins: 643, games: 4, played: true },
+        { spieltag: 6, datum: "11.02.2026", pins: null, games: 0, played: false },
+        { spieltag: 7, datum: "18.02.2026", pins: 698, games: 4, played: true },
+        { spieltag: 8, datum: "04.03.2026", pins: 661, games: 4, played: true },
+        { spieltag: 9, datum: "11.03.2026", pins: 688, games: 4, played: true },
+        { spieltag: 10, datum: "18.03.2026", pins: 640, games: 4, played: true },
+        { spieltag: 11, datum: "25.03.2026", pins: 714, games: 4, played: true }
+      ]
+    };
+
+    const playerSelect = document.getElementById("playerSelect");
+    const playerChip = document.getElementById("playerChip");
+    const playedInfo = document.getElementById("playedInfo");
+
+    const statAverage = document.getElementById("statAverage");
+    const statBest = document.getElementById("statBest");
+    const statPlayed = document.getElementById("statPlayed");
+    const statAbsent = document.getElementById("statAbsent");
+
+    const statusGrid = document.getElementById("statusGrid");
+
+    const players = Object.keys(PLAYER_DATA).sort((a, b) => a.localeCompare(b, "de"));
+
+    players.forEach(name => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      playerSelect.appendChild(option);
+    });
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("de-DE", {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      }).format(value);
+    }
+
+    function getProcessedData(entries) {
+      let runningPins = 0;
+      let runningGames = 0;
+      let lastAverage = null;
+
+      return entries.map(entry => {
+        const validPlayed = entry.played && typeof entry.pins === "number" && Number(entry.games) > 0;
+        const dayAverage = validPlayed ? entry.pins / entry.games : null;
+
+        if (validPlayed) {
+          runningPins += entry.pins;
+          runningGames += entry.games;
+          lastAverage = runningPins / runningGames;
+        }
+
+        return {
+          ...entry,
+          validPlayed,
+          dayAverage,
+          average: lastAverage,
+          runningPins,
+          runningGames
+        };
+      });
+    }
+
+    function getStats(processed) {
+      const played = processed.filter(item => item.validPlayed);
+      const absent = processed.filter(item => !item.validPlayed).length;
+
+      const totalGames = played.reduce((sum, item) => sum + item.games, 0);
+      const totalPins = played.reduce((sum, item) => sum + item.pins, 0);
+
+      const bestDayAverage = played.length
+        ? Math.max(...played.map(item => item.dayAverage))
+        : null;
+
+      const currentAverage = totalGames > 0
+        ? totalPins / totalGames
+        : null;
+
+      return {
+        playedDays: played.length,
+        absentCount: absent,
+        totalGames,
+        bestDayAverage,
+        currentAverage
+      };
+    }
+
+    function renderStatusCards(processed) {
+      statusGrid.innerHTML = "";
+
+      processed.forEach(entry => {
+        const card = document.createElement("div");
+        card.className = "status-card";
+
+        const statusClass = entry.validPlayed ? "played" : "absent";
+        const statusText = entry.validPlayed ? "gespielt" : "abwesend";
+
+        const chips = entry.validPlayed
+          ? `
+            <span class="status-chip">Spieltag ${entry.spieltag}</span>
+            <span class="status-chip">${entry.pins} Pins</span>
+            <span class="status-chip">${entry.games} Spiele</span>
+            <span class="status-chip">Tagesschnitt: ${formatNumber(entry.dayAverage)}</span>
+            <span class="status-chip">Saison: ${entry.average ? formatNumber(entry.average) : "–"}</span>
+          `
+          : `
+            <span class="status-chip">Spieltag ${entry.spieltag}</span>
+            <span class="status-chip">Kein Wert</span>
+            <span class="status-chip">Saison bleibt: ${entry.average ? formatNumber(entry.average) : "–"}</span>
+          `;
+
+        card.innerHTML = `
+          <div class="status-head">
+            <div class="status-date">${entry.datum}</div>
+            <div class="status-badge ${statusClass}">${statusText}</div>
+          </div>
+          <div class="status-values">${chips}</div>
+        `;
+
+        statusGrid.appendChild(card);
+      });
+    }
+
+    let chart;
+    let activeTooltipIndex = null;
+
+    function hideChartTooltip(chartRef) {
+      chartRef.setActiveElements([]);
+      chartRef.tooltip.setActiveElements([], { x: 0, y: 0 });
+      chartRef.update();
+      activeTooltipIndex = null;
+    }
+
+    function buildChart(processed, playerName) {
+      const labels = processed.map(item => `SpT ${item.spieltag}`);
+      const dayAverageData = processed.map(item => item.validPlayed ? Number(item.dayAverage.toFixed(2)) : null);
+      const seasonAverageData = processed.map(item => item.average != null ? Number(item.average.toFixed(2)) : null);
+
+      const values = [
+        ...dayAverageData.filter(value => Number.isFinite(value)),
+        ...seasonAverageData.filter(value => Number.isFinite(value))
+      ];
+
+      const yMin = values.length
+        ? Math.max(80, Math.floor((Math.min(...values) - 8) / 5) * 5)
+        : 120;
+
+      const yMax = values.length
+        ? Math.min(260, Math.ceil((Math.max(...values) + 8) / 5) * 5)
+        : 220;
+
+      const ctx = document.getElementById("playerChart").getContext("2d");
+
+      if (chart) {
+        chart.destroy();
+        activeTooltipIndex = null;
+      }
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Spieltag-Schnitt",
+              data: dayAverageData,
+              borderColor: "#4964ff",
+              backgroundColor: "rgba(73, 100, 255, 0.10)",
+              borderWidth: 3,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              pointHitRadius: 18,
+              pointBackgroundColor: "#4964ff",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              tension: 0.24,
+              spanGaps: false
+            },
+            {
+              label: "Laufender Saison-Schnitt",
+              data: seasonAverageData,
+              borderColor: "#ff5c9f",
+              backgroundColor: "rgba(255, 92, 159, 0.06)",
+              borderWidth: 3,
+              borderDash: [8, 6],
+              pointRadius: 0,
+              pointHoverRadius: 0,
+              tension: 0.18,
+              spanGaps: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 1.95,
+          layout: {
+            padding: {
+              top: 6,
+              right: 8,
+              bottom: 2,
+              left: 2
+            }
+          },
+          onClick(event, elements, chartRef) {
+            const points = chartRef.getElementsAtEventForMode(
+              event,
+              "nearest",
+              { intersect: true },
+              false
+            );
+
+            if (!points.length) {
+              hideChartTooltip(chartRef);
+              return;
+            }
+
+            const tappedIndex = points[0].index;
+
+            if (activeTooltipIndex === tappedIndex) {
+              hideChartTooltip(chartRef);
+              return;
+            }
+
+            activeTooltipIndex = tappedIndex;
+
+            const activeElements = [];
+            chartRef.data.datasets.forEach((dataset, datasetIndex) => {
+              const value = dataset.data[tappedIndex];
+              if (value !== null && value !== undefined) {
+                activeElements.push({ datasetIndex, index: tappedIndex });
+              }
+            });
+
+            const anchorDataset = activeElements[0];
+            const anchorPoint = chartRef.getDatasetMeta(anchorDataset.datasetIndex).data[tappedIndex];
+
+            chartRef.setActiveElements(activeElements);
+            chartRef.tooltip.setActiveElements(activeElements, {
+              x: anchorPoint.x,
+              y: anchorPoint.y
+            });
+            chartRef.update();
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              displayColors: false,
+              backgroundColor: "rgba(15, 23, 42, 0.92)",
+              titleColor: "#ffffff",
+              bodyColor: "#e5eefc",
+              footerColor: "#cdd9ee",
+              borderColor: "rgba(122,146,182,0.16)",
+              borderWidth: 1,
+              padding: 10,
+              caretSize: 6,
+              callbacks: {
+                title(items) {
+                  const index = items[0].dataIndex;
+                  const entry = processed[index];
+                  return `Spieltag ${entry.spieltag} · ${entry.datum}`;
+                },
+                label(context) {
+                  const entry = processed[context.dataIndex];
+
+                  if (!entry.validPlayed && context.datasetIndex === 0) {
+                    return "Nicht gespielt";
+                  }
+
+                  if (context.datasetIndex === 0) {
+                    return `Spieltag-Schnitt: ${formatNumber(entry.dayAverage)}`;
+                  }
+
+                  return entry.average != null
+                    ? `Saison-Schnitt: ${formatNumber(entry.average)}`
+                    : "Noch kein Schnitt";
+                },
+                footer(items) {
+                  const entry = processed[items[0].dataIndex];
+                  if (!entry.validPlayed) return "";
+                  return `Pins gesamt: ${entry.pins} · Spiele: ${entry.games}`;
+                }
+              }
+            }
+          },
+          interaction: {
+            mode: "nearest",
+            intersect: false
+          },
+          scales: {
+            x: {
+              grid: {
+                color: "rgba(122,146,182,0.08)"
+              },
+              ticks: {
+                color: "#5d7190",
+                font: {
+                  weight: 700
+                },
+                autoSkip: true,
+                maxTicksLimit: 8,
+                maxRotation: 0,
+                minRotation: 0
+              }
+            },
+            y: {
+              min: yMin,
+              max: yMax,
+              grid: {
+                color: "rgba(122,146,182,0.10)"
+              },
+              ticks: {
+                color: "#5d7190",
+                font: {
+                  weight: 700
+                },
+                callback(value) {
+                  return formatNumber(value);
+                },
+                maxTicksLimit: 7
+              },
+              title: {
+                display: true,
+                text: "Pins pro Spiel",
+                color: "#5d7190",
+                font: {
+                  weight: 800
+                }
+              }
+            }
+          }
+        }
+      });
+
+      playerChip.textContent = `Spieler: ${playerName}`;
+    }
+
+    function updateView(playerName) {
+      const processed = getProcessedData(PLAYER_DATA[playerName]);
+      const stats = getStats(processed);
+
+      buildChart(processed, playerName);
+      renderStatusCards(processed);
+
+      playedInfo.textContent = `${stats.playedDays} Spieltage gespielt · ${stats.totalGames} Spiele gesamt`;
+      statAverage.textContent = stats.currentAverage != null ? formatNumber(stats.currentAverage) : "–";
+      statBest.textContent = stats.bestDayAverage != null ? formatNumber(stats.bestDayAverage) : "–";
+      statPlayed.textContent = String(stats.totalGames);
+      statAbsent.textContent = String(stats.absentCount);
+    }
+
+    playerSelect.addEventListener("change", () => {
+      updateView(playerSelect.value);
+    });
+
+    if (players.length) {
+      playerSelect.value = players[0];
+      updateView(players[0]);
+    }
+  </script>
+</body>
+</html>
