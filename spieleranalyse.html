@@ -393,6 +393,49 @@
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
     }
 
+    .chart-detail-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,250,255,0.92));
+  border: 1px solid rgba(122,146,182,0.12);
+  box-shadow: 0 10px 24px rgba(35, 58, 100, 0.05);
+  color: #284164;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.chart-detail-box.hidden {
+  display: none;
+}
+
+.chart-detail-title {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #5c7192;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chart-detail-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chart-detail-chip {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(122,146,182,0.10);
+  color: #4e6487;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
     .legend-note {
       margin-top: 10px;
       display: flex;
@@ -767,8 +810,9 @@
           </div>
 
           <div class="chart-wrap">
-            <canvas id="playerChart" height="145"></canvas>
-
+            <canvas id="playerChart" height="145"></canvas>            
+            <div id="chartDetailBox" class="chart-detail-box hidden"></div>
+            
             <div class="legend-note">
               <span class="legend-item"><span class="legend-line"></span>Spieltag-Schnitt</span>
               <span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span>
@@ -966,14 +1010,40 @@
     }
 
     let chart;
-    let activeTooltipIndex = null;
+let activeTooltipIndex = null;
 
-    function hideChartTooltip(chartRef) {
-      chartRef.setActiveElements([]);
-      chartRef.tooltip.setActiveElements([], { x: 0, y: 0 });
-      chartRef.update();
-      activeTooltipIndex = null;
-    }
+const chartDetailBox = document.getElementById("chartDetailBox");
+
+function hideChartDetail() {
+  chartDetailBox.classList.add("hidden");
+  chartDetailBox.innerHTML = "";
+  activeTooltipIndex = null;
+}
+
+function showChartDetail(entry) {
+  const chips = entry.validPlayed
+    ? `
+      <span class="chart-detail-chip">Spieltag ${entry.spieltag}</span>
+      <span class="chart-detail-chip">${entry.datum}</span>
+      <span class="chart-detail-chip">${entry.pins} Pins</span>
+      <span class="chart-detail-chip">${entry.games} Spiele</span>
+      <span class="chart-detail-chip">Tagesschnitt: ${formatNumber(entry.dayAverage)}</span>
+      <span class="chart-detail-chip">Saison: ${entry.average ? formatNumber(entry.average) : "–"}</span>
+    `
+    : `
+      <span class="chart-detail-chip">Spieltag ${entry.spieltag}</span>
+      <span class="chart-detail-chip">${entry.datum}</span>
+      <span class="chart-detail-chip">Nicht gespielt</span>
+      <span class="chart-detail-chip">Saison bleibt: ${entry.average ? formatNumber(entry.average) : "–"}</span>
+    `;
+
+  chartDetailBox.innerHTML = `
+    <span class="chart-detail-title">Ausgewählter Spieltag</span>
+    <div class="chart-detail-values">${chips}</div>
+  `;
+  chartDetailBox.classList.remove("hidden");
+}
+
 
     function buildChart(processed, playerName) {
       const labels = processed.map(item => `SpT ${item.spieltag}`);
@@ -1047,60 +1117,35 @@
             }
           },
           onClick(event, elements, chartRef) {
-            const points = chartRef.getElementsAtEventForMode(
-              event,
-              "nearest",
-              { intersect: true },
-              false
-            );
+  const points = chartRef.getElementsAtEventForMode(
+    event,
+    "nearest",
+    { intersect: true },
+    false
+  );
 
-            if (!points.length) {
-              hideChartTooltip(chartRef);
-              return;
-            }
+  if (!points.length) {
+    hideChartDetail();
+    return;
+  }
 
-            const tappedIndex = points[0].index;
+  const tappedIndex = points[0].index;
 
-            if (activeTooltipIndex === tappedIndex) {
-              hideChartTooltip(chartRef);
-              return;
-            }
+  if (activeTooltipIndex === tappedIndex) {
+    hideChartDetail();
+    return;
+  }
 
-            activeTooltipIndex = tappedIndex;
-
-            const activeElements = [];
-            chartRef.data.datasets.forEach((dataset, datasetIndex) => {
-              const value = dataset.data[tappedIndex];
-              if (value !== null && value !== undefined) {
-                activeElements.push({ datasetIndex, index: tappedIndex });
-              }
-            });
-
-            const anchorDataset = activeElements[0];
-            const anchorPoint = chartRef.getDatasetMeta(anchorDataset.datasetIndex).data[tappedIndex];
-
-            chartRef.setActiveElements(activeElements);
-            chartRef.tooltip.setActiveElements(activeElements, {
-              x: anchorPoint.x,
-              y: anchorPoint.y
-            });
-            chartRef.update();
-          },
+  activeTooltipIndex = tappedIndex;
+  showChartDetail(processed[tappedIndex]);
+},
           plugins: {
             legend: {
               display: false
             },
             tooltip: {
-              displayColors: false,
-              backgroundColor: "rgba(15, 23, 42, 0.92)",
-              titleColor: "#ffffff",
-              bodyColor: "#e5eefc",
-              footerColor: "#cdd9ee",
-              borderColor: "rgba(122,146,182,0.16)",
-              borderWidth: 1,
-              padding: 10,
-              caretSize: 6,
-              callbacks: {
+  enabled: false
+}
                 title(items) {
                   const index = items[0].dataIndex;
                   const entry = processed[index];
@@ -1182,18 +1227,20 @@
     }
 
     function updateView(playerName) {
-      const processed = getProcessedData(PLAYER_DATA[playerName]);
-      const stats = getStats(processed);
+  hideChartDetail();
 
-      buildChart(processed, playerName);
-      renderStatusCards(processed);
+  const processed = getProcessedData(PLAYER_DATA[playerName]);
+  const stats = getStats(processed);
 
-      playedInfo.textContent = `${stats.playedDays} Spieltage gespielt · ${stats.totalGames} Spiele gesamt`;
-      statAverage.textContent = stats.currentAverage != null ? formatNumber(stats.currentAverage) : "–";
-      statBest.textContent = stats.bestDayAverage != null ? formatNumber(stats.bestDayAverage) : "–";
-      statPlayed.textContent = String(stats.totalGames);
-      statAbsent.textContent = String(stats.absentCount);
-    }
+  buildChart(processed, playerName);
+  renderStatusCards(processed);
+
+  playedInfo.textContent = `${stats.playedDays} Spieltage gespielt · ${stats.totalGames} Spiele gesamt`;
+  statAverage.textContent = stats.currentAverage != null ? formatNumber(stats.currentAverage) : "–";
+  statBest.textContent = stats.bestDayAverage != null ? formatNumber(stats.bestDayAverage) : "–";
+  statPlayed.textContent = String(stats.totalGames);
+  statAbsent.textContent = String(stats.absentCount);
+}
 
     playerSelect.addEventListener("change", () => {
       updateView(playerSelect.value);
