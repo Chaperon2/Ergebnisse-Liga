@@ -1349,7 +1349,7 @@ const statRange = document.getElementById("statRange");
   const maxValue = Math.max(...values);
   const range = maxValue - minValue;
 
-  const rawScore = 100 - stdDev * 7;
+  const rawScore = 100 - stdDev * 2.5;
   const score = Math.max(0, Math.min(100, Math.round(rawScore)));
 
   return {
