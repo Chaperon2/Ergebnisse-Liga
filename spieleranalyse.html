@@ -555,6 +555,14 @@
   font-weight: 700;
 }
 
+	  .stat-subtext {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #6b7d99;
+  line-height: 1.35;
+}
+	  
 .chart-detail-box.hidden {
   display: none;
 }
@@ -942,7 +950,8 @@
           <div class="stats-grid">
   <div class="stat-card">
     <span class="stat-label">Aktueller Schnitt</span>
-    <div class="stat-value" id="statAverage">–</div>
+    <div class="stat-value" id="statConsistency">–</div>
+<div class="stat-subtext">0 = unkonstant · 100 = sehr konstant</div>
   </div>
   <div class="stat-card">
     <span class="stat-label">Bester Tagesschnitt</span>
@@ -1535,7 +1544,7 @@ function showChartDetail(entry) {
   statPlayed.textContent = String(stats.totalGames);
   statAbsent.textContent = String(stats.absentCount);
 
-  statConsistency.textContent = consistency.score != null ? `${consistency.score}` : "–";
+  statConsistency.textContent = consistency.score != null ? `${consistency.score} / 100` : "–";
   statDeviation.textContent = consistency.stdDev != null ? `± ${formatNumber(consistency.stdDev)}` : "–";
   statRange.textContent = consistency.range != null ? formatNumber(consistency.range) : "–";
 }
