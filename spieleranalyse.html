@@ -360,6 +360,83 @@
   margin-bottom: 14px;
 }
 
+	  .consistency-explainer {
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+  border: 1px solid rgba(122,146,182,0.10);
+  box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+}
+
+.consistency-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1f3b63;
+}
+
+.consistency-text {
+  margin: 0;
+  color: #5f718d;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.consistency-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.consistency-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border: 1px solid rgba(122,146,182,0.10);
+  background: rgba(255,255,255,0.88);
+}
+
+.consistency-chip.very-good {
+  color: #107357;
+  background: linear-gradient(135deg, rgba(55,201,151,0.22), rgba(49,182,255,0.14));
+}
+
+.consistency-chip.good {
+  color: #1d5f8a;
+  background: linear-gradient(135deg, rgba(91,124,255,0.18), rgba(51,198,255,0.14));
+}
+
+.consistency-chip.medium {
+  color: #8a5b00;
+  background: linear-gradient(135deg, rgba(255,184,77,0.22), rgba(255,127,80,0.14));
+}
+
+.consistency-chip.low {
+  color: #a33a63;
+  background: linear-gradient(135deg, rgba(255,92,159,0.20), rgba(255,127,80,0.14));
+}
+
+.consistency-notes {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.consistency-note {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.84);
+  border: 1px solid rgba(122,146,182,0.10);
+  color: #5e7395;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
     .stat-card {
       padding: 14px 14px;
       border-radius: 18px;
@@ -821,6 +898,28 @@
   </div>
 </div>
 
+			<div class="consistency-explainer">
+  <h3 class="consistency-title">Was bedeutet Konstanz?</h3>
+  <p class="consistency-text">
+    Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über die gespielten
+    Spieltage hinweg abliefert. Grundlage ist der Wochenschnitt
+    (Pins pro Spieltag geteilt durch gespielte Spiele). Fehlzeiten zählen nicht
+    als schlechte Leistung, sondern werden separat ausgewiesen.
+  </p>
+
+  <div class="consistency-legend">
+    <div class="consistency-chip very-good">90–100 · sehr konstant</div>
+    <div class="consistency-chip good">75–89 · konstant</div>
+    <div class="consistency-chip medium">60–74 · wechselhaft</div>
+    <div class="consistency-chip low">0–59 · stark schwankend</div>
+  </div>
+
+  <div class="consistency-notes">
+    <span class="consistency-note">Schwankung = durchschnittliche Streuung der Wochenschnitte</span>
+    <span class="consistency-note">Spannweite = bester minus schwächster Wochenschnitt</span>
+    <span class="consistency-note">Aussagekräftig erst ab mindestens 4 gespielten Spieltagen</span>
+  </div>
+</div>
           <div class="chart-wrap">
             <canvas id="playerChart" height="145"></canvas>            
             <div id="chartDetailBox" class="chart-detail-box hidden"></div>
