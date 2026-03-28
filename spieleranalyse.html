@@ -26,6 +26,110 @@
       --max-width: 1440px;
     }
 
+	  .stat-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.info-icon-btn {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  color: #4964ff;
+  background: linear-gradient(135deg, rgba(91,124,255,0.14), rgba(255,92,159,0.10));
+  box-shadow: inset 0 0 0 1px rgba(91,124,255,0.14);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-icon-btn:hover {
+  transform: scale(1.06);
+  filter: brightness(1.03);
+  box-shadow:
+    inset 0 0 0 1px rgba(91,124,255,0.20),
+    0 8px 18px rgba(73, 100, 255, 0.12);
+}
+
+.info-icon-btn:active {
+  transform: scale(0.96);
+}
+
+.info-icon-btn i {
+  font-size: 0.84rem;
+}
+
+.info-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(8px);
+}
+
+.info-modal-overlay.hidden {
+  display: none;
+}
+
+.info-modal-card {
+  width: min(100%, 460px);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,250,255,0.95));
+  border: 1px solid rgba(122,146,182,0.12);
+  box-shadow: 0 26px 70px rgba(15, 23, 42, 0.18);
+  padding: 18px;
+}
+
+.info-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.info-modal-title {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #1c355d;
+}
+
+.info-modal-close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #5e7395;
+  background: rgba(255,255,255,0.9);
+  box-shadow: inset 0 0 0 1px rgba(122,146,182,0.12);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.info-modal-close:hover {
+  transform: scale(1.05);
+  filter: brightness(0.98);
+}
+
+.info-modal-text {
+  margin: 0;
+  color: #5d7190;
+  line-height: 1.6;
+  font-size: 0.96rem;
+}
+
     * {
       box-sizing: border-box;
     }
@@ -925,35 +1029,55 @@
     <div class="stat-value" id="statAbsent">–</div>
   </div>
   <div class="stat-card">
+  <div class="stat-label-row">
     <span class="stat-label">Konstanz-Score</span>
-    <div class="stat-value" id="statConsistency">–</div>
+    <button
+      class="info-icon-btn"
+      type="button"
+      data-info-title="Konstanz-Score"
+      data-info-text="Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über die gespielten Spieltage hinweg abliefert. Grundlage ist der Wochenschnitt, also Pins pro Spiel an jedem Spieltag. Ein hoher Wert bedeutet: geringe Schwankungen und stabile Leistungen."
+      aria-label="Erklärung zu Konstanz-Score"
+    >
+      <i class="fa-solid fa-circle-info"></i>
+    </button>
   </div>
-  <div class="stat-card">
-    <span class="stat-label">Schwankung</span>
-    <div class="stat-value" id="statDeviation">–</div>
-  </div>
-  <div class="stat-card">
-    <span class="stat-label">Spannweite</span>
-    <div class="stat-value" id="statRange">–</div>
-  </div>
+  <div class="stat-value" id="statConsistency">–</div>
 </div>
 
-			<div class="consistency-explainer">
-  <h3 class="consistency-title">Was bedeutet Konstanz?</h3>
-  <p class="consistency-text">
-    Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über die gespielten
-    Spieltage hinweg abliefert. Grundlage ist der Wochenschnitt
-    (Pins pro Spieltag geteilt durch gespielte Spiele). Fehlzeiten zählen nicht
-    als schlechte Leistung, sondern werden separat ausgewiesen.
-  </p>
-
-  <div class="consistency-legend">
-    <div class="consistency-chip very-good">90–100 · sehr konstant</div>
-    <div class="consistency-chip good">75–89 · konstant</div>
-    <div class="consistency-chip medium">60–74 · wechselhaft</div>
-    <div class="consistency-chip low">0–59 · stark schwankend</div>
+<div class="stat-card">
+  <div class="stat-label-row">
+    <span class="stat-label">Schwankung</span>
+    <button
+      class="info-icon-btn"
+      type="button"
+      data-info-title="Schwankung"
+      data-info-text="Die Schwankung zeigt, wie stark die Wochenschnitte eines Spielers von seinem normalen Niveau abweichen. Je kleiner dieser Wert ist, desto konstanter spielt der Spieler über die Saison."
+      aria-label="Erklärung zu Schwankung"
+    >
+      <i class="fa-solid fa-circle-info"></i>
+    </button>
   </div>
+  <div class="stat-value" id="statDeviation">–</div>
+</div>
 
+<div class="stat-card">
+  <div class="stat-label-row">
+    <span class="stat-label">Spannweite</span>
+    <button
+      class="info-icon-btn"
+      type="button"
+      data-info-title="Spannweite"
+      data-info-text="Die Spannweite ist der Unterschied zwischen dem besten und dem schwächsten Wochenschnitt eines Spielers. Je kleiner die Spannweite, desto gleichmäßiger waren die Leistungen über die Spieltage verteilt."
+      aria-label="Erklärung zu Spannweite"
+    >
+      <i class="fa-solid fa-circle-info"></i>
+    </button>
+  </div>
+  <div class="stat-value" id="statRange">–</div>
+</div>
+</div>
+
+			
   <div class="consistency-notes">
     <span class="consistency-note">Schwankung = durchschnittliche Streuung der Wochenschnitte</span>
     <span class="consistency-note">Spannweite = bester minus schwächster Wochenschnitt</span>
@@ -1482,6 +1606,39 @@ function showChartDetail(entry) {
   statRange.textContent = consistency.range != null ? formatNumber(consistency.range) : "–";
 }
 
+	 const infoModalOverlay = document.getElementById("infoModalOverlay");
+const infoModalTitle = document.getElementById("infoModalTitle");
+const infoModalText = document.getElementById("infoModalText");
+const infoModalClose = document.getElementById("infoModalClose");
+
+function openInfoModal(title, text) {
+  infoModalTitle.textContent = title;
+  infoModalText.textContent = text;
+  infoModalOverlay.classList.remove("hidden");
+  infoModalOverlay.setAttribute("aria-hidden", "false");
+}
+
+function closeInfoModal() {
+  infoModalOverlay.classList.add("hidden");
+  infoModalOverlay.setAttribute("aria-hidden", "true");
+}
+
+document.querySelectorAll(".info-icon-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    openInfoModal(
+      button.dataset.infoTitle || "Info",
+      button.dataset.infoText || ""
+    );
+  });
+});
+
+infoModalClose.addEventListener("click", closeInfoModal);
+
+infoModalOverlay.addEventListener("click", event => {
+  if (event.target === infoModalOverlay) {
+    closeInfoModal();
+  }
+});
     playerSelect.addEventListener("change", () => {
       updateView(playerSelect.value);
     });
@@ -1491,5 +1648,16 @@ function showChartDetail(entry) {
       updateView(players[0]);
     }
   </script>
+	<div class="info-modal-overlay hidden" id="infoModalOverlay" aria-hidden="true">
+  <div class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <div class="info-modal-head">
+      <h3 class="info-modal-title" id="infoModalTitle">Info</h3>
+      <button class="info-modal-close" id="infoModalClose" type="button" aria-label="Schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="info-modal-text" id="infoModalText"></p>
+  </div>
+</div>
 </body>
 </html>
