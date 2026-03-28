@@ -1109,24 +1109,26 @@
   </main>
 
   <button
-    class="back-fab"
-    type="button"
-    aria-label="Zurück zur Startseite"
-    title="Zurück zur Startseite"
-    onclick="location.href='index.html'"
-  >
-    <i class="fa-solid fa-arrow-left"></i>
-  </button>
+  class="refresh-fab"
+  type="button"
+  aria-label="Seite aktualisieren"
+  title="Seite aktualisieren"
+  onclick="window.location.reload()"
+>
+  <i class="fa-solid fa-rotate-right"></i>
+</button>
 
-  <button
-    class="refresh-fab"
-    type="button"
-    aria-label="Seite aktualisieren"
-    title="Seite aktualisieren"
-    onclick="window.location.reload()"
-  >
-    <i class="fa-solid fa-rotate-right"></i>
-  </button>
+<div class="info-modal-overlay hidden" id="infoModalOverlay" aria-hidden="true">
+  <div class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <div class="info-modal-head">
+      <h3 class="info-modal-title" id="infoModalTitle">Info</h3>
+      <button class="info-modal-close" id="infoModalClose" type="button" aria-label="Schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="info-modal-text" id="infoModalText"></p>
+  </div>
+</div>
 
  <script>
   const RAW_PLAYER_TABLE = String.raw`
