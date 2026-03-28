@@ -416,43 +416,44 @@
 
     .field {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   position: relative;
-  padding: 14px;
-  border-radius: 22px;
+  padding: 16px;
+  border-radius: 24px;
   background:
-    linear-gradient(135deg, rgba(91,124,255,0.18), rgba(255,92,159,0.12)),
-    rgba(255,255,255,0.9);
-  border: 1px solid rgba(73, 100, 255, 0.22);
+    linear-gradient(135deg, rgba(73, 100, 255, 0.30), rgba(255, 92, 159, 0.22)),
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,248,255,0.96));
+  border: 2px solid rgba(73, 100, 255, 0.28);
   box-shadow:
-    0 14px 34px rgba(73, 100, 255, 0.12),
-    inset 0 1px 0 rgba(255,255,255,0.7);
+    0 18px 42px rgba(73, 100, 255, 0.20),
+    0 10px 24px rgba(255, 92, 159, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.85);
 }
 
 .field label {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 900;
-  color: #294a84;
+  color: #24458a;
   letter-spacing: 0.01em;
 }
 
 .player-select {
   width: 100%;
-  border: 2px solid rgba(73, 100, 255, 0.42);
+  border: 2px solid rgba(73, 100, 255, 0.58);
   border-radius: 18px;
-  padding: 15px 50px 15px 16px;
+  padding: 16px 52px 16px 16px;
   font: inherit;
-  font-weight: 800;
-  font-size: 1rem;
+  font-weight: 900;
+  font-size: 1.02rem;
   color: #13274a;
   background:
-    linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240,246,255,0.98));
+    linear-gradient(135deg, rgba(255,255,255,1), rgba(238,244,255,1));
   outline: none;
   appearance: none;
   -webkit-appearance: none;
   box-shadow:
-    0 12px 28px rgba(73, 100, 255, 0.16),
-    inset 0 1px 0 rgba(255,255,255,0.92);
+    0 14px 30px rgba(73, 100, 255, 0.22),
+    inset 0 1px 0 rgba(255,255,255,0.96);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -465,28 +466,30 @@
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
   position: absolute;
-  right: 30px;
-  bottom: 30px;
-  color: #355dbe;
+  right: 28px;
+  bottom: 31px;
+  color: #2f56c5;
   font-size: 1rem;
   pointer-events: none;
 }
 
 .player-select:hover {
-  border-color: rgba(73, 100, 255, 0.62);
+  border-color: rgba(255, 92, 159, 0.72);
   box-shadow:
-    0 16px 34px rgba(73, 100, 255, 0.22),
-    inset 0 1px 0 rgba(255,255,255,0.96);
+    0 18px 36px rgba(73, 100, 255, 0.26),
+    0 8px 22px rgba(255, 92, 159, 0.14),
+    inset 0 1px 0 rgba(255,255,255,1);
 }
 
 .player-select:focus {
-  border-color: rgba(255, 92, 159, 0.72);
+  border-color: rgba(255, 92, 159, 0.92);
   background:
-    linear-gradient(135deg, rgba(255,255,255,1), rgba(245,240,255,1));
+    linear-gradient(135deg, rgba(255,255,255,1), rgba(248,241,255,1));
   box-shadow:
-    0 0 0 8px rgba(91, 124, 255, 0.14),
-    0 18px 38px rgba(73, 100, 255, 0.24);
-  transform: translateY(-1px);
+    0 0 0 10px rgba(91, 124, 255, 0.18),
+    0 22px 42px rgba(73, 100, 255, 0.28),
+    0 10px 26px rgba(255, 92, 159, 0.16);
+  transform: translateY(-1px) scale(1.01);
 }
     .chip-note {
       padding: 10px 12px;
@@ -1017,38 +1020,16 @@
     <div class="stat-value" id="statRange">–</div>
   </div>
 </div>
-			
-<div class="stat-card">
-  <div class="stat-label-row">
-    <span class="stat-label">Schwankung</span>
-    <button
-      class="info-icon-btn"
-      type="button"
-      data-info-title="Schwankung"
-      data-info-text="Die Schwankung zeigt, wie stark die Wochenschnitte eines Spielers von seinem normalen Niveau abweichen. Je kleiner dieser Wert ist, desto konstanter spielt der Spieler über die Saison."
-      aria-label="Erklärung zu Schwankung"
-    >
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-  <div class="stat-value" id="statDeviation">–</div>
-</div>
 
-<div class="stat-card">
-  <div class="stat-label-row">
-    <span class="stat-label">Spannweite</span>
-    <button
-      class="info-icon-btn"
-      type="button"
-      data-info-title="Spannweite"
-      data-info-text="Die Spannweite ist der Unterschied zwischen dem besten und dem schwächsten Wochenschnitt eines Spielers. Je kleiner die Spannweite, desto gleichmäßiger waren die Leistungen über die Spieltage verteilt."
-      aria-label="Erklärung zu Spannweite"
-    >
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
+<div class="chart-wrap">
+  <canvas id="playerChart" height="145"></canvas>
+  <div id="chartDetailBox" class="chart-detail-box hidden"></div>
+
+  <div class="legend-note">
+    <span class="legend-item"><span class="legend-line"></span>Spieltag-Schnitt</span>
+    <span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span>
+    <span class="legend-item"><span class="legend-gap"></span>Lücke = nicht gespielt</span>
   </div>
-  <div class="stat-value" id="statRange">–</div>
-</div>
 </div>
 
 			
