@@ -1140,40 +1140,13 @@ function showChartDetail(entry) {
   showChartDetail(processed[tappedIndex]);
 },
           plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-  enabled: false
-}
-                title(items) {
-                  const index = items[0].dataIndex;
-                  const entry = processed[index];
-                  return `Spieltag ${entry.spieltag} · ${entry.datum}`;
-                },
-                label(context) {
-                  const entry = processed[context.dataIndex];
-
-                  if (!entry.validPlayed && context.datasetIndex === 0) {
-                    return "Nicht gespielt";
-                  }
-
-                  if (context.datasetIndex === 0) {
-                    return `Spieltag-Schnitt: ${formatNumber(entry.dayAverage)}`;
-                  }
-
-                  return entry.average != null
-                    ? `Saison-Schnitt: ${formatNumber(entry.average)}`
-                    : "Noch kein Schnitt";
-                },
-                footer(items) {
-                  const entry = processed[items[0].dataIndex];
-                  if (!entry.validPlayed) return "";
-                  return `Pins gesamt: ${entry.pins} · Spiele: ${entry.games}`;
-                }
-              }
-            }
-          },
+  legend: {
+    display: false
+  },
+  tooltip: {
+    enabled: false
+  }
+},
           interaction: {
             mode: "nearest",
             intersect: false
