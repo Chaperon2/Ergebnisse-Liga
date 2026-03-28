@@ -947,40 +947,77 @@
             <div class="chip-note" id="playedInfo">0 Spieltage erfasst</div>
           </div>
 
-          <div class="stats-grid">
+         <div class="stats-grid">
   <div class="stat-card">
     <span class="stat-label">Aktueller Schnitt</span>
-    <div class="stat-value" id="statConsistency">–</div>
-<div class="stat-subtext">0 = unkonstant · 100 = sehr konstant</div>
+    <div class="stat-value" id="statAverage">–</div>
   </div>
+
   <div class="stat-card">
     <span class="stat-label">Bester Tagesschnitt</span>
     <div class="stat-value" id="statBest">–</div>
   </div>
+
   <div class="stat-card">
     <span class="stat-label">Spiele gesamt</span>
     <div class="stat-value" id="statPlayed">–</div>
   </div>
+
   <div class="stat-card">
     <span class="stat-label">Fehltage</span>
     <div class="stat-value" id="statAbsent">–</div>
   </div>
-  <div class="stat-card">
-  <div class="stat-label-row">
-    <span class="stat-label">Konstanz-Score</span>
-    <button
-      class="info-icon-btn"
-      type="button"
-      data-info-title="Konstanz-Score"
-      data-info-text="Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über die gespielten Spieltage hinweg abliefert. Grundlage ist der Wochenschnitt, also Pins pro Spiel an jedem Spieltag. Ein hoher Wert bedeutet: geringe Schwankungen und stabile Leistungen."
-      aria-label="Erklärung zu Konstanz-Score"
-    >
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-  <div class="stat-value" id="statConsistency">–</div>
-</div>
 
+  <div class="stat-card">
+    <div class="stat-label-row">
+      <span class="stat-label">Konstanz-Score</span>
+      <button
+        class="info-icon-btn"
+        type="button"
+        data-info-title="Konstanz-Score"
+        data-info-text="Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über die gespielten Spieltage hinweg abliefert. Grundlage ist der Wochenschnitt, also Pins pro Spiel an jedem Spieltag. Ein hoher Wert bedeutet: geringe Schwankungen und stabile Leistungen."
+        aria-label="Erklärung zu Konstanz-Score"
+      >
+        <i class="fa-solid fa-circle-info"></i>
+      </button>
+    </div>
+    <div class="stat-value" id="statConsistency">–</div>
+    <div class="stat-subtext">0 = unkonstant · 100 = sehr konstant</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label-row">
+      <span class="stat-label">Schwankung</span>
+      <button
+        class="info-icon-btn"
+        type="button"
+        data-info-title="Schwankung"
+        data-info-text="Die Schwankung zeigt, wie stark die Wochenschnitte eines Spielers von seinem normalen Niveau abweichen. Je kleiner dieser Wert ist, desto konstanter spielt der Spieler über die Saison."
+        aria-label="Erklärung zu Schwankung"
+      >
+        <i class="fa-solid fa-circle-info"></i>
+      </button>
+    </div>
+    <div class="stat-value" id="statDeviation">–</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label-row">
+      <span class="stat-label">Spannweite</span>
+      <button
+        class="info-icon-btn"
+        type="button"
+        data-info-title="Spannweite"
+        data-info-text="Die Spannweite ist der Unterschied zwischen dem besten und dem schwächsten Wochenschnitt eines Spielers. Je kleiner die Spannweite, desto gleichmäßiger waren die Leistungen über die Spieltage verteilt."
+        aria-label="Erklärung zu Spannweite"
+      >
+        <i class="fa-solid fa-circle-info"></i>
+      </button>
+    </div>
+    <div class="stat-value" id="statRange">–</div>
+  </div>
+</div>
+			
 <div class="stat-card">
   <div class="stat-label-row">
     <span class="stat-label">Schwankung</span>
