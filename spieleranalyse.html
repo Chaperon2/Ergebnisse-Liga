@@ -354,11 +354,11 @@
     }
 
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
 
     .stat-card {
       padding: 14px 14px;
@@ -791,23 +791,35 @@
           </div>
 
           <div class="stats-grid">
-            <div class="stat-card">
-              <span class="stat-label">Aktueller Schnitt</span>
-              <div class="stat-value" id="statAverage">–</div>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Bester Tagesschnitt</span>
-              <div class="stat-value" id="statBest">–</div>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Spiele gesamt</span>
-              <div class="stat-value" id="statPlayed">–</div>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Fehlzeiten</span>
-              <div class="stat-value" id="statAbsent">–</div>
-            </div>
-          </div>
+  <div class="stat-card">
+    <span class="stat-label">Aktueller Schnitt</span>
+    <div class="stat-value" id="statAverage">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Bester Tagesschnitt</span>
+    <div class="stat-value" id="statBest">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Spiele gesamt</span>
+    <div class="stat-value" id="statPlayed">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Fehlzeiten</span>
+    <div class="stat-value" id="statAbsent">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Konstanz-Score</span>
+    <div class="stat-value" id="statConsistency">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Schwankung</span>
+    <div class="stat-value" id="statDeviation">–</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Spannweite</span>
+    <div class="stat-value" id="statRange">–</div>
+  </div>
+</div>
 
           <div class="chart-wrap">
             <canvas id="playerChart" height="145"></canvas>            
@@ -975,9 +987,12 @@ Denise	07.01.2026	432	4	true	14.01.2026	426	4	true	21.01.2026	411	4	true	28.01.2
     const playedInfo = document.getElementById("playedInfo");
 
     const statAverage = document.getElementById("statAverage");
-    const statBest = document.getElementById("statBest");
-    const statPlayed = document.getElementById("statPlayed");
-    const statAbsent = document.getElementById("statAbsent");
+const statBest = document.getElementById("statBest");
+const statPlayed = document.getElementById("statPlayed");
+const statAbsent = document.getElementById("statAbsent");
+const statConsistency = document.getElementById("statConsistency");
+const statDeviation = document.getElementById("statDeviation");
+const statRange = document.getElementById("statRange");
 
     const statusGrid = document.getElementById("statusGrid");
 
@@ -1047,6 +1062,40 @@ Denise	07.01.2026	432	4	true	14.01.2026	426	4	true	21.01.2026	411	4	true	28.01.2
       };
     }
 
+	 function getConsistencyStats(processed) {
+  const played = processed.filter(item => item.validPlayed);
+
+  if (played.length < 4) {
+    return {
+      score: null,
+      stdDev: null,
+      range: null
+    };
+  }
+
+  const values = played.map(item => item.dayAverage);
+  const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+  const variance = values.reduce((sum, value) => {
+    const diff = value - mean;
+    return sum + diff * diff;
+  }, 0) / values.length;
+
+  const stdDev = Math.sqrt(variance);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const range = maxValue - minValue;
+
+  const rawScore = 100 - stdDev * 7;
+  const score = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+  return {
+    score,
+    stdDev,
+    range
+  };
+}
+	 
     function renderStatusCards(processed) {
       statusGrid.innerHTML = "";
 
@@ -1278,6 +1327,7 @@ function showChartDetail(entry) {
 
   const processed = getProcessedData(PLAYER_DATA[playerName]);
   const stats = getStats(processed);
+  const consistency = getConsistencyStats(processed);
 
   buildChart(processed, playerName);
   renderStatusCards(processed);
@@ -1287,6 +1337,10 @@ function showChartDetail(entry) {
   statBest.textContent = stats.bestDayAverage != null ? formatNumber(stats.bestDayAverage) : "–";
   statPlayed.textContent = String(stats.totalGames);
   statAbsent.textContent = String(stats.absentCount);
+
+  statConsistency.textContent = consistency.score != null ? `${consistency.score}` : "–";
+  statDeviation.textContent = consistency.stdDev != null ? `± ${formatNumber(consistency.stdDev)}` : "–";
+  statRange.textContent = consistency.range != null ? formatNumber(consistency.range) : "–";
 }
 
     playerSelect.addEventListener("change", () => {
