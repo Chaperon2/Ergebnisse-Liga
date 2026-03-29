@@ -1,1 +1,891 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Über uns - Strikeclub Velten</title> <meta name="description" content="Lerne den Strikeclub Velten kennen – Gemeinschaft, Leidenschaft und Bowling im Verein." /> <meta property="og:title" content="Über uns - Strikeclub Velten" /> <meta property="og:description" content="Gemeinschaft, Leidenschaft und Bowling im Strikeclub Velten." /> <meta property="og:url" content="https://www.strikeclub-velten.de/ueber-uns.html" /> <meta property="og:type" content="website" /> <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" /> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" /> <style> :root { --text: #0f172a; --text-soft: #5f718d; --border: rgba(119, 145, 185, 0.14); --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14); --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10); --max-width: 1440px; } * { box-sizing: border-box; } html { scroll-behavior: smooth; } body { margin: 0; min-height: 100vh; font-family: "Inter", Arial, sans-serif; color: var(--text); background: radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%), radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%), radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%), linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%); overflow-x: hidden; } a { color: inherit; text-decoration: none; } .scene { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; } .glow { position: absolute; border-radius: 50%; filter: blur(76px); opacity: 0.44; animation: drift 18s ease-in-out infinite; } .glow.one { width: 340px; height: 340px; left: -80px; top: 40px; background: rgba(91, 124, 255, 0.16); } .glow.two { width: 290px; height: 290px; right: -30px; top: 140px; background: rgba(255, 92, 159, 0.14); animation-delay: -6s; } .glow.three { width: 380px; height: 380px; right: 14%; bottom: -100px; background: rgba(51, 198, 255, 0.16); animation-delay: -11s; } .bg-shape { position: absolute; opacity: 0.22; animation-timing-function: ease-in-out; animation-iteration-count: infinite; } .ball-bg { width: var(--size, 120px); height: var(--size, 120px); left: var(--x, 10%); top: var(--y, 10%); border-radius: 50%; background: radial-gradient(circle at 38% 35%, rgba(16,24,40,0.14) 0 6px, transparent 7px), radial-gradient(circle at 55% 28%, rgba(16,24,40,0.14) 0 6px, transparent 7px), radial-gradient(circle at 60% 48%, rgba(16,24,40,0.14) 0 6px, transparent 7px), linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff)); box-shadow: inset -18px -18px 30px rgba(255,255,255,0.24), inset 18px 18px 28px rgba(255,255,255,0.14), 0 16px 32px rgba(65, 85, 130, 0.10); animation-name: floatBall; animation-duration: var(--dur, 18s); animation-delay: var(--delay, 0s); } .pin-bg { width: var(--w, 56px); height: var(--h, 164px); left: var(--x, 15%); top: var(--y, 20%); border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%); box-shadow: inset 0 0 0 1px rgba(150, 170, 205, 0.14), 0 16px 32px rgba(65, 85, 130, 0.08); animation-name: swayPin; animation-duration: var(--dur, 16s); animation-delay: var(--delay, 0s); transform-origin: center 82%; } .pin-bg::before { content: ""; position: absolute; top: 16px; left: 8px; right: 8px; height: 18px; border-radius: 999px; background: linear-gradient(180deg, rgba(255, 92, 159, 0.84) 0%, rgba(255, 92, 159, 0.84) 42%, transparent 42%, transparent 58%, rgba(255, 104, 142, 0.74) 58%, rgba(255, 104, 142, 0.74) 100%); } .site { position: relative; z-index: 2; width: min(var(--max-width), calc(100% - 22px)); margin: 0 auto; padding: 14px 0 34px; } .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; } .brand { display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.76); border: 1px solid rgba(122, 146, 182, 0.14); backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06); font-weight: 700; letter-spacing: -0.02em; } .brand-mark { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1)); color: #fff; box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24); } .page { position: relative; padding: 20px; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80)); border: 1px solid var(--border); backdrop-filter: blur(24px); box-shadow: var(--shadow-xl); overflow: hidden; } .page::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%), radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); pointer-events: none; } .hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; align-items: stretch; margin-bottom: 18px; } .hero-copy, .hero-card, .section-card, .quote-card { border-radius: 24px; background: rgba(255,255,255,0.72); border: 1px solid rgba(122,146,182,0.12); box-shadow: var(--shadow-lg); backdrop-filter: blur(14px); position: relative; overflow: hidden; } .hero-copy { padding: 24px; } .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.76); border: 1px solid rgba(122, 146, 182, 0.12); font-weight: 700; font-size: 0.9rem; color: #36507a; margin-bottom: 14px; box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #3bc7ff, #7a5cff); box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08); } h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.06em; font-weight: 900; } .headline-accent { background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; } .hero-text { margin: 0; color: #5d7190; font-size: 1rem; line-height: 1.7; max-width: 760px; } .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; } .btn-primary, .btn-secondary { display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 16px; font-weight: 800; font-size: 0.95rem; transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease; } .btn-primary { color: #fff; background: linear-gradient(135deg, #4964ff, #ff5c9f); box-shadow: 0 14px 28px rgba(73, 100, 255, 0.18); } .btn-secondary { color: #26416c; background: rgba(255,255,255,0.9); border: 1px solid rgba(122,146,182,0.12); box-shadow: 0 10px 22px rgba(35, 58, 100, 0.06); } .btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); filter: brightness(1.02); } .hero-card { padding: 20px; display: grid; align-content: space-between; gap: 14px; min-height: 100%; } .hero-card-top { display: grid; gap: 10px; } .hero-card-title { margin: 0; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.03em; color: #18355f; } .hero-card-text { margin: 0; color: #5d7190; line-height: 1.65; font-size: 0.95rem; } .pill-row { display: flex; flex-wrap: wrap; gap: 8px; } .pill { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.9); border: 1px solid rgba(122,146,182,0.10); color: #4f6588; font-size: 0.8rem; font-weight: 800; } .stats-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; } .stat-card { padding: 16px; border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90)); border: 1px solid rgba(122,146,182,0.10); box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .stat-label { display: block; font-size: 0.74rem; font-weight: 800; color: #6b7d99; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; } .stat-value { font-size: 1.4rem; font-weight: 900; color: #16203d; letter-spacing: -0.03em; } .stat-subtext { margin-top: 6px; color: #60728f; font-size: 0.84rem; line-height: 1.45; font-weight: 700; } .content-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; } .section-card { padding: 20px; } .section-title { margin: 0 0 10px; font-size: 1.2rem; font-weight: 900; letter-spacing: -0.03em; color: #18355f; } .section-text { margin: 0; color: #5d7190; line-height: 1.75; font-size: 0.96rem; } .list { display: grid; gap: 10px; margin-top: 14px; } .list-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.86); border: 1px solid rgba(122,146,182,0.10); } .list-item i { color: #4964ff; margin-top: 2px; } .list-item span { color: #566b8e; line-height: 1.6; font-weight: 700; font-size: 0.92rem; } .quote-card { position: relative; z-index: 1; padding: 22px; margin-bottom: 16px; } .quote-icon { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #4964ff, #ff5c9f); box-shadow: 0 12px 24px rgba(73, 100, 255, 0.18); margin-bottom: 14px; } .quote-text { margin: 0; font-size: 1.05rem; line-height: 1.7; color: #234067; font-weight: 800; letter-spacing: -0.01em; } .quote-author { margin-top: 12px; color: #6b7d99; font-size: 0.9rem; font-weight: 800; } .contact-card { position: relative; z-index: 1; padding: 20px; border-radius: 24px; background: linear-gradient(135deg, rgba(73,100,255,0.10), rgba(255,92,159,0.08), rgba(255,255,255,0.8)); border: 1px solid rgba(122,146,182,0.12); box-shadow: var(--shadow-lg); display: grid; gap: 12px; } .contact-title { margin: 0; font-size: 1.18rem; font-weight: 900; color: #18355f; letter-spacing: -0.03em; } .contact-text { margin: 0; color: #5d7190; line-height: 1.7; font-size: 0.96rem; } .footer-note { margin-top: 16px; text-align: center; color: #6c7b96; font-size: 0.92rem; padding: 0 8px; } .footer-note a { color: inherit; border-bottom: 1px solid rgba(108, 123, 150, 0.34); } .refresh-fab, .back-fab { position: fixed; bottom: 18px; z-index: 9999; width: 52px; height: 52px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92)); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28); backdrop-filter: blur(10px); transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease; } .refresh-fab { right: 18px; } .back-fab { left: 18px; } .refresh-fab i { font-size: 1rem; animation: refreshSpin 2.4s linear infinite; } .back-fab i { font-size: 1rem; animation: backPulse 1.6s ease-in-out infinite; } .refresh-fab:hover, .back-fab:hover { transform: translateY(-2px) scale(1.05); filter: saturate(1.08); box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.32); } @keyframes drift { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(24px, -18px, 0) scale(1.08); } } @keyframes floatBall { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); } 25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); } 50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); } 75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); } } @keyframes swayPin { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(14px, -22px, 0) rotate(3deg); } 50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); } 75% { transform: translate3d(16px, -10px, 0) rotate(2deg); } } @keyframes refreshSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes backPulse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } } @media (max-width: 980px) { .hero, .content-grid, .stats-grid { grid-template-columns: 1fr 1fr; } } @media (max-width: 760px) { .hero, .content-grid, .stats-grid, .control-row { grid-template-columns: 1fr; } } @media (max-width: 700px) { .site { width: 100%; padding: 0 0 22px; } .topbar { padding: 10px 8px 0; margin-bottom: 8px; } .page { border-radius: 0; border-left: 0; border-right: 0; padding: 10px 4px 14px; } .hero-copy, .hero-card, .section-card, .quote-card, .contact-card { padding: 16px; border-radius: 20px; } h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); } .refresh-fab, .back-fab { width: 48px; height: 48px; bottom: 14px; } .refresh-fab { right: 14px; } .back-fab { left: 14px; } } @media (prefers-reduced-motion: reduce) { .glow, .bg-shape, .refresh-fab i, .back-fab i { animation: none !important; } } </style> </head> <body> <div class="scene" aria-hidden="true"> <div class="glow one"></div> <div class="glow two"></div> <div class="glow three"></div> <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div> <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div> <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div> <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div> <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div> </div> <main class="site"> <div class="topbar"> <div class="brand"> <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span> <span>Strikeclub Velten</span> </div> </div> <section class="page"> <section class="hero"> <div class="hero-copy"> <div class="eyebrow"> <span class="dot"></span> <span>Über uns</span> </div> <h1>Mehr als Bowling. <span class="headline-accent">Gemeinschaft mit Leidenschaft.</span></h1> <p class="hero-text"> Der Strikeclub Velten steht für sportlichen Ehrgeiz, Zusammenhalt und Freude am Spiel. Bei uns treffen Erfahrung, Teamgeist und der Spaß am gemeinsamen Wettbewerb aufeinander. Egal ob langjähriges Vereinsmitglied oder neu dabei – im Mittelpunkt stehen immer die Menschen, die den Club Woche für Woche mit Leben füllen. </p> <div class="hero-actions"> <a class="btn-primary" href="index.html"> <i class="fa-solid fa-house"></i> <span>Zur Startseite</span> </a> <a class="btn-secondary" href="spieleranalyse.html"> <i class="fa-solid fa-chart-line"></i> <span>Zur Spieleranalyse</span> </a> </div> </div> <div class="hero-card"> <div class="hero-card-top"> <h2 class="hero-card-title">Was uns ausmacht</h2> <p class="hero-card-text"> Wir wollen Leistung und Miteinander verbinden. Der sportliche Vergleich gehört dazu, aber genauso der Respekt untereinander, die gute Stimmung und die Freude daran, sich gemeinsam weiterzuentwickeln. </p> </div> <div class="pill-row"> <span class="pill">Teamgeist</span> <span class="pill">Leidenschaft</span> <span class="pill">Fairness</span> <span class="pill">Entwicklung</span> <span class="pill">Vereinsleben</span> </div> </div> </section> <section class="stats-grid"> <div class="stat-card"> <span class="stat-label">Gegründet</span> <div class="stat-value">[Jahr]</div> <div class="stat-subtext">Seitdem Teil der Bowling-Community in Velten.</div> </div> <div class="stat-card"> <span class="stat-label">Mitglieder</span> <div class="stat-value">[Anzahl]</div> <div class="stat-subtext">Aktive Spielerinnen und Spieler im Club.</div> </div> <div class="stat-card"> <span class="stat-label">Training / Spieltag</span> <div class="stat-value">[z. B. wöchentlich]</div> <div class="stat-subtext">Regelmäßige Treffen für Wettkampf und Austausch.</div> </div> <div class="stat-card"> <span class="stat-label">Unser Fokus</span> <div class="stat-value">Team</div> <div class="stat-subtext">Leistung, Verlässlichkeit und Spaß am Sport.</div> </div> </section> <section class="content-grid"> <div class="section-card"> <h2 class="section-title">Wer wir sind</h2> <p class="section-text"> Der Strikeclub Velten ist ein Verein für alle, die Bowling nicht nur spielen, sondern gemeinsam erleben wollen. Bei uns kommen unterschiedliche Spielertypen zusammen – vom ambitionierten Wettkampfspieler bis zum verlässlichen Teammitglied, das den Verein menschlich trägt. <br /><br /> Unser Ziel ist es, sportlich konstant besser zu werden und dabei ein Umfeld zu schaffen, in dem man sich wohlfühlt, dazulernt und gerne wiederkommt. </p> </div> <div class="section-card"> <h2 class="section-title">Was uns wichtig ist</h2> <div class="list"> <div class="list-item"> <i class="fa-solid fa-people-group"></i> <span>Ein respektvoller Umgang und ein starkes Miteinander im Team.</span> </div> <div class="list-item"> <i class="fa-solid fa-bullseye"></i> <span>Sportlicher Anspruch mit dem Blick auf Entwicklung statt Stillstand.</span> </div> <div class="list-item"> <i class="fa-solid fa-handshake-angle"></i> <span>Verlässlichkeit, Fairness und Einsatz für den gemeinsamen Erfolg.</span> </div> <div class="list-item"> <i class="fa-solid fa-trophy"></i> <span>Freude am Wettbewerb, ohne den Teamgedanken aus den Augen zu verlieren.</span> </div> </div> </div> </section> <section class="quote-card"> <div class="quote-icon"> <i class="fa-solid fa-quote-left"></i> </div> <p class="quote-text"> „[Hier kann ein kurzer Vereinsleitsatz oder ein prägnanter Satz über euren Club stehen – zum Beispiel: Wir spielen mit Ehrgeiz, halten zusammen und feiern jeden Fortschritt gemeinsam.]“ </p> <div class="quote-author">Strikeclub Velten</div> </section> <section class="content-grid"> <div class="section-card"> <h2 class="section-title">Unser Vereinsleben</h2> <p class="section-text"> Bowling ist für uns nicht nur Ergebnis und Tabelle. Es geht auch um gemeinsame Abende, Gespräche zwischen den Spieltagen, gegenseitige Unterstützung und darum, als Gruppe zu wachsen. Genau daraus entsteht der Charakter eines Vereins. <br /><br /> Neue Mitglieder sollen sich schnell einfinden können, erfahrene Spieler sollen Verantwortung übernehmen und jeder soll merken, dass sein Beitrag zählt. </p> </div> <div class="section-card"> <h2 class="section-title">Sportlicher Anspruch</h2> <p class="section-text"> Wir schauen nicht nur auf einzelne gute Spiele, sondern auf Entwicklung über die Saison: Form, Konstanz, Einsatz und Verlässlichkeit machen langfristig den Unterschied. <br /><br /> Deshalb setzen wir auf Übersicht, Transparenz und Analysen, die jedem Spieler helfen, die eigene Leistung besser einzuordnen und gezielt an den nächsten Schritten zu arbeiten. </p> </div> </section> <section class="contact-card"> <h2 class="contact-title">Interesse am Strikeclub Velten?</h2> <p class="contact-text"> Wenn du mehr über unseren Verein erfahren möchtest, an einem Training teilnehmen willst oder einfach Kontakt aufnehmen möchtest, kannst du hier einen kurzen Hinweis oder später deine echten Kontaktdaten ergänzen. </p> <div class="pill-row"> <span class="pill"><i class="fa-solid fa-envelope"></i> [E-Mail eintragen]</span> <span class="pill"><i class="fa-solid fa-location-dot"></i> [Spielort eintragen]</span> <span class="pill"><i class="fa-solid fa-calendar-days"></i> [Trainingszeit eintragen]</span> </div> </section> </section> <p class="footer-note"> Strikeclub Velten · <a href="impressum.html">Impressum</a> </p> </main> <button class="back-fab" type="button" aria-label="Zurück zur Startseite" title="Zurück zur Startseite" onclick="location.href='index.html'" > <i class="fa-solid fa-arrow-left"></i> </button> <button class="refresh-fab" type="button" aria-label="Seite aktualisieren" title="Seite aktualisieren" onclick="window.location.reload()" > <i class="fa-solid fa-rotate-right"></i> </button> </body> </html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Über uns - Strikeclub Velten</title>
+
+  <meta name="description" content="Lerne die private Bowlinggemeinschaft Strikeclub Velten kennen – gemeinsames Bowling, faire Teams und Spaß an jedem Mittwoch." />
+
+  <meta property="og:title" content="Über uns - Strikeclub Velten" />
+  <meta property="og:description" content="Private Bowlinggemeinschaft aus Velten – faire Teams, entspannte Abende und Spaß am Bowling." />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/ueber-uns.html" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text: #0f172a;
+      --text-soft: #5f718d;
+      --border: rgba(119, 145, 185, 0.14);
+      --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
+      --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
+      --max-width: 1440px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%),
+        linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(76px);
+      opacity: 0.44;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .glow.one {
+      width: 340px;
+      height: 340px;
+      left: -80px;
+      top: 40px;
+      background: rgba(91, 124, 255, 0.16);
+    }
+
+    .glow.two {
+      width: 290px;
+      height: 290px;
+      right: -30px;
+      top: 140px;
+      background: rgba(255, 92, 159, 0.14);
+      animation-delay: -6s;
+    }
+
+    .glow.three {
+      width: 380px;
+      height: 380px;
+      right: 14%;
+      bottom: -100px;
+      background: rgba(51, 198, 255, 0.16);
+      animation-delay: -11s;
+    }
+
+    .bg-shape {
+      position: absolute;
+      opacity: 0.22;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .ball-bg {
+      width: var(--size, 120px);
+      height: var(--size, 120px);
+      left: var(--x, 10%);
+      top: var(--y, 10%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 28%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        radial-gradient(circle at 60% 48%, rgba(16,24,40,0.14) 0 6px, transparent 7px),
+        linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff));
+      box-shadow:
+        inset -18px -18px 30px rgba(255,255,255,0.24),
+        inset 18px 18px 28px rgba(255,255,255,0.14),
+        0 16px 32px rgba(65, 85, 130, 0.10);
+      animation-name: floatBall;
+      animation-duration: var(--dur, 18s);
+      animation-delay: var(--delay, 0s);
+    }
+
+    .pin-bg {
+      width: var(--w, 56px);
+      height: var(--h, 164px);
+      left: var(--x, 15%);
+      top: var(--y, 20%);
+      border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(150, 170, 205, 0.14),
+        0 16px 32px rgba(65, 85, 130, 0.08);
+      animation-name: swayPin;
+      animation-duration: var(--dur, 16s);
+      animation-delay: var(--delay, 0s);
+      transform-origin: center 82%;
+    }
+
+    .pin-bg::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 8px;
+      right: 8px;
+      height: 18px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          rgba(255, 92, 159, 0.84) 0%,
+          rgba(255, 92, 159, 0.84) 42%,
+          transparent 42%,
+          transparent 58%,
+          rgba(255, 104, 142, 0.74) 58%,
+          rgba(255, 104, 142, 0.74) 100%);
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max-width), calc(100% - 22px));
+      margin: 0 auto;
+      padding: 14px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(122, 146, 182, 0.14);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(91,124,255,1), rgba(255,92,159,1));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24);
+    }
+
+    .page {
+      position: relative;
+      padding: 20px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%),
+        radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .section-card,
+    .quote-card,
+    .contact-card {
+      border-radius: 24px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      padding: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(122, 146, 182, 0.12);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #36507a;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3bc7ff, #7a5cff);
+      box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .headline-accent {
+      background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 0;
+      color: #5d7190;
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #4964ff, #ff5c9f);
+      box-shadow: 0 14px 28px rgba(73, 100, 255, 0.18);
+    }
+
+    .btn-secondary {
+      color: #26416c;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: 0 10px 22px rgba(35, 58, 100, 0.06);
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.02);
+    }
+
+    .hero-card {
+      padding: 20px;
+      display: grid;
+      align-content: space-between;
+      gap: 14px;
+    }
+
+    .hero-card-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #18355f;
+    }
+
+    .hero-card-text {
+      margin: 0;
+      color: #5d7190;
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(122,146,182,0.10);
+      color: #4f6588;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
+      border: 1px solid rgba(122,146,182,0.10);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #6b7d99;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #16203d;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-subtext {
+      margin-top: 6px;
+      color: #60728f;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .content-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-card {
+      padding: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #18355f;
+    }
+
+    .section-text {
+      margin: 0;
+      color: #5d7190;
+      line-height: 1.75;
+      font-size: 0.96rem;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(122,146,182,0.10);
+    }
+
+    .list-item i {
+      color: #4964ff;
+      margin-top: 2px;
+    }
+
+    .list-item span {
+      color: #566b8e;
+      line-height: 1.6;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .quote-card {
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .quote-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #4964ff, #ff5c9f);
+      box-shadow: 0 12px 24px rgba(73, 100, 255, 0.18);
+      margin-bottom: 14px;
+    }
+
+    .quote-text {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #234067;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .quote-author {
+      margin-top: 12px;
+      color: #6b7d99;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .contact-card {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(73,100,255,0.10), rgba(255,92,159,0.08), rgba(255,255,255,0.8));
+    }
+
+    .contact-title {
+      margin: 0;
+      font-size: 1.18rem;
+      font-weight: 900;
+      color: #18355f;
+      letter-spacing: -0.03em;
+    }
+
+    .contact-text {
+      margin: 0;
+      color: #5d7190;
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      text-align: center;
+      color: #6c7b96;
+      font-size: 0.92rem;
+      padding: 0 8px;
+    }
+
+    .footer-note a {
+      color: inherit;
+      border-bottom: 1px solid rgba(108, 123, 150, 0.34);
+    }
+
+    .refresh-fab,
+    .back-fab {
+      position: fixed;
+      bottom: 18px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92));
+      box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .refresh-fab { right: 18px; }
+    .back-fab { left: 18px; }
+
+    .refresh-fab i {
+      font-size: 1rem;
+      animation: refreshSpin 2.4s linear infinite;
+    }
+
+    .back-fab i {
+      font-size: 1rem;
+      animation: backPulse 1.6s ease-in-out infinite;
+    }
+
+    .refresh-fab:hover,
+    .back-fab:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: saturate(1.08);
+      box-shadow:
+        0 14px 28px rgba(15, 23, 42, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
+    }
+
+    @keyframes floatBall {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); }
+      50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); }
+      75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); }
+    }
+
+    @keyframes swayPin {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      25% { transform: translate3d(14px, -22px, 0) rotate(3deg); }
+      50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); }
+      75% { transform: translate3d(16px, -10px, 0) rotate(2deg); }
+    }
+
+    @keyframes refreshSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes backPulse {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-4px); }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .content-grid,
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .content-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .site {
+        width: 100%;
+        padding: 0 0 22px;
+      }
+
+      .topbar {
+        padding: 10px 8px 0;
+        margin-bottom: 8px;
+      }
+
+      .page {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 10px 4px 14px;
+      }
+
+      .hero-copy,
+      .hero-card,
+      .section-card,
+      .quote-card,
+      .contact-card {
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+      }
+
+      .refresh-fab,
+      .back-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 14px;
+      }
+
+      .refresh-fab { right: 14px; }
+      .back-fab { left: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow,
+      .bg-shape,
+      .refresh-fab i,
+      .back-fab i {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
+
+    <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+    <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+
+    <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div>
+    <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
+  </div>
+
+  <main class="site">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span>Strikeclub Velten</span>
+      </div>
+    </div>
+
+    <section class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>Über uns</span>
+          </div>
+
+          <h1>Bowling mit Freunden. <span class="headline-accent">Mittwoch für Mittwoch.</span></h1>
+
+          <p class="hero-text">
+            Der Strikeclub Velten ist eine private Bowlinggemeinschaft aus Velten.
+            Bei uns steht nicht der Leistungsdruck im Vordergrund, sondern der Spaß am gemeinsamen Spielen.
+            Wir stellen faire Teams zusammen, damit jeder Mittwoch ein guter Abend wird – mit entspannter Stimmung,
+            ehrlichem Miteinander und Freude am Bowling.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="index.html">
+              <i class="fa-solid fa-house"></i>
+              <span>Zur Startseite</span>
+            </a>
+            <a class="btn-secondary" href="spieleranalyse.html">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Zur Spieleranalyse</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h2 class="hero-card-title">Was uns wichtig ist</h2>
+          <p class="hero-card-text">
+            Wir wollen gemeinsam eine gute Zeit auf der Bahn haben.
+            Deshalb achten wir auf faire Teams, lockere Atmosphäre und darauf,
+            dass jeder gerne wiederkommt. Der sportliche Reiz gehört dazu – aber immer so,
+            dass der Spaß im Mittelpunkt bleibt.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill">Spaß am Bowling</span>
+            <span class="pill">Faire Teams</span>
+            <span class="pill">Mittwoch in Velten</span>
+            <span class="pill">Gemeinschaft</span>
+            <span class="pill">Entspannte Abende</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Treffpunkt</span>
+          <div class="stat-value">Velten</div>
+          <div class="stat-subtext">Unsere Bowlinggemeinschaft ist in Velten zuhause.</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Unser Tag</span>
+          <div class="stat-value">Mittwoch</div>
+          <div class="stat-subtext">Jede Woche ein gemeinsamer Abend auf der Bahn.</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Unser Fokus</span>
+          <div class="stat-value">Spaß</div>
+          <div class="stat-subtext">Bowling soll verbinden und Freude machen.</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Unser Prinzip</span>
+          <div class="stat-value">Fair</div>
+          <div class="stat-subtext">Teams werden so gebildet, dass es für alle passt.</div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="section-card">
+          <h2 class="section-title">Wer wir sind</h2>
+          <p class="section-text">
+            Wir sind keine klassische Organisation und kein formeller Club im üblichen Sinn,
+            sondern eine private Bowlinggemeinschaft, die sich regelmäßig zum gemeinsamen Spielen trifft.
+            Uns geht es darum, zusammen auf der Bahn zu stehen, gute Abende zu erleben und den Mittwoch
+            zu einem festen Termin zu machen, auf den man sich freuen kann.
+            <br /><br />
+            Dabei ist jeder wichtig – nicht nur durch Ergebnisse, sondern auch durch die Stimmung,
+            die Verlässlichkeit und das Miteinander.
+          </p>
+        </div>
+
+        <div class="section-card">
+          <h2 class="section-title">Was unseren Mittwoch ausmacht</h2>
+          <div class="list">
+            <div class="list-item">
+              <i class="fa-solid fa-people-group"></i>
+              <span>Faire Teams, damit die Abende ausgeglichen und angenehm bleiben.</span>
+            </div>
+            <div class="list-item">
+              <i class="fa-solid fa-face-smile"></i>
+              <span>Spaß steht an erster Stelle – nicht Druck oder übertriebener Ehrgeiz.</span>
+            </div>
+            <div class="list-item">
+              <i class="fa-solid fa-handshake-angle"></i>
+              <span>Ein lockerer, respektvoller Umgang miteinander auf und neben der Bahn.</span>
+            </div>
+            <div class="list-item">
+              <i class="fa-solid fa-bowling-ball"></i>
+              <span>Gemeinsam spielen, gemeinsam lachen und einfach einen guten Abend haben.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="quote-card">
+        <div class="quote-icon">
+          <i class="fa-solid fa-quote-left"></i>
+        </div>
+        <p class="quote-text">
+          „Bei uns geht es nicht darum, jede Woche der Beste zu sein – sondern darum,
+          gemeinsam einen richtig guten Mittwoch zu haben.“
+        </p>
+        <div class="quote-author">Strikeclub Velten</div>
+      </section>
+
+      <section class="content-grid">
+        <div class="section-card">
+          <h2 class="section-title">Warum wir das machen</h2>
+          <p class="section-text">
+            Bowling macht am meisten Spaß, wenn die Runde stimmt.
+            Genau darum geht es bei uns: ein Abend, auf den man sich freuen kann,
+            mit fairen Begegnungen, guter Stimmung und genug Raum, einfach abzuschalten.
+            <br /><br />
+            Gute Würfe freuen uns natürlich trotzdem – aber sie sind nicht der einzige Maßstab.
+            Am Ende zählt, dass man gerne dabei ist.
+          </p>
+        </div>
+
+        <div class="section-card">
+          <h2 class="section-title">Gemeinschaft statt Leistungsdruck</h2>
+          <p class="section-text">
+            Natürlich schaut man auch mal auf Ergebnisse, Entwicklungen oder schöne Serien.
+            Aber das Ganze soll übersichtlich, locker und motivierend bleiben.
+            Es geht nicht darum, jemanden unter Druck zu setzen, sondern eher darum,
+            einen schönen Überblick zu schaffen und den gemeinsamen Abend noch runder zu machen.
+          </p>
+        </div>
+      </section>
+
+      <section class="contact-card">
+        <h2 class="contact-title">Kontakt</h2>
+        <p class="contact-text">
+          Wenn du mit uns Kontakt aufnehmen möchtest, findest du die Kontaktdaten im Impressum.
+          Dort ist auch die E-Mail-Adresse hinterlegt.
+        </p>
+
+        <div class="pill-row">
+          <a class="btn-secondary" href="impressum.html">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Zum Impressum</span>
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      Strikeclub Velten · <a href="impressum.html">Impressum</a>
+    </p>
+  </main>
+
+  <button
+    class="back-fab"
+    type="button"
+    aria-label="Zurück zur Startseite"
+    title="Zurück zur Startseite"
+    onclick="location.href='index.html'"
+  >
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <button
+    class="refresh-fab"
+    type="button"
+    aria-label="Seite aktualisieren"
+    title="Seite aktualisieren"
+    onclick="window.location.reload()"
+  >
+    <i class="fa-solid fa-rotate-right"></i>
+  </button>
+</body>
+</html>
