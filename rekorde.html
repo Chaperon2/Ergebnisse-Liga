@@ -6,7 +6,7 @@
   <title>Rekorde - Strikeclub Velten</title>
 
   <meta property="og:title" content="Rekorde - Strikeclub Velten" />
-  <meta property="og:description" content="Die stärksten Saisonwerte im Überblick." />
+  <meta property="og:description" content="Die wichtigsten Bestmarken der Saison im Überblick." />
   <meta property="og:url" content="https://www.strikeclub-velten.de/rekorde.html" />
   <meta property="og:type" content="website" />
 
@@ -217,12 +217,7 @@
     .header {
       position: relative;
       z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .eyebrow {
@@ -249,7 +244,7 @@
     }
 
     h1 {
-      margin: 0;
+      margin: 0 0 14px;
       font-size: clamp(2rem, 4vw, 3.6rem);
       line-height: 0.96;
       letter-spacing: -0.06em;
@@ -263,39 +258,13 @@
       color: transparent;
     }
 
-    .intro {
-      max-width: 70ch;
-      margin: 12px 0 0;
-      color: var(--text-soft);
-      line-height: 1.6;
-      font-size: 0.96rem;
+    .hero-text {
+      max-width: 780px;
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: #586b8a;
       font-weight: 600;
-    }
-
-    .date-pill {
-      padding: 14px 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(122,146,182,0.14);
-      box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
-      min-width: 230px;
-    }
-
-    .date-label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: #6a7b97;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .date-value {
-      font-size: 1.18rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #16203d;
     }
 
     .records-grid {
@@ -307,13 +276,13 @@
     }
 
     .record-card {
-      padding: 20px 18px;
+      position: relative;
+      padding: 18px;
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.90));
       border: 1px solid rgba(122,146,182,0.10);
       box-shadow: var(--shadow-md);
       overflow: hidden;
-      position: relative;
     }
 
     .record-card::before {
@@ -322,13 +291,15 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 12% 14%, rgba(91,124,255,0.12), transparent 28%),
+        radial-gradient(circle at 12% 12%, rgba(91,124,255,0.12), transparent 28%),
         radial-gradient(circle at 88% 18%, rgba(255,92,159,0.10), transparent 22%),
         radial-gradient(circle at 72% 100%, rgba(51,198,255,0.10), transparent 28%);
     }
 
     .record-card.featured {
-      background: linear-gradient(135deg, rgba(91,124,255,0.16), rgba(255,92,159,0.12)), rgba(255,255,255,0.92);
+      background:
+        linear-gradient(135deg, rgba(91,124,255,0.16), rgba(255,92,159,0.12)),
+        rgba(255,255,255,0.92);
       border: 1px solid rgba(91,124,255,0.18);
       box-shadow: 0 16px 36px rgba(73, 100, 255, 0.14);
     }
@@ -349,34 +320,53 @@
     }
 
     .record-value {
-      font-size: clamp(1.55rem, 3vw, 2.4rem);
+      margin-bottom: 8px;
+      font-size: clamp(1.5rem, 3vw, 2.35rem);
       font-weight: 900;
       color: #16203d;
       letter-spacing: -0.05em;
-      margin-bottom: 8px;
       line-height: 1;
     }
 
     .record-detail {
-      color: #566b8d;
-      font-size: 0.96rem;
-      line-height: 1.55;
+      color: #5a6f90;
+      font-size: 0.95rem;
+      line-height: 1.6;
       font-weight: 700;
     }
 
-    .record-highlight {
+    .record-chip {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       margin-top: 12px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.84);
-      border: 1px solid rgba(122,146,182,0.12);
-      color: #4f6489;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(122,146,182,0.10);
+      color: #516784;
       font-size: 0.8rem;
       font-weight: 800;
-      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
+      box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04);
+    }
+
+    .highlight-strip {
+      position: relative;
+      z-index: 1;
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(91,124,255,0.12), rgba(255,92,159,0.10));
+      border: 1px solid rgba(122,146,182,0.12);
+      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
+    }
+
+    .highlight-strip p {
+      margin: 0;
+      color: #284164;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      font-weight: 700;
     }
 
     .footer-note {
@@ -489,7 +479,7 @@
       }
 
       .records-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -508,7 +498,11 @@
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        padding: 10px 6px 14px;
+        padding: 12px 6px 16px;
+      }
+
+      .records-grid {
+        grid-template-columns: 1fr;
       }
 
       h1 {
@@ -571,28 +565,23 @@
             <span>Rekorde</span>
           </div>
 
-          <h1>Bestmarken. <span class="headline-accent">Die stärksten Saisonwerte.</span></h1>
+          <h1>Bestmarken. <span class="headline-accent">Saison und Spieltag im Überblick.</span></h1>
 
-          <p class="intro">
-            Die Seite zeigt die auffälligsten Einzelwerte aus den aktuellen Saison- und Spieltagsdaten.
+          <p class="hero-text">
+            Hier stehen die auffälligsten Werte aus den aktuellen Ergebnissen und der Gesamtauswertung.
           </p>
-        </div>
-
-        <div class="date-pill">
-          <span class="date-label">Stand</span>
-          <div class="date-value">Spieltag 11 · 25.03.2026</div>
         </div>
       </div>
 
       <section class="records-grid">
         <article class="record-card featured">
           <div class="record-inner">
-            <span class="record-label">Topspieler Gesamtwertung</span>
-            <div class="record-value">Skampy</div>
-            <div class="record-detail">775 höchste Serie · 177,9 Gesamtsaisonschnitt</div>
-            <div class="record-highlight">
-              <i class="fa-solid fa-star"></i>
-              <span>Platz 1 der Gesamtauswertung</span>
+            <span class="record-label">Bester Spieltag</span>
+            <div class="record-value">Vegas</div>
+            <div class="record-detail">788 Pins · 197,0 Schnitt</div>
+            <div class="record-chip">
+              <i class="fa-solid fa-trophy"></i>
+              <span>Serie und Spieltagsschnitt zusammengefasst</span>
             </div>
           </div>
         </article>
@@ -602,7 +591,7 @@
             <span class="record-label">Bestes Einzelspiel</span>
             <div class="record-value">Tom</div>
             <div class="record-detail">248 Pins</div>
-            <div class="record-highlight">
+            <div class="record-chip">
               <i class="fa-solid fa-bolt"></i>
               <span>Höchster Einzelwert der Saison</span>
             </div>
@@ -611,16 +600,59 @@
 
         <article class="record-card">
           <div class="record-inner">
-            <span class="record-label">Bester Spieltag</span>
-            <div class="record-value">Diana</div>
-            <div class="record-detail">762 Pins · 190,5 Schnitt</div>
-            <div class="record-highlight">
-              <i class="fa-solid fa-trophy"></i>
-              <span>Spieltag 11</span>
+            <span class="record-label">Höchster Gesamtsaisonschnitt</span>
+            <div class="record-value">Skampy</div>
+            <div class="record-detail">177,9 Schnitt</div>
+            <div class="record-chip">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Platz 1 der Gesamtauswertung</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="record-card">
+          <div class="record-inner">
+            <span class="record-label">Meiste Spiele über 200</span>
+            <div class="record-value">Skampy</div>
+            <div class="record-detail">7 Spiele über 200</div>
+            <div class="record-chip">
+              <i class="fa-solid fa-fire"></i>
+              <span>Konstant hohe Einzelspiele</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="record-card">
+          <div class="record-inner">
+            <span class="record-label">Bestes Team gesamt</span>
+            <div class="record-value">Die Abräumer</div>
+            <div class="record-detail">80 Punkte · 160,2 Schnitt</div>
+            <div class="record-chip">
+              <i class="fa-solid fa-users"></i>
+              <span>Platz 1 der Teamwertung</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="record-card">
+          <div class="record-inner">
+            <span class="record-label">Bester Team-Spieltag</span>
+            <div class="record-value">Die Abräumer</div>
+            <div class="record-detail">2067 Pins am Spieltag 11</div>
+            <div class="record-chip">
+              <i class="fa-solid fa-medal"></i>
+              <span>Höchster Teamwert im aktuellen Spieltag</span>
             </div>
           </div>
         </article>
       </section>
+
+      <div class="highlight-strip">
+        <p>
+          Spieltagsserie und Spieltagsschnitt gehören hier bewusst zusammen, weil beide denselben 4er-Block beschreiben.
+          Der Gesamtsaisonschnitt bleibt getrennt, weil er die gesamte Saison bewertet.
+        </p>
+      </div>
     </section>
 
     <p class="footer-note">
