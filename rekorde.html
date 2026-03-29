@@ -6,7 +6,8 @@
   <title>Rekorde - Strikeclub Velten</title>
 
   <meta property="og:title" content="Rekorde - Strikeclub Velten" />
-  <meta property="og:description" content="Die besten Werte der bisher erfassten Spieltage im Überblick." />
+  <meta property="og:description" content="Die stärksten Saisonwerte im Überblick." />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/rekorde.html" />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,6 +22,7 @@
       --border: rgba(119, 145, 185, 0.14);
       --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14);
       --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10);
+      --shadow-md: 0 12px 30px rgba(35, 58, 100, 0.08);
       --max-width: 1440px;
     }
 
@@ -215,6 +217,11 @@
     .header {
       position: relative;
       z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 14px;
+      flex-wrap: wrap;
       margin-bottom: 18px;
     }
 
@@ -256,29 +263,39 @@
       color: transparent;
     }
 
-    .hero-text {
-      margin-top: 14px;
-      max-width: 820px;
-      color: #5f718d;
-      line-height: 1.7;
-      font-size: 0.98rem;
+    .intro {
+      max-width: 70ch;
+      margin: 12px 0 0;
+      color: var(--text-soft);
+      line-height: 1.6;
+      font-size: 0.96rem;
       font-weight: 600;
     }
 
-    .info-strip {
-      position: relative;
-      z-index: 1;
-      margin-top: 16px;
-      margin-bottom: 16px;
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(91,124,255,0.12), rgba(255,92,159,0.10));
-      border: 1px solid rgba(122,146,182,0.12);
-      box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
-      color: #284164;
-      font-size: 0.92rem;
-      font-weight: 700;
-      line-height: 1.6;
+    .date-pill {
+      padding: 14px 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(122,146,182,0.14);
+      box-shadow: 0 12px 28px rgba(35, 58, 100, 0.06);
+      min-width: 230px;
+    }
+
+    .date-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #6a7b97;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .date-value {
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #16203d;
     }
 
     .records-grid {
@@ -286,47 +303,80 @@
       z-index: 1;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      gap: 14px;
     }
 
     .record-card {
-      padding: 18px;
+      padding: 20px 18px;
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.90));
       border: 1px solid rgba(122,146,182,0.10);
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .record-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(91,124,255,0.12), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(255,92,159,0.10), transparent 22%),
+        radial-gradient(circle at 72% 100%, rgba(51,198,255,0.10), transparent 28%);
+    }
+
+    .record-card.featured {
+      background: linear-gradient(135deg, rgba(91,124,255,0.16), rgba(255,92,159,0.12)), rgba(255,255,255,0.92);
+      border: 1px solid rgba(91,124,255,0.18);
+      box-shadow: 0 16px 36px rgba(73, 100, 255, 0.14);
+    }
+
+    .record-inner {
+      position: relative;
+      z-index: 1;
     }
 
     .record-label {
       display: block;
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: #6b7d99;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
       margin-bottom: 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: #657891;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     .record-value {
-      font-size: 1.45rem;
+      font-size: clamp(1.55rem, 3vw, 2.4rem);
       font-weight: 900;
-      letter-spacing: -0.04em;
       color: #16203d;
+      letter-spacing: -0.05em;
       margin-bottom: 8px;
+      line-height: 1;
     }
 
-    .record-holder {
-      color: #23406c;
-      font-size: 0.98rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .record-note {
-      color: #627491;
-      font-size: 0.86rem;
+    .record-detail {
+      color: #566b8d;
+      font-size: 0.96rem;
       line-height: 1.55;
       font-weight: 700;
+    }
+
+    .record-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(122,146,182,0.12);
+      color: #4f6489;
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(35, 58, 100, 0.04);
     }
 
     .footer-note {
@@ -335,6 +385,18 @@
       color: #6c7b96;
       font-size: 0.92rem;
       padding: 0 8px;
+    }
+
+    .footer-note a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(108, 123, 150, 0.34);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-note a:hover {
+      opacity: 1;
+      border-bottom-color: rgba(108, 123, 150, 0.75);
     }
 
     .refresh-fab,
@@ -427,7 +489,7 @@
       }
 
       .records-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
       }
     }
 
@@ -446,15 +508,11 @@
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        padding: 12px 6px 16px;
+        padding: 10px 6px 14px;
       }
 
       h1 {
         font-size: clamp(1.8rem, 8vw, 2.8rem);
-      }
-
-      .records-grid {
-        grid-template-columns: 1fr;
       }
 
       .refresh-fab,
@@ -507,27 +565,67 @@
 
     <section class="page">
       <div class="header">
-        <div class="eyebrow">
-          <span class="dot"></span>
-          <span>Rekorde</span>
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>Rekorde</span>
+          </div>
+
+          <h1>Bestmarken. <span class="headline-accent">Die stärksten Saisonwerte.</span></h1>
+
+          <p class="intro">
+            Die Seite zeigt die auffälligsten Einzelwerte aus den aktuellen Saison- und Spieltagsdaten.
+          </p>
         </div>
 
-        <h1>Die besten Werte. <span class="headline-accent">Automatisch berechnet.</span></h1>
-
-        <p class="hero-text">
-          Diese Seite zieht ihre Rekorde direkt aus derselben Datentabelle wie die Spielerauswertung.
-          Zukünftige Spieltage werden automatisch ignoriert.
-        </p>
+        <div class="date-pill">
+          <span class="date-label">Stand</span>
+          <div class="date-value">Spieltag 11 · 25.03.2026</div>
+        </div>
       </div>
 
-      <div class="info-strip" id="recordInfo">
-        Stand: wird berechnet …
-      </div>
+      <section class="records-grid">
+        <article class="record-card featured">
+          <div class="record-inner">
+            <span class="record-label">Topspieler Gesamtwertung</span>
+            <div class="record-value">Skampy</div>
+            <div class="record-detail">775 höchste Serie · 177,9 Gesamtsaisonschnitt</div>
+            <div class="record-highlight">
+              <i class="fa-solid fa-star"></i>
+              <span>Platz 1 der Gesamtauswertung</span>
+            </div>
+          </div>
+        </article>
 
-      <section class="records-grid" id="recordsGrid"></section>
+        <article class="record-card">
+          <div class="record-inner">
+            <span class="record-label">Bestes Einzelspiel</span>
+            <div class="record-value">Tom</div>
+            <div class="record-detail">248 Pins</div>
+            <div class="record-highlight">
+              <i class="fa-solid fa-bolt"></i>
+              <span>Höchster Einzelwert der Saison</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="record-card">
+          <div class="record-inner">
+            <span class="record-label">Bester Spieltag</span>
+            <div class="record-value">Diana</div>
+            <div class="record-detail">762 Pins · 190,5 Schnitt</div>
+            <div class="record-highlight">
+              <i class="fa-solid fa-trophy"></i>
+              <span>Spieltag 11</span>
+            </div>
+          </div>
+        </article>
+      </section>
     </section>
 
-    <p class="footer-note">Strikeclub Velten</p>
+    <p class="footer-note">
+      Strikeclub Velten · <a href="impressum.html">Impressum</a>
+    </p>
   </main>
 
   <button
@@ -549,363 +647,5 @@
   >
     <i class="fa-solid fa-rotate-right"></i>
   </button>
-
-  <script>
-    const RAW_PLAYER_TABLE = String.raw`
-	Spieltag 1				Spieltag 2				Spieltag 3				Spieltag 4				Spieltag 5				Spieltag 6				Spieltag 7				Spieltag 8				Spieltag 9				Spieltag 10				Spieltag 11				Spieltag 12				Spieltag 13				Spieltag 14			
-Name	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?	Datum	Pins	Spiele	Anwesend?
-Rainsen	07.01.2026	723	4	true	14.01.2026	707	4	true	21.01.2026	679	4	true	28.01.2026	774	4	true	04.02.2026	617	4	true	11.02.2026	712	4	true	18.02.2026	687	4	true	04.03.2026	0	0	false	11.03.2026	638	4	true	18.03.2026	640	4	true	25.03.2026	714	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Ralf	07.01.2026	673	4	true	14.01.2026	647	4	true	21.01.2026	645	4	true	28.01.2026	500	4	true	04.02.2026	506	4	true	11.02.2026	555	4	true	18.02.2026	611	4	true	04.03.2026	609	4	true	11.03.2026	614	4	true	18.03.2026	594	4	true	25.03.2026	600	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Ismene	07.01.2026	655	4	true	14.01.2026	634	4	true	21.01.2026	577	4	true	28.01.2026	635	4	true	04.02.2026	582	4	true	11.02.2026	575	4	true	18.02.2026	617	4	true	04.03.2026	0	0	false	11.03.2026	616	4	true	18.03.2026	504	4	true	25.03.2026	585	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Maik	07.01.2026	720	4	true	14.01.2026	744	4	true	21.01.2026	692	4	true	28.01.2026	636	4	true	04.02.2026	682	4	true	11.02.2026	590	4	true	18.02.2026	604	4	true	04.03.2026	681	4	true	11.03.2026	670	4	true	18.03.2026	643	4	true	25.03.2026	637	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Toni	07.01.2026	618	4	true	14.01.2026	665	4	true	21.01.2026	629	4	true	28.01.2026	650	4	true	04.02.2026	0	0	false	11.02.2026	0	0	false	18.02.2026	0	0	false	04.03.2026	0	0	false	11.03.2026	0	0	false	18.03.2026	0	0	false	25.03.2026	0	0	false	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Günni	07.01.2026	583	4	true	14.01.2026	569	4	true	21.01.2026	583	4	true	28.01.2026	690	4	true	04.02.2026	525	4	true	11.02.2026	604	4	true	18.02.2026	615	4	true	04.03.2026	557	4	true	11.03.2026	634	4	true	18.03.2026	597	4	true	25.03.2026	626	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Rene	07.01.2026	657	4	true	14.01.2026	758	4	true	21.01.2026	657	4	true	28.01.2026	743	4	true	04.02.2026	647	4	true	11.02.2026	670	4	true	18.02.2026	618	4	true	04.03.2026	0	0	false	11.03.2026	646	4	true	18.03.2026	715	4	true	25.03.2026	709	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Diana	07.01.2026	566	4	true	14.01.2026	687	4	true	21.01.2026	688	4	true	28.01.2026	692	4	true	04.02.2026	578	4	true	11.02.2026	698	4	true	18.02.2026	610	4	true	04.03.2026	655	4	true	11.03.2026	586	4	true	18.03.2026	643	4	true	25.03.2026	762	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Benno	07.01.2026	543	4	true	14.01.2026	628	4	true	21.01.2026	512	4	true	28.01.2026	549	4	true	04.02.2026	0	0	false	11.02.2026	576	4	true	18.02.2026	658	4	true	04.03.2026	618	4	true	11.03.2026	561	4	true	18.03.2026	717	4	true	25.03.2026	574	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Vegas	07.01.2026	683	4	true	14.01.2026	663	4	true	21.01.2026	788	4	true	28.01.2026	0	0	false	04.02.2026	681	4	true	11.02.2026	663	4	true	18.02.2026	592	4	true	04.03.2026	567	4	true	11.03.2026	706	4	true	18.03.2026	670	4	true	25.03.2026	710	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Thomas	07.01.2026	612	4	true	14.01.2026	636	4	true	21.01.2026	662	4	true	28.01.2026	677	4	true	04.02.2026	612	4	true	11.02.2026	666	4	true	18.02.2026	588	4	true	04.03.2026	651	4	true	11.03.2026	609	4	true	18.03.2026	656	4	true	25.03.2026	632	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Dieter	07.01.2026	620	4	true	14.01.2026	0	0	false	21.01.2026	574	4	true	28.01.2026	494	4	true	04.02.2026	521	4	true	11.02.2026	579	4	true	18.02.2026	494	4	true	04.03.2026	616	4	true	11.03.2026	502	4	true	18.03.2026	574	4	true	25.03.2026	520	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Tomber	07.01.2026	703	4	true	14.01.2026	684	4	true	21.01.2026	658	4	true	28.01.2026	592	4	true	04.02.2026	645	4	true	11.02.2026	688	4	true	18.02.2026	438	3	true	04.03.2026	0	0	false	11.03.2026	638	4	true	18.03.2026	732	4	true	25.03.2026	629	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Micha	07.01.2026	601	4	true	14.01.2026	655	4	true	21.01.2026	579	4	true	28.01.2026	0	0	false	04.02.2026	696	4	true	11.02.2026	614	4	true	18.02.2026	667	4	true	04.03.2026	656	4	true	11.03.2026	657	4	true	18.03.2026	651	4	true	25.03.2026	603	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Ingolf	07.01.2026	545	4	true	14.01.2026	671	4	true	21.01.2026	507	4	true	28.01.2026	540	4	true	04.02.2026	569	4	true	11.02.2026	458	4	true	18.02.2026	0	0	false	04.03.2026	635	4	true	11.03.2026	541	4	true	18.03.2026	517	4	true	25.03.2026	520	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Günter	07.01.2026	614	4	true	14.01.2026	570	4	true	21.01.2026	523	4	true	28.01.2026	573	4	true	04.02.2026	567	4	true	11.02.2026	624	4	true	18.02.2026	576	4	true	04.03.2026	634	4	true	11.03.2026	594	4	true	18.03.2026	591	4	true	25.03.2026	617	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Simone	07.01.2026	476	4	true	14.01.2026	462	4	true	21.01.2026	438	4	true	28.01.2026	457	4	true	04.02.2026	512	4	true	11.02.2026	0	0	false	18.02.2026	0	0	false	04.03.2026	454	4	true	11.03.2026	528	4	true	18.03.2026	476	4	true	25.03.2026	440	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Skampy	07.01.2026	0	0	false	14.01.2026	655	4	true	21.01.2026	0	0	false	28.01.2026	731	4	true	04.02.2026	716	4	true	11.02.2026	744	4	true	18.02.2026	0	0	false	04.03.2026	651	4	true	11.03.2026	775	4	true	18.03.2026	716	4	true	25.03.2026	704	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Karola	07.01.2026	635	4	true	14.01.2026	696	4	true	21.01.2026	703	4	true	28.01.2026	571	4	true	04.02.2026	592	4	true	11.02.2026	615	4	true	18.02.2026	658	4	true	04.03.2026	593	4	true	11.03.2026	661	4	true	18.03.2026	622	4	true	25.03.2026	673	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Dirk	07.01.2026	0	0	false	14.01.2026	528	4	true	21.01.2026	552	4	true	28.01.2026	543	4	true	04.02.2026	582	4	true	11.02.2026	567	4	true	18.02.2026	615	4	true	04.03.2026	660	4	true	11.03.2026	594	4	true	18.03.2026	229	2	true	25.03.2026	576	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Detlef	07.01.2026	0	0	false	14.01.2026	645	4	true	21.01.2026	0	0	false	28.01.2026	545	4	true	04.02.2026	0	0	false	11.02.2026	663	4	true	18.02.2026	0	0	false	04.03.2026	0	0	false	11.03.2026	553	4	true	18.03.2026	0	0	false	25.03.2026	600	4	true	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Tom	07.01.2026	541	4	true	14.01.2026	593	4	true	21.01.2026	554	4	true	28.01.2026	723	4	true	04.02.2026	532	4	true	11.02.2026	558	4	true	18.02.2026	0	0	false	04.03.2026	0	0	false	11.03.2026	0	0	false	18.03.2026	0	0	false	25.03.2026	0	0	false	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-Denise	07.01.2026	432	4	true	14.01.2026	426	4	true	21.01.2026	411	4	true	28.01.2026	450	4	true	04.02.2026	434	4	true	11.02.2026	453	4	true	18.02.2026	0	0	false	04.03.2026	0	0	false	11.03.2026	0	0	false	18.03.2026	0	0	false	25.03.2026	0	0	false	01.04.2026	0	0	false	08.04.2026	0	0	false	15.04.2026	0	0	false
-`;
-
-    function parseGermanDate(dateStr) {
-      const match = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(String(dateStr || "").trim());
-      if (!match) return null;
-      const [, dd, mm, yyyy] = match;
-      return new Date(Number(yyyy), Number(mm) - 1, Number(dd), 12, 0, 0, 0);
-    }
-
-    function isPastOrToday(dateStr) {
-      const date = parseGermanDate(dateStr);
-      if (!date) return false;
-
-      const now = new Date();
-      const todayEnd = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        23, 59, 59, 999
-      );
-
-      return date <= todayEnd;
-    }
-
-    function parseBool(value) {
-      return String(value || "").trim().toLowerCase() === "true";
-    }
-
-    function parsePlayerTable(raw) {
-      const lines = raw
-        .replace(/\r/g, "")
-        .split("\n")
-        .map(line => line.trimEnd())
-        .filter(line => line.trim() !== "");
-
-      if (lines.length < 3) {
-        throw new Error("Die Tabelle ist zu kurz oder leer.");
-      }
-
-      const spieltagLabels = lines[0].match(/Spieltag\s+\d+/g) || [];
-      if (!spieltagLabels.length) {
-        throw new Error("Keine Spieltag-Überschriften erkannt.");
-      }
-
-      const result = {};
-
-      for (const line of lines.slice(2)) {
-        const cells = line.split("\t").map(cell => cell.trim());
-        const name = cells[0];
-        if (!name) continue;
-
-        const entries = [];
-
-        for (let i = 0; i < spieltagLabels.length; i++) {
-          const base = 1 + i * 4;
-
-          const datum = cells[base] || "";
-          const pinsRaw = cells[base + 1] || "0";
-          const gamesRaw = cells[base + 2] || "0";
-          const presentRaw = cells[base + 3] || "false";
-
-          if (!datum) continue;
-          if (!isPastOrToday(datum)) continue;
-
-          const played = parseBool(presentRaw);
-          const pins = Number(pinsRaw);
-          const games = Number(gamesRaw);
-
-          entries.push({
-            spieltag: i + 1,
-            datum,
-            pins,
-            games,
-            played
-          });
-        }
-
-        result[name] = entries;
-      }
-
-      return result;
-    }
-
-    function formatDecimal(value, digits = 1) {
-      return new Intl.NumberFormat("de-DE", {
-        minimumFractionDigits: digits,
-        maximumFractionDigits: digits
-      }).format(value);
-    }
-
-    function formatInteger(value) {
-      return new Intl.NumberFormat("de-DE", {
-        maximumFractionDigits: 0
-      }).format(value);
-    }
-
-    function joinNames(names) {
-      if (names.length === 1) return names[0];
-      if (names.length === 2) return `${names[0]} und ${names[1]}`;
-      return `${names.slice(0, -1).join(", ")} und ${names[names.length - 1]}`;
-    }
-
-    function findMaxWithTies(items, selector) {
-      if (!items.length) return [];
-      const maxValue = Math.max(...items.map(selector));
-      return items.filter(item => selector(item) === maxValue);
-    }
-
-    function getConsistencyStats(entries) {
-      const played = entries.filter(item => item.played && Number(item.games) > 0);
-
-      if (played.length < 4) {
-        return {
-          score: null,
-          stdDev: null,
-          range: null
-        };
-      }
-
-      const values = played.map(item => item.pins / item.games);
-      const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
-
-      const variance = values.reduce((sum, value) => {
-        const diff = value - mean;
-        return sum + diff * diff;
-      }, 0) / values.length;
-
-      const stdDev = Math.sqrt(variance);
-      const range = Math.max(...values) - Math.min(...values);
-      const rawScore = 100 - stdDev * 2.5;
-      const score = Math.max(0, Math.min(100, Math.round(rawScore)));
-
-      return {
-        score,
-        stdDev,
-        range
-      };
-    }
-
-    function buildRecords(playerData) {
-      const playedDays = [];
-      const seasonStats = [];
-
-      for (const [name, entries] of Object.entries(playerData)) {
-        let totalPins = 0;
-        let totalGames = 0;
-        let totalDays = 0;
-
-        for (const entry of entries) {
-          if (entry.played && Number(entry.games) > 0) {
-            const average = entry.pins / entry.games;
-
-            playedDays.push({
-              name,
-              ...entry,
-              average
-            });
-
-            totalPins += entry.pins;
-            totalGames += entry.games;
-            totalDays += 1;
-          }
-        }
-
-        const currentAverage = totalGames > 0 ? totalPins / totalGames : null;
-        const consistency = getConsistencyStats(entries);
-
-        seasonStats.push({
-          name,
-          totalPins,
-          totalGames,
-          totalDays,
-          average: currentAverage,
-          consistencyScore: consistency.score,
-          consistencyStdDev: consistency.stdDev,
-          consistencyRange: consistency.range
-        });
-      }
-
-      const topSeries = findMaxWithTies(playedDays, item => item.pins);
-      const topDayAverage = findMaxWithTies(playedDays, item => item.average);
-      const topSeasonAverage = findMaxWithTies(
-        seasonStats.filter(item => item.totalGames > 0),
-        item => item.average
-      );
-      const topTotalPins = findMaxWithTies(
-        seasonStats.filter(item => item.totalPins > 0),
-        item => item.totalPins
-      );
-      const topTotalGames = findMaxWithTies(
-        seasonStats.filter(item => item.totalGames > 0),
-        item => item.totalGames
-      );
-      const bestConsistency = findMaxWithTies(
-        seasonStats.filter(item => item.consistencyScore != null),
-        item => item.consistencyScore
-      );
-
-      return [
-        {
-          label: "Höchste Serie",
-          value: topSeries.length ? `${formatInteger(topSeries[0].pins)} Pins` : "–",
-          holder: topSeries.length === 1
-            ? topSeries[0].name
-            : `${topSeries.length} Spieler teilen sich den Rekord`,
-          note: topSeries.length === 1
-            ? `${topSeries[0].datum} · Spieltag ${topSeries[0].spieltag} · ${topSeries[0].games} Spiele`
-            : joinNames(topSeries.map(item => item.name))
-        },
-        {
-          label: "Bester Spieltag-Schnitt",
-          value: topDayAverage.length ? formatDecimal(topDayAverage[0].average) : "–",
-          holder: topDayAverage.length === 1
-            ? topDayAverage[0].name
-            : `${topDayAverage.length} Spieler teilen sich den Rekord`,
-          note: topDayAverage.length === 1
-            ? `${topDayAverage[0].datum} · Spieltag ${topDayAverage[0].spieltag}`
-            : joinNames(topDayAverage.map(item => item.name))
-        },
-        {
-          label: "Höchster Saisonschnitt",
-          value: topSeasonAverage.length ? formatDecimal(topSeasonAverage[0].average) : "–",
-          holder: topSeasonAverage.length === 1
-            ? topSeasonAverage[0].name
-            : `${topSeasonAverage.length} Spieler teilen sich den Rekord`,
-          note: topSeasonAverage.length === 1
-            ? `${formatInteger(topSeasonAverage[0].totalGames)} Spiele · ${formatInteger(topSeasonAverage[0].totalDays)} Spieltage`
-            : joinNames(topSeasonAverage.map(item => item.name))
-        },
-        {
-          label: "Meiste Pins gesamt",
-          value: topTotalPins.length ? `${formatInteger(topTotalPins[0].totalPins)} Pins` : "–",
-          holder: topTotalPins.length === 1
-            ? topTotalPins[0].name
-            : `${topTotalPins.length} Spieler teilen sich den Rekord`,
-          note: topTotalPins.length === 1
-            ? `${formatInteger(topTotalPins[0].totalGames)} Spiele · ${formatInteger(topTotalPins[0].totalDays)} Spieltage`
-            : joinNames(topTotalPins.map(item => item.name))
-        },
-        {
-          label: "Meiste Spiele",
-          value: topTotalGames.length ? `${formatInteger(topTotalGames[0].totalGames)} Spiele` : "–",
-          holder: topTotalGames.length === 1
-            ? topTotalGames[0].name
-            : `${topTotalGames.length} Spieler teilen sich den Rekord`,
-          note: topTotalGames.length === 1
-            ? `${formatInteger(topTotalGames[0].totalDays)} Spieltage`
-            : joinNames(topTotalGames.map(item => item.name))
-        },
-        {
-          label: "Beste Konstanz",
-          value: bestConsistency.length ? `${formatInteger(bestConsistency[0].consistencyScore)} / 100` : "–",
-          holder: bestConsistency.length === 1
-            ? bestConsistency[0].name
-            : `${bestConsistency.length} Spieler teilen sich den Rekord`,
-          note: bestConsistency.length === 1
-            ? `Schwankung ± ${formatDecimal(bestConsistency[0].consistencyStdDev)} · Spannweite ${formatDecimal(bestConsistency[0].consistencyRange)}`
-            : joinNames(bestConsistency.map(item => item.name))
-        }
-      ];
-    }
-
-    function renderRecords(records) {
-      const grid = document.getElementById("recordsGrid");
-      grid.innerHTML = "";
-
-      records.forEach(record => {
-        const card = document.createElement("article");
-        card.className = "record-card";
-
-        card.innerHTML = `
-          <span class="record-label">${record.label}</span>
-          <div class="record-value">${record.value}</div>
-          <div class="record-holder">${record.holder}</div>
-          <div class="record-note">${record.note}</div>
-        `;
-
-        grid.appendChild(card);
-      });
-    }
-
-    function countPlayedDays(playerData) {
-      return Object.values(playerData).reduce((sum, entries) => {
-        return sum + entries.filter(entry => entry.played && Number(entry.games) > 0).length;
-      }, 0);
-    }
-
-    function getLatestRecordedDate(playerData) {
-      const dates = [];
-
-      Object.values(playerData).forEach(entries => {
-        entries.forEach(entry => {
-          if (entry.played && Number(entry.games) > 0) {
-            dates.push(entry.datum);
-          }
-        });
-      });
-
-      if (!dates.length) return "–";
-
-      dates.sort((a, b) => parseGermanDate(a) - parseGermanDate(b));
-      return dates[dates.length - 1];
-    }
-
-    try {
-      const playerData = parsePlayerTable(RAW_PLAYER_TABLE);
-      const records = buildRecords(playerData);
-
-      renderRecords(records);
-
-      const playerCount = Object.keys(playerData).length;
-      const playedDaysCount = countPlayedDays(playerData);
-      const latestDate = getLatestRecordedDate(playerData);
-
-      document.getElementById("recordInfo").textContent =
-        `Stand: ${latestDate} · ${playerCount} Spieler erfasst · ${playedDaysCount} gespielte Einträge ausgewertet`;
-    } catch (error) {
-      document.getElementById("recordInfo").textContent =
-        `Fehler beim Einlesen der Tabelle: ${error.message}`;
-
-      document.getElementById("recordsGrid").innerHTML = `
-        <article class="record-card">
-          <span class="record-label">Hinweis</span>
-          <div class="record-value">Tabelle prüfen</div>
-          <div class="record-holder">Die Rekorde konnten nicht berechnet werden.</div>
-          <div class="record-note">${error.message}</div>
-        </article>
-      `;
-    }
-  </script>
 </body>
 </html>
