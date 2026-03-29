@@ -374,29 +374,38 @@
       animation: refreshSpin 2.4s linear infinite;
     }
 
-    .mail-btn {
+   .mail-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 12px 16px;
+  gap: 8px;
+  margin-left: 8px;
+  padding: 8px 12px;
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(91,124,255,0.92), rgba(255,92,159,0.92));
   color: #ffffff;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  vertical-align: middle;
   box-shadow:
-    0 10px 24px rgba(73, 100, 255, 0.22),
-    inset 0 1px 0 rgba(255,255,255,0.24);
+    0 8px 18px rgba(73, 100, 255, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.22);
   transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mail-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  filter: saturate(1.06);
+  transform: translateY(-1px);
+  filter: saturate(1.05);
   box-shadow:
-    0 14px 28px rgba(73, 100, 255, 0.28),
-    inset 0 1px 0 rgba(255,255,255,0.28);
+    0 10px 22px rgba(73, 100, 255, 0.24),
+    inset 0 1px 0 rgba(255,255,255,0.26);
+}
+
+.mail-btn:active {
+  transform: scale(0.98);
+}
+
+.mail-btn i {
+  font-size: 0.9rem;
 }
 
 .mail-btn:active {
@@ -553,42 +562,40 @@
               </div>
 
       <section class="about-grid">
-        <article class="about-card">
-  <h2>Kontakt</h2>
-  <p>Fragen oder Interesse? Dann schreib uns einfach.</p>
-  <a
-    class="mail-btn"
-    href="mailto:info@strikeclub-velten.de"
-    aria-label="E-Mail an Strikeclub Velten senden"
-  >
-    <i class="fa-solid fa-envelope"></i>
-    <span>info@strikeclub-velten.de</span>
-  </a>
-</article>
+  <article class="about-card">
+    <h2>Wer wir sind</h2>
+    <p>
+      Strikeclub Velten ist eine private Bowlinggemeinschaft aus Velten. Bei uns geht es um
+      regelmäßige gemeinsame Abende auf der Bahn, lockere Stimmung und faire Teams.
+    </p>
+  </article>
 
-        <article class="about-card">
-          <h2>Wie wir spielen</h2>
-          <p>
-            Wir achten auf faire und ausgeglichene Teams, damit jeder Mittwoch unkompliziert bleibt
-            und alle mit einer guten Zeit nach Hause gehen.
-          </p>
-        </article>
+  <article class="about-card">
+    <h2>Wie wir spielen</h2>
+    <p>
+      Wir achten auf ausgeglichene Teams, damit jeder Mittwoch entspannt bleibt und alle mit
+      einer guten Zeit nach Hause gehen. Der sportliche Ehrgeiz darf dabei gern mitspielen,
+      aber der gemeinsame Abend steht im Vordergrund.
+    </p>
+  </article>
 
-        <article class="about-card">
-          <h2>Kontakt</h2>
-          <p>
-            Fragen oder Interesse? Dann schreib uns einfach an
-            <a href="mailto:info@strikeclub-velten.de">info@strikeclub-velten.de</a>.
-          </p>
-        </article>
-      </section>
+  <article class="about-card">
+    <h2>Kontakt</h2>
+    <p>
+      Fragen oder Interesse? Dann schreib uns einfach
+      <a
+        class="mail-btn"
+        href="mailto:info@strikeclub-velten.de"
+        aria-label="E-Mail an Strikeclub Velten senden"
+      >
+        <i class="fa-solid fa-envelope"></i>
+        <span>info@strikeclub-velten.de</span>
+      </a>
+    </p>
+  </article>
+</section>
 
-      <div class="highlight-strip">
-        <p>
-          Strikeclub Velten steht für regelmäßiges Bowling in entspannter Runde – ohne unnötigen Druck,
-          aber mit fairen Teams und Freude am gemeinsamen Abend.
-        </p>
-      </div>
+     
     </section>
 
     <p class="footer-note">
