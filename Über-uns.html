@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Über uns - Strikeclub Velten</title>
 
-  <meta name="description" content="Lerne die private Bowlinggemeinschaft Strikeclub Velten kennen – gemeinsames Bowling, faire Teams und Spaß an jedem Mittwoch." />
-
   <meta property="og:title" content="Über uns - Strikeclub Velten" />
-  <meta property="og:description" content="Private Bowlinggemeinschaft aus Velten – faire Teams, entspannte Abende und Spaß am Bowling." />
-  <meta property="og:url" content="https://www.strikeclub-velten.de/ueber-uns.html" />
+  <meta property="og:description" content="Private Bowlinggemeinschaft aus Velten mit fairen Teams und entspannten Mittwochsabenden." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
   <style>
@@ -29,10 +26,6 @@
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -219,32 +212,10 @@
       pointer-events: none;
     }
 
-    .hero {
+    .header {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-bottom: 18px;
-    }
-
-    .hero-copy,
-    .hero-card,
-    .section-card,
-    .quote-card,
-    .contact-card {
-      border-radius: 24px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(122,146,182,0.12);
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(14px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-copy {
-      padding: 24px;
+      margin-bottom: 22px;
     }
 
     .eyebrow {
@@ -275,7 +246,7 @@
       font-size: clamp(2rem, 4vw, 3.6rem);
       line-height: 0.96;
       letter-spacing: -0.06em;
-      font-weight: 900;
+      font-weight: 800;
     }
 
     .headline-accent {
@@ -286,244 +257,72 @@
     }
 
     .hero-text {
-      margin: 0;
-      color: #5d7190;
-      font-size: 1rem;
-      line-height: 1.7;
       max-width: 760px;
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: #586b8a;
+      font-weight: 600;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      font-size: 0.95rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, #4964ff, #ff5c9f);
-      box-shadow: 0 14px 28px rgba(73, 100, 255, 0.18);
-    }
-
-    .btn-secondary {
-      color: #26416c;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(122,146,182,0.12);
-      box-shadow: 0 10px 22px rgba(35, 58, 100, 0.06);
-    }
-
-    .btn-primary:hover,
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.02);
-    }
-
-    .hero-card {
-      padding: 20px;
+    .about-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      align-content: space-between;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
 
-    .hero-card-title {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #18355f;
-    }
-
-    .hero-card-text {
-      margin: 0;
-      color: #5d7190;
-      line-height: 1.65;
-      font-size: 0.95rem;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pill {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
+    .about-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.90));
       border: 1px solid rgba(122,146,182,0.10);
-      color: #4f6588;
-      font-size: 0.8rem;
-      font-weight: 800;
+      box-shadow: var(--shadow-lg);
     }
 
-    .stats-grid {
+    .about-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #17325c;
+    }
+
+    .about-card p {
+      margin: 0;
+      color: #5f718d;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .about-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #5f718d;
+      line-height: 1.8;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .highlight-strip {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .stat-card {
-      padding: 16px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,250,255,0.90));
-      border: 1px solid rgba(122,146,182,0.10);
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(91,124,255,0.12), rgba(255,92,159,0.10));
+      border: 1px solid rgba(122,146,182,0.12);
       box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04);
     }
 
-    .stat-label {
-      display: block;
-      font-size: 0.74rem;
-      font-weight: 800;
-      color: #6b7d99;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-
-    .stat-value {
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #16203d;
-      letter-spacing: -0.03em;
-    }
-
-    .stat-subtext {
-      margin-top: 6px;
-      color: #60728f;
-      font-size: 0.84rem;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-
-    .content-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .section-card {
-      padding: 20px;
-    }
-
-    .section-title {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #18355f;
-    }
-
-    .section-text {
+    .highlight-strip p {
       margin: 0;
-      color: #5d7190;
-      line-height: 1.75;
-      font-size: 0.96rem;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .list-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.86);
-      border: 1px solid rgba(122,146,182,0.10);
-    }
-
-    .list-item i {
-      color: #4964ff;
-      margin-top: 2px;
-    }
-
-    .list-item span {
-      color: #566b8e;
-      line-height: 1.6;
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-
-    .quote-card {
-      position: relative;
-      z-index: 1;
-      padding: 22px;
-      margin-bottom: 16px;
-    }
-
-    .quote-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      background: linear-gradient(135deg, #4964ff, #ff5c9f);
-      box-shadow: 0 12px 24px rgba(73, 100, 255, 0.18);
-      margin-bottom: 14px;
-    }
-
-    .quote-text {
-      margin: 0;
-      font-size: 1.05rem;
+      color: #284164;
+      font-size: 0.98rem;
       line-height: 1.7;
-      color: #234067;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-
-    .quote-author {
-      margin-top: 12px;
-      color: #6b7d99;
-      font-size: 0.9rem;
-      font-weight: 800;
-    }
-
-    .contact-card {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-      display: grid;
-      gap: 12px;
-      background: linear-gradient(135deg, rgba(73,100,255,0.10), rgba(255,92,159,0.08), rgba(255,255,255,0.8));
-    }
-
-    .contact-title {
-      margin: 0;
-      font-size: 1.18rem;
-      font-weight: 900;
-      color: #18355f;
-      letter-spacing: -0.03em;
-    }
-
-    .contact-text {
-      margin: 0;
-      color: #5d7190;
-      line-height: 1.7;
-      font-size: 0.96rem;
+      font-weight: 700;
     }
 
     .footer-note {
@@ -536,7 +335,14 @@
 
     .footer-note a {
       color: inherit;
+      text-decoration: none;
       border-bottom: 1px solid rgba(108, 123, 150, 0.34);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-note a:hover {
+      opacity: 1;
+      border-bottom-color: rgba(108, 123, 150, 0.75);
     }
 
     .refresh-fab,
@@ -582,6 +388,14 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.32);
     }
 
+    .refresh-fab:hover i { animation-duration: 0.9s; }
+    .back-fab:hover i { animation-duration: 0.8s; }
+
+    .refresh-fab:active,
+    .back-fab:active {
+      transform: scale(0.96);
+    }
+
     @keyframes drift {
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
       50% { transform: translate3d(24px, -18px, 0) scale(1.08); }
@@ -612,17 +426,15 @@
     }
 
     @media (max-width: 980px) {
-      .hero,
-      .content-grid,
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
+      .site {
+        width: min(var(--max-width), calc(100% - 12px));
       }
-    }
 
-    @media (max-width: 760px) {
-      .hero,
-      .content-grid,
-      .stats-grid {
+      .page {
+        padding: 14px;
+      }
+
+      .about-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -642,16 +454,7 @@
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        padding: 10px 4px 14px;
-      }
-
-      .hero-copy,
-      .hero-card,
-      .section-card,
-      .quote-card,
-      .contact-card {
-        padding: 16px;
-        border-radius: 20px;
+        padding: 12px 6px 16px;
       }
 
       h1 {
@@ -667,6 +470,11 @@
 
       .refresh-fab { right: 14px; }
       .back-fab { left: 14px; }
+
+      .refresh-fab i,
+      .back-fab i {
+        font-size: 0.95rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -702,177 +510,57 @@
     </div>
 
     <section class="page">
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="dot"></span>
-            <span>Über uns</span>
-          </div>
-
-          <h1>Bowling mit Freunden. <span class="headline-accent">Mittwoch für Mittwoch.</span></h1>
-
-          <p class="hero-text">
-            Der Strikeclub Velten ist eine private Bowlinggemeinschaft aus Velten.
-            Bei uns steht nicht der Leistungsdruck im Vordergrund, sondern der Spaß am gemeinsamen Spielen.
-            Wir stellen faire Teams zusammen, damit jeder Mittwoch ein guter Abend wird – mit entspannter Stimmung,
-            ehrlichem Miteinander und Freude am Bowling.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn-primary" href="index.html">
-              <i class="fa-solid fa-house"></i>
-              <span>Zur Startseite</span>
-            </a>
-            <a class="btn-secondary" href="spieleranalyse.html">
-              <i class="fa-solid fa-chart-line"></i>
-              <span>Zur Spieleranalyse</span>
-            </a>
-          </div>
+      <div class="header">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          <span>Über uns</span>
         </div>
 
-        <div class="hero-card">
-          <h2 class="hero-card-title">Was uns wichtig ist</h2>
-          <p class="hero-card-text">
-            Wir wollen gemeinsam eine gute Zeit auf der Bahn haben.
-            Deshalb achten wir auf faire Teams, lockere Atmosphäre und darauf,
-            dass jeder gerne wiederkommt. Der sportliche Reiz gehört dazu – aber immer so,
-            dass der Spaß im Mittelpunkt bleibt.
-          </p>
-
-          <div class="pill-row">
-            <span class="pill">Spaß am Bowling</span>
-            <span class="pill">Faire Teams</span>
-            <span class="pill">Mittwoch in Velten</span>
-            <span class="pill">Gemeinschaft</span>
-            <span class="pill">Entspannte Abende</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-label">Treffpunkt</span>
-          <div class="stat-value">Velten</div>
-          <div class="stat-subtext">Unsere Bowlinggemeinschaft ist in Velten zuhause.</div>
-        </div>
-
-        <div class="stat-card">
-          <span class="stat-label">Unser Tag</span>
-          <div class="stat-value">Mittwoch</div>
-          <div class="stat-subtext">Jede Woche ein gemeinsamer Abend auf der Bahn.</div>
-        </div>
-
-        <div class="stat-card">
-          <span class="stat-label">Unser Fokus</span>
-          <div class="stat-value">Spaß</div>
-          <div class="stat-subtext">Bowling soll verbinden und Freude machen.</div>
-        </div>
-
-        <div class="stat-card">
-          <span class="stat-label">Unser Prinzip</span>
-          <div class="stat-value">Fair</div>
-          <div class="stat-subtext">Teams werden so gebildet, dass es für alle passt.</div>
-        </div>
-      </section>
-
-      <section class="content-grid">
-        <div class="section-card">
-          <h2 class="section-title">Wer wir sind</h2>
-          <p class="section-text">
-            Wir sind keine klassische Organisation und kein formeller Club im üblichen Sinn,
-            sondern eine private Bowlinggemeinschaft, die sich regelmäßig zum gemeinsamen Spielen trifft.
-            Uns geht es darum, zusammen auf der Bahn zu stehen, gute Abende zu erleben und den Mittwoch
-            zu einem festen Termin zu machen, auf den man sich freuen kann.
-            <br /><br />
-            Dabei ist jeder wichtig – nicht nur durch Ergebnisse, sondern auch durch die Stimmung,
-            die Verlässlichkeit und das Miteinander.
-          </p>
-        </div>
-
-        <div class="section-card">
-          <h2 class="section-title">Was unseren Mittwoch ausmacht</h2>
-          <div class="list">
-            <div class="list-item">
-              <i class="fa-solid fa-people-group"></i>
-              <span>Faire Teams, damit die Abende ausgeglichen und angenehm bleiben.</span>
-            </div>
-            <div class="list-item">
-              <i class="fa-solid fa-face-smile"></i>
-              <span>Spaß steht an erster Stelle – nicht Druck oder übertriebener Ehrgeiz.</span>
-            </div>
-            <div class="list-item">
-              <i class="fa-solid fa-handshake-angle"></i>
-              <span>Ein lockerer, respektvoller Umgang miteinander auf und neben der Bahn.</span>
-            </div>
-            <div class="list-item">
-              <i class="fa-solid fa-bowling-ball"></i>
-              <span>Gemeinsam spielen, gemeinsam lachen und einfach einen guten Abend haben.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="quote-card">
-        <div class="quote-icon">
-          <i class="fa-solid fa-quote-left"></i>
-        </div>
-        <p class="quote-text">
-          „Bei uns geht es nicht darum, jede Woche der Beste zu sein – sondern darum,
-          gemeinsam einen richtig guten Mittwoch zu haben.“
+        <h1>Bowling in Velten. <span class="headline-accent">Locker, fair und gemeinsam.</span></h1>
+        <p class="hero-text">
+          Wir sind eine private Bowlinggemeinschaft aus Velten und treffen uns jeden Mittwoch,
+          um gemeinsam einen entspannten Abend auf der Bahn zu verbringen.
         </p>
-        <div class="quote-author">Strikeclub Velten</div>
+      </div>
+
+      <section class="about-grid">
+        <article class="about-card">
+          <h2>Wer wir sind</h2>
+          <p>
+            Hinter Strikeclub Velten steckt eine private Runde von Leuten, die regelmäßig zusammen bowlen.
+            Im Mittelpunkt stehen gute Abende, lockere Stimmung und das gemeinsame Spiel.
+          </p>
+        </article>
+
+        <article class="about-card">
+          <h2>Wie wir spielen</h2>
+          <p>
+            Wir achten auf faire und ausgeglichene Teams, damit jeder Mittwoch unkompliziert bleibt
+            und alle mit einer guten Zeit nach Hause gehen.
+          </p>
+        </article>
+
+        <article class="about-card">
+          <h2>Kontakt</h2>
+          <p>
+            Fragen oder Interesse? Dann schreib uns einfach an
+            <a href="mailto:info@strikeclub-velten.de">info@strikeclub-velten.de</a>.
+          </p>
+        </article>
       </section>
 
-      <section class="content-grid">
-        <div class="section-card">
-          <h2 class="section-title">Warum wir das machen</h2>
-          <p class="section-text">
-            Bowling macht am meisten Spaß, wenn die Runde stimmt.
-            Genau darum geht es bei uns: ein Abend, auf den man sich freuen kann,
-            mit fairen Begegnungen, guter Stimmung und genug Raum, einfach abzuschalten.
-            <br /><br />
-            Gute Würfe freuen uns natürlich trotzdem – aber sie sind nicht der einzige Maßstab.
-            Am Ende zählt, dass man gerne dabei ist.
-          </p>
-        </div>
-
-        <div class="section-card">
-          <h2 class="section-title">Gemeinschaft statt Leistungsdruck</h2>
-          <p class="section-text">
-            Natürlich schaut man auch mal auf Ergebnisse, Entwicklungen oder schöne Serien.
-            Aber das Ganze soll übersichtlich, locker und motivierend bleiben.
-            Es geht nicht darum, jemanden unter Druck zu setzen, sondern eher darum,
-            einen schönen Überblick zu schaffen und den gemeinsamen Abend noch runder zu machen.
-          </p>
-        </div>
-      </section>
-
-     <section class="contact-card">
-  <h2 class="contact-title">Kontakt</h2>
-  <p class="contact-text">
-    Du hast Fragen oder möchtest uns schreiben? Dann erreichst du uns per Mail unter
-    <a href="mailto:info@strikeclub-velten.de">info@strikeclub-velten.de</a>.
-  </p>
-
-  <div class="pill-row">
-    <a class="btn-secondary" href="mailto:info@strikeclub-velten.de">
-      <i class="fa-solid fa-envelope"></i>
-      <span>E-Mail schreiben</span>
-    </a>
-    <a class="btn-secondary" href="impressum.html">
-      <i class="fa-solid fa-file-lines"></i>
-      <span>Zum Impressum</span>
-    </a>
-  </div>
-</section>
+      <div class="highlight-strip">
+        <p>
+          Strikeclub Velten steht für regelmäßiges Bowling in entspannter Runde – ohne unnötigen Druck,
+          aber mit fairen Teams und Freude am gemeinsamen Abend.
+        </p>
+      </div>
     </section>
 
     <p class="footer-note">
-  Strikeclub Velten ·
-  <a href="mailto:info@strikeclub-velten.de">info@strikeclub-velten.de</a>
-  ·
-  <a href="impressum.html">Impressum</a>
-</p>
+      Strikeclub Velten ·
+      <a href="mailto:info@strikeclub-velten.de">info@strikeclub-velten.de</a>
+    </p>
   </main>
 
   <button
