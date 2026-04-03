@@ -92,7 +92,7 @@ Hausligaschnitt:					152,8`
 `
         },
         bottom: {
-          label: "11. Spieltag · 25.03.2026",
+          label: "12. Spieltag · 01.04.2026",
           raw: `Team		Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
 Donnerbälle	467 + 13	464	473 + 9	461	1887	2
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
