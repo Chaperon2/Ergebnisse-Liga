@@ -1,77 +1,77 @@
 
 window.STRIKECLUB_DATA = {
   pageData: {
-    title: "Spieltag 11",
-    date: "25.03.2026",
+    title: "Spieltag 12",
+    date: "01.04.2026",
     sections: [
       {
         type: "table",
         key: "spieltag",
         theme: "theme-spieltag",
-        label: "Spieltag 11",
-        raw: `Spieltag 11		
-
+        label: "Spieltag 12",
+        raw: `Spieltag 12								
 Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
-1	Diana	Die Abräumer	155	206	206	195	762	190,5
-2	Rainsen	Donnerbälle	192	148	204	170	714	178,5
-3	Vegas	Pitchers	189	170	186	165	710	177,5
-4	Rene	Die Abräumer	182	171	167	189	709	177,3
-5	Skampy	PIN FIGHTER	191	163	183	167	704	176,0
-6	Karola	PIN FIGHTER	121	177	153	222	673	168,3
-7	Maik	Die 3 Blinden	181	157	174	125	637	159,3
-8	Thomas	Pitchers	160	157	192	123	632	158,0
-9	Tomber	Pin Bomber	168	167	136	158	629	157,3
-10	Günni	Die 3 Blinden	141	156	148	181	626	156,5
-11	Günter	Gummibande	124	176	144	173	617	154,3
-12	Micha	Pin Bomber	153	147	120	183	603	150,8
-13	Ralf	Donnerbälle	144	154	159	143	600	150,0
-14	Detlef	Stranger Pins	157	148	122	173	600	150,0
-15	Ismene	Donnerbälle	153	138	127	167	585	146,3
-16	Dirk	PIN FIGHTER	129	175	142	130	576	144,0
-17	Benno	Die Abräumer	150	138	118	168	574	143,5
-18	Dieter	Pitchers	127	141	152	100	520	130,0
-19	Ingolf	Pin Bomber	158	140	102	120	520	130,0
-20	Simone	Gummibande	110	131	101	98	440	110,0
+1	Rainsen	Donnerbälle	192	157	201	193	743	185,8
+2	Tomber	Pin Bomber	145	169	221	184	719	179,8
+3	Karola	PIN FIGHTER	156	183	167	199	705	176,3
+4	Günter	Gummibande	169	145	187	186	687	171,8
+5	Ingolf	Pin Bomber	173	186	159	159	677	169,3
+6	Thomas	Pitchers	186	164	186	140	676	169,0
+7	Skampy	PIN FIGHTER	153	179	187	147	666	166,5
+8	Rene	Die Abräumer	159	172	137	181	649	162,3
+9	Maik	Die 3 Blinden	146	186	161	149	642	160,5
+10	Vegas	Pitchers	160	162	148	171	641	160,3
+11	Dirk	PIN FIGHTER	153	158	137	182	630	157,5
+12	Diana	Die Abräumer	136	159	170	158	623	155,8
+13	Dieter	Pitchers	150	151	172	146	619	154,8
+14	Micha	Pin Bomber	135	145	184	147	611	152,8
+15	Benno	Die Abräumer	126	181	155	143	605	151,3
+16	Ismene	Donnerbälle	127	188	131	153	599	149,8
+17	Tom	Stranger Pins	155	140	134	143	572	143,0
+18	Ralf	Donnerbälle	148	119	141	115	523	130,8
+19	Simone	Gummibande	131	121	114	143	509	127,3
+20	Denise	Stranger Pins	117	138	126	114	495	123,8
 21								
 22								
 23								
 24								
-Bestes Spiel:					Karola	222		
-Hausligaschnitt:					155,4`
+Bestes Spiel:					Tomber	221		
+Hausligaschnitt:					157,4			
+`
       },
       {
         type: "table",
         key: "einzel",
         theme: "theme-einzel",
         label: "Einzelwertung",
-        raw: `Einzelwertung
+        raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
-1	0	Skampy	PIN FIGHTER	32	775	224	5692	177,9	171,1	7
-2	0	Rainsen	Donnerbälle	40	774	224	6891	172,3	170,4	5
-3	0	Rene	Die Abräumer	40	758	223	6820	170,5	170,0	5
-4	0	Vegas	Pitchers	40	788	243	6723	168,1	161,4	2
-5	0	Maik	Die 3 Blinden	44	744	239	7299	165,9	169,7	6
-6	0	Tomber	Pin Bomber	39	732	214	6407	164,3	180,3	2
-7	2	Diana	Die Abräumer	44	762	206	7165	162,8	159,6	3
-8	0	Toni	Die 3 Blinden	16	665	207	2562	160,1	156,4	1
-9	2	Karola	PIN FIGHTER	44	703	222	7019	159,5	154,2	2
-10	-3	Micha	Pin Bomber	40	696	199	6379	159,5	0,0	
-11	-1	Thomas	Pitchers	44	677	192	7001	159,1	147,8	
+1	0	Skampy	PIN FIGHTER	36	775	224	6358	176,6	171,1	7
+2	0	Rainsen	Donnerbälle	44	774	224	7634	173,5	170,4	6
+3	0	Rene	Die Abräumer	44	758	223	7469	169,8	170,0	5
+4	0	Vegas	Pitchers	44	788	243	7364	167,4	161,4	2
+5	1	Tomber	Pin Bomber	43	732	221	7126	165,7	180,3	3
+6	-1	Maik	Die 3 Blinden	48	744	239	7941	165,4	169,7	6
+7	0	Diana	Die Abräumer	48	762	206	7788	162,3	159,6	3
+8	1	Karola	PIN FIGHTER	48	705	222	7724	160,9	154,2	2
+9	-1	Toni	Die 3 Blinden	16	665	207	2562	160,1	156,4	1
+10	1	Thomas	Pitchers	48	677	192	7677	159,9	147,8	
+11	-1	Micha	Pin Bomber	44	696	199	6990	158,9	0,0	
 12	0	Detlef	Stranger Pins	20	663	178	3006	150,3	0,0	
-13	2	Günni	Die 3 Blinden	44	690	199	6583	149,6	145,4	
-14	-1	Ismene	Donnerbälle	40	655	212	5980	149,5	141,8	2
-15	1	Ralf	Donnerbälle	44	673	182	6554	149,0	147,2	
-16	-2	Benno	Die Abräumer	40	717	203	5936	148,4	144,3	1
-17	0	Günter	Gummibande	44	634	195	6483	147,3	153,6	
-18	0	Tom	Stranger Pins	24	723	248	3501	145,9	150,3	1
-19	0	Dirk	PIN FIGHTER	38	660	186	5446	143,3	133,2	
-20	0	Ingolf	Pin Bomber	40	671	184	5503	137,6	142,1	
-21	0	Dieter	Pitchers	40	620	180	5494	137,4	143,8	
-22	0	Simone	Gummibande	36	528	151	4243	117,9	112,7	
-23	0	Denise	Stranger Pins	24	453	142	2606	108,6	0,0	
+13	0	Günni	Die 3 Blinden	44	690	199	6583	149,6	145,4	
+14	0	Ismene	Donnerbälle	44	655	212	6579	149,5	141,8	2
+15	2	Günter	Gummibande	48	687	195	7170	149,4	153,6	
+16	0	Benno	Die Abräumer	44	717	203	6541	148,7	144,3	1
+17	-2	Ralf	Donnerbälle	48	673	182	7077	147,4	147,2	
+18	0	Tom	Stranger Pins	28	723	248	4073	145,5	150,3	1
+19	0	Dirk	PIN FIGHTER	42	660	186	6076	144,7	133,2	
+20	0	Ingolf	Pin Bomber	44	677	186	6180	140,5	142,1	
+21	0	Dieter	Pitchers	44	620	180	6113	138,9	143,8	
+22	0	Simone	Gummibande	40	528	151	4752	118,8	112,7	
+23	0	Denise	Stranger Pins	28	495	142	3101	110,8	0,0	
 24										
 Bestes Spiel:					Tom	248				
-Hausligaschnitt:					152,4`
+Hausligaschnitt:					152,8`
       },
       {
         type: "composite",
@@ -81,35 +81,35 @@ Hausligaschnitt:					152,4`
         top: {
           label: "Mannschaftswertung",
           raw: `Platz	Tendenz	Team	Punkte	Pins	Spieltage	⌀
-Platz	Tendenz	Team	Punkte	Pins	Spieltage	⌀
-1	0	Die Abräumer	80	21141	11	160,2
-2	0	PIN FIGHTER	76	20977	11	158,9
-3	1	Pitchers	66	20438	11	154,8
-4	-1	Pin Bomber	66	20294	11	153,7
-5	0	Die 3 Blinden	52	20784	11	157,5
-6	0	Donnerbälle	46	20653	11	156,5
-7	0	Gummibande	31	19106	11	144,7
-8	0	Stranger Pins	23	19400	11	147,0`
+1	1	PIN FIGHTER	86	22978	12	159,6
+2	-1	Die Abräumer	80	23018	12	159,8
+3	0	Pitchers	74	22374	12	155,4
+4	0	Pin Bomber	74	22301	12	154,9
+5	0	Die 3 Blinden	60	22606	12	157,0
+6	0	Donnerbälle	48	22518	12	156,4
+7	0	Gummibande	33	20962	12	145,6
+8	0	Stranger Pins	25	21183	12	147,1
+`
         },
         bottom: {
           label: "11. Spieltag · 25.03.2026",
-          raw: `Team	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
-	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
-PIN FIGHTER	441 + 11	515	478	519 + 10	1974	8
+          raw: `Team		Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
+Donnerbälle	467 + 13	464	473 + 9	461	1887	2
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Die 3 Blinden	477	468	477	461	1883	2
+Pin Bomber	453	500	564	490	2007	8
 						
-Gummibande	399 + 20	472 + 9	410 + 20	436 + 20	1786	4
+Die Abräumer	435 + 14	512	462	482	1891	0
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Pin Bomber	479	454	358 + 20	461 + 20	1792	6
+PIN FIGHTER	462	520	491 + 3	528	2004	10
 						
-Donnerbälle	489	440 + 2	490 + 13	480	1914	2
+Gummibande	465 + 9	431 + 19	466 + 20	494	1904	2
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Die Abräumer	487	517 + 2	511 + 20	552	2067	8
+Pitchers	496	477	506	457	1936	8
 						
-Pitchers	476 + 13	468	530	388 + 20	1895	8
+Die 3 Blinden	441	481	456	444	1822	8
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Stranger Pins	452	443	417	468	1780	2`
+Stranger Pins	437 + 20	443 + 2	425 + 14	422 + 20	1783	2
+`
         }
       }
     ]
