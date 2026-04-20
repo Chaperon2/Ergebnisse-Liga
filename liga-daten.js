@@ -51,8 +51,8 @@ Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letz
 3	0	Rene	Die Abräumer	52	760	227	8983	172,8	170,0	7
 4	1	Vegas	Pitchers	48	788	243	8106	168,9	161,4	3
 5	-1	Tomber	Pin Bomber	51	784	221	8587	168,4	180,3	5
-6	0	Maik	Die 3 Blinden	56	744	239	9106	162,6	169,7	6
-7										
+6	1	Diana	Die Abräumer	56	762	206	9106	162,6	159,6	3
+6	-1	Maik	Die 3 Blinden	56	744	239	9106	162,6	169,7	6
 8	3	Micha	Pin Bomber	52	733	231	8392	161,4	0,0	2
 9	-1	Karola	PIN FIGHTER	52	705	222	8349	160,6	154,2	2
 10	-1	Toni	Die 3 Blinden	16	665	207	2562	160,1	156,4	1
