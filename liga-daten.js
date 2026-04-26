@@ -51,12 +51,12 @@ Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letz
 2	0	Rainsen	3 Bowler	4	724	209	724	181,0	173,5	1
 3	0	Skampy	Die Schräägen	4	708	228	708	177,0	176,4	1
 4	0	Benno	Die Schräägen	4	694	195	694	173,5	150,6	
-5	0	Vegas	Scooter	4	673	180	673	168,3	#BEZUG!	
+5	0	Vegas	Scooter	4	673	180	673	168,3	168,9	
 6	0	Tom	Pincesses	4	653	189	653	163,3	144,1	
-7										
+7	0	Tomber	Malibu	4	653	192	653	163,3	168,4	
 8	0	Diana	Lady Diana´s	4	650	189	650	162,5	162,6	
 9	0	Günni	Malibu	4	628	171	628	157,0	148,6	
-10	0	Karola	Scooter	4	621	177	621	155,3	168,9	
+10	0	Karola	Scooter	4	621	177	621	155,3	160,6	
 11	0	Maik	Lady Diana´s	4	618	188	618	154,5	162,6	
 12	0	Thomas	3 Bowler	4	610	167	610	152,5	159,7	
 13	0	Ismene	Malibu	4	601	167	601	150,3	150,0	
@@ -72,7 +72,7 @@ Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letz
 23										
 24										
 Bestes Spiel:					Skampy	228				
-Hausligaschnitt:					150,4					
+Hausligaschnitt:					150,4										
 `
       },
       {
