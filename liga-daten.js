@@ -94,7 +94,7 @@ Hausligaschnitt:					150,4
 `
         },
         bottom: {
-          label: "14. Spieltag · 15.04.2026",
+          label: "1. Spieltag · 22.04.2026",
           raw: `Team	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
 Tigers	339 + 5	330 + 17	470	506	1945	8
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
