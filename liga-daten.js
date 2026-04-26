@@ -1,42 +1,43 @@
 
 window.STRIKECLUB_DATA = {
   pageData: {
-    title: "Spieltag 14",
-    date: "15.04.2026",
+    title: "Spieltag 1",
+    date: "22.04.2026",
     sections: [
       {
         type: "table",
         key: "spieltag",
         theme: "theme-spieltag",
-        label: "Spieltag 14",
-        raw: `Spieltag 14								
+        label: "Spieltag 1",
+        raw: `Spieltag 1								
 Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
-1	Rene	Die Abräumer	184	211	199	166	760	190,0
-2	Vegas	Pitchers	182	187	203	170	742	185,5
-3	Micha	Pin Bomber	166	133	231	203	733	183,3
-4	Rainsen	Donnerbälle	165	203	180	167	715	178,8
-5	Tomber	Pin Bomber	174	176	157	170	677	169,3
-6	Skampy	PIN FIGHTER	134	161	161	210	666	166,5
-7	Benno	Die Abräumer	102	172	180	200	654	163,5
-8	Ralf	Donnerbälle	138	133	210	149	630	157,5
-9	Thomas	Pitchers	145	190	159	132	626	156,5
-10	Karola	PIN FIGHTER	160	187	124	154	625	156,3
-11	Diana	Die Abräumer	147	146	145	174	612	153,0
-12	Ismene	Donnerbälle	170	140	133	151	594	148,5
-13	Günter	Gummibande	122	148	161	163	594	148,5
-14	Maik	Die 3 Blinden	145	167	134	147	593	148,3
-15	Dieter	Pitchers	155	134	147	139	575	143,8
-16	Günni	Die 3 Blinden	171	121	127	130	549	137,3
-17	Dirk	PIN FIGHTER	148	127	150	115	540	135,0
-18	Simone	Gummibande	115	134	131	136	516	129,0
-19								
-20								
+1	Rene	Tigers	199	190	155	189	733	183,3
+2	Rainsen	3 Bowler	145	182	209	188	724	181,0
+3	Skampy	Die Schräägen	156	228	155	169	708	177,0
+4	Benno	Die Schräägen	189	195	145	165	694	173,5
+5	Vegas	Scooter	176	148	169	180	673	168,3
+6	Tom	Pincesses	189	159	161	144	653	163,3
+7	Tomber	Malibu	154	145	162	192	653	163,3
+8	Diana	Lady Diana´s	140	150	189	171	650	162,5
+9	Günni	Malibu	166	170	171	121	628	157,0
+10	Karola	Scooter	133	177	171	140	621	155,3
+11	Maik	Lady Diana´s	148	127	155	188	618	154,5
+12	Thomas	3 Bowler	161	146	136	167	610	152,5
+13	Ismene	Malibu	159	127	148	167	601	150,3
+14	Ingolf	3 Bowler	138	134	145	177	594	148,5
+15	Günter	Tigers	135	123	165	167	590	147,5
+16	Detlef	All Stars	170	116	151	127	564	141,0
+17	Dieter	Die Schräägen	121	178	134	129	562	140,5
+18	Dirk	Scooter	146	105	145	153	549	137,3
+19	Jerry	Pincesses	97	132	110	85	424	106,0
+20	Simone	Lady Diana´s	97	106	109	97	409	102,3
 21								
 22								
 23								
 24								
-Bestes Spiel:					Micha	231		
-Hausligaschnitt:					158,3						
+Bestes Spiel:					Skampy	228		
+Hausligaschnitt:					150,4		
+					
 `
       },
       {
@@ -46,32 +47,33 @@ Hausligaschnitt:					158,3
         label: "Einzelwertung",
         raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
-1	0	Skampy	PIN FIGHTER	44	775	224	7761	176,4	171,1	10
-2	0	Rainsen	Donnerbälle	52	774	224	9022	173,5	170,4	7
-3	0	Rene	Die Abräumer	52	760	227	8983	172,8	170,0	7
-4	1	Vegas	Pitchers	48	788	243	8106	168,9	161,4	3
-5	-1	Tomber	Pin Bomber	51	784	221	8587	168,4	180,3	5
-6	1	Diana	Die Abräumer	56	762	206	9106	162,6	159,6	3
-6	-1	Maik	Die 3 Blinden	56	744	239	9106	162,6	169,7	6
-8	3	Micha	Pin Bomber	52	733	231	8392	161,4	0,0	2
-9	-1	Karola	PIN FIGHTER	52	705	222	8349	160,6	154,2	2
-10	-1	Toni	Die 3 Blinden	16	665	207	2562	160,1	156,4	1
-11	-1	Thomas	Pitchers	52	677	192	8303	159,7	147,8	
-12	2	Benno	Die Abräumer	52	717	203	7832	150,6	144,3	2
-13	-1	Ismene	Donnerbälle	52	655	212	7799	150,0	141,8	2
-14	1	Günter	Gummibande	56	687	195	8351	149,1	153,6	
-15	-2	Günni	Die 3 Blinden	48	690	199	7132	148,6	145,4	
-16	1	Ralf	Donnerbälle	56	673	210	8283	147,9	147,2	1
-17	-1	Detlef	Stranger Pins	24	663	178	3536	147,3	0,0	
-18	1	Tom	Stranger Pins	32	723	248	4612	144,1	150,3	1
-19	-1	Dirk	PIN FIGHTER	50	660	186	7206	144,1	133,2	
-20	0	Ingolf	Pin Bomber	48	677	186	6697	139,5	142,1	
-21	0	Dieter	Pitchers	52	620	180	7224	138,9	143,8	
-22	0	Simone	Gummibande	48	528	151	5757	119,9	112,7	
-23	0	Denise	Stranger Pins	32	495	142	3552	111,0	0,0	
+1	0	Rene	Tigers	4	733	199	733	183,3	172,8	
+2	0	Rainsen	3 Bowler	4	724	209	724	181,0	173,5	1
+3	0	Skampy	Die Schräägen	4	708	228	708	177,0	176,4	1
+4	0	Benno	Die Schräägen	4	694	195	694	173,5	150,6	
+5	0	Vegas	Scooter	4	673	180	673	168,3	#BEZUG!	
+6	0	Tom	Pincesses	4	653	189	653	163,3	144,1	
+7										
+8	0	Diana	Lady Diana´s	4	650	189	650	162,5	162,6	
+9	0	Günni	Malibu	4	628	171	628	157,0	148,6	
+10	0	Karola	Scooter	4	621	177	621	155,3	168,9	
+11	0	Maik	Lady Diana´s	4	618	188	618	154,5	162,6	
+12	0	Thomas	3 Bowler	4	610	167	610	152,5	159,7	
+13	0	Ismene	Malibu	4	601	167	601	150,3	150,0	
+14	0	Ingolf	3 Bowler	4	594	177	594	148,5	139,5	
+15	0	Günter	Tigers	4	590	167	590	147,5	149,1	
+16	0	Detlef	All Stars	4	564	170	564	141,0	147,3	
+17	0	Dieter	Die Schräägen	4	562	178	562	140,5	138,9	
+18	0	Dirk	Scooter	4	549	153	549	137,3	144,1	
+19	0	Jerry	Pincesses	4	424	132	424	106,0	0,0	
+20	0	Simone	Lady Diana´s	4	409	109	409	102,3	119,9	
+21	0	Denise	Pincesses	4	374	117	374	93,5	111,0	
+22										
+23										
 24										
-Bestes Spiel:					Tom	248				
-Hausligaschnitt:					153,0`
+Bestes Spiel:					Skampy	228				
+Hausligaschnitt:					150,4					
+`
       },
       {
         type: "composite",
@@ -81,34 +83,34 @@ Hausligaschnitt:					153,0`
         top: {
           label: "Mannschaftswertung",
           raw: `Platz	Tendenz	Team	Punkte	Pins	Spieltage	⌀
-1	0	PIN FIGHTER	100	26756	14	159,3
-2	0	Die Abräumer	96	27141	14	161,6
-3	0	Pin Bomber	88	26241	14	156,2
-4	0	Pitchers	82	26133	14	155,6
-5	0	Die 3 Blinden	64	26120	14	155,5
-6	0	Donnerbälle	60	26332	14	156,7
-7	0	Gummibande	41	24468	14	145,6
-8	0	Stranger Pins	29	24611	14	146,5`
+1	0	Tigers	8	1923	1	160,3
+2	0	All Stars	8	1764	1	147,0
+3	0	Die Schräägen	6	1964	1	163,7
+4	0	Malibu	6	1882	1	156,8
+5	0	3 Bowler	4	1928	1	160,7
+6	0	Scooter	4	1843	1	153,6
+7	0	Lady Diana´s	2	1677	1	139,8
+8	0	Pincesses	2	1451	1	120,9
+`
         },
         bottom: {
           label: "14. Spieltag · 15.04.2026",
           raw: `Team	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
-Die 3 Blinden	471	443 + 19	416 + 13	432 + 10	1804	4
+Tigers	339 + 5	330 + 17	470	506	1945	8
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Gummibande	402 + 20	447 + 6	457 + 9	464 + 4	1809	6
+Lady Diana´s	385 + 20	383 + 20	453 + 20	456 + 20	1757	2
 						
-Donnerbälle	473	476	523 + 7	467	1946	4
+Die Schräägen	466 + 19	601	434 + 6	463 + 11	2000	6
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Pitchers	482	511 + 6	509	441 + 1	1950	6
+3 Bowler	444 + 2	462 + 6	490	532	1936	4
 						
-Pin Bomber	480	449	528	513	1970	4
+Malibu	479	442	481	480 + 19	1901	6
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Die Abräumer	453 + 20	529	524	540	2046	6
+Scooter	455	430 + 20	485	473	1863	4
 						
-PIN FIGHTER	442	475 + 13	435	479 + 20	1864	6
+All Stars	470	416	451	427	1764	8
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Stranger Pins	460	460	460	460	1840	4
-`
+Pincesses	374 + 20	408 + 20	358 + 20	311 + 20	1531	2`
         }
       }
     ]
