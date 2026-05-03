@@ -84,7 +84,7 @@ Hausligaschnitt:					150,7
 1	0	Tigers	18	3995	2	166,5
 2	1	Die Schräägen	16	3770	2	157,1
 3	2	3 Bowler	12	3773	2	157,2
-4	0	Malibu	12	2482	2	103,4
+4	0	Malibu	12	3717	2	154,9
 5	-3	All Stars	8	3513	2	146,4
 6	0	Scooter	6	3658	2	152,4
 7	0	Lady Diana´s	6	3416	2	142,3
