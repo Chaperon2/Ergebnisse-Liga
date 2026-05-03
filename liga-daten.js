@@ -46,31 +46,32 @@ Hausligaschnitt:					147,0`
         raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
 1	0	Micha	Tigers	4	756	227	756	189,0	161,4	1
-2	-1	Rene	Tigers	4	733	199	733	183,3	172,8	
-3	-1	Rainsen	3 Bowler	8	724	209	1376	172,0	173,5	
-4	-1	Skampy	Die Schräägen	8	708	228	1362	170,3	176,4	
+2	0	Rene	Tigers	4	733	199	733	183,3	172,8	
+3	0	Rainsen	3 Bowler	8	724	209	1376	172,0	173,5	1
+4	0	Skampy	Die Schräägen	8	708	228	1362	170,3	176,4	1
 5	0	Vegas	Scooter	4	673	180	673	168,3	168,9	
 6	0	Tomber	Malibu	8	666	192	1319	164,9	168,4	
-7	1	Diana	Lady Diana´s	8	650	189	1291	161,4	162,6	
-8	7	Günter	Tigers	8	676	209	1266	158,3	149,1	1
-9	-5	Benno	Die Schräägen	8	694	195	1266	158,3	150,6	
-10	1	Maik	Lady Diana´s	8	639	188	1257	157,1	162,6	
-11	-1	Karola	Scooter	8	621	195	1222	152,8	160,6	
-12	1	Ismene	Malibu	4	601	167	601	150,3	150,0	
-13	-1	Thomas	3 Bowler	8	610	170	1200	150,0	159,7	
-14	-5	Günni	Malibu	8	628	171	1197	149,6	148,6	
-15	-1	Ingolf	3 Bowler	8	603	177	1197	149,6	139,5	
+7	0	Diana	Lady Diana´s	8	650	189	1291	161,4	162,6	
+8	0	Günter	Tigers	8	676	209	1266	158,3	149,1	1
+9										
+10	0	Maik	Lady Diana´s	8	639	188	1257	157,1	162,6	
+11	0	Karola	Scooter	8	621	195	1222	152,8	160,6	
+12	0	Ismene	Malibu	4	601	167	601	150,3	150,0	
+13	0	Thomas	3 Bowler	8	610	170	1200	150,0	159,7	
+14	1	Ingolf	3 Bowler	8	603	177	1197	149,6	139,5	
+15										
 16	0	Toni	All Stars	4	589	160	589	147,3	0,0	
 17	0	Dieter	Die Schräägen	8	580	178	1142	142,8	138,9	
-18	-2	Detlef	All Stars	4	564	170	564	141,0	147,3	
-19	-1	Dirk	Scooter	8	574	165	1123	140,4	144,1	
-20	-14	Tom	Pincesses	8	653	189	1101	137,6	144,1	
-21	-2	Jerry	Pincesses	8	495	146	919	114,9	0,0	
-22	-2	Simone	Lady Diana´s	8	459	122	868	108,5	119,9	
-23	-2	Denise	Pincesses	8	409	117	783	97,9	111,0	
+18	0	Detlef	All Stars	4	564	170	564	141,0	147,3	
+19	0	Dirk	Scooter	8	574	165	1123	140,4	144,1	
+20	0	Tom	Pincesses	8	653	189	1101	137,6	144,1	
+21	0	Jerry	Pincesses	8	495	146	919	114,9	0,0	
+22	0	Simone	Lady Diana´s	8	459	122	868	108,5	119,9	
+23	0	Denise	Pincesses	8	409	117	783	97,9	111,0	
 24										
 Bestes Spiel:					Skampy	228				
-Hausligaschnitt:					150,7`
+Hausligaschnitt:					150,7					
+`
       },
       {
         type: "composite",
