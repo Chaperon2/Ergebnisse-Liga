@@ -1,44 +1,42 @@
 
 window.STRIKECLUB_DATA = {
   pageData: {
-    title: "Spieltag 1",
-    date: "22.04.2026",
+    title: "Spieltag 2",
+    date: "29.04.2026",
     sections: [
       {
         type: "table",
         key: "spieltag",
         theme: "theme-spieltag",
         label: "Spieltag 1",
-        raw: `Spieltag 1								
+        raw: `Spieltag 2								
 Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
-1	Rene	Tigers	199	190	155	189	733	183,3
-2	Rainsen	3 Bowler	145	182	209	188	724	181,0
-3	Skampy	Die Schräägen	156	228	155	169	708	177,0
-4	Benno	Die Schräägen	189	195	145	165	694	173,5
-5	Vegas	Scooter	176	148	169	180	673	168,3
-6	Tom	Pincesses	189	159	161	144	653	163,3
-7	Tomber	Malibu	154	145	162	192	653	163,3
-8	Diana	Lady Diana´s	140	150	189	171	650	162,5
-9	Günni	Malibu	166	170	171	121	628	157,0
-10	Karola	Scooter	133	177	171	140	621	155,3
-11	Maik	Lady Diana´s	148	127	155	188	618	154,5
-12	Thomas	3 Bowler	161	146	136	167	610	152,5
-13	Ismene	Malibu	159	127	148	167	601	150,3
-14	Ingolf	3 Bowler	138	134	145	177	594	148,5
-15	Günter	Tigers	135	123	165	167	590	147,5
-16	Detlef	All Stars	170	116	151	127	564	141,0
-17	Dieter	Die Schräägen	121	178	134	129	562	140,5
-18	Dirk	Scooter	146	105	145	153	549	137,3
-19	Jerry	Pincesses	97	132	110	85	424	106,0
-20	Simone	Lady Diana´s	97	106	109	97	409	102,3
+1	Micha	Tigers	227	165	179	185	756	189,0
+2	Günter	Tigers	209	190	125	152	676	169,0
+3	Tomber	Malibu	163	160	179	164	666	166,5
+4	Skampy	Die Schräägen	183	165	149	157	654	163,5
+5	Rainsen	3 Bowler	197	147	161	147	652	163,0
+6	Diana	Lady Diana´s	159	156	146	180	641	160,3
+7	Maik	Lady Diana´s	175	182	146	136	639	159,8
+8	Ingolf	3 Bowler	155	111	171	166	603	150,8
+9	Karola	Scooter	137	195	125	144	601	150,3
+10	Thomas	3 Bowler	170	147	133	140	590	147,5
+11	Toni	All Stars	152	146	131	160	589	147,3
+12	Dieter	Die Schräägen	134	150	162	134	580	145,0
+13	Dirk	Scooter	132	147	165	130	574	143,5
+14	Benno	Die Schräägen	155	128	138	151	572	143,0
+15	Günni	Malibu	136	151	134	148	569	142,3
+16	Jerry	Pincesses	104	146	116	129	495	123,8
+17	Simone	Lady Diana´s	104	122	121	112	459	114,8
+18	Tom	Pincesses	106	102	133	107	448	112,0
+19	Denise	Pincesses	88	116	112	93	409	102,3
+20								
 21								
 22								
 23								
 24								
-Bestes Spiel:					Skampy	228		
-Hausligaschnitt:					150,4		
-					
-`
+Bestes Spiel:					Micha	227		
+Hausligaschnitt:					147,0`
       },
       {
         type: "table",
@@ -47,33 +45,32 @@ Hausligaschnitt:					150,4
         label: "Einzelwertung",
         raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
-1	0	Rene	Tigers	4	733	199	733	183,3	172,8	
-2	0	Rainsen	3 Bowler	4	724	209	724	181,0	173,5	1
-3	0	Skampy	Die Schräägen	4	708	228	708	177,0	176,4	1
-4	0	Benno	Die Schräägen	4	694	195	694	173,5	150,6	
+1	0	Micha	Tigers	4	756	227	756	189,0	161,4	1
+2	-1	Rene	Tigers	4	733	199	733	183,3	172,8	
+3	-1	Rainsen	3 Bowler	8	724	209	1376	172,0	173,5	
+4	-1	Skampy	Die Schräägen	8	708	228	1362	170,3	176,4	
 5	0	Vegas	Scooter	4	673	180	673	168,3	168,9	
-6	0	Tom	Pincesses	4	653	189	653	163,3	144,1	
-7	0	Tomber	Malibu	4	653	192	653	163,3	168,4	
-8	0	Diana	Lady Diana´s	4	650	189	650	162,5	162,6	
-9	0	Günni	Malibu	4	628	171	628	157,0	148,6	
-10	0	Karola	Scooter	4	621	177	621	155,3	160,6	
-11	0	Maik	Lady Diana´s	4	618	188	618	154,5	162,6	
-12	0	Thomas	3 Bowler	4	610	167	610	152,5	159,7	
-13	0	Ismene	Malibu	4	601	167	601	150,3	150,0	
-14	0	Ingolf	3 Bowler	4	594	177	594	148,5	139,5	
-15	0	Günter	Tigers	4	590	167	590	147,5	149,1	
-16	0	Detlef	All Stars	4	564	170	564	141,0	147,3	
-17	0	Dieter	Die Schräägen	4	562	178	562	140,5	138,9	
-18	0	Dirk	Scooter	4	549	153	549	137,3	144,1	
-19	0	Jerry	Pincesses	4	424	132	424	106,0	0,0	
-20	0	Simone	Lady Diana´s	4	409	109	409	102,3	119,9	
-21	0	Denise	Pincesses	4	374	117	374	93,5	111,0	
-22										
-23										
+6	0	Tomber	Malibu	8	666	192	1319	164,9	168,4	
+7	1	Diana	Lady Diana´s	8	650	189	1291	161,4	162,6	
+8	7	Günter	Tigers	8	676	209	1266	158,3	149,1	1
+9	-5	Benno	Die Schräägen	8	694	195	1266	158,3	150,6	
+10	1	Maik	Lady Diana´s	8	639	188	1257	157,1	162,6	
+11	-1	Karola	Scooter	8	621	195	1222	152,8	160,6	
+12	1	Ismene	Malibu	4	601	167	601	150,3	150,0	
+13	-1	Thomas	3 Bowler	8	610	170	1200	150,0	159,7	
+14	-5	Günni	Malibu	8	628	171	1197	149,6	148,6	
+15	-1	Ingolf	3 Bowler	8	603	177	1197	149,6	139,5	
+16	0	Toni	All Stars	4	589	160	589	147,3	0,0	
+17	0	Dieter	Die Schräägen	8	580	178	1142	142,8	138,9	
+18	-2	Detlef	All Stars	4	564	170	564	141,0	147,3	
+19	-1	Dirk	Scooter	8	574	165	1123	140,4	144,1	
+20	-14	Tom	Pincesses	8	653	189	1101	137,6	144,1	
+21	-2	Jerry	Pincesses	8	495	146	919	114,9	0,0	
+22	-2	Simone	Lady Diana´s	8	459	122	868	108,5	119,9	
+23	-2	Denise	Pincesses	8	409	117	783	97,9	111,0	
 24										
 Bestes Spiel:					Skampy	228				
-Hausligaschnitt:					150,4										
-`
+Hausligaschnitt:					150,7`
       },
       {
         type: "composite",
@@ -83,34 +80,33 @@ Hausligaschnitt:					150,4
         top: {
           label: "Mannschaftswertung",
           raw: `Platz	Tendenz	Team	Punkte	Pins	Spieltage	⌀
-1	0	Tigers	8	1923	1	160,3
-2	0	All Stars	8	1764	1	147,0
-3	0	Die Schräägen	6	1964	1	163,7
-4	0	Malibu	6	1882	1	156,8
-5	0	3 Bowler	4	1928	1	160,7
-6	0	Scooter	4	1843	1	153,6
-7	0	Lady Diana´s	2	1677	1	139,8
-8	0	Pincesses	2	1451	1	120,9
-`
+1	0	Tigers	18	3995	2	166,5
+2	1	Die Schräägen	16	3770	2	157,1
+3	2	3 Bowler	12	3773	2	157,2
+4	0	Malibu	12	2482	2	103,4
+5	-3	All Stars	8	3513	2	146,4
+6	0	Scooter	6	3658	2	152,4
+7	0	Lady Diana´s	6	3416	2	142,3
+8	0	Pincesses	2	2803	2	116,8`
         },
         bottom: {
-          label: "1. Spieltag · 22.04.2026",
+          label: "2. Spieltag · 29.04.2026",
           raw: `Team	Runde 1	Runde 2	Runde 3	Runde 4	Gesamt	Ergebnis
-Tigers	339 + 5	330 + 17	470	506	1945	8
+All Stars	442	436	421	450	1749	0
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Lady Diana´s	385 + 20	383 + 20	453 + 20	456 + 20	1757	2
+Tigers	596	515	479 + 15	497	2087	10
 						
-Die Schräägen	466 + 19	601	434 + 6	463 + 11	2000	6
+Pincesses	298 + 20	364 + 20	361 + 20	329 + 20	1432	0
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-3 Bowler	444 + 2	462 + 6	490	532	1936	4
+Die Schräägen	472 + 6	443	449	442 + 6	1818	10
 						
-Malibu	479	442	481	480 + 19	1901	6
+Malibu	449 + 4	461	463 + 6	462	1845	6
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Scooter	455	430 + 20	485	473	1863	4
+Lady Diana´s	438 + 20	460 + 18	413 + 19	428 + 20	1816	4
 						
-All Stars	470	416	451	427	1764	8
+Scooter	429 + 8	502	450	434 + 10	1833	2
 ⚔️	⚔️	⚔️	⚔️	⚔️	⚔️	
-Pincesses	374 + 20	408 + 20	358 + 20	311 + 20	1531	2`
+3 Bowler	522	405 + 20	465	453	1865	8`
         }
       }
     ]
