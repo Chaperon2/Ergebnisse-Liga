@@ -873,7 +873,8 @@
     .hud-pins { display: inline-flex; align-items: center; gap: 5px; color: rgba(255,255,255,0.78); }
 
     .help-toggle,
-    .focus-exit {
+    .game-end,
+    .quick-restart {
       position: absolute;
       z-index: 800;
       width: 46px;
@@ -890,8 +891,10 @@
     }
 
     .help-toggle { right: 12px; bottom: calc(12px + var(--safe-bottom)); }
-    .focus-exit { left: 12px; bottom: calc(12px + var(--safe-bottom)); display: none; }
-    body.game-focus .focus-exit { display: grid; }
+    .game-end { left: 12px; bottom: calc(12px + var(--safe-bottom)); display: none; }
+    .quick-restart { left: 66px; bottom: calc(12px + var(--safe-bottom)); display: none; }
+    body.game-focus .game-end,
+    body.game-focus .quick-restart { display: grid; }
 
     .help-popover {
       position: absolute;
@@ -1100,7 +1103,8 @@
       .ghost-ball, .ghost-launch { --ghost-size: 56px; }
       .flash-message { top: 42%; font-size: 0.82rem; }
       .help-toggle { right: 10px; bottom: calc(10px + var(--safe-bottom)); }
-      .focus-exit { left: 10px; bottom: calc(10px + var(--safe-bottom)); }
+      .game-end { left: 10px; bottom: calc(10px + var(--safe-bottom)); }
+      .quick-restart { left: 62px; bottom: calc(10px + var(--safe-bottom)); }
       .help-popover { right: 10px; bottom: calc(64px + var(--safe-bottom)); }
       .btn { padding: 11px 12px; }
       .modal-actions { flex-direction: column; }
@@ -1190,8 +1194,12 @@
               <span id="throwSpinText">Spin 0%</span>
             </div>
 
-            <button class="focus-exit" id="focusExitBtn" type="button" aria-label="Vollbild verlassen" title="Vollbild verlassen">
-              <i class="fa-solid fa-compress"></i>
+            <button class="game-end" id="endGameBtn" type="button" aria-label="Spiel beenden" title="Spiel beenden">
+              <i class="fa-solid fa-door-open"></i>
+            </button>
+
+            <button class="quick-restart" id="quickRestartBtn" type="button" aria-label="Spiel neu starten" title="Spiel neu starten">
+              <i class="fa-solid fa-rotate-left"></i>
             </button>
 
             <button class="help-toggle" id="helpToggleBtn" type="button" aria-label="Steuerung anzeigen" title="Steuerung anzeigen">
@@ -1341,7 +1349,8 @@
     const helpToggleBtn = document.getElementById("helpToggleBtn");
     const helpPopover = document.getElementById("helpPopover");
     const helpCloseBtn = document.getElementById("helpCloseBtn");
-    const focusExitBtn = document.getElementById("focusExitBtn");
+    const endGameBtn = document.getElementById("endGameBtn");
+    const quickRestartBtn = document.getElementById("quickRestartBtn");
     const startOverlay = document.getElementById("startOverlay");
     const startGameBtn = document.getElementById("startGameBtn");
 
@@ -2305,7 +2314,22 @@
     closeModalBtn.addEventListener("click", () => { location.href = "index.html"; });
     resetGameBtn.addEventListener("click", startNewGame);
     fullscreenBtn.addEventListener("click", toggleGameFocus);
-    focusExitBtn.addEventListener("click", exitGameFocus);
+    endGameBtn.addEventListener("click", () => {
+      gameStarted = false;
+      gameOver = true;
+      isAnimating = false;
+      isDragging = false;
+      dragPointerId = null;
+      hideThrowStats();
+      hideModal();
+      startOverlay.classList.remove("hidden");
+      exitGameFocus();
+    });
+
+    quickRestartBtn.addEventListener("click", () => {
+      startNewGame();
+      enterGameFocus();
+    });
     helpToggleBtn.addEventListener("click", () => helpPopover.classList.toggle("hidden"));
     helpCloseBtn.addEventListener("click", () => helpPopover.classList.add("hidden"));
     leaderboardModal.addEventListener("click", event => { if (event.target === leaderboardModal) hideModal(); });
