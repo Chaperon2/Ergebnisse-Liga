@@ -448,6 +448,20 @@
       isolation: isolate;
     }
 
+    .lane-stage.pre-start {
+      height: clamp(520px, 62svh, 700px);
+      min-height: 520px;
+    }
+
+    .lane-stage.pre-start .scoreboard-overlay,
+    .lane-stage.pre-start .game-top-hud,
+    .lane-stage.pre-start .score-total-hud,
+    .lane-stage.pre-start .throw-stats-hud,
+    .lane-stage.pre-start .help-toggle,
+    .lane-stage.pre-start .camera {
+      opacity: 0.62;
+    }
+
     .camera {
       position: absolute;
       inset: 0;
@@ -1091,6 +1105,7 @@
       .roll-cell { min-height: 21px; font-size: 0.62rem; padding: 2px 1px; }
       .frame-total { min-height: 21px; font-size: 0.68rem; }
       .lane-stage { height: calc(100svh - 16px); min-height: 760px; }
+      .lane-stage.pre-start { height: min(58svh, 520px); min-height: 460px; }
       .game-top-hud { top: 74px; left: 8px; font-size: 0.67rem; padding: 6px 8px; }
       .score-total-hud { top: 74px; right: 8px; font-size: 0.74rem; padding: 7px 10px; }
       .throw-stats-hud { top: 112px; right: 8px; font-size: 0.72rem; padding: 7px 10px; gap: 7px; }
@@ -2198,6 +2213,7 @@
 
     function startNewGame() {
       gameStarted = true;
+      laneStage.classList.remove("pre-start");
       startOverlay.classList.add("hidden");
       frames = createEmptyFrames();
       currentFrame = 0;
@@ -2302,9 +2318,16 @@
       if (!name) { modalText.textContent = "Bitte gib einen Namen ein."; leaderboardNameInput.focus(); return; }
       try {
         const saved = await submitLeaderboardEntry(name, score);
-        if (!saved) { hideModal(); showFlash("ZU WENIG PUNKTE"); return; }
         hideModal();
-        showFlash("EINGETRAGEN");
+        if (!saved) {
+          showFlash("ZU WENIG PUNKTE");
+        } else {
+          showFlash("EINGETRAGEN");
+        }
+        setTimeout(() => {
+          startNewGame();
+          enterGameFocus();
+        }, 650);
       } catch (error) {
         modalText.textContent = `Speichern fehlgeschlagen: ${error.message}`;
       }
@@ -2360,6 +2383,8 @@
     startLeaderboardListener();
     startNewGame();
     gameStarted = false;
+    gameOver = true;
+    laneStage.classList.add("pre-start");
     startOverlay.classList.remove("hidden");
     hideThrowStats();
 
