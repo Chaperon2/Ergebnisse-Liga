@@ -259,6 +259,71 @@
     }
 
     /* Score HUD */
+    .start-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1200;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background:
+        radial-gradient(circle at 50% 62%, rgba(114,183,255,0.18), transparent 30%),
+        rgba(2, 5, 9, 0.62);
+      backdrop-filter: blur(10px);
+    }
+
+    .start-overlay.hidden {
+      display: none;
+    }
+
+    .start-card {
+      width: min(420px, 100%);
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(5, 9, 15, 0.86);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.46);
+      text-align: center;
+    }
+
+    .start-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(247,251,255,0.86);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .start-card h2 {
+      margin: 0;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .start-card p {
+      margin: 13px 0 18px;
+      color: rgba(247,251,255,0.74);
+      line-height: 1.5;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .start-btn {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+    }
+
     .scoreboard-overlay {
       position: absolute;
       top: 10px;
@@ -1094,6 +1159,15 @@
       <div class="game-grid">
         <section class="card game-card">
           <div class="lane-stage" id="laneStage" aria-label="Bowlingbahn mit Flick-Steuerung">
+            <div class="start-overlay" id="startOverlay">
+              <div class="start-card">
+                <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
+                <h2>Spiel starten</h2>
+                <p>Tippe auf Start, dann öffnet sich der Spielmodus. Erst danach beginnt das Bowling-Spiel.</p>
+                <button class="btn primary start-btn" id="startGameBtn" type="button"><i class="fa-solid fa-play"></i><span>Spiel starten</span></button>
+              </div>
+            </div>
+
             <div class="scoreboard-overlay">
               <div class="scoreboard-grid" id="scoreboard"></div>
               <div class="summary-strip">
@@ -1195,7 +1269,7 @@
       </form>
       <div class="modal-actions">
         <button class="btn secondary" id="playAgainBtn" type="button"><i class="fa-solid fa-rotate-left"></i><span>Nochmal spielen</span></button>
-        <button class="btn secondary" id="closeModalBtn" type="button"><i class="fa-solid fa-xmark"></i><span>Schließen</span></button>
+        <button class="btn secondary" id="closeModalBtn" type="button"><i class="fa-solid fa-arrow-left"></i><span>Zurück</span></button>
       </div>
     </div>
   </div>
@@ -1268,11 +1342,14 @@
     const helpPopover = document.getElementById("helpPopover");
     const helpCloseBtn = document.getElementById("helpCloseBtn");
     const focusExitBtn = document.getElementById("focusExitBtn");
+    const startOverlay = document.getElementById("startOverlay");
+    const startGameBtn = document.getElementById("startGameBtn");
 
     let frames = [];
     let currentFrame = 0;
     let standingPins = new Set();
     let gameOver = false;
+    let gameStarted = false;
     let isAnimating = false;
     let isDragging = false;
     let dragPointerId = null;
@@ -1996,11 +2073,7 @@
         updateBallTrail(previousTrailPoint, { xNorm, yNorm }, scale);
         previousTrailPoint = { xNorm, yNorm };
 
-        const follow = easeInOut(clamp((raw - 0.48) / 0.52, 0, 1));
-        const zoom = 1 + follow * 0.58;
-        const tx = (0.5 - xNorm) * stageWidth * 0.20 * follow;
-        const ty = -stageHeight * 0.035 * follow;
-        camera.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${zoom})`;
+        camera.style.transform = "translate3d(0,0,0) scale(1)";
 
         const ballTouchesPins = raw > 0.15 && yNorm <= PIN_LAYOUT[0].y + 0.016;
         if (!impactTriggered && ballTouchesPins) triggerImpact();
@@ -2010,7 +2083,7 @@
       requestAnimationFrame(frame);
     }
 
-    function canThrow() { return !gameOver && !isAnimating; }
+    function canThrow() { return gameStarted && !gameOver && !isAnimating; }
 
     function advanceToNextFrame() {
       currentFrame += 1;
@@ -2115,6 +2188,8 @@
     }
 
     function startNewGame() {
+      gameStarted = true;
+      startOverlay.classList.add("hidden");
       frames = createEmptyFrames();
       currentFrame = 0;
       standingPins = fullRackSet();
@@ -2227,7 +2302,7 @@
     });
 
     playAgainBtn.addEventListener("click", () => { hideModal(); startNewGame(); });
-    closeModalBtn.addEventListener("click", hideModal);
+    closeModalBtn.addEventListener("click", () => { location.href = "index.html"; });
     resetGameBtn.addEventListener("click", startNewGame);
     fullscreenBtn.addEventListener("click", toggleGameFocus);
     focusExitBtn.addEventListener("click", exitGameFocus);
@@ -2260,12 +2335,14 @@
     setupPins();
     startLeaderboardListener();
     startNewGame();
+    gameStarted = false;
+    startOverlay.classList.remove("hidden");
+    hideThrowStats();
 
-    // Browser erlauben echtes Fullscreen oft nur nach Nutzerinteraktion.
-    // Der CSS-Fokusmodus startet trotzdem automatisch und nutzt den ganzen Spielbereich.
-    setTimeout(() => {
+    startGameBtn.addEventListener("click", () => {
+      startNewGame();
       enterGameFocus();
-    }, 250);
+    });
   </script>
 </body>
 </html>
