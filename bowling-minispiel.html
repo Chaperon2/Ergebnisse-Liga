@@ -30,6 +30,7 @@
       --shadow-lg: 0 18px 52px rgba(0, 0, 0, 0.24);
       --max-width: 1480px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --game-footer-h: 112px;
     }
 
     * { box-sizing: border-box; }
@@ -420,7 +421,8 @@
 
     .lane-stage {
       position: relative;
-      min-height: 680px;
+      height: clamp(720px, 78svh, 920px);
+      min-height: 720px;
       overflow: hidden;
       touch-action: none;
       user-select: none;
@@ -958,6 +960,80 @@
     .refresh-fab i { animation: refreshSpin 2.3s linear infinite; }
     .back-fab i { animation: backPulse 1.6s ease-in-out infinite; }
 
+    body.game-focus {
+      overflow: hidden;
+      background: #050914;
+    }
+
+    body.game-focus .site {
+      width: 100%;
+      max-width: none;
+      height: 100svh;
+      padding: 0;
+    }
+
+    body.game-focus .topbar,
+    body.game-focus .hero,
+    body.game-focus .game-grid > .card:nth-child(2),
+    body.game-focus .footer-note,
+    body.game-focus .back-fab,
+    body.game-focus .refresh-fab {
+      display: none !important;
+    }
+
+    body.game-focus .page {
+      min-height: 100svh;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: #050914;
+    }
+
+    body.game-focus .game-grid {
+      display: block;
+      height: 100svh;
+      padding: 0;
+    }
+
+    body.game-focus .game-grid > .card:first-child {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      height: 100svh;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: #050914;
+    }
+
+    body.game-focus .card-head {
+      padding: max(10px, env(safe-area-inset-top, 0px)) 12px 9px;
+    }
+
+    body.game-focus .scoreboard-top {
+      padding: 7px 8px;
+    }
+
+    body.game-focus .summary-strip {
+      display: none;
+    }
+
+    body.game-focus .lane-stage {
+      height: 100%;
+      min-height: 0;
+    }
+
+    body.game-focus .lane-footer {
+      padding-bottom: calc(10px + var(--safe-bottom));
+    }
+
+    body.game-focus .lane-hint {
+      font-size: 0.78rem;
+    }
+
+    body.game-focus .fullscreen-exit-icon {
+      display: inline-block;
+    }
+
     @keyframes ambientDrift {
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
       50% { transform: translate3d(28px, -24px, 0) scale(1.08); }
@@ -1060,7 +1136,13 @@
       .summary-value { font-size: 0.78rem; }
 
       .lane-stage {
-        min-height: min(690px, calc(100vh - 104px));
+        height: calc(100svh - 116px);
+        min-height: 640px;
+      }
+
+      body.game-focus .lane-stage {
+        height: 100%;
+        min-height: 0;
       }
 
       .lane-perspective {
@@ -1189,7 +1271,7 @@
               <div class="flash-message" id="flashMessage"></div>
             </div>
 
-            <div class="lane-footer">
+            <div class="lane-footer" id="laneFooter">
               <div class="lane-hint">
                 <strong>Steuerung:</strong> Ball antippen, nach oben schnippen, loslassen. Seitlicher Schwung erzeugt Kurve.
                 Die rechte Pocket ist stark, aber nur mit sauberer Power zuverlässig.
@@ -1200,6 +1282,9 @@
                 <div class="metric-box"><span class="metric-label">Kurve</span><div class="metric-value" id="metricCurve">–</div></div>
               </div>
               <div class="lane-actions">
+                <button class="btn secondary" id="fullscreenBtn" type="button">
+                  <i class="fa-solid fa-expand"></i><span>Vollbild</span>
+                </button>
                 <button class="btn secondary" id="resetGameBtn" type="button">
                   <i class="fa-solid fa-rotate-left"></i><span>Neues Spiel</span>
                 </button>
@@ -1282,6 +1367,7 @@
     ];
 
     const laneStage = document.getElementById("laneStage");
+    const laneFooter = document.getElementById("laneFooter");
     const camera = document.getElementById("camera");
     const pinDeck = document.getElementById("pinDeck");
     const ball = document.getElementById("ball");
@@ -1311,6 +1397,7 @@
     const playAgainBtn = document.getElementById("playAgainBtn");
     const closeModalBtn = document.getElementById("closeModalBtn");
     const resetGameBtn = document.getElementById("resetGameBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
 
     let frames = [];
     let currentFrame = 0;
@@ -1441,6 +1528,13 @@
       renderPins([]);
     }
 
+    function getRestYNorm() {
+      const footerHeight = laneFooter ? laneFooter.offsetHeight : 112;
+      const baseRadius = (stageWidth <= 700 ? 82 : 94) / 2;
+      const usableY = (stageHeight - footerHeight - baseRadius - 22) / Math.max(stageHeight, 1);
+      return clamp(usableY, 0.58, 0.79);
+    }
+
     function setBallVisualNorm(xNorm, yNorm, scale = 1, rotationDeg = 0) {
       const baseSize = stageWidth <= 700 ? 82 : 94;
       const size = baseSize * scale;
@@ -1467,7 +1561,7 @@
     function positionBallAtRest() {
       camera.style.transform = "translate3d(0,0,0) scale(1)";
       ballRestX = clamp(ballRestX, 0.28, 0.72);
-      setBallVisualNorm(ballRestX, 0.835, 1, 0);
+      setBallVisualNorm(ballRestX, getRestYNorm(), 1, 0);
       aimPath.style.left = `${ballRestX * stageWidth}px`;
       aimPath.style.transform = "rotate(0deg)";
       throwGhost.classList.remove("show");
@@ -2262,6 +2356,47 @@
       }
     }
 
+    function syncFullscreenButton() {
+      const active = document.body.classList.contains("game-focus");
+      fullscreenBtn.innerHTML = active
+        ? `<i class="fa-solid fa-compress"></i><span>Zurück</span>`
+        : `<i class="fa-solid fa-expand"></i><span>Vollbild</span>`;
+    }
+
+    async function enterGameFocus() {
+      document.body.classList.add("game-focus");
+      syncFullscreenButton();
+      setTimeout(layoutPins, 80);
+
+      try {
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {
+        // Browser können Fullscreen ohne weitere Meldung ablehnen. Der CSS-Fokusmodus bleibt trotzdem aktiv.
+      }
+    }
+
+    async function exitGameFocus() {
+      document.body.classList.remove("game-focus");
+      syncFullscreenButton();
+      setTimeout(layoutPins, 80);
+
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          await document.exitFullscreen();
+        }
+      } catch (error) {}
+    }
+
+    function toggleGameFocus() {
+      if (document.body.classList.contains("game-focus")) {
+        exitGameFocus();
+      } else {
+        enterGameFocus();
+      }
+    }
+
     function startNewGame() {
       frames = createEmptyFrames();
       currentFrame = 0;
@@ -2361,6 +2496,15 @@
 
     closeModalBtn.addEventListener("click", hideModal);
     resetGameBtn.addEventListener("click", startNewGame);
+    fullscreenBtn.addEventListener("click", toggleGameFocus);
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement && document.body.classList.contains("game-focus")) {
+        document.body.classList.remove("game-focus");
+      }
+      syncFullscreenButton();
+      setTimeout(layoutPins, 80);
+    });
 
     leaderboardModal.addEventListener("click", (event) => {
       if (event.target === leaderboardModal) hideModal();
@@ -2381,7 +2525,7 @@
         upward: 920,
         speed: 930,
         releaseX: ballRestX,
-        releaseY: 0.835,
+        releaseY: getRestYNorm(),
         power: randomBetween(0.66, 0.86),
         angle: randomBetween(-0.04, 0.08),
         curve: randomBetween(0.04, 0.16)
