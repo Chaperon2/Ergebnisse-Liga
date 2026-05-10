@@ -310,25 +310,48 @@
       white-space: nowrap;
     }
 
+    .game-card {
+      position: relative;
+    }
+
+    .game-card > .card-head {
+      display: none;
+    }
+
     .scoreboard-top {
       padding: 10px;
       border-bottom: 1px solid var(--line);
       background: rgba(4, 7, 12, 0.36);
     }
 
+    .game-score-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      z-index: 620;
+      padding: 7px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      background: rgba(3, 7, 12, 0.42);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+      pointer-events: none;
+    }
+
     .scoreboard-grid {
       display: grid;
       grid-template-columns: repeat(10, minmax(0, 1fr));
-      gap: 5px;
+      gap: 4px;
       width: 100%;
     }
 
     .frame-card {
       overflow: hidden;
       min-width: 0;
-      border-radius: 13px;
-      background: rgba(255,255,255,0.065);
-      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 11px;
+      background: rgba(255,255,255,0.060);
+      border: 1px solid rgba(255,255,255,0.11);
     }
 
     .frame-card.current {
@@ -338,13 +361,13 @@
     }
 
     .frame-head {
-      padding: 6px 4px 5px;
-      background: linear-gradient(135deg, rgba(114,183,255,0.26), rgba(255,116,168,0.15));
-      color: #f7fbff;
+      padding: 4px 2px 3px;
+      background: linear-gradient(135deg, rgba(114,183,255,0.22), rgba(255,116,168,0.12));
+      color: rgba(247,251,255,0.82);
       text-align: center;
-      font-size: 0.64rem;
+      font-size: 0.54rem;
       font-weight: 900;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       white-space: nowrap;
     }
@@ -352,7 +375,7 @@
     .roll-boxes {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      min-height: 35px;
+      min-height: 26px;
       border-top: 1px solid rgba(255,255,255,0.10);
       border-bottom: 1px solid rgba(255,255,255,0.10);
     }
@@ -364,11 +387,11 @@
     .roll-cell {
       display: grid;
       place-items: center;
-      min-height: 35px;
-      padding: 5px 2px;
+      min-height: 26px;
+      padding: 3px 1px;
       border-right: 1px solid rgba(255,255,255,0.10);
-      color: #fff;
-      font-size: 0.86rem;
+      color: rgba(255,255,255,0.92);
+      font-size: 0.72rem;
       font-weight: 900;
     }
 
@@ -377,18 +400,15 @@
     .frame-total {
       display: grid;
       place-items: center;
-      min-height: 34px;
-      padding: 4px 2px;
-      color: #ffffff;
-      font-size: 0.94rem;
+      min-height: 25px;
+      padding: 3px 1px;
+      color: rgba(255,255,255,0.95);
+      font-size: 0.78rem;
       font-weight: 900;
     }
 
     .summary-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px;
-      margin-top: 9px;
+      display: none;
     }
 
     .summary-box {
@@ -419,8 +439,8 @@
     /* Bowling scene */
     .lane-stage {
       position: relative;
-      height: clamp(820px, 84svh, 1120px);
-      min-height: 760px;
+      height: clamp(880px, 92svh, 1220px);
+      min-height: 820px;
       overflow: hidden;
       touch-action: none;
       user-select: none;
@@ -603,39 +623,42 @@
 
     .pin {
       position: absolute;
-      width: var(--pin-w, 26px);
-      height: var(--pin-h, 68px);
-      margin-left: calc(var(--pin-w, 26px) / -2);
-      margin-top: calc(var(--pin-h, 68px) / -2);
-      border-radius: 46% 46% 44% 44% / 16% 16% 74% 74%;
+      width: var(--pin-w, 28px);
+      height: var(--pin-h, 76px);
+      margin-left: calc(var(--pin-w, 28px) / -2);
+      margin-top: calc(var(--pin-h, 76px) / -2);
+      border-radius: 48% 48% 43% 43% / 15% 15% 76% 76%;
       background:
-        radial-gradient(ellipse at 34% 15%, rgba(255,255,255,0.82), transparent 34%),
-        linear-gradient(180deg, #ffffff 0%, #fbfbfb 38%, #e7ebf0 100%);
+        radial-gradient(ellipse at 34% 13%, rgba(255,255,255,0.95), transparent 32%),
+        radial-gradient(ellipse at 62% 78%, rgba(176,188,202,0.30), transparent 44%),
+        linear-gradient(90deg, rgba(210,218,226,0.35), transparent 24%, transparent 72%, rgba(120,132,146,0.20)),
+        linear-gradient(180deg, #ffffff 0%, #fdfdfd 34%, #f1f3f6 62%, #dfe5eb 100%);
       box-shadow:
-        inset 0 0 0 1px rgba(170, 170, 170, 0.30),
-        inset 8px 0 9px rgba(255,255,255,0.36),
-        inset -7px -12px 14px rgba(78, 90, 110, 0.13),
-        0 9px 15px rgba(0,0,0,0.24);
-      transform-origin: 50% 86%;
+        inset 0 0 0 1px rgba(160, 166, 174, 0.36),
+        inset 9px 0 10px rgba(255,255,255,0.40),
+        inset -8px -14px 16px rgba(74, 86, 106, 0.16),
+        0 10px 16px rgba(0,0,0,0.28);
+      transform-origin: 50% 88%;
       will-change: transform, opacity;
     }
 
     .pin::before {
       content: "";
       position: absolute;
-      top: 16%;
-      left: 15%;
-      right: 15%;
-      height: 13%;
+      top: 15%;
+      left: 13%;
+      right: 13%;
+      height: 15%;
       border-radius: 999px;
       background:
         linear-gradient(180deg,
-          #e3343d 0%,
-          #e3343d 42%,
-          transparent 42%,
-          transparent 58%,
-          #dd4d54 58%,
-          #dd4d54 100%);
+          #d92330 0%,
+          #d92330 36%,
+          #ffffff 36%,
+          #ffffff 52%,
+          #d92330 52%,
+          #d92330 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.12);
     }
 
     .pin::after {
@@ -666,16 +689,16 @@
       left: 50%;
       top: 72%;
       z-index: 210;
-      width: var(--guide-size, 132px);
-      height: var(--guide-size, 132px);
-      margin-left: calc(var(--guide-size, 132px) / -2);
-      margin-top: calc(var(--guide-size, 132px) / -2);
+      width: var(--guide-size, 210px);
+      height: var(--guide-size, 210px);
+      margin-left: calc(var(--guide-size, 210px) / -2);
+      margin-top: calc(var(--guide-size, 210px) / -2);
       border-radius: 50%;
-      border: 2px dashed rgba(255,255,255,0.42);
+      border: 2px dashed rgba(255,255,255,0.40);
       background:
-        radial-gradient(circle, rgba(255,255,255,0.10), transparent 68%),
-        radial-gradient(circle, transparent 54%, rgba(114,183,255,0.12) 55%, transparent 72%);
-      box-shadow: 0 0 32px rgba(114,183,255,0.24);
+        radial-gradient(circle, transparent 0 44%, rgba(255,255,255,0.07) 45%, transparent 62%),
+        radial-gradient(circle, transparent 62%, rgba(114,183,255,0.14) 63%, transparent 72%);
+      box-shadow: 0 0 42px rgba(114,183,255,0.22);
       pointer-events: none;
     }
 
@@ -684,18 +707,18 @@
       left: 50%;
       top: 72%;
       z-index: 220;
-      width: var(--ghost-size, 66px);
-      height: var(--ghost-size, 66px);
-      margin-left: calc(var(--ghost-size, 66px) / -2);
-      margin-top: calc(var(--ghost-size, 66px) / -2);
+      width: var(--ghost-size, 64px);
+      height: var(--ghost-size, 64px);
+      margin-left: calc(var(--ghost-size, 64px) / -2);
+      margin-top: calc(var(--ghost-size, 64px) / -2);
       border-radius: 50%;
       background:
         radial-gradient(circle at 34% 26%, rgba(255,255,255,0.46), transparent 28%),
-        linear-gradient(145deg, rgba(126,178,255,0.60), rgba(120,212,255,0.38));
-      border: 1px solid rgba(255,255,255,0.20);
+        linear-gradient(145deg, rgba(126,178,255,0.66), rgba(120,212,255,0.42));
+      border: 1px solid rgba(255,255,255,0.24);
       opacity: 0.82;
       pointer-events: none;
-      animation: ghostLoop 2.25s ease-in-out infinite;
+      animation: ghostCircleThrow 3.0s ease-in-out infinite;
       filter: drop-shadow(0 12px 20px rgba(0,0,0,0.28));
     }
 
@@ -842,70 +865,103 @@
       animation: messagePop 1.18s ease forwards;
     }
 
-    .lane-footer {
+    .game-top-hud {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 360;
-      display: grid;
-      grid-template-columns: 1fr auto auto;
+      top: 90px;
+      left: 12px;
+      z-index: 610;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px calc(12px + var(--safe-bottom));
-      border-top: 1px solid rgba(255,255,255,0.14);
-      background: rgba(5, 8, 12, 0.70);
-      backdrop-filter: blur(12px);
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(3, 7, 12, 0.36);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.82);
+      font-size: 0.72rem;
+      font-weight: 900;
       pointer-events: none;
     }
 
-    .lane-footer .btn,
-    .lane-footer .metrics {
-      pointer-events: auto;
+    .hud-pins {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: rgba(255,255,255,0.78);
     }
 
-    .lane-hint {
-      color: var(--text-soft);
-      font-size: 0.86rem;
-      font-weight: 700;
-      line-height: 1.42;
-    }
-
-    .metrics {
+    .help-toggle {
+      position: absolute;
+      right: 12px;
+      bottom: calc(12px + var(--safe-bottom));
+      z-index: 700;
+      width: 46px;
+      height: 46px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(72px, 1fr));
-      gap: 7px;
-      min-width: min(360px, 100%);
-    }
-
-    .metric-box {
-      border-radius: 14px;
-      padding: 8px 9px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .metric-label {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--muted);
-      font-size: 0.62rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.055em;
-    }
-
-    .metric-value {
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 50%;
       color: #fff;
-      font-size: 0.88rem;
-      font-weight: 900;
-      white-space: nowrap;
+      background: rgba(3, 7, 12, 0.52);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+      cursor: pointer;
     }
 
-    .lane-actions {
+    .help-popover {
+      position: absolute;
+      right: 12px;
+      bottom: calc(68px + var(--safe-bottom));
+      z-index: 710;
+      width: min(340px, calc(100% - 24px));
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(5, 9, 15, 0.82);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.34);
+      color: #fff;
+    }
+
+    .help-popover.hidden {
+      display: none;
+    }
+
+    .help-popover strong {
+      display: block;
+      margin-right: 34px;
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .help-popover p {
+      margin: 8px 0 12px;
+      color: rgba(247,251,255,0.78);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .help-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+    }
+
+    .help-actions-inline {
       display: flex;
+      gap: 8px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
     .btn {
@@ -1159,15 +1215,19 @@
     }
 
     body.game-focus .card-head {
-      padding: max(10px, var(--safe-top)) 12px 9px;
-    }
-
-    body.game-focus .scoreboard-top {
-      padding: 7px 8px;
-    }
-
-    body.game-focus .summary-strip {
       display: none;
+    }
+
+    body.game-focus .game-score-overlay {
+      top: max(8px, var(--safe-top));
+      left: 8px;
+      right: 8px;
+      padding: 6px;
+    }
+
+    body.game-focus .game-top-hud {
+      top: calc(max(8px, var(--safe-top)) + 78px);
+      left: 10px;
     }
 
     body.game-focus .lane-stage {
@@ -1175,35 +1235,24 @@
       min-height: 0;
     }
 
-    body.game-focus .lane-hint {
-      font-size: 0.78rem;
-    }
-
-    body.game-focus .lane-footer {
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-    }
-
-    body.game-focus .metrics {
-      display: none;
-    }
-
-    body.game-focus .lane-actions {
-      justify-content: end;
-    }
+    
 
     @keyframes ambientDrift {
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
       50% { transform: translate3d(28px, -24px, 0) scale(1.08); }
     }
 
-    @keyframes ghostLoop {
-      0% { transform: translate(-38px, 22px) scale(1); opacity: 0; }
-      10% { transform: translate(-30px, 14px) scale(1); opacity: 0.74; }
-      30% { transform: translate(30px, 14px) scale(1); opacity: 0.84; }
-      42% { transform: translate(0px, -4px) scale(1.04); opacity: 0.92; }
-      78% { transform: translate(0px, -310px) scale(0.35); opacity: 0.20; }
-      100% { transform: translate(0px, 20px) scale(1); opacity: 0; }
+    @keyframes ghostCircleThrow {
+      0% { transform: translate(92px, 0) scale(1); opacity: 0; }
+      8% { transform: translate(65px, 65px) scale(1); opacity: 0.70; }
+      18% { transform: translate(0, 92px) scale(1); opacity: 0.86; }
+      30% { transform: translate(-65px, 65px) scale(1); opacity: 0.90; }
+      42% { transform: translate(-92px, 0) scale(1); opacity: 0.90; }
+      54% { transform: translate(-65px, -65px) scale(1); opacity: 0.86; }
+      66% { transform: translate(0, -92px) scale(1.03); opacity: 0.92; }
+      76% { transform: translate(0, -92px) scale(1.03); opacity: 0.92; }
+      94% { transform: translate(0, -430px) scale(0.30); opacity: 0.18; }
+      100% { transform: translate(92px, 0) scale(1); opacity: 0; }
     }
 
     @keyframes pinFall {
@@ -1293,18 +1342,17 @@
       .intro { font-size: 0.91rem; }
 
       .scoreboard-grid { gap: 3px; }
-      .frame-head { font-size: 0.52rem; padding: 5px 1px 4px; }
-      .roll-cell { min-height: 29px; font-size: 0.70rem; padding: 4px 1px; }
-      .frame-total { min-height: 29px; font-size: 0.78rem; }
+      .frame-head { font-size: 0.47rem; padding: 3px 1px 2px; }
+      .roll-cell { min-height: 22px; font-size: 0.64rem; padding: 2px 1px; }
+      .frame-total { min-height: 22px; font-size: 0.70rem; }
 
-      .summary-strip { gap: 4px; }
-      .summary-box { padding: 8px 4px; }
-      .summary-label { font-size: 0.54rem; }
-      .summary-value { font-size: 0.78rem; }
+      .game-score-overlay { top: 7px; left: 6px; right: 6px; padding: 5px; }
+      .game-top-hud { top: 74px; left: 8px; font-size: 0.67rem; padding: 6px 8px; }
+      .summary-strip { display: none; }
 
       .lane-stage {
-        height: calc(100svh - 116px);
-        min-height: 730px;
+        height: calc(100svh - 26px);
+        min-height: 760px;
       }
 
       .monitor-row {
@@ -1338,17 +1386,13 @@
 
       .ball { width: 86px; height: 86px; margin-left: -43px; margin-top: -43px; }
       .ball-shadow { width: 76px; margin-left: -38px; }
-      .guide-ring { --guide-size: 116px; }
-      .ghost-ball { --ghost-size: 58px; }
+      .guide-ring { --guide-size: 178px; }
+      .ghost-ball { --ghost-size: 56px; }
       .flash-message { top: 35%; font-size: 0.82rem; }
 
-      .lane-footer { padding: 10px 10px calc(10px + var(--safe-bottom)); }
-      .lane-hint { font-size: 0.80rem; }
-      .metrics { grid-template-columns: repeat(3, 1fr); gap: 5px; }
-      .metric-box { padding: 7px 7px; }
-      .metric-value { font-size: 0.76rem; }
-      .lane-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .btn { width: 100%; padding: 11px 12px; }
+      .help-toggle { right: 10px; bottom: calc(10px + var(--safe-bottom)); }
+      .help-popover { right: 10px; bottom: calc(64px + var(--safe-bottom)); }
+      .btn { padding: 11px 12px; }
       .modal-actions { flex-direction: column; }
       .leaderboard-row { grid-template-columns: 42px 1fr auto; }
       .leaderboard-rank { width: 34px; height: 34px; }
@@ -1365,9 +1409,8 @@
     }
 
     @media (max-width: 390px) {
-      .lane-hint strong { display: none; }
-      .lane-hint { font-size: 0.75rem; }
       .btn span { display: none; }
+      .game-top-hud { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1416,16 +1459,8 @@
       </div>
 
       <div class="game-grid">
-        <section class="card">
-          <div class="card-head">
-            <div class="card-title-wrap">
-              <h2 class="card-title">Bowlingbahn</h2>
-              <div class="card-subtitle" id="throwStatus">Ball antippen, nach vorne schnippen und loslassen.</div>
-            </div>
-            <div class="badge" id="remainingBadge"><i class="fa-solid fa-thumbtack"></i><span>10 Pins stehen</span></div>
-          </div>
-
-          <div class="scoreboard-top">
+        <section class="card game-card">
+          <div class="scoreboard-top game-score-overlay">
             <div class="scoreboard-grid" id="scoreboard"></div>
             <div class="summary-strip">
               <div class="summary-box"><span class="summary-label">Gesamt</span><div class="summary-value" id="summaryTotal">0</div></div>
@@ -1436,6 +1471,22 @@
           </div>
 
           <div class="lane-stage" id="laneStage" aria-label="Bowlingbahn mit Flick-Steuerung">
+            <div class="game-top-hud" aria-live="polite">
+              <div class="hud-status" id="throwStatus">Frame 1 · Wurf 1</div>
+              <div class="hud-pins" id="remainingBadge"><i class="fa-solid fa-thumbtack"></i><span>10 Pins</span></div>
+            </div>
+            <button class="help-toggle" id="helpToggleBtn" type="button" aria-label="Steuerung anzeigen">
+              <i class="fa-solid fa-circle-info"></i>
+            </button>
+            <div class="help-popover hidden" id="helpPopover">
+              <button class="help-close" id="helpCloseBtn" type="button" aria-label="Hinweis schließen"><i class="fa-solid fa-xmark"></i></button>
+              <strong>Steuerung</strong>
+              <p>Tippe den Ball an, ziehe kurz im Kreis und schnippe ihn nach vorne. Seitlicher Schwung erzeugt Kurve. Die Ghost-Vorschau zeigt den Ablauf.</p>
+              <div class="help-actions-inline">
+                <button class="btn secondary" id="fullscreenBtn" type="button"><i class="fa-solid fa-expand"></i><span>Vollbild</span></button>
+                <button class="btn secondary" id="resetGameBtn" type="button"><i class="fa-solid fa-rotate-left"></i><span>Neu</span></button>
+              </div>
+            </div>
             <div class="camera" id="camera">
               <div class="lane-world">
                 <div class="back-wall"></div>
@@ -1464,25 +1515,7 @@
               </div>
             </div>
 
-            <div class="lane-footer" id="laneFooter">
-              <div class="lane-hint">
-                <strong>Steuerung:</strong> Den sichtbaren Ball antippen, nach vorne schnippen, loslassen.
-                Der animierte Schatten zeigt die Wurfbewegung und verschwindet beim Greifen.
-              </div>
-              <div class="metrics" aria-label="Wurfwerte">
-                <div class="metric-box"><span class="metric-label">Power</span><div class="metric-value" id="metricPower">–</div></div>
-                <div class="metric-box"><span class="metric-label">Linie</span><div class="metric-value" id="metricLine">–</div></div>
-                <div class="metric-box"><span class="metric-label">Kurve</span><div class="metric-value" id="metricCurve">–</div></div>
-              </div>
-              <div class="lane-actions">
-                <button class="btn secondary" id="fullscreenBtn" type="button">
-                  <i class="fa-solid fa-expand"></i><span>Vollbild</span>
-                </button>
-                <button class="btn secondary" id="resetGameBtn" type="button">
-                  <i class="fa-solid fa-rotate-left"></i><span>Neu</span>
-                </button>
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -1566,6 +1599,9 @@
     const pinDeck = document.getElementById("pinDeck");
     const ball = document.getElementById("ball");
     const ballShadow = document.getElementById("ballShadow");
+    const helpToggleBtn = document.getElementById("helpToggleBtn");
+    const helpPopover = document.getElementById("helpPopover");
+    const helpCloseBtn = document.getElementById("helpCloseBtn");
     const guideRing = document.getElementById("guideRing");
     const ghostBall = document.getElementById("ghostBall");
     const aimPath = document.getElementById("aimPath");
@@ -1698,10 +1734,10 @@
     }
 
     function getRestYNorm() {
-      const footerHeight = laneFooter ? laneFooter.offsetHeight : 120;
       const baseRadius = (stageWidth <= 700 ? 86 : 98) / 2;
-      const usableY = (stageHeight - footerHeight - baseRadius - 84) / Math.max(stageHeight, 1);
-      return clamp(usableY, 0.62, 0.76);
+      const safeBottom = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--safe-bottom")) || 0;
+      const usableY = (stageHeight - baseRadius - safeBottom - 74) / Math.max(stageHeight, 1);
+      return clamp(usableY, 0.70, 0.84);
     }
 
     function getBallBaseSize() {
@@ -1727,13 +1763,13 @@
       pinElements.forEach(el => {
         const pin = PIN_LAYOUT.find(item => item.id === Number(el.dataset.pinId));
         if (!pin) return;
-        const baseScale = clamp(stageWidth / 900, 0.62, 0.94);
+        const baseScale = clamp(stageWidth / 900, 0.68, 1.02);
         const perspective = clamp((pin.y - 0.246) / 0.069, 0, 1);
         const pinScale = baseScale * lerp(0.72, 1.05, perspective);
         el.style.left = `${pin.x * stageWidth}px`;
         el.style.top = `${pin.y * stageHeight}px`;
-        el.style.setProperty("--pin-w", `${28 * pinScale}px`);
-        el.style.setProperty("--pin-h", `${74 * pinScale}px`);
+        el.style.setProperty("--pin-w", `${30 * pinScale}px`);
+        el.style.setProperty("--pin-h", `${80 * pinScale}px`);
         el.style.zIndex = String(50 + Math.round(pin.y * 1000));
       });
 
@@ -1986,23 +2022,23 @@
       const throwNumber = frame ? frame.throws.length + 1 : 1;
       const standingCount = standingPins.size;
 
-      remainingBadge.innerHTML = `<i class="fa-solid fa-thumbtack"></i><span>${standingCount} ${standingCount === 1 ? "Pin steht" : "Pins stehen"}</span>`;
+      remainingBadge.innerHTML = `<i class="fa-solid fa-thumbtack"></i><span>${standingCount} ${standingCount === 1 ? "Pin" : "Pins"}</span>`;
 
       if (gameOver) {
-        throwStatus.textContent = "Spiel beendet. Ergebnis steht fest.";
+        throwStatus.textContent = "Final";
         return;
       }
 
       if (isAnimating) {
-        throwStatus.textContent = "Kamera folgt dem Ball …";
+        throwStatus.textContent = "Ball läuft";
         return;
       }
 
       if (currentFrame < 9) {
-        throwStatus.textContent = `Frame ${currentFrame + 1}, Wurf ${throwNumber}. Ball nach vorne schnippen.`;
+        throwStatus.textContent = `F${currentFrame + 1} · W${throwNumber}`;
       } else {
         const isBonus = frame.throws.length >= 2 && (frame.throws[0] === 10 || frame.throws[0] + frame.throws[1] === 10);
-        throwStatus.textContent = `Frame 10, ${isBonus && throwNumber === 3 ? "Bonuswurf" : `Wurf ${throwNumber}`}.`;
+        throwStatus.textContent = `F10 · ${isBonus && throwNumber === 3 ? "Bonus" : `W${throwNumber}`}`;
       }
     }
 
@@ -2731,6 +2767,8 @@
     closeModalBtn.addEventListener("click", hideModal);
     resetGameBtn.addEventListener("click", startNewGame);
     fullscreenBtn.addEventListener("click", toggleGameFocus);
+    helpToggleBtn.addEventListener("click", () => helpPopover.classList.toggle("hidden"));
+    helpCloseBtn.addEventListener("click", () => helpPopover.classList.add("hidden"));
 
     leaderboardModal.addEventListener("click", (event) => {
       if (event.target === leaderboardModal) hideModal();
