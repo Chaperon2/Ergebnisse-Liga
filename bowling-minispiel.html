@@ -1397,6 +1397,8 @@
     let leaderboardEntries = [];
     let audioCtx = null;
     let lastImpactMap = {};
+    let gameRunId = 0;
+    let pendingGameTimers = [];
 
     function ensureAudio() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1440,6 +1442,22 @@
     function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
     function randomBetween(min, max) { return min + Math.random() * (max - min); }
     function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function clearGameTimers() {
+      pendingGameTimers.forEach(timerId => clearTimeout(timerId));
+      pendingGameTimers = [];
+    }
+
+    function scheduleGameTimer(callback, delay, runId = gameRunId) {
+      const timerId = setTimeout(() => {
+        pendingGameTimers = pendingGameTimers.filter(id => id !== timerId);
+        if (runId !== gameRunId) return;
+        callback();
+      }, delay);
+      pendingGameTimers.push(timerId);
+      return timerId;
+    }
+
     function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
     function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
@@ -2063,6 +2081,7 @@
     }
 
     function animateThrow(release) {
+      const runId = gameRunId;
       const simulation = simulateThrow(release);
       const { path, knockedIds, impactMap } = simulation;
       const duration = clamp(1380 - release.power * 330, 950, 1420);
@@ -2079,6 +2098,7 @@
       aimPath.classList.remove("show");
 
       function triggerImpact() {
+        if (runId !== gameRunId) return;
         if (impactTriggered) return;
         impactTriggered = true;
         standingPins = new Set([...standingPins].filter(id => !knockedIds.includes(id)));
@@ -2091,14 +2111,16 @@
       }
 
       function finalizeThrow() {
+        if (runId !== gameRunId) return;
         if (throwFinished) return;
         throwFinished = true;
         isAnimating = false;
         ballTrail.classList.remove("show");
-        setTimeout(() => handlePostThrowState(knockedIds.length, simulation), 120);
+        scheduleGameTimer(() => handlePostThrowState(knockedIds.length, simulation), 120, runId);
       }
 
       function frame(now) {
+        if (runId !== gameRunId) return;
         if (throwFinished) return;
         const raw = clamp((now - start) / duration, 0, 1);
         const t = easeOutCubic(raw);
@@ -2128,7 +2150,7 @@
         gameOver = true;
         renderScoreboard();
         updateStatus();
-        setTimeout(() => openEndGameModal(), 380);
+        scheduleGameTimer(() => openEndGameModal(), 380);
         return;
       }
       standingPins = fullRackSet();
@@ -2155,7 +2177,7 @@
             standingPins = fullRackSet();
             lastImpactMap = {};
             renderPins([]);
-            setTimeout(() => advanceToNextFrame(), 860);
+            scheduleGameTimer(() => advanceToNextFrame(), 860);
             return;
           }
           positionBallAtRest();
@@ -2167,7 +2189,7 @@
         standingPins = fullRackSet();
         lastImpactMap = {};
         renderPins([]);
-        setTimeout(() => advanceToNextFrame(), 820);
+        scheduleGameTimer(() => advanceToNextFrame(), 820);
         return;
       }
 
@@ -2213,18 +2235,20 @@
         gameOver = true;
         renderScoreboard();
         updateStatus();
-        setTimeout(() => openEndGameModal(), 620);
+        scheduleGameTimer(() => openEndGameModal(), 620);
         return;
       }
       if (t.length === 3) {
         gameOver = true;
         renderScoreboard();
         updateStatus();
-        setTimeout(() => openEndGameModal(), 620);
+        scheduleGameTimer(() => openEndGameModal(), 620);
       }
     }
 
     function startNewGame() {
+      clearGameTimers();
+      gameRunId += 1;
       gameStarted = true;
       laneStage.classList.remove("pre-start");
       startOverlay.classList.add("hidden");
@@ -2351,6 +2375,8 @@
     resetGameBtn.addEventListener("click", startNewGame);
     fullscreenBtn.addEventListener("click", toggleGameFocus);
     endGameBtn.addEventListener("click", () => {
+      clearGameTimers();
+      gameRunId += 1;
       gameStarted = false;
       gameOver = true;
       isAnimating = false;
