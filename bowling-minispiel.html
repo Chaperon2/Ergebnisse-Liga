@@ -511,15 +511,15 @@
       height: 78%;
       width: min(10.5%, 104px);
       background:
-        linear-gradient(90deg, rgba(255,255,255,0.06), transparent 30%, rgba(0,0,0,0.34)),
-        repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 18px, rgba(0,0,0,0.05) 18px 36px),
-        linear-gradient(180deg, #303435 0%, #17191a 44%, #080909 100%);
+        linear-gradient(90deg, rgba(255,255,255,0.08), transparent 28%, rgba(0,0,0,0.38)),
+        repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 18px, rgba(0,0,0,0.06) 18px 36px),
+        linear-gradient(180deg, #313638 0%, #17191a 45%, #070808 100%);
       box-shadow:
         inset 0 0 10px rgba(255,255,255,0.10),
         inset 0 0 36px rgba(0,0,0,0.78),
         0 0 0 2px rgba(255,255,255,0.055);
       z-index: 8;
-      opacity: 0.96;
+      opacity: 0.97;
     }
 
     .lane-gutter::after {
@@ -530,7 +530,7 @@
       width: 5px;
       border-radius: 999px;
       background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.06));
-      opacity: 0.45;
+      opacity: 0.48;
     }
 
     .lane-gutter.left::after { right: 5px; }
@@ -743,6 +743,24 @@
     }
 
     .throw-ghost.show { opacity: 1; }
+
+    .ball-trail {
+      position: absolute;
+      left: 50%;
+      top: 80%;
+      z-index: 255;
+      width: 130px;
+      height: 18px;
+      border-radius: 999px;
+      pointer-events: none;
+      opacity: 0;
+      transform-origin: 100% 50%;
+      background: linear-gradient(90deg, rgba(114,183,255,0), rgba(114,183,255,0.24) 48%, rgba(255,116,168,0.72) 100%);
+      filter: blur(0.4px) drop-shadow(0 0 18px rgba(114,183,255,0.34));
+      will-change: left, top, width, height, transform, opacity;
+    }
+
+    .ball-trail.show { opacity: 1; }
 
     .ball-shadow {
       position: absolute;
@@ -1219,6 +1237,7 @@
                 <div class="ghost-orbit" id="ghostOrbit" aria-hidden="true"><div class="ghost-ball"></div></div>
                 <div class="ghost-launch" id="ghostLaunch" aria-hidden="true"></div>
                 <div class="impact-burst" id="impactBurst"></div>
+                <div class="ball-trail" id="ballTrail" aria-hidden="true"></div>
                 <div class="ball-shadow" id="ballShadow"></div>
                 <div class="ball" id="ball" aria-label="Bowlingball" role="button" tabindex="0"></div>
                 <div class="flash-message" id="flashMessage"></div>
@@ -1302,6 +1321,7 @@
     const camera = document.getElementById("camera");
     const pinDeck = document.getElementById("pinDeck");
     const ball = document.getElementById("ball");
+    const ballTrail = document.getElementById("ballTrail");
     const ballShadow = document.getElementById("ballShadow");
     const guideRing = document.getElementById("guideRing");
     const ghostOrbit = document.getElementById("ghostOrbit");
@@ -1406,8 +1426,8 @@
     function getRestYNorm() {
       const baseRadius = getBallBaseSize() / 2;
       const safeBottom = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--safe-bottom")) || 0;
-      const usableY = (stageHeight - baseRadius - safeBottom - 34) / Math.max(stageHeight, 1);
-      return clamp(usableY, 0.80, 0.90);
+      const usableY = (stageHeight - baseRadius - safeBottom - 16) / Math.max(stageHeight, 1);
+      return clamp(usableY, 0.84, 0.93);
     }
 
     function setupPins() {
@@ -1481,6 +1501,7 @@
 
     function positionBallAtRest() {
       camera.style.transform = "translate3d(0,0,0) scale(1)";
+      ballTrail.classList.remove("show");
       ballRestX = clamp(ballRestX, 0.34, 0.66);
       const restY = getRestYNorm();
       setBallVisualNorm(ballRestX, restY, 1, 0);
@@ -1805,8 +1826,27 @@
       const power = clamp(upward / 1320, 0, 1.30);
       const angle = clamp(vx / Math.max(upward, 270), -0.76, 0.76);
       const lateralTravel = (point.x - start.x) / stageWidth;
-      const curve = clamp(lateralTravel * 1.10 + angle * 0.28, -0.52, 0.52);
-      return { vx, vy, upward, speed, releaseX, releaseY, power, angle, curve };
+
+      let spinSum = 0;
+      const spinCenter = { x: ballRestX * stageWidth, y: restY * stageHeight };
+      let prevAngle = null;
+      pointerHistory.forEach(item => {
+        const dx = item.x - spinCenter.x;
+        const dy = item.y - spinCenter.y;
+        if (Math.hypot(dx, dy) < 22) return;
+        const currentAngle = Math.atan2(dy, dx);
+        if (prevAngle !== null) {
+          let diff = currentAngle - prevAngle;
+          while (diff > Math.PI) diff -= Math.PI * 2;
+          while (diff < -Math.PI) diff += Math.PI * 2;
+          spinSum += diff;
+        }
+        prevAngle = currentAngle;
+      });
+
+      const spin = clamp(spinSum / (Math.PI * 1.35), -1, 1);
+      const curve = clamp(lateralTravel * 0.55 + angle * 0.22 + spin * 0.50, -0.70, 0.70);
+      return { vx, vy, upward, speed, releaseX, releaseY, power, angle, curve, spin };
     }
 
     function updateThrowPreview(point) {
@@ -1826,7 +1866,7 @@
       throwGhost.style.left = `${visualX * stageWidth}px`;
       throwGhost.style.top = `${Math.max(82, visualY * stageHeight - 94)}px`;
       throwGhost.classList.add("show");
-      setBallVisualNorm(visualX, visualY, 1, release.angle * 85);
+      setBallVisualNorm(visualX, visualY, 1, release.angle * 70 + release.spin * 130);
     }
 
     function describePower(power) {
@@ -1863,8 +1903,9 @@
 
       function xAtT(t) {
         const shaped = clamp(t, 0, 1);
-        const lateCurve = shaped * shaped * (0.62 + shaped * 0.38);
-        return release.releaseX + angle * 0.210 * shaped + curve * 0.145 * lateCurve + laneNoise * shaped;
+        const hook = clamp((shaped - 0.20) / 0.80, 0, 1);
+        const lateCurve = hook * hook * (0.55 + hook * 0.45);
+        return release.releaseX + angle * 0.155 * shaped + curve * 0.265 * lateCurve + laneNoise * shaped;
       }
       function yAtT(t) { return lerp(startY, endY, clamp(t, 0, 1)); }
       function tForY(yNorm) { return clamp((startY - yNorm) / Math.max(0.001, startY - endY), 0, 1); }
@@ -1991,12 +2032,37 @@
       // Metriken sind aktuell absichtlich nicht dauerhaft sichtbar; Funktion bleibt für spätere HUD-Erweiterung.
     }
 
+    function updateBallTrail(previous, current, scale) {
+      if (!previous) {
+        ballTrail.classList.remove("show");
+        return;
+      }
+
+      const x1 = previous.xNorm * stageWidth;
+      const y1 = previous.yNorm * stageHeight;
+      const x2 = current.xNorm * stageWidth;
+      const y2 = current.yNorm * stageHeight;
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const distance = Math.hypot(dx, dy);
+      const length = clamp(distance * 4.5 + 90 * scale, 80, 260);
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+      ballTrail.style.left = `${x2}px`;
+      ballTrail.style.top = `${y2}px`;
+      ballTrail.style.width = `${length}px`;
+      ballTrail.style.height = `${clamp(22 * scale, 7, 22)}px`;
+      ballTrail.style.transform = `translate(-100%, -50%) rotate(${angle}deg)`;
+      ballTrail.classList.add("show");
+    }
+
     function animateThrow(release) {
       const simulation = simulateThrow(release);
       const { path, knockedIds, impactMap } = simulation;
       const duration = clamp(1380 - release.power * 330, 950, 1420);
       const start = performance.now();
       let impactTriggered = false;
+      let previousTrailPoint = null;
       isAnimating = true;
       hideThrowHelp();
       updateStatus();
@@ -2010,8 +2076,11 @@
         standingPins = new Set([...standingPins].filter(id => !knockedIds.includes(id)));
         lastImpactMap = { ...lastImpactMap, ...impactMap };
         renderPins(knockedIds, impactMap);
-        playHitSound(knockedIds.length);
-        showImpactBurst(clamp(simulation.targetAtHead, 0.34, 0.66), PIN_LAYOUT[0].y);
+
+        if (knockedIds.length) {
+          playHitSound(knockedIds.length);
+          showImpactBurst(clamp(simulation.targetAtHead, 0.34, 0.66), PIN_LAYOUT[0].y);
+        }
       }
 
       function frame(now) {
@@ -2020,8 +2089,10 @@
         const xNorm = path.xAtT(t);
         const yNorm = path.yAtT(t);
         const scale = lerp(1.0, 0.34, t);
-        const rotation = 1120 * t * (release.curve >= 0 ? 1 : -1);
+        const rotation = 1120 * t * (release.curve >= 0 ? 1 : -1) + (release.spin || 0) * 900 * t;
         setBallVisualNorm(xNorm, yNorm, scale, rotation);
+        updateBallTrail(previousTrailPoint, { xNorm, yNorm }, scale);
+        previousTrailPoint = { xNorm, yNorm };
 
         const follow = easeInOut(clamp((raw - 0.48) / 0.52, 0, 1));
         const zoom = 1 + follow * 0.58;
@@ -2029,14 +2100,21 @@
         const ty = -stageHeight * 0.035 * follow;
         camera.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${zoom})`;
 
-        if (!impactTriggered && raw >= 0.87) triggerImpact();
+        const ballTouchesHeadPin = raw > 0.18 && yNorm <= PIN_LAYOUT[0].y + 0.014;
+        if (!impactTriggered && ballTouchesHeadPin) triggerImpact();
+        if (!impactTriggered && raw >= 0.94) triggerImpact();
+
         if (raw < 1) {
           requestAnimationFrame(frame);
           return;
         }
+
         triggerImpact();
         isAnimating = false;
-        setTimeout(() => handlePostThrowState(knockedIds.length, simulation), 190);
+        setTimeout(() => {
+          ballTrail.classList.remove("show");
+          handlePostThrowState(knockedIds.length, simulation);
+        }, 190);
       }
       requestAnimationFrame(frame);
     }
