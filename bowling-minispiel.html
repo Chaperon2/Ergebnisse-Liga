@@ -449,8 +449,10 @@
     }
 
     .lane-stage.pre-start {
-      height: clamp(520px, 62svh, 700px);
-      min-height: 520px;
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      background: transparent;
     }
 
     .lane-stage.pre-start .scoreboard-overlay,
@@ -458,8 +460,19 @@
     .lane-stage.pre-start .score-total-hud,
     .lane-stage.pre-start .throw-stats-hud,
     .lane-stage.pre-start .help-toggle,
+    .lane-stage.pre-start .game-end,
+    .lane-stage.pre-start .quick-restart,
     .lane-stage.pre-start .camera {
-      opacity: 0.62;
+      display: none;
+    }
+
+    .lane-stage.pre-start .start-overlay {
+      position: relative;
+      inset: auto;
+      min-height: 0;
+      padding: 18px;
+      background: transparent;
+      backdrop-filter: none;
     }
 
     .camera {
@@ -1105,7 +1118,7 @@
       .roll-cell { min-height: 21px; font-size: 0.62rem; padding: 2px 1px; }
       .frame-total { min-height: 21px; font-size: 0.68rem; }
       .lane-stage { height: calc(100svh - 16px); min-height: 760px; }
-      .lane-stage.pre-start { height: min(58svh, 520px); min-height: 460px; }
+      .lane-stage.pre-start { height: auto; min-height: 0; }
       .game-top-hud { top: 74px; left: 8px; font-size: 0.67rem; padding: 6px 8px; }
       .score-total-hud { top: 74px; right: 8px; font-size: 0.74rem; padding: 7px 10px; }
       .throw-stats-hud { top: 112px; right: 8px; font-size: 0.72rem; padding: 7px 10px; gap: 7px; }
@@ -2346,6 +2359,7 @@
       hideThrowStats();
       hideModal();
       startOverlay.classList.remove("hidden");
+      laneStage.classList.add("pre-start");
       exitGameFocus();
     });
 
