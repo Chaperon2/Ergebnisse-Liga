@@ -42,7 +42,8 @@ Hausligaschnitt:					147,3`
         type: "table",
         key: "einzel",
         theme: "theme-einzel",
-        label: "Einzelwertung										
+        label: "Einzelwertung"	
+		raw: `	
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
 1	1	Rene	Tigers	8	733	203	1421	177,6	172,8	1
 2	2	Skampy	Die Schräägen	12	726	228	2088	174,0	176,4	1
