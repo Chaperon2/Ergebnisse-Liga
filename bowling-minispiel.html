@@ -509,15 +509,36 @@
       position: absolute;
       bottom: 2%;
       height: 78%;
-      width: min(8.6%, 84px);
-      background: linear-gradient(180deg, #242626 0%, #101111 100%);
-      box-shadow: inset 0 0 20px rgba(255,255,255,0.055), inset 0 0 36px rgba(0,0,0,0.65);
-      z-index: 5;
+      width: min(10.5%, 104px);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.06), transparent 30%, rgba(0,0,0,0.34)),
+        repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 18px, rgba(0,0,0,0.05) 18px 36px),
+        linear-gradient(180deg, #303435 0%, #17191a 44%, #080909 100%);
+      box-shadow:
+        inset 0 0 10px rgba(255,255,255,0.10),
+        inset 0 0 36px rgba(0,0,0,0.78),
+        0 0 0 2px rgba(255,255,255,0.055);
+      z-index: 8;
+      opacity: 0.96;
     }
+
+    .lane-gutter::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.06));
+      opacity: 0.45;
+    }
+
+    .lane-gutter.left::after { right: 5px; }
+    .lane-gutter.right::after { left: 5px; }
 
     .lane-gutter.left {
       left: 50%;
-      transform: translateX(calc(-1 * min(42vw, 420px)));
+      transform: translateX(calc(-1 * min(44vw, 440px)));
       clip-path: polygon(22% 100%, 100% 100%, 76% 0%, 0% 0%);
     }
 
@@ -536,44 +557,77 @@
 
     .pin {
       position: absolute;
-      width: var(--pin-w, 30px);
-      height: var(--pin-h, 80px);
-      margin-left: calc(var(--pin-w, 30px) / -2);
-      margin-top: calc(var(--pin-h, 80px) / -2);
-      border-radius: 48% 48% 43% 43% / 15% 15% 76% 76%;
-      background:
-        radial-gradient(ellipse at 34% 13%, rgba(255,255,255,0.95), transparent 32%),
-        radial-gradient(ellipse at 62% 78%, rgba(176,188,202,0.30), transparent 44%),
-        linear-gradient(90deg, rgba(210,218,226,0.35), transparent 24%, transparent 72%, rgba(120,132,146,0.20)),
-        linear-gradient(180deg, #ffffff 0%, #fdfdfd 34%, #f1f3f6 62%, #dfe5eb 100%);
-      box-shadow: inset 0 0 0 1px rgba(160,166,174,0.36), inset 9px 0 10px rgba(255,255,255,0.40), inset -8px -14px 16px rgba(74,86,106,0.16), 0 10px 16px rgba(0,0,0,0.28);
-      transform-origin: 50% 88%;
+      width: var(--pin-w, 34px);
+      height: var(--pin-h, 92px);
+      margin-left: calc(var(--pin-w, 34px) / -2);
+      margin-top: calc(var(--pin-h, 92px) / -2);
+      transform-origin: 50% 91%;
       will-change: transform, opacity;
+      filter: drop-shadow(0 10px 10px rgba(0,0,0,0.28));
     }
 
-    .pin::before {
-      content: "";
+    .pin-body {
       position: absolute;
-      top: 15%;
-      left: 13%;
-      right: 13%;
-      height: 15%;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #d92330 0%, #d92330 36%, #ffffff 36%, #ffffff 52%, #d92330 52%, #d92330 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.12);
+      inset: 0;
+      display: block;
+      border-radius: 50% 50% 47% 47% / 13% 13% 76% 76%;
+      background:
+        radial-gradient(ellipse at 32% 9%, rgba(255,255,255,0.98), transparent 30%),
+        radial-gradient(ellipse at 50% 4%, #ffffff 0 16%, transparent 17%),
+        radial-gradient(ellipse at 50% 49%, rgba(255,255,255,0.95) 0 34%, transparent 35%),
+        linear-gradient(90deg, rgba(172,183,196,0.33), transparent 18%, transparent 74%, rgba(86,96,110,0.22)),
+        linear-gradient(180deg, #ffffff 0%, #fbfcfd 34%, #eef2f5 66%, #d6dde6 100%);
+      clip-path: polygon(
+        42% 0%, 58% 0%, 64% 10%, 63% 24%,
+        72% 39%, 91% 64%, 86% 88%, 68% 100%,
+        32% 100%, 14% 88%, 9% 64%, 28% 39%,
+        37% 24%, 36% 10%
+      );
+      box-shadow:
+        inset 0 0 0 1px rgba(136,145,158,0.36),
+        inset 10px 2px 10px rgba(255,255,255,0.46),
+        inset -9px -16px 18px rgba(52,64,82,0.15);
     }
 
-    .pin::after {
-      content: "";
+    .pin-stripe {
+      position: absolute;
+      left: 24%;
+      right: 24%;
+      top: 18%;
+      height: 12%;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg,
+          #c81725 0%, #c81725 37%,
+          #ffffff 37%, #ffffff 53%,
+          #d92532 53%, #d92532 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 1px 2px rgba(0,0,0,0.16);
+    }
+
+    .pin-highlight {
+      position: absolute;
+      left: 32%;
+      top: 8%;
+      width: 20%;
+      height: 70%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.05));
+      opacity: 0.72;
+      transform: rotate(4deg);
+      pointer-events: none;
+    }
+
+    .pin-shadow {
       position: absolute;
       left: 50%;
-      bottom: -7%;
-      width: 70%;
+      bottom: -6%;
+      width: 76%;
       height: 10%;
       transform: translateX(-50%);
       border-radius: 50%;
-      background: rgba(0,0,0,0.16);
+      background: rgba(0,0,0,0.20);
       filter: blur(2px);
+      pointer-events: none;
     }
 
     .pin.fallen { animation: pinFall 0.92s cubic-bezier(.17,.84,.35,1) forwards; }
@@ -1231,16 +1285,17 @@
     const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
 
     const PIN_LAYOUT = [
-      { id: 0, x: 0.500, y: 0.335, row: 3 },
-      { id: 1, x: 0.475, y: 0.310, row: 2 },
-      { id: 2, x: 0.525, y: 0.310, row: 2 },
-      { id: 3, x: 0.450, y: 0.285, row: 1 },
-      { id: 4, x: 0.500, y: 0.285, row: 1 },
-      { id: 5, x: 0.550, y: 0.285, row: 1 },
-      { id: 6, x: 0.425, y: 0.260, row: 0 },
-      { id: 7, x: 0.475, y: 0.260, row: 0 },
-      { id: 8, x: 0.525, y: 0.260, row: 0 },
-      { id: 9, x: 0.575, y: 0.260, row: 0 }
+      // Pins weiter hinten: mehr sichtbare Bahn und mehr Raum für Kurve.
+      { id: 0, x: 0.500, y: 0.300, row: 3 },
+      { id: 1, x: 0.474, y: 0.276, row: 2 },
+      { id: 2, x: 0.526, y: 0.276, row: 2 },
+      { id: 3, x: 0.448, y: 0.252, row: 1 },
+      { id: 4, x: 0.500, y: 0.252, row: 1 },
+      { id: 5, x: 0.552, y: 0.252, row: 1 },
+      { id: 6, x: 0.422, y: 0.228, row: 0 },
+      { id: 7, x: 0.474, y: 0.228, row: 0 },
+      { id: 8, x: 0.526, y: 0.228, row: 0 },
+      { id: 9, x: 0.578, y: 0.228, row: 0 }
     ];
 
     const laneStage = document.getElementById("laneStage");
@@ -1351,8 +1406,8 @@
     function getRestYNorm() {
       const baseRadius = getBallBaseSize() / 2;
       const safeBottom = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--safe-bottom")) || 0;
-      const usableY = (stageHeight - baseRadius - safeBottom - 74) / Math.max(stageHeight, 1);
-      return clamp(usableY, 0.70, 0.84);
+      const usableY = (stageHeight - baseRadius - safeBottom - 34) / Math.max(stageHeight, 1);
+      return clamp(usableY, 0.80, 0.90);
     }
 
     function setupPins() {
@@ -1361,6 +1416,7 @@
         const el = document.createElement("div");
         el.className = "pin";
         el.dataset.pinId = String(pin.id);
+        el.innerHTML = `<span class="pin-body"><span class="pin-stripe"></span><span class="pin-highlight"></span></span><span class="pin-shadow"></span>`;
         pinDeck.appendChild(el);
       });
       layoutScene();
@@ -1374,12 +1430,12 @@
         const pin = PIN_LAYOUT.find(item => item.id === Number(el.dataset.pinId));
         if (!pin) return;
         const baseScale = clamp(stageWidth / 900, 0.68, 1.02);
-        const perspective = clamp((pin.y - 0.260) / 0.075, 0, 1);
-        const pinScale = baseScale * lerp(0.78, 1.08, perspective);
+        const perspective = clamp((pin.y - 0.228) / 0.072, 0, 1);
+        const pinScale = baseScale * lerp(0.82, 1.14, perspective);
         el.style.left = `${pin.x * stageWidth}px`;
         el.style.top = `${pin.y * stageHeight}px`;
-        el.style.setProperty("--pin-w", `${30 * pinScale}px`);
-        el.style.setProperty("--pin-h", `${80 * pinScale}px`);
+        el.style.setProperty("--pin-w", `${34 * pinScale}px`);
+        el.style.setProperty("--pin-h", `${92 * pinScale}px`);
         el.style.zIndex = String(150 + Math.round(pin.y * 1000));
       });
 
