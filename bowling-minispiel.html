@@ -1391,13 +1391,26 @@
     let ballRestX = 0.50;
     let leaderboardEntries = [];
     let audioCtx = null;
+    let masterGain = null;
+    let audioUnlocked = false;
+    let activeRollSound = null;
     let lastImpactMap = {};
     let gameRunId = 0;
     let pendingGameTimers = [];
 
     function ensureAudio() {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.58, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
+      }
       if (audioCtx.state === "suspended") audioCtx.resume();
+      audioUnlocked = true;
+    }
+
+    function connectToMaster(node) {
+      node.connect(masterGain || audioCtx.destination);
     }
 
     function playTone(frequency, duration, type = "sine", volume = 0.04, delay = 0) {
@@ -1408,30 +1421,156 @@
       osc.type = type;
       osc.frequency.setValueAtTime(frequency, now);
       gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, volume), now + 0.012);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      connectToMaster(gain);
       osc.start(now);
-      osc.stop(now + duration + 0.04);
+      osc.stop(now + duration + 0.05);
+    }
+
+    function createNoiseBuffer(duration = 0.35) {
+      if (!audioCtx) return null;
+      const sampleRate = audioCtx.sampleRate;
+      const frameCount = Math.max(1, Math.floor(sampleRate * duration));
+      const buffer = audioCtx.createBuffer(1, frameCount, sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < frameCount; i += 1) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      return buffer;
+    }
+
+    function playNoise({ duration = 0.25, volume = 0.04, delay = 0, filterType = "bandpass", frequency = 900, q = 1.2 } = {}) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime + delay;
+      const buffer = createNoiseBuffer(duration + 0.03);
+      if (!buffer) return;
+      const source = audioCtx.createBufferSource();
+      const filter = audioCtx.createBiquadFilter();
+      const gain = audioCtx.createGain();
+      source.buffer = buffer;
+      filter.type = filterType;
+      filter.frequency.setValueAtTime(frequency, now);
+      filter.Q.setValueAtTime(q, now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, volume), now + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      source.connect(filter);
+      filter.connect(gain);
+      connectToMaster(gain);
+      source.start(now);
+      source.stop(now + duration + 0.04);
+    }
+
+    function playButtonSound() {
+      if (!audioUnlocked) return;
+      playTone(540, 0.045, "triangle", 0.018, 0);
+      playTone(760, 0.035, "sine", 0.012, 0.025);
+    }
+
+    function playStartSound() {
+      if (!audioUnlocked) return;
+      playTone(330, 0.07, "triangle", 0.026, 0);
+      playTone(495, 0.08, "triangle", 0.026, 0.06);
+      playTone(660, 0.10, "triangle", 0.026, 0.13);
+    }
+
+    function playMissSound() {
+      if (!audioUnlocked) return;
+      playTone(185, 0.13, "sine", 0.022, 0);
+      playTone(132, 0.18, "sine", 0.018, 0.10);
+    }
+
+    function playGutterSound() {
+      if (!audioUnlocked) return;
+      playNoise({ duration: 0.42, volume: 0.030, filterType: "lowpass", frequency: 520, q: 0.7 });
+      playTone(96, 0.22, "sine", 0.026, 0.05);
     }
 
     function playHitSound(pinCount) {
+      if (!audioUnlocked) return;
       const base = Math.min(10, Math.max(1, pinCount || 1));
-      playTone(122 + base * 9, 0.08, "triangle", 0.045, 0);
-      playTone(70 + base * 5, 0.14, "sine", 0.032, 0.025);
-      if (base >= 7) playTone(235, 0.08, "square", 0.018, 0.06);
+      playTone(86 + base * 7, 0.08, "triangle", 0.040, 0);
+      playTone(58 + base * 4, 0.16, "sine", 0.030, 0.025);
+
+      const clatterCount = Math.min(7, Math.max(2, Math.ceil(base * 0.75)));
+      for (let i = 0; i < clatterCount; i += 1) {
+        playNoise({
+          duration: randomBetween(0.045, 0.105),
+          volume: randomBetween(0.010, 0.026) * clamp(base / 6, 0.55, 1.35),
+          delay: randomBetween(0.015, 0.22),
+          filterType: "bandpass",
+          frequency: randomBetween(850, 2600),
+          q: randomBetween(1.3, 4.2)
+        });
+      }
+
+      if (base >= 7) {
+        playNoise({ duration: 0.18, volume: 0.026, delay: 0.06, filterType: "highpass", frequency: 1100, q: 0.9 });
+        playTone(240, 0.08, "square", 0.014, 0.08);
+      }
     }
 
     function playStrikeSound() {
-      playTone(440, 0.10, "triangle", 0.05, 0.00);
-      playTone(660, 0.12, "triangle", 0.05, 0.08);
-      playTone(880, 0.16, "triangle", 0.05, 0.18);
+      if (!audioUnlocked) return;
+      playHitSound(10);
+      playTone(440, 0.09, "triangle", 0.045, 0.04);
+      playTone(660, 0.11, "triangle", 0.045, 0.13);
+      playTone(880, 0.15, "triangle", 0.040, 0.24);
+      playTone(1320, 0.18, "sine", 0.022, 0.36);
     }
 
     function playSpareSound() {
-      playTone(420, 0.10, "sine", 0.05, 0.00);
-      playTone(560, 0.14, "sine", 0.05, 0.10);
+      if (!audioUnlocked) return;
+      playTone(392, 0.08, "sine", 0.040, 0.00);
+      playTone(523, 0.10, "sine", 0.040, 0.09);
+      playTone(784, 0.13, "triangle", 0.030, 0.19);
+    }
+
+    function playScoreSavedSound() {
+      if (!audioUnlocked) return;
+      playTone(523, 0.06, "triangle", 0.030, 0);
+      playTone(659, 0.08, "triangle", 0.030, 0.07);
+      playTone(988, 0.12, "triangle", 0.026, 0.16);
+    }
+
+    function startRollingSound(release) {
+      if (!audioCtx || !audioUnlocked) return;
+      stopRollingSound(0.025);
+
+      const buffer = createNoiseBuffer(1.2);
+      if (!buffer) return;
+
+      const now = audioCtx.currentTime;
+      const source = audioCtx.createBufferSource();
+      const filter = audioCtx.createBiquadFilter();
+      const gain = audioCtx.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(260 + clamp(release.power, 0, 1.2) * 420, now);
+      filter.Q.setValueAtTime(0.6, now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.020 + clamp(release.power, 0, 1.1) * 0.030, now + 0.08);
+      source.connect(filter);
+      filter.connect(gain);
+      connectToMaster(gain);
+      source.start(now);
+      activeRollSound = { source, gain };
+    }
+
+    function stopRollingSound(fade = 0.09) {
+      if (!audioCtx || !activeRollSound) return;
+      const { source, gain } = activeRollSound;
+      const now = audioCtx.currentTime;
+      try {
+        gain.gain.cancelScheduledValues(now);
+        gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value || 0.0001), now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + fade);
+        source.stop(now + fade + 0.03);
+      } catch (error) {}
+      activeRollSound = null;
     }
 
     function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
@@ -2108,6 +2247,7 @@
       hideThrowHelp();
       showThrowStats(release);
       updateStatus();
+      startRollingSound(release);
       throwGhost.classList.remove("show");
       aimPath.classList.remove("show");
 
@@ -2130,6 +2270,7 @@
         throwFinished = true;
         isAnimating = false;
         ballTrail.classList.remove("show");
+        stopRollingSound();
         scheduleGameTimer(() => handlePostThrowState(knockedIds.length, simulation), 120, runId);
       }
 
@@ -2180,8 +2321,8 @@
       const frame = currentFrameData();
       frame.throws.push(pinsDown);
       renderScoreboard();
-      if (simulation.gutter) showFlash("RINNE");
-      else if (pinsDown === 0) showFlash("VORBEI");
+      if (simulation.gutter) { showFlash("RINNE"); playGutterSound(); }
+      else if (pinsDown === 0) { showFlash("VORBEI"); playMissSound(); }
 
       if (currentFrame < 9) {
         if (frame.throws.length === 1) {
@@ -2372,8 +2513,10 @@
         hideModal();
         if (!saved) {
           showFlash("ZU WENIG PUNKTE");
+          playMissSound();
         } else {
           showFlash("EINGETRAGEN");
+          playScoreSavedSound();
         }
         setTimeout(() => {
           startNewGame();
@@ -2388,6 +2531,23 @@
     closeModalBtn.addEventListener("click", () => { location.href = "index.html"; });
     resetGameBtn.addEventListener("click", startNewGame);
     fullscreenBtn.addEventListener("click", toggleGameFocus);
+
+    [
+      startGameBtn,
+      playAgainBtn,
+      closeModalBtn,
+      resetGameBtn,
+      fullscreenBtn,
+      helpToggleBtn,
+      helpCloseBtn,
+      endGameBtn,
+      quickRestartBtn
+    ].forEach(button => {
+      button.addEventListener("click", () => {
+        ensureAudio();
+        playButtonSound();
+      });
+    });
     endGameBtn.addEventListener("click", () => {
       clearGameTimers();
       gameRunId += 1;
@@ -2443,6 +2603,8 @@
     hideThrowStats();
 
     startGameBtn.addEventListener("click", () => {
+      ensureAudio();
+      playStartSound();
       startNewGame();
       enterGameFocus();
     });
