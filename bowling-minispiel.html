@@ -258,7 +258,6 @@
       white-space: nowrap;
     }
 
-    /* Score HUD */
     .start-overlay {
       position: absolute;
       inset: 0;
@@ -272,9 +271,7 @@
       backdrop-filter: blur(10px);
     }
 
-    .start-overlay.hidden {
-      display: none;
-    }
+    .start-overlay.hidden { display: none; }
 
     .start-card {
       width: min(420px, 100%);
@@ -434,7 +431,6 @@
     .throw-stats-hud.hidden { display: none; }
     .throw-stat-muted { color: rgba(247,251,255,0.65); }
 
-    /* Bowling scene */
     .lane-stage {
       position: relative;
       height: clamp(880px, 92svh, 1220px);
@@ -591,7 +587,6 @@
       pointer-events: none;
       z-index: 7;
     }
-
 
     .pin-deck { position: absolute; inset: 0; pointer-events: none; z-index: 120; }
 
@@ -1902,8 +1897,6 @@
         prevAngle = currentAngle;
       });
 
-      // Bildschirmkoordinaten: positive Winkeländerung entspricht Uhrzeigersinn.
-      // Uhrzeigersinn => positiver Spin => Hook nach rechts.
       const spin = clamp(spinSum / (Math.PI * 1.35), -1, 1);
       const curve = clamp(lateralTravel * 0.40 + angle * 0.18 + spin * 0.82, -0.95, 0.95);
       return { vx, vy, upward, speed, releaseX, releaseY, power, angle, curve, spin };
@@ -1963,17 +1956,30 @@
       const pocketQuality = 1 - Math.min(1, Math.abs(targetAtHead - pocketX) / 0.072);
       const powerQuality = path.powerQuality;
       const usablePower = clamp(release.power, 0, 1.16);
-      const carryQuality = clamp(0.20 + powerQuality * 0.35 + usablePower * 0.22 + pocketQuality * 0.30, 0.15, 0.96);
-      const hitRadius = 0.032 + clamp(release.power, 0.35, 1.0) * 0.016;
+      const carryQuality = clamp(
+        0.28 + powerQuality * 0.34 + usablePower * 0.24 + pocketQuality * 0.30,
+        0.22,
+        0.98
+      );
+
+      // Etwas näher an der optischen Ballgröße. Vorher war die Kollisionszone zu dünn,
+      // wodurch der Ball sichtbar durch Pins laufen konnte, ohne Treffer zu zählen.
+      const hitRadius = 0.040 + clamp(release.power, 0.35, 1.0) * 0.018;
       let gutter = false;
+
+      // Kleine Toleranz, damit die Rinne nicht früher greift als die Optik vermuten lässt.
+      const laneMargin = 0.026;
 
       for (let i = 0; i <= 26; i += 1) {
         const t = i / 26;
         const x = path.xAtT(t);
-        if (t > 0.12 && (x < laneLeftAt(t) || x > laneRightAt(t))) { gutter = true; break; }
+        if (t > 0.14 && (x < laneLeftAt(t) - laneMargin || x > laneRightAt(t) + laneMargin)) {
+          gutter = true;
+          break;
+        }
       }
 
-      if (!standing.length || release.power < 0.28 || gutter) {
+      if (!standing.length || release.power < 0.24 || gutter) {
         return { knockedIds: [], impactMap, targetAtHead, path, gutter, pocketQuality, powerQuality, carryQuality };
       }
 
@@ -1981,9 +1987,14 @@
         const t = path.tForY(pin.y);
         const x = path.xAtT(t);
         const dx = Math.abs(x - pin.x);
-        const radius = hitRadius - (freshRack ? pin.row * 0.003 : 0);
+
+        // row: 3 ist bei diesem Layout der Headpin. Deshalb bekommt er nicht weniger,
+        // sondern etwas mehr Toleranz, passend zur Perspektive und Ballgröße.
+        const perspectiveBonus = freshRack ? pin.row * 0.0025 : 0;
+        const radius = hitRadius + perspectiveBonus;
         const nearHit = dx < radius;
-        const graze = dx < radius + 0.014 && Math.random() < 0.24 * carryQuality;
+        const graze = dx < radius + 0.020 && Math.random() < 0.34 * carryQuality;
+
         if (nearHit || graze) {
           const directEnergy = clamp((1 - dx / (radius + 0.014)) * 0.78 + usablePower * 0.18 + powerQuality * 0.12, 0.15, 1.04);
           knocked.add(pin.id);
@@ -2006,15 +2017,15 @@
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const distance = Math.hypot(dx * 1.0, dy * 1.50);
-            if (distance > 0.112) return;
+            if (distance > 0.128) return;
             const forwardCarry = dy < 0 ? 1.08 : 0.72;
             const sideCarry = 1 - Math.min(0.26, Math.abs(dx) * 2.1);
             const sourceEnergy = energyMap[sourceId] || 0.35;
-            const proximity = 1 - distance / 0.112;
+            const proximity = 1 - distance / 0.128;
             const chance = sourceEnergy * carryQuality * proximity * forwardCarry * sideCarry * (0.90 - wave * 0.10);
             if (chance > bestChance) { bestChance = chance; bestSource = source; }
           });
-          if (bestChance > randomBetween(0.27, 0.73)) {
+          if (bestChance > randomBetween(0.22, 0.66)) {
             newlyKnocked.push(target.id);
             energyMap[target.id] = clamp(bestChance * randomBetween(0.56, 0.88), 0.12, 0.86);
             const dir = bestSource ? Math.sign(target.x - bestSource.x) || (Math.random() < 0.5 ? -1 : 1) : (Math.random() < 0.5 ? -1 : 1);
@@ -2037,7 +2048,10 @@
             }
           });
         }
-        if (knocked.size === 10 && !strikeWindow && Math.random() < 0.64) {
+
+        // Nicht jeden guten, aber nicht perfekten 10er-Treffer künstlich wieder zerstören.
+        // Vorher wurden viele gefühlt saubere Treffer nachträglich bestraft.
+        if (knocked.size === 10 && !strikeWindow && pocketQuality < 0.72 && Math.random() < 0.38) {
           const candidates = [...knocked].filter(id => id !== 0);
           const leaveId = candidates[Math.floor(Math.random() * candidates.length)];
           knocked.delete(leaveId);
