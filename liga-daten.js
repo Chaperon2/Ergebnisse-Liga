@@ -14,8 +14,8 @@ Platz	Name	Team	Spiel 1	Spiel 2	Spiel 3	Spiel 4	Pins Gesamt	⌀
 1	Rene	Tigers	171	231	193	167	762	190,5
 2	Vegas	Scooter	182	156	185	194	717	179,3
 3	Diana	Lady Diana´s	155	158	224	134	671	167,8
-4	Tom	Pincesses	173	170	174	130	647	161,8
-5	Diana	Lady Diana´s	155	158	224	134	671	167,8
+4	Maik	Lady Diana´s	198	157	146	146	647	161,8
+5	Tom	Pincesses	173	170	174	130	647	161,8
 6	Micha	Tigers	140	166	203	130	639	159,8
 7	Skampy	Die Schräägen	129	150	181	160	620	155,0
 8	Benno	Die Schräägen	122	176	157	145	600	150,0
