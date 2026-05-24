@@ -42,7 +42,8 @@ Hausligaschnitt:					148,9`
         type: "table",
         key: "einzel",
         theme: "theme-einzel",
-        label: "Einzelwertung										
+        label: "Einzelwertung",
+        raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
 1	0	Rene	Tigers	16	762	231	2887	180,4	172,8	3
 2	2	Vegas	Scooter	16	717	221	2698	168,6	168,9	1
@@ -111,8 +112,7 @@ Pincesses	465	404 + 11	356 + 20	402	1658	2`
     ]
   },
 
-  rawPlayerTable: String.raw`
-	Spieltag 1								Spieltag 2								Spieltag 3								Spieltag 4								Spieltag 5								Spieltag 6								Spieltag 7								Spieltag 8								Spieltag 9								Spieltag 10								Spieltag 11								Spieltag 12								Spieltag 13								Spieltag 14							
+  rawPlayerTable: String.raw`Spieltag 1								Spieltag 2								Spieltag 3								Spieltag 4								Spieltag 5								Spieltag 6								Spieltag 7								Spieltag 8								Spieltag 9								Spieltag 10								Spieltag 11								Spieltag 12								Spieltag 13								Spieltag 14							
 Name	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?	Datum	Gesamtpins	Spiel1	Spiel2	Spiel3	Spiel4	Spiele	Anwesend?
 Toni	22.04.2026	0	0	0	0	0	0	false	29.04.2026	589	152	146	131	160	0	false	06.05.2026	630	153	133	156	188	0	false	13.05.2026	554	149	133	114	158	4	true	19.05.2026	558	165	129	125	139	0	false	26.05.2026	Pins Gesamt	0	0	0	0	0	false	02.06.2026	Pins Gesamt	0	0	0	0	0	false	03.03.2026	Pins Gesamt					0	false	10.03.2026	Pins Gesamt					0	false	17.03.2026	Pins Gesamt					0	false	24.03.2026	Pins Gesamt					0	false	31.03.2026	Pins Gesamt					0	false	07.04.2026	Pins Gesamt					0	false	14.04.2026	Pins Gesamt					0	false
 Detlef	22.04.2026	564	170	116	151	127	4	true	29.04.2026	0	0	0	0	0	4	true	06.05.2026	583	146	149	155	133	4	true	13.05.2026	0	0	0	0	0	0	false	20.05.2026	596	154	122	170	150	4	true	27.05.2026	0	0	0	0	0	0	false	03.06.2026	0	0	0	0	0	0	false	04.03.2026	0					0	false	11.03.2026	0					0	false	18.03.2026	0					0	false	25.03.2026	0					0	false	01.04.2026	0					0	false	08.04.2026	0					0	false	15.04.2026	0					0	false
