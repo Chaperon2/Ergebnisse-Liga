@@ -45,18 +45,18 @@ Hausligaschnitt:					156,2`
         label: "Einzelwertung",
         raw: `Einzelwertung										
 Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letzte Saison	Spiele > 200
-1	0	Rene	Tigers	28	762	231	5007	178,8	159,7	7
+1	0	Rene	Tigers	28	762	231	5007	178,8	172,8	7
 2	0	Rainsen	3 Bowler	28	753	209	4812	171,9	173,5	3
 3	0	Vegas	Scooter	24	717	221	4053	168,9	168,9	2
-4	0	Skampy	Die Schräägen	32	726	228	5356	167,4	150,0	1
-5	0	Micha	Tigers	28	756	227	4644	165,9	139,5	3
-6	1	Diana	Lady Diana´s	32	699	224	5164	161,4	160,6	2
+4	0	Skampy	Die Schräägen	32	726	228	5356	167,4	176,4	1
+5	0	Micha	Tigers	28	756	227	4644	165,9	161,4	3
+6	1	Diana	Lady Diana´s	32	699	224	5164	161,4	162,6	2
 7	-1	Tomber	Malibu	16	666	211	2564	160,3	168,4	1
 8	0	Karola	Scooter	20	658	195	3188	159,4	160,6	
 9	0	Thomas	3 Bowler	24	680	198	3782	157,6	159,7	
-10	0	Maik	Lady Diana´s	28	690	198	4355	155,5	144,1	
-11	0	Günter	Tigers	32	676	209	4871	152,2	168,9	2
-12	0	Benno	Die Schräägen	24	694	195	3643	151,8	148,6	
+10	0	Maik	Lady Diana´s	28	690	198	4355	155,5	162,6	
+11	0	Günter	Tigers	32	676	209	4871	152,2	149,1	2
+12	0	Benno	Die Schräägen	24	694	195	3643	151,8	150,6	
 13	0	Toni	All Stars	28	672	199	4222	150,8	0,0	
 14	0	Günni	Malibu	32	628	182	4740	148,1	148,6	
 15	0	Detlef	All Stars	16	596	172	2335	145,9	147,3	
@@ -65,9 +65,9 @@ Platz	Tendenz	Name	Team	Spiele	Beste Serie	Bestes Spiel	Pins Gesamt	⌀	⌀ letz
 18	-1	Ismene	Malibu	28	601	172	3904	139,4	150,0	
 19	0	Dieter	Die Schräägen	32	590	179	4322	135,1	138,9	
 20	0	Dirk	Scooter	20	574	165	2621	131,1	144,1	
-21	0	Jerry	Pincesses	32	543	178	3813	119,2	138,9	
-22	0	Simone	Lady Diana´s	24	512	145	2613	108,9	168,4	
-23	0	Denise	Pincesses	24	507	155	2536	105,7	173,5	
+21	0	Jerry	Pincesses	32	543	178	3813	119,2	0,0	
+22	0	Simone	Lady Diana´s	24	512	145	2613	108,9	119,9	
+23	0	Denise	Pincesses	24	507	155	2536	105,7	111,0	
 24										
 Bestes Spiel:					Rene	231				
 Hausligaschnitt:					148,6`
