@@ -28,6 +28,29 @@ const TEAM_COLOR_CLASSES = [
   "team-color-8",
 ];
 
+function normalizeTeamName(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[´'’`]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/* Feste Farben für die derzeitigen Teams. Neue Namen erhalten automatisch
+   eine noch freie Farbe. Dadurch bleiben Farben innerhalb einer Saison stabil. */
+const KNOWN_TEAM_COLORS = new Map([
+  ["3 bowler", "team-color-1"],
+  ["die schraagen", "team-color-2"],
+  ["pincesses", "team-color-3"],
+  ["tigers", "team-color-4"],
+  ["scooter", "team-color-5"],
+  ["malibu", "team-color-6"],
+  ["lady dianas", "team-color-7"],
+  ["all stars", "team-color-8"],
+]);
+
 function buildTeamColorMap(matchdays) {
   const teamNames = [...new Set(
     matchdays.flatMap((day) => (day.pairings ?? []).flatMap((pairing) => [pairing.homeTeam, pairing.awayTeam])),
@@ -35,7 +58,24 @@ function buildTeamColorMap(matchdays) {
     .filter(Boolean)
     .sort((a, b) => String(a).localeCompare(String(b), "de", { sensitivity: "base" }));
 
-  return new Map(teamNames.map((name, index) => [name, TEAM_COLOR_CLASSES[index % TEAM_COLOR_CLASSES.length]]));
+  const assigned = new Map();
+  const used = new Set();
+
+  teamNames.forEach((name) => {
+    const knownClass = KNOWN_TEAM_COLORS.get(normalizeTeamName(name));
+    if (knownClass) {
+      assigned.set(name, knownClass);
+      used.add(knownClass);
+    }
+  });
+
+  const freeClasses = TEAM_COLOR_CLASSES.filter((className) => !used.has(className));
+  teamNames.forEach((name) => {
+    if (assigned.has(name)) return;
+    assigned.set(name, freeClasses.shift() ?? TEAM_COLOR_CLASSES[assigned.size % TEAM_COLOR_CLASSES.length]);
+  });
+
+  return assigned;
 }
 
 function teamColorClass(teamName, colorMap) {
@@ -43,10 +83,9 @@ function teamColorClass(teamName, colorMap) {
 }
 
 function renderTeamLegend(colorMap) {
-  return `<section class="team-color-legend" aria-label="Teamfarben">
-    <div class="team-color-legend-title"><i class="fa-solid fa-palette"></i><span>Teamfarben</span></div>
+  return `<section class="team-color-legend schedule-team-legend" aria-label="Teamfarben">
     <div class="team-color-chips">${[...colorMap.entries()].map(([teamName, colorClass]) => (
-      `<span class="team-color-chip ${colorClass}"><span class="team-color-dot"></span>${escapeHtml(teamName)}</span>`
+      `<span class="team-color-chip ${colorClass}"><i class="fa-solid fa-gear" aria-hidden="true"></i>${escapeHtml(teamName)}</span>`
     )).join("")}</div>
   </section>`;
 }
@@ -54,7 +93,6 @@ function renderTeamLegend(colorMap) {
 function formatDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return "–";
   return new Intl.DateTimeFormat("de-DE", {
-    weekday: "short",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -96,12 +134,7 @@ function relevantMatchday(matchdays) {
 }
 
 function compactDate(value) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return "Datum";
-  return new Intl.DateTimeFormat("de-DE", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(new Date(`${value}T12:00:00`));
+  return formatDate(value) === "–" ? "Datum" : formatDate(value);
 }
 
 function configureJumpButton(matchdays) {
@@ -151,38 +184,41 @@ function render(scheduleData, meta) {
 
   const publishedThrough = Number(meta.publishedThrough ?? 0);
   const nextNumber = nextMatchdayNumber(matchdays, publishedThrough);
-  title.textContent = scheduleData.seasonName ?? scheduleData.seasonId ?? "Spielplan";
+  const focusDay = relevantMatchday(matchdays);
+  const seasonLabel = scheduleData.seasonName ?? scheduleData.seasonId ?? "Saison";
+  title.textContent = `Spielplan · ${seasonLabel}`;
   summary.textContent = publishedThrough >= 14
-    ? "Die Saison ist abgeschlossen. Alle Begegnungen und Bahnpaarungen bleiben im Archiv sichtbar."
+    ? "Die Saison ist abgeschlossen. Alle Begegnungen und Bahnpaarungen bleiben sichtbar."
     : publishedThrough > 0
       ? `Ergebnisse sind bis Spieltag ${publishedThrough} veröffentlicht. Spieltag ${nextNumber} ist als Nächstes vorgesehen.`
       : `Alle ${matchdays.length} Spieltage mit festen Bahnpaarungen.`;
 
   if (overview) {
+    overview.className = "schedule-overview-bar";
     overview.innerHTML = [
-      ["Saison", scheduleData.seasonName ?? scheduleData.seasonId, "fa-gears"],
-      ["Spieltage", `${matchdays.length}`, "fa-calendar-days"],
-      ["Veröffentlicht", `${publishedThrough} / ${matchdays.length}`, "fa-signal"],
-      ["Bahnen", "1+2 · 3+4 · 5+6 · 7+8", "fa-road"],
-    ].map(([label, value, icon]) => `<article class="summary-card"><i class="fa-solid ${icon}"></i><div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div></article>`).join("");
+      ["fa-calendar-days", `${matchdays.length} Spieltage`],
+      ["fa-people-group", "8 Teams"],
+      ["fa-road", "Bahnen 1+2 · 3+4 · 5+6 · 7+8"],
+      ["fa-signal", `${publishedThrough} veröffentlicht`],
+    ].map(([icon, value]) => `<span><i class="fa-solid ${icon}"></i>${escapeHtml(value)}</span>`).join("");
   }
 
   const teamColors = buildTeamColorMap(matchdays);
   container.innerHTML = renderTeamLegend(teamColors) + matchdays.map((day) => {
     const played = Number(day.number) <= publishedThrough;
     const next = Number(day.number) === nextNumber;
-    const stateClass = played ? "is-played" : next ? "is-next" : "";
-    const stateLabel = played ? "gespielt" : next ? "nächster Spieltag" : "geplant";
-    return `<article class="schedule-day ${stateClass}" id="spieltag-${Number(day.number)}">
+    const focused = Number(day.number) === Number(focusDay?.number);
+    const stateClass = [played ? "is-played" : "", next ? "is-next" : "", focused ? "is-current" : ""].filter(Boolean).join(" ");
+    const stateLabel = next ? "Nächster Spieltag" : played ? "Gespielt" : "Geplant";
+    return `<article class="schedule-day ${stateClass}" id="spieltag-${Number(day.number)}" aria-label="Spieltag ${Number(day.number)} · ${escapeHtml(stateLabel)}">
       <header class="schedule-day-head">
-        <div><span class="schedule-state">${escapeHtml(stateLabel)}</span><h2>Spieltag ${Number(day.number)}</h2></div>
+        <div class="schedule-day-title"><i class="fa-solid fa-star" aria-hidden="true"></i><h2>Spieltag ${Number(day.number)}</h2></div>
         <time datetime="${escapeHtml(day.date)}">${escapeHtml(formatDate(day.date))}</time>
       </header>
       <div class="pairing-list">
         ${(day.pairings ?? []).map((pairing) => `<div class="pairing-row">
-          <span class="lane-badge">Bahn ${escapeHtml(pairing.lanePair)}</span>
           <strong class="team team-colored home ${teamColorClass(pairing.homeTeam, teamColors)}">${escapeHtml(pairing.homeTeam)}</strong>
-          <span class="versus">VS</span>
+          <span class="versus"><small>Bahn ${escapeHtml(pairing.lanePair)}</small><b>VS</b></span>
           <strong class="team team-colored away ${teamColorClass(pairing.awayTeam, teamColors)}">${escapeHtml(pairing.awayTeam)}</strong>
         </div>`).join("")}
       </div>
@@ -193,8 +229,8 @@ function render(scheduleData, meta) {
   liveState.innerHTML = `<i class="fa-solid ${meta.source === "fallback" ? "fa-triangle-exclamation" : "fa-signal"}"></i><span>${escapeHtml(meta.warning ?? "Live aus der Ligadatenbank · automatische Aktualisierung")}</span>`;
   hideMessage();
 
-  const nextCard = nextNumber ? document.querySelector(`#spieltag-${nextNumber}`) : null;
-  if (nextCard) nextCard.setAttribute("aria-current", "date");
+  const currentCard = focusDay ? document.querySelector(`#spieltag-${Number(focusDay.number)}`) : null;
+  if (currentCard) currentCard.setAttribute("aria-current", "date");
   configureJumpButton(matchdays);
 }
 

@@ -271,3 +271,349 @@ tbody tr:nth-child(8n){--row-accent:#d72673}
 @media(max-width:1100px){.schedule-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-duels{grid-template-columns:1fr}}
 @media(max-width:700px){.team-duels{padding:7px;gap:8px}.team-duel{gap:6px;padding:11px 7px 8px}.duel-team{padding:8px 5px;gap:3px 5px}.duel-team strong{font-size:14px}.duel-team small{font-size:8px}.duel-score{min-width:68px;gap:5px;font-size:30px}.duel-rounds{gap:3px}.duel-round{padding:4px 2px;font-size:8px}.schedule-grid{grid-template-columns:1fr;padding:8px 5px}.schedule-day h2{font-size:18px}.pairing-row{grid-template-columns:43px minmax(0,1fr) 22px minmax(0,1fr)}.team{font-size:11px}}
 @media(max-width:390px){.duel-team strong{font-size:12px}.duel-score{min-width:56px;font-size:26px}.duel-rounds{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== Phase 8.8: Spielplan wie Designvorlage + verfeinerte Spielergebnis-Tabellen ===== */
+
+/* Feste, kräftige Teamfarben aus der Spielplan-Vorlage */
+.team-color-1{--team-accent:#2f6dff}
+.team-color-2{--team-accent:#65cf2e}
+.team-color-3{--team-accent:#e8b719}
+.team-color-4{--team-accent:#e44525}
+.team-color-5{--team-accent:#8a4fd0}
+.team-color-6{--team-accent:#1db7c6}
+.team-color-7{--team-accent:#df7518}
+.team-color-8{--team-accent:#d62070}
+
+/* ---------- Spielplan ---------- */
+.schedule-view .lane-legend{display:none}
+.schedule-view .hero{
+  padding:34px 28px 22px;
+  background:
+    radial-gradient(circle at 15% 15%,rgba(255,183,52,.08),transparent 28%),
+    radial-gradient(circle at 86% 18%,rgba(64,244,239,.08),transparent 25%),
+    repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.10) 3px 4px),
+    linear-gradient(180deg,#19130d,#080706);
+}
+.schedule-view .hero h1{
+  font-size:clamp(38px,4.4vw,68px);
+  color:#f0c66c;
+  letter-spacing:.035em;
+  text-shadow:0 2px 0 #5a2f16,0 0 14px rgba(255,189,64,.17),0 8px 22px #000;
+}
+.schedule-view .hero-text{max-width:850px}
+.schedule-view .live-state{margin-top:14px}
+
+.schedule-overview-bar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  padding:9px 14px;
+  border-top:1px solid rgba(222,165,72,.24);
+  border-bottom:1px solid #5a331d;
+  background:linear-gradient(180deg,#100d09,#060706);
+  color:#cbb997;
+  font-size:11px;
+}
+.schedule-overview-bar span{display:inline-flex;align-items:center;gap:7px}
+.schedule-overview-bar i{color:#efb94d}
+
+.schedule-view .content-panel{padding:10px;background:#050606}
+.schedule-view .schedule-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  padding:10px;
+  background:#050606;
+}
+.schedule-view .schedule-grid>.team-color-legend{grid-column:1/-1}
+.schedule-view .schedule-team-legend{
+  padding:8px 9px;
+  border:2px solid #5e351c;
+  border-radius:5px;
+  background:linear-gradient(180deg,#17110b,#070707);
+  box-shadow:inset 0 0 0 1px rgba(239,178,75,.17),0 8px 20px rgba(0,0,0,.34);
+}
+.schedule-view .team-color-chips{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:5px;
+}
+.schedule-view .team-color-chip{
+  min-width:0;
+  min-height:28px;
+  justify-content:center;
+  gap:5px;
+  padding:5px 4px;
+  border:1px solid color-mix(in srgb,var(--team-accent) 78%,#4a2b19);
+  border-radius:3px;
+  background:
+    linear-gradient(180deg,color-mix(in srgb,var(--team-accent) 18%,#11100d),#070808 82%);
+  color:var(--team-accent);
+  font-family:"Oswald",sans-serif;
+  font-size:10px;
+  line-height:1.05;
+  text-transform:uppercase;
+  white-space:normal;
+  text-align:center;
+  text-shadow:0 0 8px color-mix(in srgb,var(--team-accent) 35%,transparent);
+  box-shadow:inset 0 0 10px color-mix(in srgb,var(--team-accent) 9%,transparent);
+}
+.schedule-view .team-color-chip i{
+  flex:0 0 auto;
+  color:var(--team-accent);
+  filter:drop-shadow(0 0 5px var(--team-accent));
+}
+
+.schedule-view .schedule-day{
+  position:relative;
+  border:2px solid #60371d;
+  border-radius:5px;
+  background:
+    radial-gradient(circle at 50% 0,rgba(246,182,72,.045),transparent 48%),
+    linear-gradient(180deg,#11100d,#050606);
+  box-shadow:
+    inset 0 0 0 1px rgba(238,175,76,.16),
+    inset 0 0 22px rgba(0,0,0,.78),
+    0 10px 23px rgba(0,0,0,.38);
+  opacity:1;
+  overflow:hidden;
+}
+.schedule-view .schedule-day::before,
+.schedule-view .schedule-day::after{
+  content:"";
+  position:absolute;
+  z-index:3;
+  top:7px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f3cc7f 0 15%,#86502a 42%,#21120a 74%);
+  box-shadow:0 0 0 1px #000;
+  pointer-events:none;
+}
+.schedule-view .schedule-day::before{left:7px}
+.schedule-view .schedule-day::after{right:7px}
+.schedule-view .schedule-day-head{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 12px 7px 18px;
+  border-bottom:1px solid rgba(225,165,72,.46);
+  background:linear-gradient(180deg,#24170b 0%,#0a0908 58%,#151008 100%);
+  box-shadow:inset 0 -1px 0 rgba(255,190,78,.16);
+}
+.schedule-view .schedule-day-title{display:flex;align-items:center;gap:7px;min-width:0}
+.schedule-view .schedule-day-title i{
+  color:#e8ad39;
+  font-size:9px;
+  filter:drop-shadow(0 0 5px rgba(255,186,58,.5));
+}
+.schedule-view .schedule-day h2{
+  margin:0;
+  color:#f0bc55;
+  font-family:"Oswald",sans-serif;
+  font-size:18px;
+  line-height:1;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.schedule-view .schedule-day time{
+  color:#d8c7a5;
+  font-family:"Roboto Slab",serif;
+  font-size:10px;
+  font-weight:600;
+  white-space:nowrap;
+}
+.schedule-view .pairing-list{display:grid;gap:5px;padding:8px}
+.schedule-view .pairing-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);
+  align-items:center;
+  gap:5px;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+.schedule-view .team.team-colored{
+  min-width:0;
+  min-height:27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:5px 6px;
+  border:1px solid color-mix(in srgb,var(--team-accent) 82%,#412515);
+  border-radius:4px;
+  background:
+    linear-gradient(180deg,color-mix(in srgb,var(--team-accent) 47%,#10100d),color-mix(in srgb,var(--team-accent) 16%,#070808));
+  color:#fff8e9;
+  font-family:"Oswald",sans-serif;
+  font-size:11px;
+  line-height:1.05;
+  font-weight:600;
+  letter-spacing:.012em;
+  text-transform:uppercase;
+  text-align:center;
+  text-shadow:0 1px 2px #000,0 0 6px color-mix(in srgb,var(--team-accent) 25%,transparent);
+  box-shadow:
+    inset 0 0 10px color-mix(in srgb,var(--team-accent) 19%,transparent),
+    0 0 7px color-mix(in srgb,var(--team-accent) 16%,transparent);
+  overflow-wrap:anywhere;
+}
+.schedule-view .team.team-colored::before{display:none}
+.schedule-view .versus{
+  width:auto;
+  min-height:27px;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:1px;
+  padding:2px 1px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#f4bd4c;
+  box-shadow:none;
+  line-height:1;
+}
+.schedule-view .versus small{
+  color:#9f8d6c;
+  font-family:"Roboto Slab",serif;
+  font-size:6px;
+  font-weight:600;
+  white-space:nowrap;
+}
+.schedule-view .versus b{
+  color:#f0b83f;
+  font-family:"Oswald",sans-serif;
+  font-size:10px;
+  letter-spacing:.04em;
+  text-shadow:0 0 6px rgba(255,186,58,.35);
+}
+.schedule-view .schedule-day.is-played{opacity:1}
+.schedule-view .schedule-day.is-next,
+.schedule-view .schedule-day.is-current{
+  border-color:#e6aa2d;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,209,97,.28),
+    0 0 0 2px rgba(255,190,52,.15),
+    0 0 22px rgba(255,175,33,.24),
+    0 13px 28px rgba(0,0,0,.46);
+}
+.schedule-view .schedule-day.is-next .schedule-day-head,
+.schedule-view .schedule-day.is-current .schedule-day-head{
+  background:linear-gradient(180deg,#50310e 0%,#171008 58%,#2a1a09 100%);
+}
+.schedule-view .schedule-day.is-next .schedule-day-title i,
+.schedule-view .schedule-day.is-current .schedule-day-title i{color:#ffe078}
+
+/* ---------- Spielergebnis-Tabellen ---------- */
+.results-view .section-spieltag .table-head,
+.results-view .section-einzel .table-head{
+  background:
+    radial-gradient(circle at 15% 0,rgba(64,244,239,.055),transparent 35%),
+    linear-gradient(180deg,#25170c,#090a09 58%,#171008);
+}
+.results-view .section-spieltag .table-title,
+.results-view .section-einzel .table-title{color:#f1c05a}
+.results-view .section-spieltag tbody tr:nth-child(odd),
+.results-view .section-einzel tbody tr:nth-child(odd){--row-accent:#29c7d1}
+.results-view .section-spieltag tbody tr:nth-child(even),
+.results-view .section-einzel tbody tr:nth-child(even){--row-accent:#d49831}
+.results-view .section-spieltag tbody tr:nth-child(odd) td,
+.results-view .section-einzel tbody tr:nth-child(odd) td{
+  background:linear-gradient(90deg,#11191a,#0b0e0e 88%)!important;
+}
+.results-view .section-spieltag tbody tr:nth-child(even) td,
+.results-view .section-einzel tbody tr:nth-child(even) td{
+  background:linear-gradient(90deg,#292825,#171716 88%)!important;
+}
+.results-view .section-spieltag tbody tr td:first-child,
+.results-view .section-einzel tbody tr td:first-child{
+  border-left:4px solid var(--row-accent)!important;
+  box-shadow:none!important;
+}
+.results-view th.col-best{
+  color:#ffd15e;
+  background:linear-gradient(180deg,#332108,#11100b)!important;
+}
+.results-view th.col-average{
+  color:#62f3ec;
+  background:linear-gradient(180deg,#0b2b2c,#0a0d0d)!important;
+}
+.results-view td.metric-best{
+  position:relative;
+  color:#ffd56b!important;
+  font-weight:800;
+  background:linear-gradient(180deg,rgba(75,51,13,.92),rgba(27,20,10,.96))!important;
+  box-shadow:inset 0 0 0 1px rgba(255,197,75,.20);
+  text-shadow:0 0 7px rgba(255,194,65,.18);
+}
+.results-view td.metric-best::before{
+  content:"★";
+  margin-right:3px;
+  color:#ffca4e;
+  font-size:.72em;
+}
+.results-view td.metric-average{
+  color:#69f5ee!important;
+  font-weight:800;
+  background:linear-gradient(180deg,rgba(8,48,50,.94),rgba(7,22,23,.96))!important;
+  box-shadow:inset 0 0 0 1px rgba(64,244,239,.15);
+  text-shadow:0 0 7px rgba(64,244,239,.18);
+}
+.results-view td.metric-series{
+  color:#d7bdff!important;
+  font-weight:700;
+}
+.results-view td.daily-best-score{
+  outline:1px solid #ffd15d;
+  outline-offset:-2px;
+  box-shadow:inset 0 0 8px rgba(255,200,70,.22),0 0 7px rgba(255,190,50,.12);
+  font-weight:900;
+}
+.results-view .stat-chip.stat-best{
+  border-color:rgba(255,200,91,.55);
+  color:#ffd36a;
+  background:linear-gradient(180deg,#35230d,#120f09);
+  box-shadow:inset 0 0 10px rgba(255,190,65,.07);
+}
+.results-view .stat-chip.stat-average{
+  border-color:rgba(64,244,239,.45);
+  color:#67f3ed;
+  background:linear-gradient(180deg,#0b2b2c,#071011);
+  box-shadow:inset 0 0 10px rgba(64,244,239,.07);
+}
+
+@media(max-width:1100px){
+  .schedule-view .team-color-chips{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .schedule-view .schedule-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:700px){
+  .schedule-view .hero{padding:27px 12px 18px}
+  .schedule-view .hero h1{font-size:clamp(33px,10vw,48px)}
+  .schedule-overview-bar{gap:6px 13px;padding:8px 7px;font-size:9px}
+  .schedule-view .content-panel{padding:7px 4px}
+  .schedule-view .schedule-grid{grid-template-columns:1fr;gap:8px;padding:6px 2px}
+  .schedule-view .team-color-chips{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .schedule-view .team-color-chip{font-size:9px;min-height:29px;padding:5px 3px}
+  .schedule-view .schedule-day-head{padding:8px 10px 7px 17px}
+  .schedule-view .schedule-day h2{font-size:17px}
+  .schedule-view .schedule-day time{font-size:9px}
+  .schedule-view .pairing-list{gap:5px;padding:7px 5px}
+  .schedule-view .pairing-row{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:4px}
+  .schedule-view .team.team-colored{min-height:29px;padding:5px 3px;font-size:10px}
+  .schedule-view .versus small{font-size:5.5px}
+  .schedule-view .versus b{font-size:9px}
+
+  .results-view .section-spieltag .col-name{width:17%}
+  .results-view .section-spieltag .col-team{width:15%}
+  .results-view .section-spieltag .col-best{width:9%}
+  .results-view td.metric-best::before{display:none}
+  .results-view td.metric-best,
+  .results-view td.metric-average{padding-left:1px;padding-right:1px}
+}

@@ -58,6 +58,7 @@ function renderTable({ headers, rows, sectionClass = "" }) {
     return `<tr class="${rowClasses}">${row.cells.map((cell, index) => {
       const classes = [headerClass(headers[index])];
       if (row.score200Indexes?.includes(index)) classes.push("score-200");
+      if (cell && typeof cell === "object" && cell.className) classes.push(cell.className);
       return `<td class="${classes.join(" ")}">${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
     }).join("")}</tr>`;
   }).join("")}</tbody></table></div>`;
@@ -67,7 +68,10 @@ function tableCard({ key, theme, title, subtitle, stats = [], content }) {
   return `<article class="table-card ${theme} section-${key}">
     <div class="table-head">
       <div class="table-title-wrap"><h2 class="table-title">${escapeHtml(title)}</h2><div class="table-subtitle">${escapeHtml(subtitle)}</div></div>
-      <div class="stats-chips">${stats.map((stat) => `<span class="stat-chip">${escapeHtml(stat)}</span>`).join("")}</div>
+      <div class="stats-chips">${stats.map((stat) => {
+        const item = typeof stat === "object" ? stat : { value: stat, className: "" };
+        return `<span class="stat-chip ${escapeHtml(item.className ?? "")}">${escapeHtml(item.value)}</span>`;
+      }).join("")}</div>
     </div>
     ${content}
   </article>`;
@@ -88,12 +92,29 @@ function render(data) {
     { label: "Spiel 3", mobile: "S3" },
     { label: "Spiel 4", mobile: "S4" },
     { label: "Pins Gesamt", mobile: "Pins" },
+    { label: "Bestes Spiel", mobile: "Best" },
     "Ø",
   ];
-  const dailyRows = data.currentMatchday.rows.map((row) => ({
-    cells: [row.rank, row.name, row.team, ...row.scores.map((score) => score ?? "–"), row.total, formatNumber(row.average)],
-    score200Indexes: row.scores.map((score, index) => Number(score) >= 200 ? index + 3 : -1).filter((index) => index >= 0),
-  }));
+  const dailyBestScore = Math.max(0, ...data.currentMatchday.rows.flatMap((row) => row.scores.map((score) => Number(score ?? 0))));
+  const dailyRows = data.currentMatchday.rows.map((row) => {
+    const rowBest = Math.max(0, ...row.scores.map((score) => Number(score ?? 0)));
+    const scoreCells = row.scores.map((score) => ({
+      value: score ?? "–",
+      className: Number(score) === dailyBestScore && dailyBestScore > 0 ? "daily-best-score" : "",
+    }));
+    return {
+      cells: [
+        row.rank,
+        row.name,
+        row.team,
+        ...scoreCells,
+        row.total,
+        { value: rowBest || "–", className: "metric-best" },
+        { value: formatNumber(row.average), className: "metric-average" },
+      ],
+      score200Indexes: row.scores.map((score, index) => Number(score) >= 200 ? index + 3 : -1).filter((index) => index >= 0),
+    };
+  });
 
   const playerHeaders = [
     { label: "Platz", mobile: "Pl." },
@@ -115,10 +136,10 @@ function render(data) {
       row.name,
       row.team,
       row.games,
-      row.bestSeries,
-      row.bestGame,
+      { value: row.bestSeries, className: "metric-series" },
+      { value: row.bestGame, className: "metric-best" },
       row.pins,
-      formatNumber(row.average),
+      { value: formatNumber(row.average), className: "metric-average" },
       row.previousSeasonAverage == null ? "–" : formatNumber(row.previousSeasonAverage),
       row.games200 || "–",
     ],
@@ -180,8 +201,8 @@ function render(data) {
       title: `Spieltag ${matchday.number}`,
       subtitle: formatDate(matchday.date),
       stats: [
-        `Bestes Spiel: ${data.currentMatchday.bestGame?.name ?? "–"} · ${data.currentMatchday.bestGame?.score ?? "–"}`,
-        `Hausligaschnitt: ${formatNumber(data.currentMatchday.houseAverage)}`,
+        { value: `Bestes Spiel: ${data.currentMatchday.bestGame?.name ?? "–"} · ${data.currentMatchday.bestGame?.score ?? "–"}`, className: "stat-best" },
+        { value: `Hausligaschnitt: ${formatNumber(data.currentMatchday.houseAverage)}`, className: "stat-average" },
       ],
       content: renderTable({ headers: dailyHeaders, rows: dailyRows }),
     }),
@@ -191,8 +212,8 @@ function render(data) {
       title: "Einzelwertung",
       subtitle: `Saisonstand bis Spieltag ${matchday.number}`,
       stats: [
-        `Bestes Spiel: ${data.individualStandings.bestGame?.name ?? "–"} · ${data.individualStandings.bestGame?.score ?? "–"}`,
-        `Hausligaschnitt: ${formatNumber(data.individualStandings.houseAverage)}`,
+        { value: `Bestes Spiel: ${data.individualStandings.bestGame?.name ?? "–"} · ${data.individualStandings.bestGame?.score ?? "–"}`, className: "stat-best" },
+        { value: `Hausligaschnitt: ${formatNumber(data.individualStandings.houseAverage)}`, className: "stat-average" },
       ],
       content: renderTable({ headers: playerHeaders, rows: playerRows }),
     }),
