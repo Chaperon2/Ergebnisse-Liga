@@ -1,1 +1,774 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Rekorde - Strikeclub Velten</title> <meta property="og:title" content="Rekorde - Strikeclub Velten" /> <meta property="og:description" content="Die wichtigsten Bestmarken der Saison im Überblick." /> <meta property="og:url" content="https://www.strikeclub-velten.de/rekorde.html" /> <meta property="og:type" content="website" /> <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" /> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" /> <style> :root { --text: #0f172a; --text-soft: #5f718d; --border: rgba(119, 145, 185, 0.14); --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14); --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10); --shadow-md: 0 12px 30px rgba(35, 58, 100, 0.08); --max-width: 1440px; } * { box-sizing: border-box; } body { margin: 0; min-height: 100vh; font-family: "Inter", Arial, sans-serif; color: var(--text); background: radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%), radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%), radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%), linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%); overflow-x: hidden; } a { color: inherit; text-decoration: none; } .scene { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; } .glow { position: absolute; border-radius: 50%; filter: blur(76px); opacity: 0.44; animation: drift 18s ease-in-out infinite; } .glow.one { width: 340px; height: 340px; left: -80px; top: 40px; background: rgba(91, 124, 255, 0.16); } .glow.two { width: 290px; height: 290px; right: -30px; top: 140px; background: rgba(255, 92, 159, 0.14); animation-delay: -6s; } .glow.three { width: 380px; height: 380px; right: 14%; bottom: -100px; background: rgba(51, 198, 255, 0.16); animation-delay: -11s; } .bg-shape { position: absolute; opacity: 0.22; animation-timing-function: ease-in-out; animation-iteration-count: infinite; } .ball-bg { width: var(--size, 120px); height: var(--size, 120px); left: var(--x, 10%); top: var(--y, 10%); border-radius: 50%; background: radial-gradient(circle at 38% 35%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), radial-gradient(circle at 55% 28%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), radial-gradient(circle at 60% 48%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff)); box-shadow: inset -18px -18px 30px rgba(255, 255, 255, 0.24), inset 18px 18px 28px rgba(255, 255, 255, 0.14), 0 16px 32px rgba(65, 85, 130, 0.10); animation-name: floatBall; animation-duration: var(--dur, 18s); animation-delay: var(--delay, 0s); } .pin-bg { width: var(--w, 56px); height: var(--h, 164px); left: var(--x, 15%); top: var(--y, 20%); border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%); box-shadow: inset 0 0 0 1px rgba(150, 170, 205, 0.14), 0 16px 32px rgba(65, 85, 130, 0.08); animation-name: swayPin; animation-duration: var(--dur, 16s); animation-delay: var(--delay, 0s); transform-origin: center 82%; } .pin-bg::before { content: ""; position: absolute; top: 16px; left: 8px; right: 8px; height: 18px; border-radius: 999px; background: linear-gradient( 180deg, rgba(255, 92, 159, 0.84) 0%, rgba(255, 92, 159, 0.84) 42%, transparent 42%, transparent 58%, rgba(255, 104, 142, 0.74) 58%, rgba(255, 104, 142, 0.74) 100% ); } .site { position: relative; z-index: 2; width: min(var(--max-width), calc(100% - 22px)); margin: 0 auto; padding: 14px 0 34px; } .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; } .brand { display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.76); border: 1px solid rgba(122, 146, 182, 0.14); backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06); font-weight: 700; letter-spacing: -0.02em; } .brand-mark { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(135deg, rgba(91, 124, 255, 1), rgba(255, 92, 159, 1)); color: #fff; box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24); } .page { position: relative; padding: 20px; border-radius: 26px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.80)); border: 1px solid var(--border); backdrop-filter: blur(24px); box-shadow: var(--shadow-xl); overflow: hidden; } .page::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%), radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); pointer-events: none; } .header { position: relative; z-index: 1; margin-bottom: 22px; } .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.76); border: 1px solid rgba(122, 146, 182, 0.12); font-weight: 700; font-size: 0.9rem; color: #36507a; margin-bottom: 14px; box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #3bc7ff, #7a5cff); box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08); } h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.06em; font-weight: 800; } .headline-accent { background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; } .records-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } .record-card { position: relative; padding: 18px; border-radius: 22px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 255, 0.90)); border: 1px solid rgba(122, 146, 182, 0.10); box-shadow: var(--shadow-md); overflow: hidden; } .record-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 12% 12%, rgba(91, 124, 255, 0.12), transparent 28%), radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.10), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); } .record-card.featured { background: linear-gradient(135deg, rgba(91, 124, 255, 0.16), rgba(255, 92, 159, 0.12)), rgba(255, 255, 255, 0.92); border: 1px solid rgba(91, 124, 255, 0.18); box-shadow: 0 16px 36px rgba(73, 100, 255, 0.14); } .record-inner { position: relative; z-index: 1; } .record-label { display: block; margin-bottom: 10px; font-size: 0.78rem; font-weight: 900; color: #657891; text-transform: uppercase; letter-spacing: 0.06em; } .record-value { margin-bottom: 8px; font-size: clamp(1.45rem, 3vw, 2.25rem); font-weight: 900; color: #16203d; letter-spacing: -0.05em; line-height: 1; } .record-detail { color: #5a6f90; font-size: 0.95rem; line-height: 1.6; font-weight: 700; } .record-players { margin-top: 12px; padding: 10px 12px; border-radius: 16px; background: rgba(255, 255, 255, 0.84); border: 1px solid rgba(122, 146, 182, 0.10); color: #4f6484; font-size: 0.82rem; line-height: 1.5; font-weight: 700; } .record-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.86); border: 1px solid rgba(122, 146, 182, 0.10); color: #516784; font-size: 0.8rem; font-weight: 800; box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04); } .error-box { position: relative; z-index: 1; padding: 18px; border-radius: 20px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 255, 0.90)); border: 1px solid rgba(255, 127, 80, 0.18); box-shadow: var(--shadow-md); color: #8a4b2b; font-weight: 700; line-height: 1.6; } .footer-note { margin-top: 16px; text-align: center; color: #6c7b96; font-size: 0.92rem; padding: 0 8px; } .footer-note a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(108, 123, 150, 0.34); transition: opacity 0.2s ease, border-color 0.2s ease; } .footer-note a:hover { opacity: 1; border-bottom-color: rgba(108, 123, 150, 0.75); } .refresh-fab, .back-fab { position: fixed; bottom: 18px; z-index: 9999; width: 52px; height: 52px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92)); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28); backdrop-filter: blur(10px); transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease; } .refresh-fab { right: 18px; } .back-fab { left: 18px; } .refresh-fab i { font-size: 1rem; animation: refreshSpin 2.4s linear infinite; } .back-fab i { font-size: 1rem; animation: backPulse 1.6s ease-in-out infinite; } .refresh-fab:hover, .back-fab:hover { transform: translateY(-2px) scale(1.05); filter: saturate(1.08); box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.32); } .refresh-fab:hover i { animation-duration: 0.9s; } .back-fab:hover i { animation-duration: 0.8s; } .refresh-fab:active, .back-fab:active { transform: scale(0.96); } @keyframes drift { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(24px, -18px, 0) scale(1.08); } } @keyframes floatBall { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); } 25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); } 50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); } 75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); } } @keyframes swayPin { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(14px, -22px, 0) rotate(3deg); } 50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); } 75% { transform: translate3d(16px, -10px, 0) rotate(2deg); } } @keyframes refreshSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes backPulse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } } @media (max-width: 980px) { .site { width: min(var(--max-width), calc(100% - 12px)); } .page { padding: 14px; } .records-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } } @media (max-width: 700px) { .site { width: 100%; padding: 0 0 22px; } .topbar { padding: 10px 8px 0; margin-bottom: 8px; } .page { border-radius: 0; border-left: 0; border-right: 0; padding: 12px 6px 16px; } .records-grid { grid-template-columns: 1fr; } h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); } .refresh-fab, .back-fab { width: 48px; height: 48px; bottom: 14px; } .refresh-fab { right: 14px; } .back-fab { left: 14px; } .refresh-fab i, .back-fab i { font-size: 0.95rem; } } @media (prefers-reduced-motion: reduce) { .glow, .bg-shape, .refresh-fab i, .back-fab i { animation: none !important; } } </style> </head> <body> <div class="scene" aria-hidden="true"> <div class="glow one"></div> <div class="glow two"></div> <div class="glow three"></div> <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;" ></div> <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;" ></div> <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;" ></div> <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;" ></div> <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;" ></div> </div> <main class="site"> <div class="topbar"> <div class="brand"> <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span> <span>Strikeclub Velten</span> </div> </div> <section class="page"> <div class="header"> <div> <div class="eyebrow"> <span class="dot"></span> <span>Rekorde</span> </div> <h1> Bestmarken. <span class="headline-accent">Automatisch aus den aktuellen Daten.</span> </h1> </div> </div> <section class="records-grid" id="recordsGrid"></section> </section> <p class="footer-note"> Strikeclub Velten · <a href="impressum.html">Impressum</a> </p> </main> <button class="back-fab" type="button" aria-label="Zurück zur Startseite" title="Zurück zur Startseite" onclick="location.href='index.html'" > <i class="fa-solid fa-arrow-left"></i> </button> <button class="refresh-fab" type="button" aria-label="Seite aktualisieren" title="Seite aktualisieren" onclick="window.location.reload()" > <i class="fa-solid fa-rotate-right"></i> </button> <script src="liga-daten.js"></script> <script> const recordsGrid = document.getElementById("recordsGrid"); const sharedData = window.STRIKECLUB_DATA || null; function formatNumber(value, digits = 1) { return new Intl.NumberFormat("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value); } function formatPercent(value) { const sign = value > 0 ? "+" : ""; return `${sign}${formatNumber(value, 1)} %`; } function parseGermanNumber(value) { if (value === null || value === undefined) return NaN; const normalized = String(value) .trim() .replace(/\./g, "") .replace(",", "."); return Number(normalized); } function normalizeLine(line) { return String(line || "").replace(/\u00A0/g, " ").trimEnd(); } function splitColumns(line) { if (line.includes("\t")) { return line.split("\t").map((cell) => cell.trim()); } return line.trim().split(/\s{2,}/).map((cell) => cell.trim()); } function isSingleTitleLine(line) { const trimmed = line.trim(); return ( !trimmed.includes("\t") && !/\s{2,}/.test(trimmed) && /[A-Za-zÄÖÜäöü]/.test(trimmed) ); } function parseTableRaw(rawText, fallbackLabel) { const lines = String(rawText || "") .replace(/\r/g, "") .split("\n") .map(normalizeLine); let sectionTitle = fallbackLabel; let headers = []; let rows = []; let titleConsumed = false; for (const line of lines) { if (!line.trim()) continue; if (!titleConsumed && isSingleTitleLine(line) && !line.includes("Platz")) { sectionTitle = line.trim(); titleConsumed = true; continue; } if (/^Bestes Spiel:/i.test(line) || /^Hausligaschnitt:/i.test(line)) { continue; } if (line.includes("⚔️")) { continue; } const cells = splitColumns(line); if (!cells.length) continue; const usefulCells = cells.filter(Boolean); if (!headers.length) { headers = usefulCells; continue; } const cleanCells = cells.slice(0, headers.length); while (cleanCells.length < headers.length) cleanCells.push(""); const isDuplicateHeader = cleanCells.every((cell, index) => { return ( String(cell).trim().toLowerCase() === String(headers[index] || "").trim().toLowerCase() ); }); if (isDuplicateHeader) continue; const filled = cleanCells.filter(Boolean); if (filled.length <= 1 && /^\d+$/.test(filled[0] || "")) continue; rows.push(cleanCells); } return { sectionTitle, headers, rows }; } function rowsToObjects(parsed) { return parsed.rows.map((row) => { const obj = {}; parsed.headers.forEach((header, index) => { obj[header] = row[index] ?? ""; }); return obj; }); } function parseGermanDate(dateStr) { const match = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(String(dateStr || "").trim()); if (!match) return null; const [, dd, mm, yyyy] = match; return new Date(Number(yyyy), Number(mm) - 1, Number(dd), 12, 0, 0, 0); } function isPastOrToday(dateStr) { const date = parseGermanDate(dateStr); if (!date) return false; const now = new Date(); const todayEnd = new Date( now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999 ); return date <= todayEnd; } function parseBool(value) { return String(value || "").trim().toLowerCase() === "true"; } function parsePlayerTable(raw) { const lines = String(raw || "") .replace(/\r/g, "") .split("\n") .map((line) => line.trimEnd()) .filter((line) => line.trim() !== ""); if (lines.length < 3) return {}; const spieltagLabels = lines[0].match(/Spieltag\s+\d+/g) || []; if (!spieltagLabels.length) return {}; const result = {}; for (const line of lines.slice(2)) { const cells = line.split("\t").map((cell) => cell.trim()); const name = cells[0]; if (!name) continue; const entries = []; for (let i = 0; i < spieltagLabels.length; i++) { const base = 1 + i * 4; const datum = cells[base] || ""; const pinsRaw = cells[base + 1] || "0"; const gamesRaw = cells[base + 2] || "0"; const presentRaw = cells[base + 3] || "false"; if (!datum || !isPastOrToday(datum)) continue; const played = parseBool(presentRaw); const pins = Number(pinsRaw); const games = Number(gamesRaw); entries.push({ spieltag: i + 1, datum, pins: played ? pins : null, games: played ? games : 0, played }); } result[name] = entries; } return result; } function getConsistencyWinner(playerData) { let best = null; for (const [name, entries] of Object.entries(playerData)) { const values = entries .filter((entry) => entry.played && typeof entry.pins === "number" && entry.games > 0) .map((entry) => entry.pins / entry.games); if (values.length < 4) continue; const mean = values.reduce((sum, value) => sum + value, 0) / values.length; const variance = values.reduce((sum, value) => { const diff = value - mean; return sum + diff * diff; }, 0) / values.length; const stdDev = Math.sqrt(variance); const score = Math.max(0, Math.min(100, Math.round(100 - stdDev * 2.5))); if (!best || score > best.score) { best = { name, score, stdDev }; } } return best; } function getBestRowByNumber(rows, key, resultKey = "value") { let best = null; for (const row of rows) { const value = parseGermanNumber(row[key]); if (!Number.isFinite(value)) { continue; } if (!best || value > best[resultKey]) { best = { row, [resultKey]: value }; } } return best; } function createRecordCard(record) { const article = document.createElement("article"); article.className = `record-card${record.featured ? " featured" : ""}`; article.innerHTML = ` <div class="record-inner"> <span class="record-label">${record.label}</span> <div class="record-value">${record.value}</div> <div class="record-detail">${record.detail}</div> ${record.players ? `<div class="record-players">${record.players}</div>` : ""} ${ record.chip ? ` <div class="record-chip"> <i class="${record.icon}"></i> <span>${record.chip}</span> </div> ` : "" } </div> `; return article; } function renderError(message) { recordsGrid.innerHTML = ""; const box = document.createElement("div"); box.className = "error-box"; box.textContent = message; recordsGrid.appendChild(box); } function buildRecords() { if (!sharedData || !sharedData.pageData || !sharedData.rawPlayerTable) { renderError("Gemeinsame Datenbasis nicht gefunden. Prüfe, ob liga-daten.js richtig eingebunden ist."); return; } const PAGE_DATA = sharedData.pageData; const RAW_PLAYER_TABLE = sharedData.rawPlayerTable; const einzelSection = PAGE_DATA.sections.find((section) => section.key === "einzel"); const teamSection = PAGE_DATA.sections.find((section) => section.key === "team"); if (!einzelSection || !teamSection) { renderError("Die benötigten Tabellen wurden nicht gefunden."); return; } const einzelRows = rowsToObjects(parseTableRaw(einzelSection.raw, "Einzelwertung")); const teamTopRows = rowsToObjects(parseTableRaw(teamSection.top.raw, "Mannschaftswertung")); const teamBottomRows = rowsToObjects(parseTableRaw(teamSection.bottom.raw, teamSection.bottom.label)); if (!einzelRows.length || !teamTopRows.length || !teamBottomRows.length) { renderError("Mindestens eine Tabelle konnte nicht sauber gelesen werden."); return; } const teamPlayersMap = new Map(); einzelRows.forEach((row) => { const team = row["Team"]; const name = row["Name"]; const avg = parseGermanNumber(row["⌀"]); if (!team || !name) return; if (!teamPlayersMap.has(team)) { teamPlayersMap.set(team, []); } teamPlayersMap.get(team).push({ name, avg }); }); function getTeamPlayers(teamName) { const players = (teamPlayersMap.get(teamName) || []) .sort((a, b) => b.avg - a.avg) .map((player) => player.name); return players.length ? `Spieler: ${players.join(" · ")}` : ""; } const bestPlayday = getBestRowByNumber(einzelRows, "Beste Serie", "value"); const bestSingleGame = getBestRowByNumber(einzelRows, "Bestes Spiel", "value"); const bestSeasonAverage = getBestRowByNumber(einzelRows, "⌀", "value"); const most200Games = getBestRowByNumber(einzelRows, "Spiele > 200", "value"); const bestTeamOverall = getBestRowByNumber(teamTopRows, "Punkte", "points"); const bestTeamDay = getBestRowByNumber(teamBottomRows, "Gesamt", "total"); const bestImprovementCandidates = einzelRows .map((row) => { const current = parseGermanNumber(row["⌀"]); const previous = parseGermanNumber(row["⌀ letzte Saison"]); if (!Number.isFinite(current) || !Number.isFinite(previous) || previous <= 0) { return null; } return { row, current, previous, improvement: ((current - previous) / previous) * 100 }; }) .filter(Boolean); const bestImprovement = bestImprovementCandidates.reduce((best, item) => { if (!best || item.improvement > best.improvement) return item; return best; }, null); const playerData = parsePlayerTable(RAW_PLAYER_TABLE); const bestConsistency = getConsistencyWinner(playerData); const bestPlaydayAverage = bestPlayday ? bestPlayday.value / 4 : null; const records = [ { label: "Bester Spieltag", value: bestPlayday?.row?.["Name"] || "–", detail: bestPlayday ? `${bestPlayday.value} Pins · ${formatNumber(bestPlaydayAverage)} Schnitt` : "Kein Wert", chip: "Serie und Spieltagsschnitt zusammengefasst", icon: "fa-solid fa-trophy", featured: true }, { label: "Bestes Einzelspiel", value: bestSingleGame?.row?.["Name"] || "–", detail: bestSingleGame ? `${bestSingleGame.value} Pins` : "Kein Wert", chip: "Höchster Einzelwert der Saison", icon: "fa-solid fa-bolt" }, { label: "Höchster Gesamtsaisonschnitt", value: bestSeasonAverage?.row?.["Name"] || "–", detail: bestSeasonAverage ? `${formatNumber(bestSeasonAverage.value)} Schnitt` : "Kein Wert", chip: "Platz 1 der Gesamtauswertung", icon: "fa-solid fa-chart-line" }, { label: "Meiste Spiele über 200", value: most200Games?.row?.["Name"] || "–", detail: most200Games ? `${most200Games.value} Spiele über 200` : "Kein Wert", chip: "Konstant starke Einzelspiele", icon: "fa-solid fa-fire" }, { label: "Beste Konstanz", value: bestConsistency?.name || "–", detail: bestConsistency ? `${bestConsistency.score} / 100 Konstanz-Score` : "Kein Wert", chip: "Wenig Schwankung über die Spieltage", icon: "fa-solid fa-wave-square" }, { label: "Beste Verbesserung", value: bestImprovement?.row?.["Name"] || "–", detail: bestImprovement ? `${formatPercent(bestImprovement.improvement)} zur Vorsaison` : "Kein Wert", chip: bestImprovement ? `${formatNumber(bestImprovement.current)} statt ${formatNumber(bestImprovement.previous)} Schnitt` : "Nur mit Vorjahreswert", icon: "fa-solid fa-arrow-trend-up" }, { label: "Bestes Team gesamt", value: bestTeamOverall?.row?.["Team"] || "–", detail: bestTeamOverall ? `${bestTeamOverall.row["Punkte"]} Punkte · ${bestTeamOverall.row["⌀"]} Schnitt` : "Kein Wert", players: bestTeamOverall ? getTeamPlayers(bestTeamOverall.row["Team"]) : "", chip: "Platz 1 der Teamwertung", icon: "fa-solid fa-users" }, { label: "Bester Team-Spieltag", value: bestTeamDay?.row?.["Team"] || "–", detail: bestTeamDay ? `${bestTeamDay.row["Gesamt"]} Pins · ${PAGE_DATA.title}` : "Kein Wert", players: bestTeamDay ? getTeamPlayers(bestTeamDay.row["Team"]) : "", chip: "Höchster Teamwert im aktuellen Spieltag", icon: "fa-solid fa-medal" } ]; recordsGrid.innerHTML = ""; records.forEach((record) => { recordsGrid.appendChild(createRecordCard(record)); }); } buildRecords(); </script> </body> </html>
+<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Rekorde - Strikeclub Velten</title> <meta property="og:title" content="Rekorde - Strikeclub Velten" /> <meta property="og:description" content="Die wichtigsten Bestmarken der Saison im Überblick." /> <meta property="og:url" content="https://www.strikeclub-velten.de/rekorde.html" /> <meta property="og:type" content="website" /> <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;500;600;700;800&display=swap" rel="stylesheet" /> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" /> <style> :root { --text: #0f172a; --text-soft: #5f718d; --border: rgba(119, 145, 185, 0.14); --shadow-xl: 0 30px 80px rgba(35, 58, 100, 0.14); --shadow-lg: 0 18px 46px rgba(35, 58, 100, 0.10); --shadow-md: 0 12px 30px rgba(35, 58, 100, 0.08); --max-width: 1440px; } * { box-sizing: border-box; } body { margin: 0; min-height: 100vh; font-family: "Inter", Arial, sans-serif; color: var(--text); background: radial-gradient(circle at 10% 10%, rgba(91, 124, 255, 0.12), transparent 30%), radial-gradient(circle at 92% 10%, rgba(255, 92, 159, 0.12), transparent 24%), radial-gradient(circle at 82% 84%, rgba(51, 198, 255, 0.14), transparent 30%), linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%); overflow-x: hidden; } a { color: inherit; text-decoration: none; } .scene { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; } .glow { position: absolute; border-radius: 50%; filter: blur(76px); opacity: 0.44; animation: drift 18s ease-in-out infinite; } .glow.one { width: 340px; height: 340px; left: -80px; top: 40px; background: rgba(91, 124, 255, 0.16); } .glow.two { width: 290px; height: 290px; right: -30px; top: 140px; background: rgba(255, 92, 159, 0.14); animation-delay: -6s; } .glow.three { width: 380px; height: 380px; right: 14%; bottom: -100px; background: rgba(51, 198, 255, 0.16); animation-delay: -11s; } .bg-shape { position: absolute; opacity: 0.22; animation-timing-function: ease-in-out; animation-iteration-count: infinite; } .ball-bg { width: var(--size, 120px); height: var(--size, 120px); left: var(--x, 10%); top: var(--y, 10%); border-radius: 50%; background: radial-gradient(circle at 38% 35%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), radial-gradient(circle at 55% 28%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), radial-gradient(circle at 60% 48%, rgba(16, 24, 40, 0.14) 0 6px, transparent 7px), linear-gradient(145deg, var(--c1, #7c9bff), var(--c2, #b15cff)); box-shadow: inset -18px -18px 30px rgba(255, 255, 255, 0.24), inset 18px 18px 28px rgba(255, 255, 255, 0.14), 0 16px 32px rgba(65, 85, 130, 0.10); animation-name: floatBall; animation-duration: var(--dur, 18s); animation-delay: var(--delay, 0s); } .pin-bg { width: var(--w, 56px); height: var(--h, 164px); left: var(--x, 15%); top: var(--y, 20%); border-radius: 40% 40% 42% 42% / 15% 15% 72% 72%; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 40%, #eef4ff 100%); box-shadow: inset 0 0 0 1px rgba(150, 170, 205, 0.14), 0 16px 32px rgba(65, 85, 130, 0.08); animation-name: swayPin; animation-duration: var(--dur, 16s); animation-delay: var(--delay, 0s); transform-origin: center 82%; } .pin-bg::before { content: ""; position: absolute; top: 16px; left: 8px; right: 8px; height: 18px; border-radius: 999px; background: linear-gradient( 180deg, rgba(255, 92, 159, 0.84) 0%, rgba(255, 92, 159, 0.84) 42%, transparent 42%, transparent 58%, rgba(255, 104, 142, 0.74) 58%, rgba(255, 104, 142, 0.74) 100% ); } .site { position: relative; z-index: 2; width: min(var(--max-width), calc(100% - 22px)); margin: 0 auto; padding: 14px 0 34px; } .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; } .brand { display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.76); border: 1px solid rgba(122, 146, 182, 0.14); backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(35, 58, 100, 0.06); font-weight: 700; letter-spacing: -0.02em; } .brand-mark { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(135deg, rgba(91, 124, 255, 1), rgba(255, 92, 159, 1)); color: #fff; box-shadow: 0 8px 20px rgba(91, 124, 255, 0.24); } .page { position: relative; padding: 20px; border-radius: 26px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.80)); border: 1px solid var(--border); backdrop-filter: blur(24px); box-shadow: var(--shadow-xl); overflow: hidden; } .page::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 12% 10%, rgba(91, 124, 255, 0.10), transparent 28%), radial-gradient(circle at 86% 18%, rgba(255, 92, 159, 0.08), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); pointer-events: none; } .header { position: relative; z-index: 1; margin-bottom: 22px; } .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.76); border: 1px solid rgba(122, 146, 182, 0.12); font-weight: 700; font-size: 0.9rem; color: #36507a; margin-bottom: 14px; box-shadow: 0 10px 24px rgba(35, 58, 100, 0.04); } .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #3bc7ff, #7a5cff); box-shadow: 0 0 0 6px rgba(91, 124, 255, 0.08); } h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.06em; font-weight: 800; } .headline-accent { background: linear-gradient(135deg, #0f172a 0%, #4964ff 44%, #ff5c9f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; } .records-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } .record-card { position: relative; padding: 18px; border-radius: 22px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 255, 0.90)); border: 1px solid rgba(122, 146, 182, 0.10); box-shadow: var(--shadow-md); overflow: hidden; } .record-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 12% 12%, rgba(91, 124, 255, 0.12), transparent 28%), radial-gradient(circle at 88% 18%, rgba(255, 92, 159, 0.10), transparent 22%), radial-gradient(circle at 72% 100%, rgba(51, 198, 255, 0.10), transparent 28%); } .record-card.featured { background: linear-gradient(135deg, rgba(91, 124, 255, 0.16), rgba(255, 92, 159, 0.12)), rgba(255, 255, 255, 0.92); border: 1px solid rgba(91, 124, 255, 0.18); box-shadow: 0 16px 36px rgba(73, 100, 255, 0.14); } .record-inner { position: relative; z-index: 1; } .record-label { display: block; margin-bottom: 10px; font-size: 0.78rem; font-weight: 900; color: #657891; text-transform: uppercase; letter-spacing: 0.06em; } .record-value { margin-bottom: 8px; font-size: clamp(1.45rem, 3vw, 2.25rem); font-weight: 900; color: #16203d; letter-spacing: -0.05em; line-height: 1; } .record-detail { color: #5a6f90; font-size: 0.95rem; line-height: 1.6; font-weight: 700; } .record-players { margin-top: 12px; padding: 10px 12px; border-radius: 16px; background: rgba(255, 255, 255, 0.84); border: 1px solid rgba(122, 146, 182, 0.10); color: #4f6484; font-size: 0.82rem; line-height: 1.5; font-weight: 700; } .record-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.86); border: 1px solid rgba(122, 146, 182, 0.10); color: #516784; font-size: 0.8rem; font-weight: 800; box-shadow: 0 8px 18px rgba(35, 58, 100, 0.04); } .error-box { position: relative; z-index: 1; padding: 18px; border-radius: 20px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 255, 0.90)); border: 1px solid rgba(255, 127, 80, 0.18); box-shadow: var(--shadow-md); color: #8a4b2b; font-weight: 700; line-height: 1.6; } .footer-note { margin-top: 16px; text-align: center; color: #6c7b96; font-size: 0.92rem; padding: 0 8px; } .footer-note a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(108, 123, 150, 0.34); transition: opacity 0.2s ease, border-color 0.2s ease; } .footer-note a:hover { opacity: 1; border-bottom-color: rgba(108, 123, 150, 0.75); } .refresh-fab, .back-fab { position: fixed; bottom: 18px; z-index: 9999; width: 52px; height: 52px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 255, 0.92), rgba(255, 92, 159, 0.92)); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28); backdrop-filter: blur(10px); transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease; } .refresh-fab { right: 18px; } .back-fab { left: 18px; } .refresh-fab i { font-size: 1rem; animation: refreshSpin 2.4s linear infinite; } .back-fab i { font-size: 1rem; animation: backPulse 1.6s ease-in-out infinite; } .refresh-fab:hover, .back-fab:hover { transform: translateY(-2px) scale(1.05); filter: saturate(1.08); box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.32); } .refresh-fab:hover i { animation-duration: 0.9s; } .back-fab:hover i { animation-duration: 0.8s; } .refresh-fab:active, .back-fab:active { transform: scale(0.96); } @keyframes drift { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(24px, -18px, 0) scale(1.08); } } @keyframes floatBall { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); } 25% { transform: translate3d(18px, -28px, 0) rotate(6deg) scale(1.02); } 50% { transform: translate3d(-16px, 20px, 0) rotate(-7deg) scale(0.98); } 75% { transform: translate3d(24px, -12px, 0) rotate(4deg) scale(1.01); } } @keyframes swayPin { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(14px, -22px, 0) rotate(3deg); } 50% { transform: translate3d(-10px, 14px, 0) rotate(-4deg); } 75% { transform: translate3d(16px, -10px, 0) rotate(2deg); } } @keyframes refreshSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes backPulse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } } @media (max-width: 980px) { .site { width: min(var(--max-width), calc(100% - 12px)); } .page { padding: 14px; } .records-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } } @media (max-width: 700px) { .site { width: 100%; padding: 0 0 22px; } .topbar { padding: 10px 8px 0; margin-bottom: 8px; } .page { border-radius: 0; border-left: 0; border-right: 0; padding: 12px 6px 16px; } .records-grid { grid-template-columns: 1fr; } h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); } .refresh-fab, .back-fab { width: 48px; height: 48px; bottom: 14px; } .refresh-fab { right: 14px; } .back-fab { left: 14px; } .refresh-fab i, .back-fab i { font-size: 0.95rem; } } @media (prefers-reduced-motion: reduce) { .glow, .bg-shape, .refresh-fab i, .back-fab i { animation: none !important; } } </style> 
+<style id="strikeclub-steampunk-theme">
+  :root {
+    --steam-bg: #080705;
+    --steam-panel: #15110d;
+    --steam-panel-2: #211910;
+    --steam-metal: #322318;
+    --steam-brass: #c99748;
+    --steam-brass-light: #f0cd86;
+    --steam-copper: #a65b33;
+    --steam-cream: #f2e2bd;
+    --steam-muted: #b9aa8c;
+    --steam-cyan: #4df5ed;
+    --steam-pink: #ff63bd;
+    --steam-gold: #ffc85b;
+    --steam-green: #72f49a;
+    --steam-blue: #74b8ff;
+    --steam-shadow: 0 24px 70px rgba(0,0,0,.52);
+    --page-accent: var(--steam-cyan);
+    --page-accent-rgb: 77,245,237;
+    --page-secondary: var(--steam-pink);
+    --page-secondary-rgb: 255,99,189;
+  }
+
+  body.page-records { --page-accent: #ffbd59; --page-accent-rgb: 255,189,89; --page-secondary: #ff6e8c; --page-secondary-rgb: 255,110,140; }
+  body.page-analysis { --page-accent: #74b8ff; --page-accent-rgb: 116,184,255; --page-secondary: #ff63bd; --page-secondary-rgb: 255,99,189; }
+  body.page-about { --page-accent: #9c8cff; --page-accent-rgb: 156,140,255; --page-secondary: #58e8b3; --page-secondary-rgb: 88,232,179; }
+  body.page-news { --page-accent: #72f49a; --page-accent-rgb: 114,244,154; --page-secondary: #ffc85b; --page-secondary-rgb: 255,200,91; }
+  body.page-legal { --page-accent: #ffc85b; --page-accent-rgb: 255,200,91; --page-secondary: #4df5ed; --page-secondary-rgb: 77,245,237; }
+
+  html { color-scheme: dark; background: var(--steam-bg); }
+
+  body.steam-page {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--steam-cream);
+    font-family: "Roboto Slab", Georgia, serif;
+    background:
+      radial-gradient(circle at 8% 5%, rgba(var(--page-accent-rgb),.13), transparent 24rem),
+      radial-gradient(circle at 94% 16%, rgba(var(--page-secondary-rgb),.10), transparent 22rem),
+      radial-gradient(circle at 48% 92%, rgba(166,91,51,.14), transparent 30rem),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px),
+      linear-gradient(180deg, #0c0a07 0%, #060504 100%);
+    overflow-x: hidden;
+  }
+
+  body.steam-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .62;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.55), transparent 14%, transparent 86%, rgba(0,0,0,.55)),
+      repeating-linear-gradient(90deg, transparent 0 47px, rgba(201,151,72,.025) 47px 48px),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.08) 3px 4px);
+  }
+
+  body.steam-page a { color: inherit; }
+
+  /* Existing decorative scene becomes an industrial ambient layer. */
+  body.steam-page .scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  body.steam-page .glow {
+    opacity: .2;
+    filter: blur(92px) saturate(1.35);
+  }
+
+  body.steam-page .glow.one { background: rgba(var(--page-accent-rgb),.45); }
+  body.steam-page .glow.two { background: rgba(var(--page-secondary-rgb),.38); }
+  body.steam-page .glow.three { background: rgba(201,151,72,.28); }
+
+  body.steam-page .bg-shape {
+    opacity: .07 !important;
+    filter: sepia(1) saturate(.55) contrast(1.35);
+  }
+
+  body.steam-page .site {
+    position: relative;
+    z-index: 2;
+    width: min(1440px, calc(100% - 28px));
+    margin: 0 auto;
+    padding: 16px 0 38px;
+  }
+
+  body.page-legal .site { width: min(920px, calc(100% - 28px)); }
+
+  body.steam-page .topbar {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 0 0 14px;
+    padding: 8px 12px;
+    border: 1px solid rgba(240,205,134,.34);
+    border-radius: 10px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.025), transparent 30%),
+      linear-gradient(180deg, rgba(43,31,21,.97), rgba(12,10,7,.98));
+    box-shadow:
+      inset 0 0 0 2px rgba(54,31,17,.82),
+      inset 0 0 0 4px rgba(201,151,72,.10),
+      0 14px 34px rgba(0,0,0,.38);
+  }
+
+  body.steam-page .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    color: #ecd39e;
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+    text-shadow: 0 4px 14px rgba(0,0,0,.6);
+  }
+
+  body.steam-page .brand-mark {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: inline-grid;
+    place-items: center;
+    border: 2px solid var(--steam-brass);
+    border-radius: 50%;
+    color: var(--steam-cream);
+    background:
+      radial-gradient(circle at 34% 28%, rgba(255,255,255,.15), transparent 22%),
+      linear-gradient(145deg, rgba(var(--page-accent-rgb),.30), #0b1010 72%);
+    box-shadow:
+      0 0 0 3px #29180f,
+      0 0 16px rgba(var(--page-accent-rgb),.19);
+  }
+
+  body.steam-page .back-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 13px;
+    border: 1px solid rgba(240,205,134,.35);
+    border-radius: 6px;
+    color: #eed7aa;
+    background: linear-gradient(180deg, #332116, #110c08);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.38);
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .page,
+  body.steam-page .card {
+    position: relative;
+    padding: 24px;
+    border: 2px solid #6b4024;
+    border-radius: 14px;
+    overflow: hidden;
+    color: var(--steam-cream);
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.03), transparent 28%),
+      radial-gradient(circle at 12% 4%, rgba(var(--page-accent-rgb),.10), transparent 25rem),
+      radial-gradient(circle at 92% 10%, rgba(var(--page-secondary-rgb),.08), transparent 22rem),
+      linear-gradient(180deg, rgba(31,25,18,.98), rgba(10,9,7,.99));
+    border: 1px solid rgba(240,205,134,.42);
+    backdrop-filter: none;
+    box-shadow:
+      inset 0 0 0 2px rgba(55,31,17,.88),
+      inset 0 0 0 5px rgba(166,91,51,.12),
+      var(--steam-shadow);
+  }
+
+  body.steam-page .page::before,
+  body.steam-page .card::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    z-index: 0;
+    pointer-events: none;
+    border: 1px solid rgba(240,205,134,.17);
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.035), transparent 24%, transparent 76%, rgba(var(--page-secondary-rgb),.035)),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.035) 3px 4px);
+  }
+
+  body.steam-page .page::after,
+  body.steam-page .card::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    z-index: 5;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 4px 4px, #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at calc(100% - 4px) 4px, #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at 4px calc(100% - 4px), #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at calc(100% - 4px) calc(100% - 4px), #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px);
+  }
+
+  body.steam-page .page > *,
+  body.steam-page .card > * { position: relative; z-index: 2; }
+
+  body.steam-page .header {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+    padding: 4px 4px 20px;
+    border-bottom: 1px solid rgba(201,151,72,.30);
+  }
+
+  body.steam-page .header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: min(360px, 72%);
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--page-accent), var(--page-secondary), transparent);
+    box-shadow: 0 0 14px rgba(var(--page-accent-rgb),.34);
+  }
+
+  body.steam-page .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 8px 11px;
+    border: 1px solid rgba(var(--page-accent-rgb),.36);
+    border-radius: 4px;
+    color: var(--page-accent);
+    background: rgba(3,12,12,.58);
+    box-shadow: inset 0 0 14px rgba(var(--page-accent-rgb),.055);
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .eyebrow .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 1px;
+    background: var(--page-accent);
+    box-shadow: 0 0 8px var(--page-accent), 0 0 18px rgba(var(--page-accent-rgb),.55);
+    animation: steamBlink 1.8s steps(1,end) infinite;
+  }
+
+  body.steam-page h1 {
+    margin: 0 0 13px;
+    color: #f2dfb7;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(40px, 5vw, 74px);
+    line-height: .96;
+    font-weight: 700;
+    letter-spacing: .012em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 #64391f, 0 9px 24px rgba(0,0,0,.75);
+  }
+
+  body.steam-page .headline-accent {
+    color: transparent;
+    background: linear-gradient(100deg, var(--page-accent), var(--steam-brass-light) 46%, var(--page-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(var(--page-accent-rgb),.16));
+  }
+
+  body.steam-page .hero-text {
+    color: var(--steam-muted);
+    font-family: "Roboto Slab", serif;
+    font-weight: 500;
+    line-height: 1.72;
+  }
+
+  body.steam-page .footer-note {
+    margin-top: 17px;
+    padding: 0 8px;
+    color: #9f9178;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: none;
+  }
+
+  body.steam-page .footer-note a {
+    color: #d9bf89;
+    border-bottom: 1px solid rgba(217,191,137,.35);
+  }
+
+  body.steam-page .back-fab,
+  body.steam-page .refresh-fab {
+    position: fixed;
+    bottom: 16px;
+    z-index: 9999;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(240,205,134,.55);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #f7e7c4;
+    background:
+      linear-gradient(145deg, rgba(var(--page-accent-rgb),.20), transparent 48%),
+      linear-gradient(180deg, #3a2517, #100b08);
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.5),
+      0 10px 26px rgba(0,0,0,.46),
+      0 0 17px rgba(var(--page-accent-rgb),.10);
+    backdrop-filter: none;
+  }
+
+  body.steam-page .back-fab { left: 16px; }
+  body.steam-page .refresh-fab { right: 16px; }
+
+  body.steam-page .back-fab:hover,
+  body.steam-page .refresh-fab:hover {
+    transform: translateY(-2px);
+    border-color: var(--page-accent);
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.5),
+      0 12px 28px rgba(0,0,0,.5),
+      0 0 20px rgba(var(--page-accent-rgb),.22);
+  }
+
+  /* Reusable dark machine panels */
+  body.steam-page .analysis-panel,
+  body.steam-page .panel,
+  body.steam-page .overlay-banner,
+  body.steam-page .about-card,
+  body.steam-page .record-card,
+  body.steam-page .block {
+    color: var(--steam-cream);
+    border: 1px solid rgba(240,205,134,.27);
+    background:
+      radial-gradient(circle at 12% 0%, rgba(var(--page-accent-rgb),.08), transparent 45%),
+      linear-gradient(180deg, rgba(34,27,19,.97), rgba(13,11,8,.99));
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.37),
+      0 13px 30px rgba(0,0,0,.32);
+  }
+
+  body.steam-page .panel-head,
+  body.steam-page .analysis-panel .panel-head {
+    color: #eed9ad;
+    border-bottom: 1px solid rgba(201,151,72,.28);
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.09), transparent 55%),
+      linear-gradient(180deg, rgba(55,39,25,.98), rgba(20,15,11,.98));
+  }
+
+  body.steam-page .panel-title,
+  body.steam-page .overlay-title,
+  body.steam-page .about-card h2,
+  body.steam-page .block h2,
+  body.steam-page .status-headline {
+    color: #f0d8a7;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .panel-subtitle,
+  body.steam-page .overlay-text,
+  body.steam-page .about-card p,
+  body.steam-page .block p,
+  body.steam-page .record-detail,
+  body.steam-page .record-players,
+  body.steam-page .item-text,
+  body.steam-page .mini-text {
+    color: var(--steam-muted);
+  }
+
+  body.steam-page .chip-note,
+  body.steam-page .panel-chip,
+  body.steam-page .overlay-pill,
+  body.steam-page .meta-chip,
+  body.steam-page .record-chip {
+    border: 1px solid rgba(var(--page-accent-rgb),.30);
+    color: var(--page-accent);
+    background: rgba(4,15,15,.55);
+    box-shadow: inset 0 0 12px rgba(var(--page-accent-rgb),.05);
+  }
+
+  /* Records */
+  body.page-records .records-grid { gap: 13px; }
+  body.page-records .record-card {
+    position: relative;
+    padding: 20px;
+    border-radius: 9px;
+    overflow: hidden;
+  }
+
+  body.page-records .record-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(240,205,134,.12);
+    background: none;
+    pointer-events: none;
+  }
+
+  body.page-records .record-card.featured {
+    border-color: rgba(var(--page-accent-rgb),.56);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(var(--page-accent-rgb),.19), transparent 55%),
+      linear-gradient(180deg, #322117, #110d09);
+    box-shadow: 0 0 28px rgba(var(--page-accent-rgb),.10), 0 18px 36px rgba(0,0,0,.38);
+  }
+
+  body.page-records .record-label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+    line-height: 1.55;
+  }
+
+  body.page-records .record-value {
+    color: #f4dcae;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(31px, 4vw, 53px);
+    text-shadow: 0 0 18px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-records .record-players {
+    border: 1px solid rgba(201,151,72,.18);
+    border-radius: 5px;
+    background: rgba(0,0,0,.22);
+  }
+
+  body.page-records .error-box {
+    border: 1px solid rgba(255,103,126,.42);
+    color: #ffc2cd;
+    background: rgba(69,15,24,.52);
+  }
+
+  /* Player analysis */
+  body.page-analysis .analysis-panel {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  body.page-analysis .panel-body { background: rgba(5,5,4,.18); }
+
+  body.page-analysis .field {
+    border: 1px solid rgba(var(--page-accent-rgb),.40);
+    border-radius: 7px;
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.10), transparent),
+      linear-gradient(180deg, #251c14, #100c09);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.38), 0 12px 25px rgba(0,0,0,.29);
+  }
+
+  body.page-analysis .field label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  body.page-analysis .player-select {
+    color: #f2dfb7;
+    border: 1px solid rgba(var(--page-accent-rgb),.48);
+    border-radius: 5px;
+    background: #111718;
+    box-shadow: inset 0 0 16px rgba(var(--page-accent-rgb),.055);
+  }
+
+  body.page-analysis .field::after { color: var(--page-accent); }
+
+  body.page-analysis .player-select:focus {
+    border-color: var(--page-accent);
+    color: #fff0c9;
+    background: #121a1c;
+    box-shadow: 0 0 0 4px rgba(var(--page-accent-rgb),.10), 0 0 22px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-analysis .stat-card {
+    border: 1px solid rgba(201,151,72,.23);
+    border-radius: 7px;
+    background:
+      radial-gradient(circle at 90% 0%, rgba(var(--page-accent-rgb),.08), transparent 55%),
+      linear-gradient(180deg, #251d15, #100d09);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.35), 0 9px 20px rgba(0,0,0,.25);
+  }
+
+  body.page-analysis .stat-label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 6px;
+    line-height: 1.55;
+  }
+
+  body.page-analysis .stat-value {
+    color: #f0d7a5;
+    font-family: "Oswald", sans-serif;
+    font-size: 27px;
+    text-shadow: 0 0 12px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-analysis .stat-subtext { color: #9d917b; }
+
+  body.page-analysis .info-icon-btn {
+    color: var(--page-accent);
+    background: rgba(var(--page-accent-rgb),.08);
+    box-shadow: inset 0 0 0 1px rgba(var(--page-accent-rgb),.22);
+  }
+
+  body.page-analysis .chart-wrap,
+  body.page-analysis .chart-detail-box {
+    border: 1px solid rgba(201,151,72,.24);
+    border-radius: 8px;
+    color: var(--steam-cream);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 21px, rgba(var(--page-accent-rgb),.026) 21px 22px),
+      linear-gradient(180deg, #121716, #0a0907);
+    box-shadow: inset 0 0 24px rgba(var(--page-accent-rgb),.035);
+  }
+
+  body.page-analysis .chart-detail-title { color: var(--page-accent); }
+  body.page-analysis .chart-detail-chip {
+    color: #d9c49c;
+    border: 1px solid rgba(201,151,72,.23);
+    background: rgba(0,0,0,.25);
+  }
+
+  body.page-analysis .legend-note,
+  body.page-analysis .legend-item { color: #a99b82; }
+
+  body.page-analysis .status-section {
+    border-top-color: rgba(201,151,72,.25);
+  }
+
+  body.page-analysis .status-grid > * {
+    border-color: rgba(201,151,72,.22) !important;
+    color: #e3cc9d !important;
+    background: linear-gradient(180deg, #251d15, #100d09) !important;
+  }
+
+  body.page-analysis .info-modal-overlay { background: rgba(3,3,2,.78); backdrop-filter: blur(8px); }
+  body.page-analysis .info-modal-card {
+    border: 1px solid rgba(240,205,134,.48);
+    color: var(--steam-cream);
+    background: linear-gradient(180deg, #2c2118, #0f0c09);
+    box-shadow: var(--steam-shadow);
+  }
+  body.page-analysis .info-modal-title { color: #f0d8a7; font-family: "Oswald",sans-serif; text-transform: uppercase; }
+  body.page-analysis .info-modal-text { color: var(--steam-muted); }
+  body.page-analysis .info-modal-close {
+    color: var(--page-accent);
+    background: rgba(var(--page-accent-rgb),.08);
+  }
+
+  /* About */
+  body.page-about .about-grid { gap: 14px; }
+  body.page-about .about-card {
+    position: relative;
+    padding: 22px;
+    border-radius: 9px;
+    overflow: hidden;
+  }
+
+  body.page-about .about-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--page-accent), var(--page-secondary));
+    box-shadow: 0 0 14px rgba(var(--page-accent-rgb),.24);
+  }
+
+  body.page-about .about-card h2 { font-size: 25px; }
+  body.page-about .about-card p { line-height: 1.72; }
+
+  body.page-about .mail-btn {
+    margin-top: 14px;
+    min-height: 48px;
+    border: 1px solid rgba(var(--page-accent-rgb),.38);
+    border-radius: 5px;
+    color: var(--page-accent);
+    background: rgba(6,10,15,.55);
+    box-shadow: inset 0 0 14px rgba(var(--page-accent-rgb),.06);
+  }
+
+  /* News */
+  body.page-news .overlay-banner {
+    border-radius: 9px;
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.12), rgba(var(--page-secondary-rgb),.06)),
+      linear-gradient(180deg, #2a2118, #110d09);
+  }
+
+  body.page-news .overlay-icon {
+    border: 1px solid rgba(var(--page-accent-rgb),.50);
+    border-radius: 6px;
+    color: var(--page-accent);
+    background: rgba(5,15,10,.62);
+    box-shadow: 0 0 18px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-news .panel { border-radius: 9px; }
+  body.page-news .item-card {
+    border: 1px solid rgba(201,151,72,.22);
+    border-radius: 7px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(var(--page-accent-rgb),.06), transparent 52%),
+      linear-gradient(180deg, #251d15, #100d09);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.33), 0 9px 20px rgba(0,0,0,.23);
+  }
+
+  body.page-news .item-tag {
+    color: var(--page-accent);
+    border-color: rgba(var(--page-accent-rgb),.26);
+    background: rgba(var(--page-accent-rgb),.055);
+  }
+
+  body.page-news .item-status {
+    border: 1px solid rgba(201,151,72,.28);
+    color: #e8cb93;
+    background: rgba(0,0,0,.24);
+  }
+
+  body.page-news .item-status.open { color: var(--steam-green); }
+  body.page-news .item-status.info { color: var(--steam-blue); }
+  body.page-news .item-status.soon { color: var(--steam-gold); }
+
+  body.page-news .item-title {
+    color: #f0d7a5;
+    font-family: "Oswald", sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+  }
+
+  body.page-news .highlight-strip,
+  body.page-news .mini-card {
+    border-color: rgba(201,151,72,.22);
+    color: var(--steam-cream);
+    background: linear-gradient(180deg, #251d15, #100d09);
+  }
+
+  body.page-news .mini-label { color: var(--page-accent); }
+  body.page-news .mini-value { color: #f0d7a5; font-family: "Oswald",sans-serif; }
+
+  /* Legal / Impressum */
+  body.page-legal .card { padding: 28px; }
+  body.page-legal .content { gap: 13px; }
+
+  body.page-legal .block {
+    position: relative;
+    padding: 18px 18px 18px 22px;
+    border-radius: 7px;
+  }
+
+  body.page-legal .block::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--page-accent), var(--page-secondary));
+    box-shadow: 0 0 10px rgba(var(--page-accent-rgb),.18);
+  }
+
+  body.page-legal .block h2 { margin-bottom: 9px; font-size: 21px; }
+  body.page-legal .block p { color: var(--steam-muted); }
+  body.page-legal .block a { color: var(--page-accent); }
+
+  @keyframes steamBlink {
+    0%, 68%, 100% { opacity: 1; }
+    69%, 80% { opacity: .18; }
+  }
+
+  @media (max-width: 900px) {
+    body.steam-page .site { width: min(100%, 720px); padding: 0 0 26px; }
+    body.steam-page .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      margin: 0;
+      padding: 9px 11px;
+      border-width: 0 0 1px;
+      border-radius: 0;
+      background: rgba(11,9,7,.95);
+      backdrop-filter: blur(10px);
+    }
+    body.steam-page .page,
+    body.steam-page .card {
+      margin: 10px 8px 0;
+      padding: 17px 12px 20px;
+      border-radius: 10px;
+    }
+    body.steam-page .header { padding: 2px 2px 16px; }
+    body.steam-page h1 { font-size: clamp(34px, 10vw, 54px); }
+    body.steam-page .brand { font-size: 17px; }
+    body.steam-page .brand-mark { flex-basis: 38px; width: 38px; height: 38px; }
+    body.steam-page .bg-shape { display: none; }
+
+    body.page-records .records-grid,
+    body.page-about .about-grid,
+    body.page-news .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    body.page-analysis .control-row { grid-template-columns: 1fr; }
+    body.page-analysis .stats-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    body.page-analysis .chart-wrap { padding: 9px 5px 10px; }
+
+    body.steam-page .back-fab,
+    body.steam-page .refresh-fab {
+      width: 46px;
+      height: 46px;
+      bottom: 12px;
+    }
+    body.steam-page .back-fab { left: 12px; }
+    body.steam-page .refresh-fab { right: 12px; }
+  }
+
+  @media (max-width: 520px) {
+    body.steam-page .topbar { min-height: 58px; }
+    body.steam-page .brand { font-size: 15px; }
+    body.steam-page .brand-mark { flex-basis: 35px; width: 35px; height: 35px; }
+    body.steam-page .back-link { min-height: 40px; padding: 7px 10px; font-size: 12px; }
+    body.steam-page .page,
+    body.steam-page .card { margin-inline: 5px; padding-inline: 10px; }
+    body.steam-page .eyebrow { font-size: 6.5px; }
+    body.steam-page h1 { font-size: clamp(31px, 10.5vw, 45px); }
+
+    body.page-analysis .stats-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+    body.page-analysis .stat-card { padding: 11px 9px; }
+    body.page-analysis .stat-value { font-size: 23px; }
+    body.page-analysis .stat-label { font-size: 5.4px; }
+    body.page-analysis .panel-body { padding: 9px; }
+    body.page-analysis .field { padding: 11px; }
+    body.page-analysis .player-select { padding: 12px 42px 12px 12px; }
+    body.page-analysis .field::after { right: 25px; bottom: 25px; }
+
+    body.page-news .overlay-left { align-items: center; }
+    body.page-news .overlay-icon { width: 44px; height: 44px; }
+    body.page-news .item-card { padding: 13px; }
+
+    body.page-legal .card { padding: 18px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body.steam-page *, body.steam-page *::before, body.steam-page *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+
+</head> <body class="steam-page page-records"> <div class="scene" aria-hidden="true"> <div class="glow one"></div> <div class="glow two"></div> <div class="glow three"></div> <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;" ></div> <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;" ></div> <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;" ></div> <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;" ></div> <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;" ></div> </div> <main class="site"> <div class="topbar"> <div class="brand"> <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span> <span>Strikeclub Velten</span> </div> </div> <section class="page"> <div class="header"> <div> <div class="eyebrow"> <span class="dot"></span> <span>Rekorde</span> </div> <h1> Bestmarken. <span class="headline-accent">Automatisch aus den aktuellen Daten.</span> </h1> </div> </div> <section class="records-grid" id="recordsGrid"></section> </section> <p class="footer-note"> Strikeclub Velten · <a href="impressum.html">Impressum</a> </p> </main> <button class="back-fab" type="button" aria-label="Zurück zur Startseite" title="Zurück zur Startseite" onclick="location.href='index.html'" > <i class="fa-solid fa-arrow-left"></i> </button> <button class="refresh-fab" type="button" aria-label="Seite aktualisieren" title="Seite aktualisieren" onclick="window.location.reload()" > <i class="fa-solid fa-rotate-right"></i> </button> <script src="liga-daten.js"></script> <script> const recordsGrid = document.getElementById("recordsGrid"); const sharedData = window.STRIKECLUB_DATA || null; function formatNumber(value, digits = 1) { return new Intl.NumberFormat("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value); } function formatPercent(value) { const sign = value > 0 ? "+" : ""; return `${sign}${formatNumber(value, 1)} %`; } function parseGermanNumber(value) { if (value === null || value === undefined) return NaN; const normalized = String(value) .trim() .replace(/\./g, "") .replace(",", "."); return Number(normalized); } function normalizeLine(line) { return String(line || "").replace(/\u00A0/g, " ").trimEnd(); } function splitColumns(line) { if (line.includes("\t")) { return line.split("\t").map((cell) => cell.trim()); } return line.trim().split(/\s{2,}/).map((cell) => cell.trim()); } function isSingleTitleLine(line) { const trimmed = line.trim(); return ( !trimmed.includes("\t") && !/\s{2,}/.test(trimmed) && /[A-Za-zÄÖÜäöü]/.test(trimmed) ); } function parseTableRaw(rawText, fallbackLabel) { const lines = String(rawText || "") .replace(/\r/g, "") .split("\n") .map(normalizeLine); let sectionTitle = fallbackLabel; let headers = []; let rows = []; let titleConsumed = false; for (const line of lines) { if (!line.trim()) continue; if (!titleConsumed && isSingleTitleLine(line) && !line.includes("Platz")) { sectionTitle = line.trim(); titleConsumed = true; continue; } if (/^Bestes Spiel:/i.test(line) || /^Hausligaschnitt:/i.test(line)) { continue; } if (line.includes("⚔️")) { continue; } const cells = splitColumns(line); if (!cells.length) continue; const usefulCells = cells.filter(Boolean); if (!headers.length) { headers = usefulCells; continue; } const cleanCells = cells.slice(0, headers.length); while (cleanCells.length < headers.length) cleanCells.push(""); const isDuplicateHeader = cleanCells.every((cell, index) => { return ( String(cell).trim().toLowerCase() === String(headers[index] || "").trim().toLowerCase() ); }); if (isDuplicateHeader) continue; const filled = cleanCells.filter(Boolean); if (filled.length <= 1 && /^\d+$/.test(filled[0] || "")) continue; rows.push(cleanCells); } return { sectionTitle, headers, rows }; } function rowsToObjects(parsed) { return parsed.rows.map((row) => { const obj = {}; parsed.headers.forEach((header, index) => { obj[header] = row[index] ?? ""; }); return obj; }); } function parseGermanDate(dateStr) { const match = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(String(dateStr || "").trim()); if (!match) return null; const [, dd, mm, yyyy] = match; return new Date(Number(yyyy), Number(mm) - 1, Number(dd), 12, 0, 0, 0); } function isPastOrToday(dateStr) { const date = parseGermanDate(dateStr); if (!date) return false; const now = new Date(); const todayEnd = new Date( now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999 ); return date <= todayEnd; } function parseBool(value) { return String(value || "").trim().toLowerCase() === "true"; } function parsePlayerTable(raw) { const lines = String(raw || "") .replace(/\r/g, "") .split("\n") .map((line) => line.trimEnd()) .filter((line) => line.trim() !== ""); if (lines.length < 3) return {}; const spieltagLabels = lines[0].match(/Spieltag\s+\d+/g) || []; if (!spieltagLabels.length) return {}; const result = {}; for (const line of lines.slice(2)) { const cells = line.split("\t").map((cell) => cell.trim()); const name = cells[0]; if (!name) continue; const entries = []; for (let i = 0; i < spieltagLabels.length; i++) { const base = 1 + i * 4; const datum = cells[base] || ""; const pinsRaw = cells[base + 1] || "0"; const gamesRaw = cells[base + 2] || "0"; const presentRaw = cells[base + 3] || "false"; if (!datum || !isPastOrToday(datum)) continue; const played = parseBool(presentRaw); const pins = Number(pinsRaw); const games = Number(gamesRaw); entries.push({ spieltag: i + 1, datum, pins: played ? pins : null, games: played ? games : 0, played }); } result[name] = entries; } return result; } function getConsistencyWinner(playerData) { let best = null; for (const [name, entries] of Object.entries(playerData)) { const values = entries .filter((entry) => entry.played && typeof entry.pins === "number" && entry.games > 0) .map((entry) => entry.pins / entry.games); if (values.length < 4) continue; const mean = values.reduce((sum, value) => sum + value, 0) / values.length; const variance = values.reduce((sum, value) => { const diff = value - mean; return sum + diff * diff; }, 0) / values.length; const stdDev = Math.sqrt(variance); const score = Math.max(0, Math.min(100, Math.round(100 - stdDev * 2.5))); if (!best || score > best.score) { best = { name, score, stdDev }; } } return best; } function getBestRowByNumber(rows, key, resultKey = "value") { let best = null; for (const row of rows) { const value = parseGermanNumber(row[key]); if (!Number.isFinite(value)) { continue; } if (!best || value > best[resultKey]) { best = { row, [resultKey]: value }; } } return best; } function createRecordCard(record) { const article = document.createElement("article"); article.className = `record-card${record.featured ? " featured" : ""}`; article.innerHTML = ` <div class="record-inner"> <span class="record-label">${record.label}</span> <div class="record-value">${record.value}</div> <div class="record-detail">${record.detail}</div> ${record.players ? `<div class="record-players">${record.players}</div>` : ""} ${ record.chip ? ` <div class="record-chip"> <i class="${record.icon}"></i> <span>${record.chip}</span> </div> ` : "" } </div> `; return article; } function renderError(message) { recordsGrid.innerHTML = ""; const box = document.createElement("div"); box.className = "error-box"; box.textContent = message; recordsGrid.appendChild(box); } function buildRecords() { if (!sharedData || !sharedData.pageData || !sharedData.rawPlayerTable) { renderError("Gemeinsame Datenbasis nicht gefunden. Prüfe, ob liga-daten.js richtig eingebunden ist."); return; } const PAGE_DATA = sharedData.pageData; const RAW_PLAYER_TABLE = sharedData.rawPlayerTable; const einzelSection = PAGE_DATA.sections.find((section) => section.key === "einzel"); const teamSection = PAGE_DATA.sections.find((section) => section.key === "team"); if (!einzelSection || !teamSection) { renderError("Die benötigten Tabellen wurden nicht gefunden."); return; } const einzelRows = rowsToObjects(parseTableRaw(einzelSection.raw, "Einzelwertung")); const teamTopRows = rowsToObjects(parseTableRaw(teamSection.top.raw, "Mannschaftswertung")); const teamBottomRows = rowsToObjects(parseTableRaw(teamSection.bottom.raw, teamSection.bottom.label)); if (!einzelRows.length || !teamTopRows.length || !teamBottomRows.length) { renderError("Mindestens eine Tabelle konnte nicht sauber gelesen werden."); return; } const teamPlayersMap = new Map(); einzelRows.forEach((row) => { const team = row["Team"]; const name = row["Name"]; const avg = parseGermanNumber(row["⌀"]); if (!team || !name) return; if (!teamPlayersMap.has(team)) { teamPlayersMap.set(team, []); } teamPlayersMap.get(team).push({ name, avg }); }); function getTeamPlayers(teamName) { const players = (teamPlayersMap.get(teamName) || []) .sort((a, b) => b.avg - a.avg) .map((player) => player.name); return players.length ? `Spieler: ${players.join(" · ")}` : ""; } const bestPlayday = getBestRowByNumber(einzelRows, "Beste Serie", "value"); const bestSingleGame = getBestRowByNumber(einzelRows, "Bestes Spiel", "value"); const bestSeasonAverage = getBestRowByNumber(einzelRows, "⌀", "value"); const most200Games = getBestRowByNumber(einzelRows, "Spiele > 200", "value"); const bestTeamOverall = getBestRowByNumber(teamTopRows, "Punkte", "points"); const bestTeamDay = getBestRowByNumber(teamBottomRows, "Gesamt", "total"); const bestImprovementCandidates = einzelRows .map((row) => { const current = parseGermanNumber(row["⌀"]); const previous = parseGermanNumber(row["⌀ letzte Saison"]); if (!Number.isFinite(current) || !Number.isFinite(previous) || previous <= 0) { return null; } return { row, current, previous, improvement: ((current - previous) / previous) * 100 }; }) .filter(Boolean); const bestImprovement = bestImprovementCandidates.reduce((best, item) => { if (!best || item.improvement > best.improvement) return item; return best; }, null); const playerData = parsePlayerTable(RAW_PLAYER_TABLE); const bestConsistency = getConsistencyWinner(playerData); const bestPlaydayAverage = bestPlayday ? bestPlayday.value / 4 : null; const records = [ { label: "Bester Spieltag", value: bestPlayday?.row?.["Name"] || "–", detail: bestPlayday ? `${bestPlayday.value} Pins · ${formatNumber(bestPlaydayAverage)} Schnitt` : "Kein Wert", chip: "Serie und Spieltagsschnitt zusammengefasst", icon: "fa-solid fa-trophy", featured: true }, { label: "Bestes Einzelspiel", value: bestSingleGame?.row?.["Name"] || "–", detail: bestSingleGame ? `${bestSingleGame.value} Pins` : "Kein Wert", chip: "Höchster Einzelwert der Saison", icon: "fa-solid fa-bolt" }, { label: "Höchster Gesamtsaisonschnitt", value: bestSeasonAverage?.row?.["Name"] || "–", detail: bestSeasonAverage ? `${formatNumber(bestSeasonAverage.value)} Schnitt` : "Kein Wert", chip: "Platz 1 der Gesamtauswertung", icon: "fa-solid fa-chart-line" }, { label: "Meiste Spiele über 200", value: most200Games?.row?.["Name"] || "–", detail: most200Games ? `${most200Games.value} Spiele über 200` : "Kein Wert", chip: "Konstant starke Einzelspiele", icon: "fa-solid fa-fire" }, { label: "Beste Konstanz", value: bestConsistency?.name || "–", detail: bestConsistency ? `${bestConsistency.score} / 100 Konstanz-Score` : "Kein Wert", chip: "Wenig Schwankung über die Spieltage", icon: "fa-solid fa-wave-square" }, { label: "Beste Verbesserung", value: bestImprovement?.row?.["Name"] || "–", detail: bestImprovement ? `${formatPercent(bestImprovement.improvement)} zur Vorsaison` : "Kein Wert", chip: bestImprovement ? `${formatNumber(bestImprovement.current)} statt ${formatNumber(bestImprovement.previous)} Schnitt` : "Nur mit Vorjahreswert", icon: "fa-solid fa-arrow-trend-up" }, { label: "Bestes Team gesamt", value: bestTeamOverall?.row?.["Team"] || "–", detail: bestTeamOverall ? `${bestTeamOverall.row["Punkte"]} Punkte · ${bestTeamOverall.row["⌀"]} Schnitt` : "Kein Wert", players: bestTeamOverall ? getTeamPlayers(bestTeamOverall.row["Team"]) : "", chip: "Platz 1 der Teamwertung", icon: "fa-solid fa-users" }, { label: "Bester Team-Spieltag", value: bestTeamDay?.row?.["Team"] || "–", detail: bestTeamDay ? `${bestTeamDay.row["Gesamt"]} Pins · ${PAGE_DATA.title}` : "Kein Wert", players: bestTeamDay ? getTeamPlayers(bestTeamDay.row["Team"]) : "", chip: "Höchster Teamwert im aktuellen Spieltag", icon: "fa-solid fa-medal" } ]; recordsGrid.innerHTML = ""; records.forEach((record) => { recordsGrid.appendChild(createRecordCard(record)); }); } buildRecords(); </script> </body> </html>
