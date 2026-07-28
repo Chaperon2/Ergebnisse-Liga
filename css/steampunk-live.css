@@ -44,3 +44,48 @@
 .section-spieltag tbody tr:not(.separator-row):not(.blank-separator) td:first-child,.section-einzel tbody tr:not(.separator-row):not(.blank-separator) td:first-child{box-shadow:inset 4px 0 0 color-mix(in srgb,var(--row-accent) 80%,transparent)}
 .section-spieltag tbody tr:not(.separator-row):not(.blank-separator):hover td,.section-einzel tbody tr:not(.separator-row):not(.blank-separator):hover td{background:linear-gradient(90deg,color-mix(in srgb,var(--row-accent) 18%,#120e0a),#100c09 88%)}
 @media(max-width:700px){.team-color-legend{padding:10px 9px}.team-color-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.team-color-chip{min-width:0;padding:6px;font-size:10px;overflow-wrap:anywhere}.team.team-colored{padding-left:10px}.team.team-colored:before{left:2px;width:3px}.section-spieltag tbody tr:not(.separator-row):not(.blank-separator) td:first-child,.section-einzel tbody tr:not(.separator-row):not(.blank-separator) td:first-child{box-shadow:inset 3px 0 0 color-mix(in srgb,var(--row-accent) 80%,transparent)}}
+
+/* Phase 8.4: echte Zebra-Zeilen statt acht wechselnder Akzentfarben */
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator),
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator){
+  --row-accent: var(--cyan);
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td{
+  background: linear-gradient(90deg, rgba(14,32,34,.96), rgba(9,12,12,.98) 88%) !important;
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td{
+  background: linear-gradient(90deg, rgba(45,31,20,.96), rgba(16,12,9,.98) 88%) !important;
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td:first-child,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td:first-child{
+  box-shadow: inset 4px 0 0 var(--cyan) !important;
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td:first-child,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td:first-child{
+  box-shadow: inset 4px 0 0 var(--gold) !important;
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):hover td,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):hover td{
+  background: linear-gradient(90deg, rgba(30,58,59,.98), rgba(18,16,12,.98) 88%) !important;
+}
+.section-spieltag tbody tr:not(.separator-row):not(.blank-separator):hover td:first-child,
+.section-einzel tbody tr:not(.separator-row):not(.blank-separator):hover td:first-child{
+  box-shadow: inset 5px 0 0 var(--pink) !important;
+}
+.section-spieltag .score-200,
+.section-einzel .score-200{
+  color:#071012 !important;
+  background:linear-gradient(180deg,#6df58d,#25b960) !important;
+}
+@media(max-width:700px){
+  .section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td:first-child,
+  .section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(odd) td:first-child{
+    box-shadow: inset 3px 0 0 var(--cyan) !important;
+  }
+  .section-spieltag tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td:first-child,
+  .section-einzel tbody tr:not(.separator-row):not(.blank-separator):nth-child(even) td:first-child{
+    box-shadow: inset 3px 0 0 var(--gold) !important;
+  }
+}
