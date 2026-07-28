@@ -6,6 +6,7 @@ const message = document.querySelector("#scheduleMessage");
 const container = document.querySelector("#publicSchedule");
 const liveState = document.querySelector("#liveState");
 const overview = document.querySelector("#scheduleOverview");
+const jumpToCurrentBtn = document.querySelector("#jumpToCurrentBtn");
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -24,6 +25,70 @@ function formatDate(value) {
     month: "2-digit",
     year: "numeric",
   }).format(new Date(`${value}T12:00:00`));
+}
+
+function getBerlinNow() {
+  const formatter = new Intl.DateTimeFormat("de-DE", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const parts = Object.fromEntries(
+    formatter
+      .formatToParts(new Date())
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, part.value]),
+  );
+  return {
+    key: `${parts.year}-${parts.month}-${parts.day}`,
+    minutes: Number(parts.hour) * 60 + Number(parts.minute),
+  };
+}
+
+function relevantMatchday(matchdays) {
+  if (!matchdays.length) return null;
+  const now = getBerlinNow();
+  const cutoffMinutes = 18 * 60 + 45;
+  const sameDay = matchdays.find((day) => day.date === now.key);
+  if (sameDay && now.minutes <= cutoffMinutes) return sameDay;
+  const nextFuture = matchdays.find((day) => day.date > now.key);
+  if (nextFuture) return nextFuture;
+  if (sameDay) return sameDay;
+  return matchdays[matchdays.length - 1];
+}
+
+function compactDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return "Datum";
+  return new Intl.DateTimeFormat("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(`${value}T12:00:00`));
+}
+
+function configureJumpButton(matchdays) {
+  if (!jumpToCurrentBtn) return;
+  const target = relevantMatchday(matchdays);
+  if (!target) {
+    jumpToCurrentBtn.classList.add("hidden");
+    jumpToCurrentBtn.onclick = null;
+    return;
+  }
+
+  const label = jumpToCurrentBtn.querySelector("span");
+  if (label) label.textContent = `Zum ${compactDate(target.date)}`;
+  jumpToCurrentBtn.classList.remove("hidden");
+  jumpToCurrentBtn.onclick = () => {
+    const card = document.querySelector(`#spieltag-${Number(target.number)}`);
+    if (!card) return;
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+    card.classList.add("pulse-target");
+    window.setTimeout(() => card.classList.remove("pulse-target"), 1900);
+  };
 }
 
 function nextMatchdayNumber(matchdays, publishedThrough) {
@@ -95,6 +160,7 @@ function render(scheduleData, meta) {
 
   const nextCard = nextNumber ? document.querySelector(`#spieltag-${nextNumber}`) : null;
   if (nextCard) nextCard.setAttribute("aria-current", "date");
+  configureJumpButton(matchdays);
 }
 
 const requested = requestedSeasonId();
@@ -109,6 +175,7 @@ watchLoader(
       showMessage(error, "error");
       liveState.className = "live-state error";
       liveState.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${escapeHtml(error)}</span>`;
+      if (jumpToCurrentBtn) jumpToCurrentBtn.classList.add("hidden");
     },
   },
 );
