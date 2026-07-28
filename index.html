@@ -18,18 +18,18 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Strikeclub Velten" />
   <meta property="og:locale" content="de_DE" />
-  <meta property="og:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=5" />
+  <meta property="og:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Strikeclub Velten im Retro-Steampunk-Arcade-Design" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=5" />
+  <meta name="twitter:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="images/strikeclub-steampunk-icon-32.png?v=5" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/strikeclub-steampunk-icon-192.png?v=5" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/strikeclub-steampunk-icon-180.png?v=5" />
-  <link rel="manifest" href="site.webmanifest?v=5" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/strikeclub-steampunk-icon-32.png?v=6" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/strikeclub-steampunk-icon-192.png?v=6" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/strikeclub-steampunk-icon-180.png?v=6" />
+  <link rel="manifest" href="site.webmanifest?v=6" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -822,6 +822,213 @@
     .nav-results strong,
     .nav-schedule strong { font-size: 34px; }
 
+    /* Mini-Spiel: animierter Bowling-Teaser */
+    .nav-game {
+      padding-right: 198px;
+      background:
+        radial-gradient(circle at 82% 26%, rgba(255,98,186,.20), transparent 36%),
+        radial-gradient(circle at 65% 92%, rgba(69,244,239,.10), transparent 42%),
+        linear-gradient(145deg, #28142b, #0c0a07 84%);
+    }
+
+    .nav-game > .nav-icon { display: none; }
+    .nav-game > small,
+    .nav-game > strong,
+    .nav-game > span:not(.game-teaser):not(.game-cta) { position: relative; z-index: 4; }
+    .nav-game > span:not(.game-teaser):not(.game-cta) { max-width: 25ch; }
+
+    .game-teaser {
+      --teaser-scale: 1;
+      position: absolute;
+      right: 14px;
+      top: 11px;
+      z-index: 3;
+      width: 170px;
+      height: 88px;
+      overflow: hidden;
+      border: 1px solid rgba(255,201,95,.34);
+      border-radius: 7px;
+      background:
+        linear-gradient(180deg, rgba(69,244,239,.08), transparent 34%),
+        repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,201,95,.055) 18px 19px),
+        linear-gradient(180deg, #071416 0 31%, #6e4325 32%, #1b110c 100%);
+      box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.48),
+        inset 0 0 24px rgba(69,244,239,.055),
+        0 8px 18px rgba(0,0,0,.34);
+      pointer-events: none;
+      isolation: isolate;
+    }
+
+    .game-teaser::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      height: 40px;
+      clip-path: polygon(0 100%, 100% 100%, 80% 0, 20% 0);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.10), transparent 18%, rgba(255,255,255,.08) 48%, transparent 76%, rgba(255,255,255,.10)),
+        repeating-linear-gradient(90deg, #4a2b18 0 13%, #bc8246 13% 14%, #382113 14% 27%);
+      box-shadow: 0 -4px 12px rgba(0,0,0,.46);
+      opacity: .92;
+    }
+
+    .game-teaser::after {
+      content: "ARCADE LANE";
+      position: absolute;
+      left: 8px;
+      top: 7px;
+      color: rgba(69,244,239,.86);
+      font-family: "Press Start 2P", monospace;
+      font-size: 5px;
+      letter-spacing: .06em;
+      text-shadow: 0 0 8px rgba(69,244,239,.52);
+    }
+
+    .teaser-ball {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      z-index: 5;
+      width: calc(26px * var(--teaser-scale));
+      height: calc(26px * var(--teaser-scale));
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 37% 31%, #071012 0 2px, transparent 3px),
+        radial-gradient(circle at 54% 26%, #071012 0 2px, transparent 3px),
+        radial-gradient(circle at 60% 46%, #071012 0 2px, transparent 3px),
+        radial-gradient(circle at 29% 22%, rgba(255,255,255,.64), transparent 25%),
+        linear-gradient(145deg, #43f4ef, #5687f0 52%, #ff62ba);
+      box-shadow: 0 7px 12px rgba(0,0,0,.5), 0 0 13px rgba(69,244,239,.38);
+      animation: teaserBallRoll 4.8s cubic-bezier(.24,.68,.31,1) infinite;
+      will-change: transform, opacity;
+    }
+
+    .teaser-pins {
+      position: absolute;
+      right: 17px;
+      bottom: 13px;
+      z-index: 4;
+      width: 53px;
+      height: 48px;
+    }
+
+    .teaser-pins i {
+      position: absolute;
+      bottom: 0;
+      width: calc(13px * var(--teaser-scale));
+      height: calc(36px * var(--teaser-scale));
+      transform-origin: 50% 92%;
+      border-radius: 48% 48% 42% 42% / 14% 14% 76% 76%;
+      background:
+        linear-gradient(180deg, transparent 0 19%, #de5248 19% 25%, #f6ddb1 25% 29%, #de5248 29% 35%, transparent 35%),
+        linear-gradient(90deg, rgba(101,58,28,.28), transparent 28%, transparent 72%, rgba(70,39,20,.28)),
+        linear-gradient(180deg, #f6e7c4, #c7955e 76%, #704124);
+      clip-path: polygon(41% 0,59% 0,66% 15%,64% 28%,76% 47%,92% 69%,84% 91%,65% 100%,35% 100%,16% 91%,8% 69%,24% 47%,36% 28%,34% 15%);
+      filter: drop-shadow(0 5px 4px rgba(0,0,0,.42));
+      will-change: transform, opacity;
+    }
+
+    .teaser-pins i:nth-child(1) { left: 2px; animation: teaserPinLeft 4.8s ease-in-out infinite; }
+    .teaser-pins i:nth-child(2) { left: 20px; bottom: 5px; animation: teaserPinCenter 4.8s ease-in-out infinite; }
+    .teaser-pins i:nth-child(3) { left: 38px; animation: teaserPinRight 4.8s ease-in-out infinite; }
+
+    .teaser-impact {
+      position: absolute;
+      right: 45px;
+      bottom: 30px;
+      z-index: 6;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      opacity: 0;
+      background: #fff4c9;
+      box-shadow: 0 0 0 7px rgba(255,201,95,.15), 0 0 24px rgba(255,201,95,.92), 0 0 38px rgba(255,98,186,.55);
+      animation: teaserImpact 4.8s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .game-cta {
+      position: absolute;
+      right: 15px;
+      bottom: 12px;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 8px;
+      border: 1px solid rgba(255,98,186,.42);
+      border-radius: 4px;
+      background: rgba(28,7,23,.82);
+      color: #ffd3ed;
+      font-family: "Press Start 2P", monospace;
+      font-size: 5.8px;
+      line-height: 1.45;
+      text-transform: uppercase;
+      box-shadow: inset 0 0 12px rgba(255,98,186,.08), 0 0 13px rgba(255,98,186,.10);
+      animation: teaserCtaPulse 2.1s ease-in-out infinite;
+    }
+
+    .game-cta i { color: var(--pink); animation: teaserArrow 1s ease-in-out infinite; }
+
+    .nav-game:hover .game-cta,
+    .nav-game:focus-visible .game-cta {
+      color: #fff;
+      border-color: var(--pink);
+      box-shadow: inset 0 0 16px rgba(255,98,186,.14), 0 0 22px rgba(255,98,186,.24);
+    }
+
+    @keyframes teaserBallRoll {
+      0%, 12% { transform: translate3d(0,0,0) rotate(0deg) scale(1); opacity: 1; }
+      43% { transform: translate3d(99px,-1px,0) rotate(520deg) scale(.82); opacity: 1; }
+      56%, 72% { transform: translate3d(104px,-1px,0) rotate(560deg) scale(.78); opacity: .18; }
+      79%, 94% { transform: translate3d(104px,-1px,0) rotate(560deg) scale(.78); opacity: 0; }
+      95% { transform: translate3d(0,0,0) rotate(0deg) scale(1); opacity: 0; }
+      100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); opacity: 1; }
+    }
+
+    @keyframes teaserPinLeft {
+      0%, 42% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+      54%, 78% { transform: translate3d(-8px,3px,0) rotate(-72deg); opacity: 1; }
+      84%, 94% { transform: translate3d(-8px,3px,0) rotate(-72deg); opacity: 0; }
+      95% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+      100% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes teaserPinCenter {
+      0%, 44% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+      57%, 78% { transform: translate3d(7px,4px,0) rotate(82deg); opacity: 1; }
+      84%, 94% { transform: translate3d(7px,4px,0) rotate(82deg); opacity: 0; }
+      95% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+      100% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes teaserPinRight {
+      0%, 46% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+      60%, 78% { transform: translate3d(10px,2px,0) rotate(68deg); opacity: 1; }
+      84%, 94% { transform: translate3d(10px,2px,0) rotate(68deg); opacity: 0; }
+      95% { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
+      100% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes teaserImpact {
+      0%, 40% { opacity: 0; transform: scale(.2); }
+      46% { opacity: 1; transform: scale(1.05); }
+      57%, 100% { opacity: 0; transform: scale(2.7); }
+    }
+
+    @keyframes teaserCtaPulse {
+      0%,100% { filter: brightness(.88); transform: translateY(0); }
+      50% { filter: brightness(1.18); transform: translateY(-1px); }
+    }
+
+    @keyframes teaserArrow {
+      0%,100% { transform: translateX(0); opacity: .58; }
+      50% { transform: translateX(4px); opacity: 1; }
+    }
+
     .console-footer {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -940,10 +1147,10 @@
     .mobile-hero {
       position: relative;
       overflow: hidden;
-      min-height: 325px;
+      min-height: 268px;
       display: grid;
       align-content: end;
-      padding: 21px 18px 22px;
+      padding: 18px 16px 17px;
       border: 1px solid rgba(243,205,124,.34);
       border-radius: 12px;
       background:
@@ -997,11 +1204,13 @@
     .mobile-rack {
       position: absolute;
       right: 8px;
-      top: 70px;
+      top: 56px;
       z-index: 3;
       width: 110px;
       height: 92px;
-      opacity: .58;
+      opacity: .72;
+      transform: scale(.92);
+      transform-origin: top right;
     }
 
     .mobile-rack i {
@@ -1026,7 +1235,12 @@
     .mobile-rack i:nth-child(9) { left: 60px; top: 45px; }
     .mobile-rack i:nth-child(10) { left: 86px; top: 45px; }
 
-    .mobile-hero-copy { position: relative; z-index: 4; max-width: 100%; padding-right: 36px; }
+    .mobile-hero-copy {
+      position: relative;
+      z-index: 4;
+      max-width: 100%;
+      padding-right: 94px;
+    }
 
     .mobile-hero-copy small {
       display: block;
@@ -1063,6 +1277,54 @@
       color: #c3b491;
       font-size: 12px;
       line-height: 1.5;
+    }
+
+    .mobile-hero-stats {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 15px;
+    }
+
+    .mobile-hero-stat {
+      min-width: 0;
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      padding: 8px 5px 7px;
+      border: 1px solid rgba(243,205,124,.24);
+      border-top-color: var(--stat, var(--cyan));
+      border-radius: 5px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--stat, var(--cyan)) 8%, transparent), transparent 70%),
+        rgba(5,8,7,.72);
+      box-shadow: inset 0 0 12px color-mix(in srgb, var(--stat, var(--cyan)) 6%, transparent);
+      text-align: center;
+    }
+
+    .mobile-hero-stat:nth-child(2) { --stat: var(--gold); }
+    .mobile-hero-stat:nth-child(3) { --stat: var(--green); }
+
+    .mobile-hero-stat strong {
+      color: var(--stat, var(--cyan));
+      font-family: "Oswald", sans-serif;
+      font-size: 19px;
+      line-height: 1;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px color-mix(in srgb, var(--stat, var(--cyan)) 30%, transparent);
+    }
+
+    .mobile-hero-stat span {
+      overflow: hidden;
+      color: #b8a989;
+      font-family: "Press Start 2P", monospace;
+      font-size: 5.2px;
+      line-height: 1.35;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .mobile-primary {
@@ -1131,7 +1393,62 @@
     }
 
     .mobile-card.wide { grid-column: span 2; min-height: 100px; grid-template-columns: 45px 1fr auto; align-items: center; align-content: center; }
-    .mobile-card.game { --accent: var(--pink); }
+    .mobile-card.game {
+      --accent: var(--pink);
+      min-height: 142px;
+      grid-template-columns: minmax(0,1fr) 146px;
+      align-items: stretch;
+      align-content: stretch;
+      padding: 11px;
+      background:
+        radial-gradient(circle at 85% 16%, rgba(255,98,186,.18), transparent 46%),
+        linear-gradient(180deg, #221229, #0b0907);
+    }
+
+    .mobile-game-copy {
+      min-width: 0;
+      display: grid !important;
+      grid-template-columns: 42px minmax(0,1fr);
+      align-content: center;
+      align-items: center;
+      gap: 9px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .mobile-game-copy .mobile-card-icon { grid-row: span 2; }
+    .mobile-game-text { min-width: 0; display: grid; gap: 4px; }
+
+    .mobile-game-cta {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+      padding: 5px 7px;
+      border: 1px solid rgba(255,98,186,.40);
+      border-radius: 4px;
+      background: rgba(30,7,24,.76);
+      color: #ffd0ea;
+      font-family: "Press Start 2P", monospace;
+      font-size: 5.2px;
+      line-height: 1.4;
+      animation: teaserCtaPulse 2.1s ease-in-out infinite;
+    }
+
+    .mobile-game-cta i { color: var(--pink); animation: teaserArrow 1s ease-in-out infinite; }
+
+    .mobile-card.game .game-teaser {
+      --teaser-scale: .88;
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: 100%;
+      min-height: 118px;
+      align-self: stretch;
+    }
+
+    .mobile-card.game:active { transform: scale(.985); }
     .mobile-card.analysis { --accent: var(--blue); }
     .mobile-card.records { --accent: var(--orange); }
     .mobile-card.news { --accent: var(--green); }
@@ -1224,11 +1541,20 @@
       .mobile-top { padding-inline: 9px; }
       .mobile-brand-copy strong { font-size: 17px; }
       .mobile-live { padding-inline: 7px; }
-      .mobile-hero { min-height: 305px; }
-      .mobile-hero-copy { max-width: 84%; }
+      .mobile-hero { min-height: 254px; }
+      .mobile-hero-copy { max-width: 100%; padding-right: 80px; }
+      .mobile-rack { top: 54px; transform: scale(.84); }
+      .mobile-hero-stats { gap: 5px; margin-top: 13px; }
+      .mobile-hero-stat { padding-inline: 3px; }
+      .mobile-hero-stat strong { font-size: 17px; }
+      .mobile-hero-stat span { font-size: 4.7px; }
       .mobile-primary { gap: 7px; }
       .mobile-primary-card { min-height: 124px; }
       .mobile-card { min-height: 112px; padding: 11px; }
+      .mobile-card.game { grid-template-columns: minmax(0,1fr) 126px; min-height: 136px; }
+      .mobile-card.game .game-teaser { --teaser-scale: .80; min-height: 112px; }
+      .mobile-game-copy { grid-template-columns: 38px minmax(0,1fr); gap: 7px; }
+      .mobile-game-copy .mobile-card-icon { width: 38px; height: 38px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1237,6 +1563,10 @@
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
       }
+      .teaser-ball { transform: translate3d(54px,0,0) rotate(270deg) scale(.9) !important; opacity: 1 !important; }
+      .teaser-pins i { transform: none !important; opacity: 1 !important; }
+      .teaser-impact { display: none !important; }
+      .game-cta, .mobile-game-cta { filter: none !important; transform: none !important; }
     }
   </style>
 </head>
@@ -1332,10 +1662,15 @@
           </a>
 
           <a class="nav-card nav-game" href="bowling-minispiel.html">
-            <span class="nav-icon"><i class="fa-solid fa-gamepad"></i></span>
             <small>03 // Arcade</small>
             <strong>Mini-Spiel</strong>
             <span>Flick-Wurf, Spin und gemeinsames Top-10-Leaderboard.</span>
+            <span class="game-teaser" aria-hidden="true">
+              <i class="teaser-ball"></i>
+              <span class="teaser-pins"><i></i><i></i><i></i></span>
+              <i class="teaser-impact"></i>
+            </span>
+            <span class="game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span>
           </a>
 
           <a class="nav-card nav-analysis" href="spieleranalyse.html">
@@ -1401,7 +1736,12 @@
         <div class="mobile-hero-copy">
           <small>Hausliga online</small>
           <h1>Strikeclub<span>Velten</span></h1>
-          </div>
+        </div>
+        <div class="mobile-hero-stats" aria-label="Ligaübersicht">
+          <div class="mobile-hero-stat"><strong>8</strong><span>Teams</span></div>
+          <div class="mobile-hero-stat"><strong>14</strong><span>Spieltage</span></div>
+          <div class="mobile-hero-stat"><strong>Live</strong><span>Daten</span></div>
+        </div>
       </section>
 
       <section class="mobile-primary" aria-label="Häufig genutzt">
@@ -1411,7 +1751,17 @@
 
       <h2 class="mobile-section-title">Weitere Module</h2>
       <nav class="mobile-bento" aria-label="Weitere Seiten">
-        <a class="mobile-card wide game" href="bowling-minispiel.html"><span class="mobile-card-icon"><i class="fa-solid fa-gamepad"></i></span><span><strong>Mini-Spiel</strong><small>Bowling im Arcade-Modus</small></span><i class="fa-solid fa-chevron-right"></i></a>
+        <a class="mobile-card wide game" href="bowling-minispiel.html">
+          <span class="mobile-game-copy">
+            <span class="mobile-card-icon"><i class="fa-solid fa-gamepad"></i></span>
+            <span class="mobile-game-text"><strong>Mini-Spiel</strong><small>Bowling im Arcade-Modus</small><span class="mobile-game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span></span>
+          </span>
+          <span class="game-teaser" aria-hidden="true">
+            <i class="teaser-ball"></i>
+            <span class="teaser-pins"><i></i><i></i><i></i></span>
+            <i class="teaser-impact"></i>
+          </span>
+        </a>
         <a class="mobile-card analysis" href="spieleranalyse.html"><span class="mobile-card-icon"><i class="fa-solid fa-chart-line"></i></span><strong>Analyse</strong><small>Spielerverlauf</small></a>
         <a class="mobile-card records" href="rekorde.html"><span class="mobile-card-icon"><i class="fa-solid fa-medal"></i></span><strong>Rekorde</strong><small>Bestmarken</small></a>
         <a class="mobile-card news" href="termine-news.html"><span class="mobile-card-icon"><i class="fa-solid fa-newspaper"></i></span><strong>News</strong><small>Termine &amp; Hinweise</small></a>
