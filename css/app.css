@@ -130,3 +130,7 @@ textarea:focus { outline: 2px solid rgba(49, 94, 251, 0.18); border-color: var(-
 .integrity-item.warning { border-color:rgba(220,150,30,.24); background:rgba(255,184,77,.10); }
 .integrity-item.success { border-color:rgba(55,201,151,.24); background:rgba(55,201,151,.10); }
 @media (max-width:700px) { .archive-card header { flex-direction:column; } }
+
+
+/* Phase 8.1: einheitliche schwebende Navigation */
+.back-fab,.refresh-fab{position:fixed;bottom:16px;z-index:9999;width:50px;height:50px;border:1px solid rgba(240,200,121,.55);border-radius:50%;display:grid;place-items:center;cursor:pointer;color:#f7e8c5;background:radial-gradient(circle at 35% 28%,rgba(64,244,239,.22),transparent 30%),linear-gradient(145deg,#4b2d1b,#130d08 72%);box-shadow:inset 0 0 0 3px rgba(0,0,0,.45),0 10px 26px rgba(0,0,0,.48);font-size:16px}.back-fab{left:16px}.refresh-fab{right:16px}.back-fab i{animation:phase81Back 1.7s ease-in-out infinite}.refresh-fab i{animation:phase81Spin 2.6s linear infinite}@keyframes phase81Spin{to{transform:rotate(360deg)}}@keyframes phase81Back{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}@media(max-width:700px){.back-fab,.refresh-fab{width:48px;height:48px;bottom:12px}.back-fab{left:12px}.refresh-fab{right:12px}}@media(prefers-reduced-motion:reduce){.back-fab i,.refresh-fab i{animation:none!important}}

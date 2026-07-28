@@ -15,8 +15,18 @@ function tendency(value) {
   return '<span class="tendency flat">–</span>';
 }
 
+function headerText(header) {
+  return typeof header === "object" ? header.label : header;
+}
+
+function headerMarkup(header) {
+  const label = headerText(header);
+  const mobile = typeof header === "object" ? (header.mobile ?? label) : label;
+  return `<span class="header-full">${escapeHtml(label)}</span><span class="header-mobile">${escapeHtml(mobile)}</span>`;
+}
+
 function headerClass(header) {
-  const value = header.toLowerCase();
+  const value = headerText(header).toLowerCase();
   if (value.includes("platz")) return "col-rank";
   if (value.includes("tendenz")) return "col-trend";
   if (value === "name") return "col-name text-left";
@@ -36,15 +46,16 @@ function headerClass(header) {
 
 function renderTable({ headers, rows, sectionClass = "" }) {
   return `<div class="table-wrap ${sectionClass}"><table><thead><tr>${headers.map((header) => (
-    `<th class="${headerClass(header)}">${escapeHtml(header)}</th>`
+    `<th class="${headerClass(header)}">${headerMarkup(header)}</th>`
   )).join("")}</tr></thead><tbody>${rows.map((row) => {
     if (row.type === "separator") {
-      return `<tr class="separator-row">${headers.map(() => "<td>⚔️</td>").join("")}</tr>`;
+      return `<tr class="separator-row"><td colspan="${headers.length}"><span class="matchup-vs"><span></span>VS<span></span></span></td></tr>`;
     }
     if (row.type === "blank") {
       return `<tr class="blank-separator"><td colspan="${headers.length}"></td></tr>`;
     }
-    return `<tr>${row.cells.map((cell, index) => {
+    const rowClasses = [row.pairStart ? "pair-start" : "", row.pairEnd ? "pair-end" : ""].filter(Boolean).join(" ");
+    return `<tr class="${rowClasses}">${row.cells.map((cell, index) => {
       const classes = [headerClass(headers[index])];
       if (row.score200Indexes?.includes(index)) classes.push("score-200");
       return `<td class="${classes.join(" ")}">${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
@@ -68,13 +79,35 @@ function render(data) {
   pageTitle.innerHTML = `${escapeHtml(seasonName)} · Spieltag ${Number(matchday.number)}. <span class="headline-accent">Ergebnisse im Überblick.</span>`;
   pageDate.textContent = formatDate(matchday.date);
 
-  const dailyHeaders = ["Platz", "Name", "Team", "Spiel 1", "Spiel 2", "Spiel 3", "Spiel 4", "Pins Gesamt", "Ø"];
+  const dailyHeaders = [
+    { label: "Platz", mobile: "Pl." },
+    "Name",
+    "Team",
+    { label: "Spiel 1", mobile: "S1" },
+    { label: "Spiel 2", mobile: "S2" },
+    { label: "Spiel 3", mobile: "S3" },
+    { label: "Spiel 4", mobile: "S4" },
+    { label: "Pins Gesamt", mobile: "Pins" },
+    "Ø",
+  ];
   const dailyRows = data.currentMatchday.rows.map((row) => ({
     cells: [row.rank, row.name, row.team, ...row.scores.map((score) => score ?? "–"), row.total, formatNumber(row.average)],
     score200Indexes: row.scores.map((score, index) => Number(score) >= 200 ? index + 3 : -1).filter((index) => index >= 0),
   }));
 
-  const playerHeaders = ["Platz", "Tendenz", "Name", "Team", "Spiele", "Beste Serie", "Bestes Spiel", "Pins Gesamt", "Ø", "Ø Vorsaison", "Spiele ≥ 200"];
+  const playerHeaders = [
+    { label: "Platz", mobile: "Pl." },
+    { label: "Tendenz", mobile: "Tr." },
+    "Name",
+    "Team",
+    { label: "Spiele", mobile: "Sp." },
+    { label: "Beste Serie", mobile: "Serie" },
+    { label: "Bestes Spiel", mobile: "Best" },
+    { label: "Pins Gesamt", mobile: "Pins" },
+    "Ø",
+    { label: "Ø Vorsaison", mobile: "Ø alt" },
+    { label: "Spiele ≥ 200", mobile: "200+" },
+  ];
   const playerRows = data.individualStandings.rows.map((row) => ({
     cells: [
       row.rank,
@@ -91,18 +124,39 @@ function render(data) {
     ],
   }));
 
-  const teamHeaders = ["Platz", "Tendenz", "Team", "Punkte", "Pins", "Spieltage", "Ø"];
+  const teamHeaders = [
+    { label: "Platz", mobile: "Pl." },
+    { label: "Tendenz", mobile: "Tr." },
+    "Team",
+    { label: "Punkte", mobile: "Pkt." },
+    "Pins",
+    { label: "Spieltage", mobile: "ST" },
+    "Ø",
+  ];
   const teamRows = data.teamStandings.rows.map((row) => ({
     cells: [row.rank, { html: true, value: tendency(row.trend) }, row.name, row.points, row.pins, row.matchdays, formatNumber(row.average)],
   }));
   const teamNames = new Map(data.teamStandings.rows.map((row) => [row.teamId, row.name]));
-  const matchupHeaders = ["Team", "Runde 1", "Runde 2", "Runde 3", "Runde 4", "Gesamt", "Ergebnis"];
+  const matchupHeaders = [
+    "Team",
+    { label: "Runde 1", mobile: "R1" },
+    { label: "Runde 2", mobile: "R2" },
+    { label: "Runde 3", mobile: "R3" },
+    { label: "Runde 4", mobile: "R4" },
+    { label: "Gesamt", mobile: "Ges." },
+    { label: "Ergebnis", mobile: "Pkt." },
+  ];
   const matchupRows = [];
   data.teamStandings.matchups.forEach((matchup, index) => {
-    for (const side of [matchup.home, matchup.away]) {
-      matchupRows.push({ cells: [teamNames.get(side.teamId) ?? side.teamId, ...side.rounds.map((round) => round.display), side.scoringPins, side.points] });
-      if (side === matchup.home) matchupRows.push({ type: "separator" });
-    }
+    matchupRows.push({
+      pairStart: true,
+      cells: [teamNames.get(matchup.home.teamId) ?? matchup.home.teamId, ...matchup.home.rounds.map((round) => round.display), matchup.home.scoringPins, matchup.home.points],
+    });
+    matchupRows.push({ type: "separator" });
+    matchupRows.push({
+      pairEnd: true,
+      cells: [teamNames.get(matchup.away.teamId) ?? matchup.away.teamId, ...matchup.away.rounds.map((round) => round.display), matchup.away.scoringPins, matchup.away.points],
+    });
     if (index < data.teamStandings.matchups.length - 1) matchupRows.push({ type: "blank" });
   });
 

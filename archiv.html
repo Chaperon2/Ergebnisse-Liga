@@ -1,34 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Strikeclub Velten · Liga-Archiv</title>
-  <meta name="description" content="Ergebnisse und Spielpläne vergangener Bowlingliga-Saisons.">
-  <link rel="stylesheet" href="css/app.css">
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Strikeclub Velten · Liga-Archiv</title>
+<meta content="Ergebnisse und Spielpläne vergangener Bowlingliga-Saisons." name="description"/>
+<link href="css/app.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/></head>
 <body>
-  <main class="shell archive-shell">
-    <div class="topbar">
-      <div class="brand">Strikeclub Velten · Liga-Archiv</div>
-      <div class="actions">
-        <a class="button secondary" href="ergebnisse.html">Aktuelle Ergebnisse</a>
-        <a class="button secondary" href="spielplan.html">Aktueller Spielplan</a>
-        <a class="button secondary" href="index.html">Startseite</a>
-      </div>
-    </div>
-
-    <section class="panel archive-hero">
-      <div>
-        <div class="badge">Saisonübersicht</div>
-        <h1>Ergebnisse und Spielpläne</h1>
-        <p class="muted">Abgeschlossene und laufende Saisons bleiben dauerhaft abrufbar.</p>
-      </div>
-    </section>
-
-    <div id="archiveMessage" class="status">Saisonarchiv wird geladen …</div>
-    <div id="seasonArchive" class="archive-grid"></div>
-  </main>
-  <script type="module" src="js/archive.js"></script>
-</body>
+<main class="shell archive-shell">
+<div class="topbar">
+<div class="brand">Strikeclub Velten · Liga-Archiv</div>
+<div class="actions">
+<a class="button secondary" href="ergebnisse.html">Aktuelle Ergebnisse</a>
+<a class="button secondary" href="spielplan.html">Aktueller Spielplan</a>
+</div>
+</div>
+<section class="panel archive-hero">
+<div>
+<div class="badge">Saisonübersicht</div>
+<h1>Ergebnisse und Spielpläne</h1>
+<p class="muted">Abgeschlossene und laufende Saisons bleiben dauerhaft abrufbar.</p>
+</div>
+</section>
+<div class="status" id="archiveMessage">Saisonarchiv wird geladen …</div>
+<div class="archive-grid" id="seasonArchive"></div>
+</main>
+<script src="js/archive.js" type="module"></script>
+<button aria-label="Zurück zur Startseite" class="back-fab" onclick="location.href='index.html'" title="Zurück zur Startseite" type="button">
+<i class="fa-solid fa-arrow-left"></i>
+</button><button aria-label="Seite aktualisieren" class="refresh-fab" onclick="window.location.reload()" title="Seite aktualisieren" type="button">
+<i class="fa-solid fa-rotate-right"></i>
+</button></body>
 </html>

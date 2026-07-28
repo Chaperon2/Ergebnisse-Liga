@@ -16,7 +16,6 @@ const statAbsent = document.getElementById("statAbsent");
 const statConsistency = document.getElementById("statConsistency");
 const statDeviation = document.getElementById("statDeviation");
 const statRange = document.getElementById("statRange");
-const statusGrid = document.getElementById("statusGrid");
 const chartCanvas = document.getElementById("playerChart");
 const chartDetailBox = document.getElementById("chartDetailBox");
 const infoModalOverlay = document.getElementById("infoModalOverlay");
@@ -72,28 +71,6 @@ function runningRows(player) {
   }
 
   return rows;
-}
-
-function renderStatusCards(player) {
-  statusGrid.innerHTML = (player.entries ?? []).map((entry) => {
-    const scores = (entry.scores ?? []).filter((score) => Number.isInteger(score) && score > 0);
-    const chips = scores.length
-      ? [
-          ...scores.map((score, index) => `<span class="status-chip">Spiel ${index + 1}: ${formatInteger(score)}</span>`),
-          `<span class="status-chip">${formatInteger(entry.total)} Pins</span>`,
-          `<span class="status-chip">Tagesschnitt ${formatNumber(entry.dayAverage)}</span>`,
-          `<span class="status-chip">Saison ${formatNumber(entry.cumulativeAverage)}</span>`,
-        ].join("")
-      : `<span class="status-chip">Kein Einzelspiel</span><span class="status-chip">Saison bleibt ${formatNumber(entry.cumulativeAverage)}</span>`;
-
-    return `<article class="status-card">
-      <div class="status-head">
-        <div class="status-date">Spieltag ${formatInteger(entry.matchdayNumber)} · ${escapeHtml(formatDate(entry.date))}</div>
-        <div class="status-badge ${scores.length ? "played" : "absent"}">${scores.length ? "gespielt" : "kein Einzelwert"}</div>
-      </div>
-      <div class="status-values">${chips}</div>
-    </article>`;
-  }).join("");
 }
 
 function showChartDetail(row) {
@@ -224,7 +201,6 @@ function renderPlayer(playerId) {
   statRange.textContent = player.consistency?.range == null ? "–" : `${formatInteger(player.consistency.range)} Pins`;
 
   buildChart(player);
-  renderStatusCards(player);
 }
 
 function render(data) {
@@ -253,7 +229,8 @@ function showError(message) {
   playerChip.textContent = "Keine Live-Daten";
   playedInfo.textContent = "–";
   [statAverage, statBest, statPlayed, statAbsent, statConsistency, statDeviation, statRange].forEach((element) => { element.textContent = "–"; });
-  statusGrid.innerHTML = `<div class="chart-detail-box">${escapeHtml(message)}</div>`;
+  chartDetailBox.classList.remove("hidden");
+  chartDetailBox.textContent = message;
   chart?.destroy();
 }
 
