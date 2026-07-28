@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strikeclub Velten · Liga-Archiv</title>
+  <meta name="description" content="Ergebnisse und Spielpläne vergangener Bowlingliga-Saisons.">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <main class="shell archive-shell">
+    <div class="topbar">
+      <div class="brand">Strikeclub Velten · Liga-Archiv</div>
+      <div class="actions">
+        <a class="button secondary" href="/ergebnisse.html">Aktuelle Ergebnisse</a>
+        <a class="button secondary" href="/spielplan.html">Aktueller Spielplan</a>
+        <a class="button secondary" href="/">Startseite</a>
+      </div>
+    </div>
+
+    <section class="panel archive-hero">
+      <div>
+        <div class="badge">Saisonübersicht</div>
+        <h1>Ergebnisse und Spielpläne</h1>
+        <p class="muted">Abgeschlossene und laufende Saisons bleiben dauerhaft abrufbar.</p>
+      </div>
+    </section>
+
+    <div id="archiveMessage" class="status">Saisonarchiv wird geladen …</div>
+    <div id="seasonArchive" class="archive-grid"></div>
+  </main>
+  <script type="module" src="/js/archive.js"></script>
+</body>
+</html>

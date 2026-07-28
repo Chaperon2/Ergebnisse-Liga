@@ -1,19 +1,20 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spieleranalyse - Strikeclub Velten</title>
-  <meta property="og:title" content="Spieleranalyse - Strikeclub Velten" />
-  <meta property="og:description" content="Einzelspiel-Verlauf und Saisonentwicklung der Spieler im Überblick." />
-  <meta property="og:url" content="https://www.strikeclub-velten.de/spieleranalyse.html" />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spieleranalyse - Strikeclub Velten</title>
+<meta content="Spieleranalyse - Strikeclub Velten" property="og:title"/>
+<meta content="Einzelspiel-Verlauf und Saisonentwicklung der Spieler im Überblick." property="og:description"/>
+<meta content="https://www.strikeclub-velten.de/spieleranalyse.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Press+Start+2P&amp;family=Roboto+Slab:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
     :root {
       --text: #0f172a;
       --text-soft: #5f718d;
@@ -872,7 +873,6 @@
       }
     }
   </style>
-
 <style id="strikeclub-steampunk-theme">
   :root {
     --steam-bg: #080705;
@@ -1643,807 +1643,141 @@
       scroll-behavior: auto !important;
     }
   }
-</style>
 
+.live-data-state{position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin:-8px 0 16px;padding:12px 15px;border:1px solid rgba(64,244,239,.34);border-left:4px solid #40f4ef;border-radius:8px;background:linear-gradient(90deg,rgba(64,244,239,.11),rgba(17,14,10,.94));color:#d9fdf9;font-weight:700;box-shadow:inset 0 0 18px rgba(64,244,239,.05),0 10px 24px rgba(0,0,0,.25)}
+.live-data-state i{color:#40f4ef;filter:drop-shadow(0 0 7px rgba(64,244,239,.65))}.live-data-state.error{border-color:rgba(255,79,109,.45);border-left-color:#ff4f6d;color:#ffd7df}.live-data-state.error i{color:#ff4f6d}
+.page-analysis .chart-wrap{min-height:440px}.page-analysis #playerChart{width:100%!important;height:360px!important;min-height:330px;max-height:420px}
+@media(max-width:700px){.live-data-state{margin-top:0;font-size:.84rem;line-height:1.45}.page-analysis .chart-wrap{min-height:390px}.page-analysis #playerChart{height:300px!important;min-height:285px;max-height:340px}}
+</style>
 </head>
 <body class="steam-page page-analysis">
-  <div class="scene" aria-hidden="true">
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-    <div class="glow three"></div>
-    <div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
-    <div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
-    <div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
-    <div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div>
-    <div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
-  </div>
-
-  <main class="site">
-    <div class="topbar">
-      <div class="brand">
-        <span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
-        <span>Strikeclub Velten</span>
-      </div>
-    </div>
-
-    <section class="page">
-      <div class="header">
-        <div>
-          <div class="eyebrow">
-            <span class="dot"></span>
-            <span>Spieleranalyse</span>
-          </div>
-          <h1>Form. <span class="headline-accent">Verlauf der Saison.</span></h1>
-        </div>
-      </div>
-
-      <section class="analysis-panel">
-        <div class="panel-head">
-          <div class="panel-title-wrap">
-            <h2 class="panel-title">Verlauf</h2>
-            <div class="panel-subtitle">Einzelspiele und laufender Saison-Schnitt</div>
-          </div>
-          <div class="chip-note" id="playerChip">Spieler: –</div>
-        </div>
-
-        <div class="panel-body">
-          <div class="control-row">
-            <div class="field">
-              <label for="playerSelect">Spieler auswählen</label>
-              <select id="playerSelect" class="player-select"></select>
-            </div>
-            <div class="chip-note" id="playedInfo">0 Spieltage erfasst</div>
-          </div>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <span class="stat-label">Aktueller Schnitt</span>
-              <div class="stat-value" id="statAverage">–</div>
-            </div>
-
-            <div class="stat-card">
-              <span class="stat-label">Bestes Spiel</span>
-              <div class="stat-value" id="statBest">–</div>
-            </div>
-
-            <div class="stat-card">
-              <span class="stat-label">Spiele gesamt</span>
-              <div class="stat-value" id="statPlayed">–</div>
-            </div>
-
-            <div class="stat-card">
-              <span class="stat-label">Fehltage</span>
-              <div class="stat-value" id="statAbsent">–</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-label-row">
-                <span class="stat-label">Konstanz-Score</span>
-                <button
-                  class="info-icon-btn"
-                  type="button"
-                  data-info-title="Konstanz-Score"
-                  data-info-text="Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über seine einzelnen Spiele hinweg abliefert. Grundlage sind jetzt nicht mehr Tagesdurchschnitte, sondern jedes einzelne Spielergebnis. Ein hoher Wert bedeutet: geringe Schwankungen von Spiel zu Spiel."
-                  aria-label="Erklärung zu Konstanz-Score"
-                >
-                  <i class="fa-solid fa-circle-info"></i>
-                </button>
-              </div>
-              <div class="stat-value" id="statConsistency">–</div>
-              <div class="stat-subtext">0 = unkonstant · 100 = sehr konstant</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-label-row">
-                <span class="stat-label">Schwankung</span>
-                <button
-                  class="info-icon-btn"
-                  type="button"
-                  data-info-title="Schwankung"
-                  data-info-text="Die Schwankung zeigt, wie stark die einzelnen Spielergebnisse vom normalen Niveau des Spielers abweichen. Je kleiner dieser Wert ist, desto konstanter spielt der Spieler von Spiel zu Spiel."
-                  aria-label="Erklärung zu Schwankung"
-                >
-                  <i class="fa-solid fa-circle-info"></i>
-                </button>
-              </div>
-              <div class="stat-value" id="statDeviation">–</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-label-row">
-                <span class="stat-label">Spannweite</span>
-                <button
-                  class="info-icon-btn"
-                  type="button"
-                  data-info-title="Spannweite"
-                  data-info-text="Die Spannweite ist der Unterschied zwischen dem besten und dem schwächsten Einzelspiel eines Spielers. Je kleiner die Spannweite, desto gleichmäßiger waren die einzelnen Spiele."
-                  aria-label="Erklärung zu Spannweite"
-                >
-                  <i class="fa-solid fa-circle-info"></i>
-                </button>
-              </div>
-              <div class="stat-value" id="statRange">–</div>
-            </div>
-          </div>
-
-          <div class="chart-wrap">
-            <canvas id="playerChart" height="145"></canvas>
-            <div id="chartDetailBox" class="chart-detail-box hidden"></div>
-            <div class="legend-note">
-              <span class="legend-item"><span class="legend-line"></span>Einzelspiel</span>
-              <span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span>
-              <span class="legend-item"><span class="legend-gap"></span>Lücke = kein Einzelspiel</span>
-            </div>
-          </div>
-
-          <div class="status-section">
-            <h3 class="status-headline">Erfasste Spieltage</h3>
-            <div class="status-grid" id="statusGrid"></div>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <p class="footer-note">
+<div aria-hidden="true" class="scene">
+<div class="glow one"></div>
+<div class="glow two"></div>
+<div class="glow three"></div>
+<div class="bg-shape ball-bg" style="--size: 150px; --x: 7%; --y: 16%; --c1:#6ea8ff; --c2:#8b5cff; --dur:19s; --delay:-2s;"></div>
+<div class="bg-shape ball-bg" style="--size: 112px; --x: 84%; --y: 14%; --c1:#ff6aa8; --c2:#ff9b63; --dur:16s; --delay:-7s;"></div>
+<div class="bg-shape ball-bg" style="--size: 132px; --x: 78%; --y: 74%; --c1:#42d1ff; --c2:#6b7cff; --dur:22s; --delay:-5s;"></div>
+<div class="bg-shape pin-bg" style="--x: 18%; --y: 10%; --dur:18s; --delay:-4s;"></div>
+<div class="bg-shape pin-bg" style="--x: 92%; --y: 34%; --dur:15s; --delay:-8s; --w:50px; --h:150px;"></div>
+</div>
+<main class="site">
+<div class="topbar">
+<div class="brand">
+<span class="brand-mark"><i class="fa-solid fa-bowling-ball"></i></span>
+<span>Strikeclub Velten</span>
+</div>
+</div>
+<section class="page">
+<div class="header">
+<div>
+<div class="eyebrow">
+<span class="dot"></span>
+<span>Spieleranalyse</span>
+</div>
+<h1>Form. <span class="headline-accent">Verlauf der Saison.</span></h1>
+</div>
+</div>
+<section class="analysis-panel">
+<div class="panel-head">
+<div class="panel-title-wrap">
+<h2 class="panel-title">Verlauf</h2>
+<div class="panel-subtitle">Einzelspiele und laufender Saison-Schnitt</div>
+</div>
+<div class="chip-note" id="playerChip">Spieler: –</div>
+</div>
+<div class="panel-body">
+<div class="control-row">
+<div class="field">
+<label for="playerSelect">Spieler auswählen</label>
+<select class="player-select" id="playerSelect"></select>
+</div>
+<div class="chip-note" id="playedInfo">0 Spieltage erfasst</div>
+</div>
+<div class="stats-grid">
+<div class="stat-card">
+<span class="stat-label">Aktueller Schnitt</span>
+<div class="stat-value" id="statAverage">–</div>
+</div>
+<div class="stat-card">
+<span class="stat-label">Bestes Spiel</span>
+<div class="stat-value" id="statBest">–</div>
+</div>
+<div class="stat-card">
+<span class="stat-label">Spiele gesamt</span>
+<div class="stat-value" id="statPlayed">–</div>
+</div>
+<div class="stat-card">
+<span class="stat-label">Fehltage</span>
+<div class="stat-value" id="statAbsent">–</div>
+</div>
+<div class="stat-card">
+<div class="stat-label-row">
+<span class="stat-label">Konstanz-Score</span>
+<button aria-label="Erklärung zu Konstanz-Score" class="info-icon-btn" data-info-text="Der Konstanz-Score zeigt, wie gleichmäßig ein Spieler über seine einzelnen Spiele hinweg abliefert. Grundlage sind jetzt nicht mehr Tagesdurchschnitte, sondern jedes einzelne Spielergebnis. Ein hoher Wert bedeutet: geringe Schwankungen von Spiel zu Spiel." data-info-title="Konstanz-Score" type="button">
+<i class="fa-solid fa-circle-info"></i>
+</button>
+</div>
+<div class="stat-value" id="statConsistency">–</div>
+<div class="stat-subtext">0 = unkonstant · 100 = sehr konstant</div>
+</div>
+<div class="stat-card">
+<div class="stat-label-row">
+<span class="stat-label">Schwankung</span>
+<button aria-label="Erklärung zu Schwankung" class="info-icon-btn" data-info-text="Die Schwankung zeigt, wie stark die einzelnen Spielergebnisse vom normalen Niveau des Spielers abweichen. Je kleiner dieser Wert ist, desto konstanter spielt der Spieler von Spiel zu Spiel." data-info-title="Schwankung" type="button">
+<i class="fa-solid fa-circle-info"></i>
+</button>
+</div>
+<div class="stat-value" id="statDeviation">–</div>
+</div>
+<div class="stat-card">
+<div class="stat-label-row">
+<span class="stat-label">Spannweite</span>
+<button aria-label="Erklärung zu Spannweite" class="info-icon-btn" data-info-text="Die Spannweite ist der Unterschied zwischen dem besten und dem schwächsten Einzelspiel eines Spielers. Je kleiner die Spannweite, desto gleichmäßiger waren die einzelnen Spiele." data-info-title="Spannweite" type="button">
+<i class="fa-solid fa-circle-info"></i>
+</button>
+</div>
+<div class="stat-value" id="statRange">–</div>
+</div>
+</div>
+<div class="chart-wrap">
+<canvas height="145" id="playerChart"></canvas>
+<div class="chart-detail-box hidden" id="chartDetailBox"></div>
+<div class="legend-note">
+<span class="legend-item"><span class="legend-line"></span>Einzelspiel</span>
+<span class="legend-item"><span class="legend-dash"></span>Laufender Saison-Schnitt</span>
+<span class="legend-item"><span class="legend-gap"></span>Lücke = kein Einzelspiel</span>
+</div>
+</div>
+<div class="status-section">
+<h3 class="status-headline">Erfasste Spieltage</h3>
+<div class="status-grid" id="statusGrid"></div>
+</div>
+</div>
+</section>
+</section>
+<p class="footer-note">
       Strikeclub Velten · <a href="impressum.html">Impressum</a>
-    </p>
-  </main>
-
-  <button
-    class="back-fab"
-    type="button"
-    aria-label="Zurück zur Startseite"
-    title="Zurück zur Startseite"
-    onclick="location.href='index.html'"
-  >
-    <i class="fa-solid fa-arrow-left"></i>
-  </button>
-
-  <button
-    class="refresh-fab"
-    type="button"
-    aria-label="Seite aktualisieren"
-    title="Seite aktualisieren"
-    onclick="window.location.reload()"
-  >
-    <i class="fa-solid fa-rotate-right"></i>
-  </button>
-
-  <div class="info-modal-overlay hidden" id="infoModalOverlay" aria-hidden="true">
-    <div class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
-      <div class="info-modal-head">
-        <h3 class="info-modal-title" id="infoModalTitle">Info</h3>
-        <button class="info-modal-close" id="infoModalClose" type="button" aria-label="Schließen">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <p class="info-modal-text" id="infoModalText"></p>
-    </div>
-  </div>
-
-  <script src="liga-daten.js"></script>
-  <script>
-    const RAW_PLAYER_TABLE = window.STRIKECLUB_DATA?.rawPlayerTable || "";
-
-    const playerSelect = document.getElementById("playerSelect");
-    const playerChip = document.getElementById("playerChip");
-    const playedInfo = document.getElementById("playedInfo");
-    const statAverage = document.getElementById("statAverage");
-    const statBest = document.getElementById("statBest");
-    const statPlayed = document.getElementById("statPlayed");
-    const statAbsent = document.getElementById("statAbsent");
-    const statConsistency = document.getElementById("statConsistency");
-    const statDeviation = document.getElementById("statDeviation");
-    const statRange = document.getElementById("statRange");
-    const statusGrid = document.getElementById("statusGrid");
-    const chartDetailBox = document.getElementById("chartDetailBox");
-    const infoModalOverlay = document.getElementById("infoModalOverlay");
-    const infoModalTitle = document.getElementById("infoModalTitle");
-    const infoModalText = document.getElementById("infoModalText");
-    const infoModalClose = document.getElementById("infoModalClose");
-
-    function parseGermanDate(dateStr) {
-      const match = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(String(dateStr || "").trim());
-      if (!match) return null;
-
-      const [, dd, mm, yyyy] = match;
-      return new Date(Number(yyyy), Number(mm) - 1, Number(dd), 12, 0, 0, 0);
-    }
-
-    function isPastOrToday(dateStr) {
-      const date = parseGermanDate(dateStr);
-      if (!date) return false;
-
-      const now = new Date();
-      const todayEnd = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        23,
-        59,
-        59,
-        999
-      );
-
-      return date <= todayEnd;
-    }
-
-    function parseBool(value) {
-      return String(value || "").trim().toLowerCase() === "true";
-    }
-
-    function parseScore(value) {
-      const cleaned = String(value ?? "")
-        .trim()
-        .replace(/\./g, "")
-        .replace(",", ".");
-
-      if (!cleaned) return null;
-
-      const number = Number(cleaned);
-      return Number.isFinite(number) ? number : null;
-    }
-
-    function formatNumber(value) {
-      return new Intl.NumberFormat("de-DE", {
-        minimumFractionDigits: 1,
-        maximumFractionDigits: 1
-      }).format(value);
-    }
-
-    function formatInteger(value) {
-      return new Intl.NumberFormat("de-DE", {
-        maximumFractionDigits: 0
-      }).format(value);
-    }
-
-    function parsePlayerTable(raw) {
-      const lines = String(raw || "")
-        .replace(/\r/g, "")
-        .split("\n")
-        .map(line => line.trimEnd())
-        .filter(line => line.trim() !== "");
-
-      if (lines.length < 3) {
-        return {};
-      }
-
-      const spieltagLabels = lines[0].match(/Spieltag\s+\d+/g) || [];
-
-      if (!spieltagLabels.length) {
-        return {};
-      }
-
-      const result = {};
-      const columnsPerSpieltag = 8;
-
-      for (const line of lines.slice(2)) {
-        const cells = line.split("\t").map(cell => cell.trim());
-        const name = cells[0];
-
-        if (!name) continue;
-
-        const entries = [];
-        let previousScheduleDate = null;
-
-        for (let i = 0; i < spieltagLabels.length; i++) {
-          const base = 1 + i * columnsPerSpieltag;
-          const datum = cells[base] || "";
-          const dateObject = parseGermanDate(datum);
-
-          if (!datum || !dateObject) continue;
-
-          /*
-            Schutz gegen alte Platzhalterdaten:
-            Wenn spätere Spieltag-Spalten plötzlich ein älteres Datum haben,
-            werden sie ignoriert. Das verhindert z. B., dass März-Daten nach
-            Juni-Spalten als Fehltage gezählt werden.
-          */
-          if (previousScheduleDate && dateObject < previousScheduleDate) {
-            continue;
-          }
-
-          previousScheduleDate = dateObject;
-
-          if (!isPastOrToday(datum)) continue;
-
-          const reportedTotalPins = parseScore(cells[base + 1]);
-          const rawGameScores = [
-            parseScore(cells[base + 2]),
-            parseScore(cells[base + 3]),
-            parseScore(cells[base + 4]),
-            parseScore(cells[base + 5])
-          ];
-
-          const declaredGames = parseScore(cells[base + 6]) || 0;
-          const presentFlag = parseBool(cells[base + 7]);
-
-          const gameScores = rawGameScores.filter(score =>
-            Number.isFinite(score) && score > 0
-          );
-
-          const calculatedPins = gameScores.reduce((sum, score) => sum + score, 0);
-
-          entries.push({
-            spieltag: i + 1,
-            datum,
-            reportedTotalPins,
-            calculatedPins,
-            declaredGames,
-            presentFlag,
-            gameScores,
-            played: gameScores.length > 0
-          });
-        }
-
-        result[name] = entries;
-      }
-
-      return result;
-    }
-
-    const PLAYER_DATA = parsePlayerTable(RAW_PLAYER_TABLE);
-    const players = Object.keys(PLAYER_DATA).sort((a, b) => a.localeCompare(b, "de"));
-
-    function getProcessedData(entries) {
-      let runningPins = 0;
-      let runningGames = 0;
-      let lastAverage = null;
-
-      return entries.map(entry => {
-        const gameScores = Array.isArray(entry.gameScores)
-          ? entry.gameScores.filter(score => Number.isFinite(score) && score > 0)
-          : [];
-
-        const validPlayed = gameScores.length > 0;
-        const gamePoints = [];
-
-        let dayPins = null;
-        let dayAverage = null;
-
-        if (validPlayed) {
-          dayPins = gameScores.reduce((sum, score) => sum + score, 0);
-          dayAverage = dayPins / gameScores.length;
-
-          gameScores.forEach((score, index) => {
-            runningPins += score;
-            runningGames += 1;
-            lastAverage = runningPins / runningGames;
-
-            gamePoints.push({
-              spieltag: entry.spieltag,
-              datum: entry.datum,
-              gameNumber: index + 1,
-              pins: score,
-              average: lastAverage,
-              runningPins,
-              runningGames
-            });
-          });
-        }
-
-        return {
-          ...entry,
-          validPlayed,
-          pins: dayPins,
-          games: gameScores.length,
-          dayAverage,
-          average: lastAverage,
-          runningPins,
-          runningGames,
-          gameScores,
-          gamePoints
-        };
-      });
-    }
-
-    function getAllGamePoints(processed) {
-      return processed.flatMap(item => item.gamePoints || []);
-    }
-
-    function getStats(processed) {
-      const playedDays = processed.filter(item => item.validPlayed).length;
-      const absent = processed.filter(item => !item.validPlayed).length;
-      const gamePoints = getAllGamePoints(processed);
-
-      const totalGames = gamePoints.length;
-      const totalPins = gamePoints.reduce((sum, item) => sum + item.pins, 0);
-
-      const bestGame = gamePoints.length
-        ? Math.max(...gamePoints.map(item => item.pins))
-        : null;
-
-      const currentAverage = totalGames > 0
-        ? totalPins / totalGames
-        : null;
-
-      return {
-        playedDays,
-        absentCount: absent,
-        totalGames,
-        totalPins,
-        bestGame,
-        currentAverage
-      };
-    }
-
-    function getConsistencyStats(processed) {
-      const gamePoints = getAllGamePoints(processed);
-      const values = gamePoints.map(item => item.pins);
-
-      if (values.length < 4) {
-        return { score: null, stdDev: null, range: null };
-      }
-
-      const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
-
-      const variance = values.reduce((sum, value) => {
-        const diff = value - mean;
-        return sum + diff * diff;
-      }, 0) / values.length;
-
-      const stdDev = Math.sqrt(variance);
-      const minValue = Math.min(...values);
-      const maxValue = Math.max(...values);
-      const range = maxValue - minValue;
-
-      /*
-        Einzelspiele schwanken stärker als Tagesdurchschnitte.
-        Der alte Faktor 2.5 wäre hier zu streng und kaum vergleichbar.
-      */
-      const rawScore = 100 - stdDev * 1.7;
-      const score = Math.max(0, Math.min(100, Math.round(rawScore)));
-
-      return { score, stdDev, range };
-    }
-
-    function renderStatusCards(processed) {
-      statusGrid.innerHTML = "";
-
-      processed.forEach(entry => {
-        const card = document.createElement("div");
-        card.className = "status-card";
-
-        const statusClass = entry.validPlayed ? "played" : "absent";
-        const statusText = entry.validPlayed ? "gespielt" : "kein Einzelwert";
-
-        const gameChips = entry.validPlayed
-          ? entry.gameScores
-              .map((score, index) => `<span class="status-chip">Spiel ${index + 1}: ${formatInteger(score)}</span>`)
-              .join("")
-          : "";
-
-        const chips = entry.validPlayed
-          ? `
-            <span class="status-chip">Spieltag ${entry.spieltag}</span>
-            ${gameChips}
-            <span class="status-chip">${formatInteger(entry.pins)} Pins</span>
-            <span class="status-chip">${entry.games} Spiele</span>
-            <span class="status-chip">Tagesschnitt: ${formatNumber(entry.dayAverage)}</span>
-            <span class="status-chip">Saison: ${entry.average ? formatNumber(entry.average) : "–"}</span>
-          `
-          : `
-            <span class="status-chip">Spieltag ${entry.spieltag}</span>
-            <span class="status-chip">Keine verwertbaren Einzelspiele</span>
-            <span class="status-chip">Saison bleibt: ${entry.average ? formatNumber(entry.average) : "–"}</span>
-          `;
-
-        card.innerHTML = `
-          <div class="status-head">
-            <div class="status-date">${entry.datum}</div>
-            <div class="status-badge ${statusClass}">${statusText}</div>
-          </div>
-          <div class="status-values">${chips}</div>
-        `;
-
-        statusGrid.appendChild(card);
-      });
-    }
-
-    let chart;
-    let activeTooltipIndex = null;
-
-    function hideChartDetail() {
-      chartDetailBox.classList.add("hidden");
-      chartDetailBox.innerHTML = "";
-      activeTooltipIndex = null;
-    }
-
-    function showChartDetail(row) {
-      if (!row) return;
-
-      if (row.isGap) {
-        const entry = row.entry;
-
-        chartDetailBox.innerHTML = `
-          <span class="chart-detail-title">Ausgewählter Spieltag</span>
-          <div class="chart-detail-values">
-            <span class="chart-detail-chip">Spieltag ${entry.spieltag}</span>
-            <span class="chart-detail-chip">${entry.datum}</span>
-            <span class="chart-detail-chip">Kein Einzelspiel</span>
-            <span class="chart-detail-chip">Saison bleibt: ${entry.average ? formatNumber(entry.average) : "–"}</span>
-          </div>
-        `;
-
-        chartDetailBox.classList.remove("hidden");
-        return;
-      }
-
-      const point = row.point;
-      const entry = row.entry;
-
-      chartDetailBox.innerHTML = `
-        <span class="chart-detail-title">Ausgewähltes Einzelspiel</span>
-        <div class="chart-detail-values">
-          <span class="chart-detail-chip">Spieltag ${point.spieltag}</span>
-          <span class="chart-detail-chip">${point.datum}</span>
-          <span class="chart-detail-chip">Spiel ${point.gameNumber}</span>
-          <span class="chart-detail-chip">${formatInteger(point.pins)} Pins</span>
-          <span class="chart-detail-chip">Tagesschnitt: ${formatNumber(entry.dayAverage)}</span>
-          <span class="chart-detail-chip">Saison nach Spiel: ${formatNumber(point.average)}</span>
-        </div>
-      `;
-
-      chartDetailBox.classList.remove("hidden");
-    }
-
-    function buildChart(processed, playerName) {
-      const rows = [];
-
-      processed.forEach(entry => {
-        if (entry.validPlayed) {
-          entry.gamePoints.forEach(point => {
-            rows.push({
-              label: `SpT ${point.spieltag}.${point.gameNumber}`,
-              entry,
-              point,
-              isGap: false,
-              gameValue: point.pins,
-              seasonAverage: point.average
-            });
-          });
-        } else {
-          rows.push({
-            label: `SpT ${entry.spieltag}`,
-            entry,
-            point: null,
-            isGap: true,
-            gameValue: null,
-            seasonAverage: entry.average
-          });
-        }
-      });
-
-      const labels = rows.map(row => row.label);
-
-      const gameData = rows.map(row =>
-        Number.isFinite(row.gameValue) ? row.gameValue : null
-      );
-
-      const seasonAverageData = rows.map(row =>
-        row.seasonAverage != null ? Number(row.seasonAverage.toFixed(2)) : null
-      );
-
-      const values = [
-        ...gameData.filter(value => Number.isFinite(value)),
-        ...seasonAverageData.filter(value => Number.isFinite(value))
-      ];
-
-      const yMin = values.length
-        ? Math.max(40, Math.floor((Math.min(...values) - 12) / 10) * 10)
-        : 80;
-
-      const yMax = values.length
-        ? Math.min(300, Math.ceil((Math.max(...values) + 12) / 10) * 10)
-        : 220;
-
-      const ctx = document.getElementById("playerChart").getContext("2d");
-
-      if (chart) {
-        chart.destroy();
-        activeTooltipIndex = null;
-      }
-
-      chart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Einzelspiel",
-              data: gameData,
-              borderColor: "#74b8ff",
-              backgroundColor: "rgba(116, 184, 255, 0.10)",
-              borderWidth: 3,
-              pointRadius: 4,
-              pointHoverRadius: 6,
-              pointHitRadius: 18,
-              pointBackgroundColor: "#74b8ff",
-              pointBorderColor: "#f2dfb7",
-              pointBorderWidth: 2,
-              tension: 0.24,
-              spanGaps: false
-            },
-            {
-              label: "Laufender Saison-Schnitt",
-              data: seasonAverageData,
-              borderColor: "#ff63bd",
-              backgroundColor: "rgba(255, 99, 189, 0.06)",
-              borderWidth: 3,
-              borderDash: [8, 6],
-              pointRadius: 0,
-              pointHoverRadius: 0,
-              pointHitRadius: 12,
-              tension: 0.18,
-              spanGaps: true
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          aspectRatio: 1.95,
-          layout: {
-            padding: { top: 6, right: 8, bottom: 2, left: 2 }
-          },
-          onClick(event, elements, chartRef) {
-            const points = chartRef.getElementsAtEventForMode(
-              event,
-              "nearest",
-              { intersect: false },
-              false
-            );
-
-            if (!points.length) {
-              hideChartDetail();
-              return;
-            }
-
-            const tappedIndex = points[0].index;
-
-            if (activeTooltipIndex === tappedIndex) {
-              hideChartDetail();
-              return;
-            }
-
-            activeTooltipIndex = tappedIndex;
-            showChartDetail(rows[tappedIndex]);
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
-          },
-          interaction: {
-            mode: "nearest",
-            intersect: false
-          },
-          scales: {
-            x: {
-              grid: { color: "rgba(201,151,72,0.10)" },
-              ticks: {
-                color: "#b9aa8c",
-                font: { weight: 700 },
-                autoSkip: true,
-                maxTicksLimit: 10,
-                maxRotation: 0,
-                minRotation: 0
-              }
-            },
-            y: {
-              min: yMin,
-              max: yMax,
-              grid: { color: "rgba(201,151,72,0.12)" },
-              ticks: {
-                color: "#b9aa8c",
-                font: { weight: 700 },
-                callback(value) {
-                  return formatInteger(value);
-                },
-                maxTicksLimit: 7
-              },
-              title: {
-                display: true,
-                text: "Pins pro Spiel",
-                color: "#b9aa8c",
-                font: { weight: 800 }
-              }
-            }
-          }
-        }
-      });
-
-      playerChip.textContent = `Spieler: ${playerName}`;
-    }
-
-    function updateView(playerName) {
-      hideChartDetail();
-
-      const processed = getProcessedData(PLAYER_DATA[playerName] || []);
-      const stats = getStats(processed);
-      const consistency = getConsistencyStats(processed);
-
-      buildChart(processed, playerName);
-      renderStatusCards(processed);
-
-      playedInfo.textContent = `${stats.playedDays} Spieltage gespielt · ${stats.totalGames} Spiele gesamt`;
-      statAverage.textContent = stats.currentAverage != null ? formatNumber(stats.currentAverage) : "–";
-      statBest.textContent = stats.bestGame != null ? formatInteger(stats.bestGame) : "–";
-      statPlayed.textContent = String(stats.totalGames);
-      statAbsent.textContent = String(stats.absentCount);
-      statConsistency.textContent = consistency.score != null ? `${consistency.score} / 100` : "–";
-      statDeviation.textContent = consistency.stdDev != null ? `± ${formatNumber(consistency.stdDev)}` : "–";
-      statRange.textContent = consistency.range != null ? formatInteger(consistency.range) : "–";
-    }
-
-    function openInfoModal(title, text) {
-      infoModalTitle.textContent = title;
-      infoModalText.textContent = text;
-      infoModalOverlay.classList.remove("hidden");
-      infoModalOverlay.setAttribute("aria-hidden", "false");
-    }
-
-    function closeInfoModal() {
-      infoModalOverlay.classList.add("hidden");
-      infoModalOverlay.setAttribute("aria-hidden", "true");
-    }
-
-    document.querySelectorAll(".info-icon-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        openInfoModal(
-          button.dataset.infoTitle || "Info",
-          button.dataset.infoText || ""
-        );
-      });
-    });
-
-    infoModalClose.addEventListener("click", closeInfoModal);
-
-    infoModalOverlay.addEventListener("click", event => {
-      if (event.target === infoModalOverlay) {
-        closeInfoModal();
-      }
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeInfoModal();
-      }
-    });
-
-    playerSelect.addEventListener("change", () => {
-      updateView(playerSelect.value);
-    });
-
-    function init() {
-      if (!RAW_PLAYER_TABLE || !players.length) {
-        playerChip.textContent = "Spieler: –";
-        playedInfo.textContent = "Keine Daten geladen";
-        statusGrid.innerHTML = `
-          <div class="status-card">
-            <div class="status-head">
-              <div class="status-date">Hinweis</div>
-              <div class="status-badge absent">fehlt</div>
-            </div>
-            <div class="status-values">
-              <span class="status-chip">Prüfe, ob liga-daten.js eingebunden ist</span>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      players.forEach(name => {
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        playerSelect.appendChild(option);
-      });
-
-      playerSelect.value = players[0];
-      updateView(players[0]);
-    }
-
-    init();
-  </script>
-</body>
+</p>
+</main>
+<button aria-label="Zurück zur Startseite" class="back-fab" onclick="location.href='index.html'" title="Zurück zur Startseite" type="button">
+<i class="fa-solid fa-arrow-left"></i>
+</button>
+<button aria-label="Seite aktualisieren" class="refresh-fab" onclick="window.location.reload()" title="Seite aktualisieren" type="button">
+<i class="fa-solid fa-rotate-right"></i>
+</button>
+<div aria-hidden="true" class="info-modal-overlay hidden" id="infoModalOverlay">
+<div aria-labelledby="infoModalTitle" aria-modal="true" class="info-modal-card" role="dialog">
+<div class="info-modal-head">
+<h3 class="info-modal-title" id="infoModalTitle">Info</h3>
+<button aria-label="Schließen" class="info-modal-close" id="infoModalClose" type="button">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<p class="info-modal-text" id="infoModalText"></p>
+</div>
+</div>
+
+
+<script src="/js/player-analysis-live.js" type="module"></script></body>
 </html>
