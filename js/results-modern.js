@@ -137,32 +137,29 @@ function render(data) {
     cells: [row.rank, { html: true, value: tendency(row.trend) }, row.name, row.points, row.pins, row.matchdays, formatNumber(row.average)],
   }));
   const teamNames = new Map(data.teamStandings.rows.map((row) => [row.teamId, row.name]));
-  const matchupHeaders = [
-    "Team",
-    { label: "Runde 1", mobile: "R1" },
-    { label: "Runde 2", mobile: "R2" },
-    { label: "Runde 3", mobile: "R3" },
-    { label: "Runde 4", mobile: "R4" },
-    { label: "Gesamt", mobile: "Ges." },
-    { label: "Ergebnis", mobile: "Pkt." },
-  ];
-  const matchupRows = [];
-  data.teamStandings.matchups.forEach((matchup, index) => {
-    matchupRows.push({
-      pairStart: true,
-      cells: [teamNames.get(matchup.home.teamId) ?? matchup.home.teamId, ...matchup.home.rounds.map((round) => round.display), matchup.home.scoringPins, matchup.home.points],
-    });
-    matchupRows.push({ type: "separator" });
-    matchupRows.push({
-      pairEnd: true,
-      cells: [teamNames.get(matchup.away.teamId) ?? matchup.away.teamId, ...matchup.away.rounds.map((round) => round.display), matchup.away.scoringPins, matchup.away.points],
-    });
-    if (index < data.teamStandings.matchups.length - 1) matchupRows.push({ type: "blank" });
-  });
+  const teamColorMap = new Map(data.teamStandings.rows.map((row, index) => [row.teamId, `duel-color-${(index % 8) + 1}`]));
+  const teamDuels = data.teamStandings.matchups.map((matchup) => {
+    const homeName = teamNames.get(matchup.home.teamId) ?? matchup.home.teamId;
+    const awayName = teamNames.get(matchup.away.teamId) ?? matchup.away.teamId;
+    const homeClass = teamColorMap.get(matchup.home.teamId) ?? "duel-color-1";
+    const awayClass = teamColorMap.get(matchup.away.teamId) ?? "duel-color-2";
+    const roundRows = matchup.home.rounds.map((round, roundIndex) => {
+      const awayRound = matchup.away.rounds[roundIndex];
+      return `<span class="duel-round"><b>R${roundIndex + 1}</b><span>${escapeHtml(round.display)}</span><i>:</i><span>${escapeHtml(awayRound?.display ?? "–")}</span></span>`;
+    }).join("");
+    return `<article class="team-duel">
+      <div class="duel-team ${homeClass}"><span class="duel-color-dot"></span><strong>${escapeHtml(homeName)}</strong><small>${escapeHtml(matchup.home.scoringPins)} Pins</small></div>
+      <div class="duel-score" aria-label="${escapeHtml(homeName)} ${escapeHtml(matchup.home.points)} zu ${escapeHtml(matchup.away.points)} ${escapeHtml(awayName)}">
+        <span>${escapeHtml(matchup.home.points)}</span><b>:</b><span>${escapeHtml(matchup.away.points)}</span>
+      </div>
+      <div class="duel-team away ${awayClass}"><span class="duel-color-dot"></span><strong>${escapeHtml(awayName)}</strong><small>${escapeHtml(matchup.away.scoringPins)} Pins</small></div>
+      <div class="duel-rounds">${roundRows}</div>
+    </article>`;
+  }).join("");
 
   const teamContent = `<div class="stacked-tables">
     <div class="subtable-shell"><div class="subtable-head"><h3 class="subtable-title">Mannschaftswertung</h3></div>${renderTable({ headers: teamHeaders, rows: teamRows })}</div>
-    <div class="subtable-shell"><div class="subtable-head"><h3 class="subtable-title">${escapeHtml(`Spieltag ${matchday.number} · ${formatDate(matchday.date)}`)}</h3></div>${renderTable({ headers: matchupHeaders, rows: matchupRows })}</div>
+    <div class="subtable-shell duel-shell"><div class="subtable-head"><h3 class="subtable-title">${escapeHtml(`Direkte Duelle · Spieltag ${matchday.number} · ${formatDate(matchday.date)}`)}</h3></div><div class="team-duels">${teamDuels}</div></div>
   </div>`;
 
   const leaderPlayer = data.individualStandings.rows?.[0];
