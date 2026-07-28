@@ -167,6 +167,34 @@
       50% { text-shadow: 0 0 8px rgba(64,244,239,.85), 0 0 24px rgba(64,244,239,.32); }
     }
 
+    @keyframes heroAurora {
+      0%, 100% { transform: translate3d(-2%, -1%, 0) scale(1); filter: hue-rotate(0deg); }
+      35% { transform: translate3d(4%, 2%, 0) scale(1.08); filter: hue-rotate(22deg); }
+      70% { transform: translate3d(-1%, 4%, 0) scale(1.03); filter: hue-rotate(-18deg); }
+    }
+
+    @keyframes heroTitlePulse {
+      0%, 100% { filter: brightness(.96) saturate(1); transform: translateY(0); }
+      50% { filter: brightness(1.18) saturate(1.22); transform: translateY(-1px); }
+    }
+
+    @keyframes bulbChase {
+      0%, 100% { opacity: .22; transform: scale(.78); }
+      18% { opacity: 1; transform: scale(1.18); }
+      36% { opacity: .45; transform: scale(.9); }
+    }
+
+    @keyframes pixelDrift {
+      0% { transform: translate3d(-10px, -4px, 0); opacity: .12; }
+      45% { opacity: .82; }
+      100% { transform: translate3d(30px, 18px, 0); opacity: .08; }
+    }
+
+    @keyframes scanlineSweep {
+      0% { transform: translateY(-130%); }
+      100% { transform: translateY(420%); }
+    }
+
     /* ---------- DESKTOP ---------- */
     .desktop-home {
       min-height: 100vh;
@@ -366,18 +394,52 @@
     }
 
     .hero-stage {
-      min-height: 385px;
+      min-height: 430px;
       display: grid;
-      grid-template-columns: minmax(180px, 260px) 1fr minmax(210px, 300px);
+      grid-template-columns: minmax(180px, 250px) minmax(430px, 1fr) minmax(210px, 290px);
       align-items: center;
-      gap: 28px;
-      padding: 36px 34px 30px;
+      gap: 26px;
+      padding: 38px 34px 34px;
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(90deg, rgba(5,5,4,.93), rgba(13,11,8,.52) 24%, rgba(13,11,8,.49) 74%, rgba(5,5,4,.93)),
-        repeating-linear-gradient(90deg, transparent 0 11.8%, rgba(82,199,202,.06) 11.8% 12.1%),
-        linear-gradient(180deg, #17130e 0 54%, #4b301d 55%, #160e09 100%);
+        linear-gradient(90deg, rgba(5,5,4,.95), rgba(11,9,15,.45) 22%, rgba(6,18,20,.45) 75%, rgba(5,5,4,.95)),
+        repeating-linear-gradient(90deg, transparent 0 11.8%, rgba(82,199,202,.08) 11.8% 12.1%),
+        linear-gradient(180deg, #18100e 0 52%, #57301f 53%, #160e09 100%);
+    }
+
+    .hero-stage .hero-color-field {
+      position: absolute;
+      inset: -24%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 28% 34%, rgba(255,89,182,.32), transparent 19%),
+        radial-gradient(circle at 68% 28%, rgba(64,244,239,.30), transparent 20%),
+        radial-gradient(circle at 54% 72%, rgba(255,200,91,.25), transparent 21%),
+        radial-gradient(circle at 82% 70%, rgba(168,147,255,.20), transparent 18%);
+      filter: blur(20px) saturate(1.25);
+      animation: heroAurora 11s ease-in-out infinite;
+    }
+
+    .hero-stage .hero-pixel-cloud {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-pixel-cloud span {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 1px;
+      background: var(--pixel-color, var(--cyan));
+      box-shadow: 0 0 8px var(--pixel-color, var(--cyan));
+      opacity: .35;
+      animation: pixelDrift var(--pixel-speed, 5s) linear infinite;
+      animation-delay: var(--pixel-delay, 0s);
     }
 
     .hero-stage::before {
@@ -401,9 +463,10 @@
       content: "";
       position: absolute;
       inset: 0;
+      z-index: 2;
       background:
-        radial-gradient(circle at 50% 42%, rgba(255,196,105,.11), transparent 28%),
-        repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.08) 3px 4px);
+        radial-gradient(circle at 50% 42%, rgba(255,196,105,.14), transparent 28%),
+        repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.10) 3px 4px);
       pointer-events: none;
     }
 
@@ -452,10 +515,71 @@
 
     .hero-copy {
       position: relative;
-      z-index: 3;
+      z-index: 5;
       text-align: center;
-      padding: 18px 0;
+      padding: 27px 28px 25px;
+      border: 2px solid rgba(240,200,121,.44);
+      border-radius: 13px;
+      background:
+        linear-gradient(135deg, rgba(255,89,182,.10), transparent 34%),
+        linear-gradient(315deg, rgba(64,244,239,.10), transparent 36%),
+        linear-gradient(180deg, rgba(13,10,14,.88), rgba(5,8,9,.91));
+      box-shadow:
+        inset 0 0 0 3px rgba(22,12,8,.80),
+        inset 0 0 42px rgba(64,244,239,.055),
+        0 0 0 1px rgba(255,89,182,.15),
+        0 18px 48px rgba(0,0,0,.50),
+        0 0 42px rgba(64,244,239,.10);
+      isolation: isolate;
     }
+
+    .hero-copy::before,
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .hero-copy::before {
+      inset: 9px;
+      border: 1px dashed rgba(64,244,239,.38);
+      border-radius: 8px;
+      box-shadow: inset 0 0 25px rgba(255,89,182,.07);
+    }
+
+    .hero-copy::after {
+      left: 3%;
+      right: 3%;
+      top: 0;
+      height: 25%;
+      background: linear-gradient(180deg, transparent, rgba(64,244,239,.08), transparent);
+      animation: scanlineSweep 5.2s linear infinite;
+    }
+
+    .hero-marquee {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 8px;
+      margin: -4px 3px 19px;
+    }
+
+    .hero-marquee span {
+      width: 8px;
+      height: 8px;
+      justify-self: center;
+      border-radius: 50%;
+      color: var(--bulb, var(--cyan));
+      background: currentColor;
+      box-shadow: 0 0 7px currentColor, 0 0 16px currentColor;
+      animation: bulbChase 2s steps(1,end) infinite;
+      animation-delay: calc(var(--i) * -0.13s);
+    }
+
+    .hero-marquee span:nth-child(4n + 1) { --bulb: var(--cyan); }
+    .hero-marquee span:nth-child(4n + 2) { --bulb: var(--pink); }
+    .hero-marquee span:nth-child(4n + 3) { --bulb: var(--gold); }
+    .hero-marquee span:nth-child(4n + 4) { --bulb: var(--green); }
 
     .hero-kicker {
       display: inline-flex;
@@ -472,13 +596,63 @@
     .hero-copy h1 {
       margin: 0;
       font-family: "Oswald", sans-serif;
-      font-size: clamp(46px, 6vw, 92px);
-      line-height: .92;
-      letter-spacing: .015em;
+      font-size: clamp(50px, 6.1vw, 94px);
+      line-height: .90;
+      letter-spacing: .018em;
       text-transform: uppercase;
-      color: #f1dfb8;
-      text-shadow: 0 3px 0 #6b3d23, 0 10px 28px rgba(0,0,0,.82);
+      animation: heroTitlePulse 4s ease-in-out infinite;
     }
+
+    .hero-title-line {
+      display: block;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,244,215,.30);
+      filter: drop-shadow(0 5px 0 rgba(61,31,21,.72)) drop-shadow(0 12px 18px rgba(0,0,0,.70));
+    }
+
+    .hero-title-line.line-liga {
+      background-image: linear-gradient(90deg, #6bfff7 2%, #8bc2ff 43%, #ff65c0 100%);
+      text-shadow: 0 0 18px rgba(64,244,239,.18);
+    }
+
+    .hero-title-line.line-spieltage {
+      background-image: linear-gradient(90deg, #ffe38b 0%, #ff9e55 54%, #ff5f96 100%);
+      text-shadow: 0 0 18px rgba(255,200,91,.16);
+    }
+
+    .hero-title-line.line-ergebnisse {
+      background-image: linear-gradient(90deg, #76ff99 0%, #55e8ff 48%, #b496ff 100%);
+      text-shadow: 0 0 18px rgba(109,245,141,.14);
+    }
+
+    .hero-chip-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 17px 0 0;
+    }
+
+    .hero-chip {
+      min-height: 29px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+      border: 1px solid color-mix(in srgb, var(--chip, var(--cyan)) 44%, #5b351e);
+      border-radius: 4px;
+      background: rgba(5,9,10,.72);
+      color: var(--chip, var(--cyan));
+      font-family: "Press Start 2P", monospace;
+      font-size: 6.5px;
+      line-height: 1.4;
+      box-shadow: inset 0 0 12px color-mix(in srgb, var(--chip, var(--cyan)) 9%, transparent), 0 0 13px color-mix(in srgb, var(--chip, var(--cyan)) 10%, transparent);
+    }
+
+    .hero-chip:nth-child(2) { --chip: var(--pink); }
+    .hero-chip:nth-child(3) { --chip: var(--gold); }
 
     .hero-copy p {
       margin: 19px auto 0;
@@ -852,12 +1026,27 @@
     .mobile-hero {
       position: relative;
       overflow: hidden;
-      padding: 26px 18px 22px;
+      padding: 23px 15px 21px;
       border-radius: 11px;
       text-align: center;
       background:
-        linear-gradient(180deg, rgba(13,24,25,.84), rgba(14,10,8,.96)),
-        repeating-linear-gradient(90deg, transparent 0 20px, rgba(64,244,239,.025) 20px 21px);
+        radial-gradient(circle at 12% 18%, rgba(255,89,182,.22), transparent 34%),
+        radial-gradient(circle at 88% 20%, rgba(64,244,239,.22), transparent 35%),
+        radial-gradient(circle at 50% 82%, rgba(255,200,91,.16), transparent 42%),
+        linear-gradient(180deg, rgba(15,16,28,.92), rgba(8,10,10,.98)),
+        repeating-linear-gradient(90deg, transparent 0 20px, rgba(64,244,239,.035) 20px 21px);
+      box-shadow: inset 0 0 34px rgba(64,244,239,.05), 0 15px 32px rgba(0,0,0,.36);
+    }
+
+    .mobile-hero::before {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      background:
+        conic-gradient(from 30deg at 50% 50%, rgba(64,244,239,.12), rgba(255,89,182,.14), rgba(255,200,91,.12), rgba(109,245,141,.09), rgba(64,244,239,.12));
+      filter: blur(28px);
+      animation: heroAurora 10s ease-in-out infinite;
+      pointer-events: none;
     }
 
     .mobile-hero::after {
@@ -895,12 +1084,70 @@
     .mobile-hero h1 {
       margin: 0;
       font-family: "Oswald", sans-serif;
-      font-size: clamp(38px, 12vw, 58px);
-      line-height: .98;
+      font-size: clamp(39px, 12vw, 58px);
+      line-height: .94;
       text-transform: uppercase;
-      color: #f2deb1;
-      text-shadow: 0 2px 0 #60371f, 0 8px 22px rgba(0,0,0,.74);
+      animation: heroTitlePulse 4s ease-in-out infinite;
     }
+
+    .mobile-title-line {
+      display: block;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-stroke: .7px rgba(255,244,215,.28);
+      filter: drop-shadow(0 3px 0 rgba(74,37,21,.75)) drop-shadow(0 8px 13px rgba(0,0,0,.72));
+    }
+
+    .mobile-title-line:nth-child(1) { background-image: linear-gradient(90deg, #5ffff5, #89bfff 55%, #ff65c0); }
+    .mobile-title-line:nth-child(2) { background-image: linear-gradient(90deg, #ffe58a, #ff9a57 58%, #ff65a8); }
+    .mobile-title-line:nth-child(3) { background-image: linear-gradient(90deg, #78ff9c, #55eaff 55%, #af97ff); }
+
+    .mobile-marquee {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      margin: 0 10px 15px;
+    }
+
+    .mobile-marquee span {
+      width: 7px;
+      height: 7px;
+      justify-self: center;
+      border-radius: 50%;
+      color: var(--bulb, var(--cyan));
+      background: currentColor;
+      box-shadow: 0 0 7px currentColor, 0 0 14px currentColor;
+      animation: bulbChase 1.8s steps(1,end) infinite;
+      animation-delay: calc(var(--i) * -0.15s);
+    }
+
+    .mobile-marquee span:nth-child(4n + 1) { --bulb: var(--cyan); }
+    .mobile-marquee span:nth-child(4n + 2) { --bulb: var(--pink); }
+    .mobile-marquee span:nth-child(4n + 3) { --bulb: var(--gold); }
+    .mobile-marquee span:nth-child(4n + 4) { --bulb: var(--green); }
+
+    .mobile-pixel-ribbon {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 13px;
+    }
+
+    .mobile-pixel-ribbon span {
+      padding: 5px 7px;
+      border: 1px solid rgba(64,244,239,.26);
+      border-radius: 3px;
+      background: rgba(2,11,13,.60);
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 5.7px;
+      line-height: 1.35;
+    }
+
+    .mobile-pixel-ribbon span:nth-child(2) { color: var(--pink); border-color: rgba(255,89,182,.28); }
+    .mobile-pixel-ribbon span:nth-child(3) { color: var(--gold); border-color: rgba(255,200,91,.28); }
 
     .mobile-hero p {
       margin: 14px auto 0;
@@ -1074,7 +1321,7 @@
 
     @media (min-width: 900px) and (max-width: 1180px) {
       .machine-header { grid-template-columns: 150px 1fr 150px; }
-      .hero-stage { grid-template-columns: 190px 1fr 210px; gap: 18px; padding-inline: 22px; }
+      .hero-stage { grid-template-columns: 175px minmax(390px, 1fr) 195px; gap: 14px; padding-inline: 18px; }
       .desktop-nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .machine-card { min-height: 210px; }
     }
@@ -1140,6 +1387,15 @@
       </header>
 
       <section class="hero-stage">
+        <div class="hero-color-field" aria-hidden="true"></div>
+        <div class="hero-pixel-cloud" aria-hidden="true">
+          <span style="left:12%;top:18%;--pixel-color:#40f4ef;--pixel-speed:5.2s;--pixel-delay:-1s"></span>
+          <span style="left:24%;top:71%;--pixel-color:#ff59b6;--pixel-speed:6.4s;--pixel-delay:-3s"></span>
+          <span style="left:44%;top:11%;--pixel-color:#ffc85b;--pixel-speed:5.8s;--pixel-delay:-2s"></span>
+          <span style="left:61%;top:78%;--pixel-color:#6df58d;--pixel-speed:6.8s;--pixel-delay:-4s"></span>
+          <span style="left:76%;top:20%;--pixel-color:#a893ff;--pixel-speed:5.5s;--pixel-delay:-2.7s"></span>
+          <span style="left:88%;top:64%;--pixel-color:#40f4ef;--pixel-speed:7s;--pixel-delay:-4.4s"></span>
+        </div>
         <aside class="hero-aside metal-frame" aria-hidden="true">
           <div class="pixel-sign">
             <strong>STRIKE!</strong>
@@ -1154,11 +1410,24 @@
         </aside>
 
         <div class="hero-copy">
+          <div class="hero-marquee" aria-hidden="true">
+            <span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span><span style="--i:5"></span><span style="--i:6"></span><span style="--i:7"></span>
+            <span style="--i:8"></span><span style="--i:9"></span><span style="--i:10"></span><span style="--i:11"></span><span style="--i:12"></span><span style="--i:13"></span><span style="--i:14"></span>
+          </div>
           <div class="hero-kicker">
             <span class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span></span>
-            <span>Hausliga Velten</span>
+            <span>Hausliga Velten · Arcade Terminal</span>
           </div>
-          <h1>Liga.<br />Spieltage.<br />Ergebnisse.</h1>
+          <h1>
+            <span class="hero-title-line line-liga">Liga.</span>
+            <span class="hero-title-line line-spieltage">Spieltage.</span>
+            <span class="hero-title-line line-ergebnisse">Ergebnisse.</span>
+          </h1>
+          <div class="hero-chip-row" aria-label="Seitenmerkmale">
+            <span class="hero-chip"><i class="fa-solid fa-signal"></i> Live Daten</span>
+            <span class="hero-chip"><i class="fa-solid fa-ghost"></i> 8-Bit Spirit</span>
+            <span class="hero-chip"><i class="fa-solid fa-gears"></i> Liga Maschine</span>
+          </div>
           <p>Dein Club. Deine Liga. Dein Strike. Ergebnisse, Spielplan, Statistiken und News auf einen Blick.</p>
           <div class="hero-quick-links">
             <a class="quick-link" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i> Ergebnisse</a>
@@ -1281,9 +1550,18 @@
 
     <main class="mobile-main">
       <section class="mobile-hero metal-frame">
+        <div class="mobile-marquee" aria-hidden="true">
+          <span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span><span style="--i:5"></span>
+          <span style="--i:6"></span><span style="--i:7"></span><span style="--i:8"></span><span style="--i:9"></span><span style="--i:10"></span>
+        </div>
         <div class="mobile-emblem"><i class="fa-solid fa-bowling-ball"></i></div>
-        <div class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <h1>Liga.<br />Spieltage.<br />Ergebnisse.</h1>
+        <h1>
+          <span class="mobile-title-line">Liga.</span>
+          <span class="mobile-title-line">Spieltage.</span>
+          <span class="mobile-title-line">Ergebnisse.</span>
+        </h1>
+        <div class="mobile-pixel-ribbon" aria-hidden="true"><span>LIVE</span><span>8-BIT</span><span>VELTEN</span></div>
+        <p>Alle wichtigen Informationen zur Hausliga Velten – schnell erreichbar und für dein Smartphone optimiert.</p>
         <div class="mobile-status"><i class="fa-solid fa-signal"></i> LIVE · FIREBASE</div>
       </section>
 
