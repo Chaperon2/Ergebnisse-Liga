@@ -1,0 +1,506 @@
+{
+  "data": {
+    "seasonId": "2026-s2",
+    "seasonName": "Liga 2026 S2",
+    "lanePairs": [
+      "1+2",
+      "3+4",
+      "5+6",
+      "7+8"
+    ],
+    "matchdayCount": 14,
+    "matchdays": [
+      {
+        "id": "spieltag-01",
+        "number": 1,
+        "date": "2026-04-22",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "tigers",
+            "homeTeam": "Tigers",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-02",
+        "number": 2,
+        "date": "2026-04-29",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "die-schraagen",
+            "awayTeam": "Die Schräägen"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-03",
+        "number": 3,
+        "date": "2026-05-06",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-04",
+        "number": 4,
+        "date": "2026-05-13",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "3-bowler",
+            "homeTeam": "3 Bowler",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-05",
+        "number": 5,
+        "date": "2026-05-20",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "lady-diana-s",
+            "homeTeam": "Lady Diana´s",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "tigers",
+            "homeTeam": "Tigers",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-06",
+        "number": 6,
+        "date": "2026-05-27",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "die-schraagen",
+            "awayTeam": "Die Schräägen"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "3-bowler",
+            "homeTeam": "3 Bowler",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-07",
+        "number": 7,
+        "date": "2026-06-03",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-08",
+        "number": 8,
+        "date": "2026-06-10",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "tigers",
+            "homeTeam": "Tigers",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-09",
+        "number": 9,
+        "date": "2026-06-17",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "die-schraagen",
+            "awayTeam": "Die Schräägen"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-10",
+        "number": 10,
+        "date": "2026-06-24",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-11",
+        "number": 11,
+        "date": "2026-07-01",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "3-bowler",
+            "homeTeam": "3 Bowler",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "malibu",
+            "homeTeam": "Malibu",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-12",
+        "number": 12,
+        "date": "2026-07-08",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "lady-diana-s",
+            "homeTeam": "Lady Diana´s",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "scooter",
+            "awayTeam": "Scooter"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "tigers",
+            "homeTeam": "Tigers",
+            "awayTeamId": "pincesses",
+            "awayTeam": "Pincesses"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-13",
+        "number": 13,
+        "date": "2026-07-15",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "die-schraagen",
+            "awayTeam": "Die Schräägen"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "3-bowler",
+            "homeTeam": "3 Bowler",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          }
+        ]
+      },
+      {
+        "id": "spieltag-14",
+        "number": 14,
+        "date": "2026-07-22",
+        "pairings": [
+          {
+            "lanePair": "1+2",
+            "homeTeamId": "pincesses",
+            "homeTeam": "Pincesses",
+            "awayTeamId": "3-bowler",
+            "awayTeam": "3 Bowler"
+          },
+          {
+            "lanePair": "3+4",
+            "homeTeamId": "scooter",
+            "homeTeam": "Scooter",
+            "awayTeamId": "lady-diana-s",
+            "awayTeam": "Lady Diana´s"
+          },
+          {
+            "lanePair": "5+6",
+            "homeTeamId": "all-stars",
+            "homeTeam": "All Stars",
+            "awayTeamId": "malibu",
+            "awayTeam": "Malibu"
+          },
+          {
+            "lanePair": "7+8",
+            "homeTeamId": "die-schraagen",
+            "homeTeam": "Die Schräägen",
+            "awayTeamId": "tigers",
+            "awayTeam": "Tigers"
+          }
+        ]
+      }
+    ]
+  },
+  "publishedThrough": 14
+}

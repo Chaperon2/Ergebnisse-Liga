@@ -1,0 +1,16 @@
+{
+  "activeSeasonId": "2026-s2",
+  "data": [
+    {
+      "seasonId": "2026-s2",
+      "seasonName": "Liga 2026 S2",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": true,
+      "firstMatchdayDate": "2026-04-22",
+      "lastMatchdayDate": "2026-07-22"
+    }
+  ]
+}
