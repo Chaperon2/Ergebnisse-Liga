@@ -17,6 +17,40 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+const TEAM_COLOR_CLASSES = [
+  "team-color-1",
+  "team-color-2",
+  "team-color-3",
+  "team-color-4",
+  "team-color-5",
+  "team-color-6",
+  "team-color-7",
+  "team-color-8",
+];
+
+function buildTeamColorMap(matchdays) {
+  const teamNames = [...new Set(
+    matchdays.flatMap((day) => (day.pairings ?? []).flatMap((pairing) => [pairing.homeTeam, pairing.awayTeam])),
+  )]
+    .filter(Boolean)
+    .sort((a, b) => String(a).localeCompare(String(b), "de", { sensitivity: "base" }));
+
+  return new Map(teamNames.map((name, index) => [name, TEAM_COLOR_CLASSES[index % TEAM_COLOR_CLASSES.length]]));
+}
+
+function teamColorClass(teamName, colorMap) {
+  return colorMap.get(teamName) ?? TEAM_COLOR_CLASSES[0];
+}
+
+function renderTeamLegend(colorMap) {
+  return `<section class="team-color-legend" aria-label="Teamfarben">
+    <div class="team-color-legend-title"><i class="fa-solid fa-palette"></i><span>Teamfarben</span></div>
+    <div class="team-color-chips">${[...colorMap.entries()].map(([teamName, colorClass]) => (
+      `<span class="team-color-chip ${colorClass}"><span class="team-color-dot"></span>${escapeHtml(teamName)}</span>`
+    )).join("")}</div>
+  </section>`;
+}
+
 function formatDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return "–";
   return new Intl.DateTimeFormat("de-DE", {
@@ -133,7 +167,8 @@ function render(scheduleData, meta) {
     ].map(([label, value, icon]) => `<article class="summary-card"><i class="fa-solid ${icon}"></i><div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div></article>`).join("");
   }
 
-  container.innerHTML = matchdays.map((day) => {
+  const teamColors = buildTeamColorMap(matchdays);
+  container.innerHTML = renderTeamLegend(teamColors) + matchdays.map((day) => {
     const played = Number(day.number) <= publishedThrough;
     const next = Number(day.number) === nextNumber;
     const stateClass = played ? "is-played" : next ? "is-next" : "";
@@ -146,9 +181,9 @@ function render(scheduleData, meta) {
       <div class="pairing-list">
         ${(day.pairings ?? []).map((pairing) => `<div class="pairing-row">
           <span class="lane-badge">Bahn ${escapeHtml(pairing.lanePair)}</span>
-          <strong class="team home">${escapeHtml(pairing.homeTeam)}</strong>
+          <strong class="team team-colored home ${teamColorClass(pairing.homeTeam, teamColors)}">${escapeHtml(pairing.homeTeam)}</strong>
           <span class="versus">VS</span>
-          <strong class="team away">${escapeHtml(pairing.awayTeam)}</strong>
+          <strong class="team team-colored away ${teamColorClass(pairing.awayTeam, teamColors)}">${escapeHtml(pairing.awayTeam)}</strong>
         </div>`).join("")}
       </div>
     </article>`;
