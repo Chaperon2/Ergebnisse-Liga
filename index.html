@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0a08" />
+  <title>Strikeclub Velten · Liga, Spieltage & Ergebnisse</title>
+
+  <meta name="description" content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." />
+  <meta property="og:title" content="Strikeclub Velten · Liga, Spieltage & Ergebnisse" />
+  <meta property="og:description" content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." />
+  <meta property="og:url" content="https://www.strikeclub-velten.de/" />
+  <meta property="og:image" content="https://www.strikeclub-velten.de/images/linkvorschau-startseite.jpg?v=1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Strikeclub Velten" />
+  <meta property="og:locale" content="de_DE" />
+
+  <link rel="icon" type="image/png" sizes="192x192" href="images/strikeclub-elegant-icon-192.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/strikeclub-elegant-icon-180.png?v=2" />
+  <link rel="manifest" href="site.webmanifest?v=2" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #090806;
+      --bg-soft: #11100c;
+      --panel: #17140f;
+      --panel-2: #211b13;
+      --brass: #c89746;
+      --brass-light: #f0c879;
+      --copper: #a95f35;
+      --rust: #6f3425;
+      --petrol: #0b555b;
+      --petrol-light: #1ab6b5;
+      --burgundy: #522039;
+      --purple: #382650;
+      --cream: #f4e5c1;
+      --text: #f4e7c9;
+      --text-soft: #c7b894;
+      --danger: #ff4f6d;
+      --cyan: #40f4ef;
+      --gold: #ffc85b;
+      --pink: #ff59b6;
+      --green: #6df58d;
+      --blue: #64a9ff;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.48);
+      --max: 1440px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--bg);
+      color-scheme: dark;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Roboto Slab", Georgia, serif;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(200,151,70,0.15), transparent 23rem),
+        radial-gradient(circle at 91% 14%, rgba(26,182,181,0.10), transparent 22rem),
+        radial-gradient(circle at 45% 88%, rgba(169,95,53,0.11), transparent 30rem),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, #0b0a08 0%, #070604 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, select { font: inherit; }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: -80px;
+      z-index: 99999;
+      padding: 12px 16px;
+      border: 2px solid var(--brass-light);
+      background: #080706;
+      color: #fff;
+      border-radius: 6px;
+    }
+
+    .skip-link:focus { top: 12px; }
+
+    .desktop-home { display: block; }
+    .mobile-home { display: none; }
+
+    /* ---------- Shared mechanical vocabulary ---------- */
+    .metal-frame {
+      position: relative;
+      border: 1px solid rgba(240,200,121,0.35);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.035), transparent 28%),
+        linear-gradient(180deg, rgba(35,29,20,0.96), rgba(13,12,9,0.98));
+      box-shadow:
+        inset 0 0 0 2px rgba(49,29,17,0.85),
+        inset 0 0 0 4px rgba(190,125,57,0.18),
+        0 18px 40px rgba(0,0,0,0.4);
+    }
+
+    .metal-frame::before,
+    .metal-frame::after {
+      content: "";
+      position: absolute;
+      z-index: 4;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #f1ca83 0 14%, #8a4f2c 38%, #23140c 72%);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.7), 0 1px 3px #000;
+      pointer-events: none;
+    }
+
+    .metal-frame::before { left: 8px; top: 8px; }
+    .metal-frame::after { right: 8px; bottom: 8px; }
+
+    .pixel-lights {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .pixel-lights span {
+      width: 7px;
+      height: 7px;
+      display: block;
+      border-radius: 1px;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor, 0 0 18px currentColor;
+      animation: pixelBlink 1.7s steps(1, end) infinite;
+    }
+
+    .pixel-lights span:nth-child(1) { color: var(--cyan); }
+    .pixel-lights span:nth-child(2) { color: var(--pink); animation-delay: -.55s; }
+    .pixel-lights span:nth-child(3) { color: var(--gold); animation-delay: -1.05s; }
+    .pixel-lights span:nth-child(4) { color: var(--green); animation-delay: -.2s; }
+
+    @keyframes pixelBlink {
+      0%, 72%, 100% { opacity: 1; }
+      73%, 82% { opacity: 0.18; }
+    }
+
+    @keyframes scan {
+      from { transform: translateY(-110%); }
+      to { transform: translateY(430%); }
+    }
+
+    @keyframes gaugePulse {
+      0%, 100% { filter: brightness(.82); }
+      50% { filter: brightness(1.18); }
+    }
+
+    @keyframes cogRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes marqueeGlow {
+      0%, 100% { text-shadow: 0 0 8px rgba(64,244,239,.34); }
+      50% { text-shadow: 0 0 8px rgba(64,244,239,.85), 0 0 24px rgba(64,244,239,.32); }
+    }
+
+    /* ---------- DESKTOP ---------- */
+    .desktop-home {
+      min-height: 100vh;
+      position: relative;
+      isolation: isolate;
+      padding: 14px;
+    }
+
+    .desktop-video {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .18;
+      filter: sepia(.65) saturate(.7) contrast(1.18) brightness(.52);
+      pointer-events: none;
+    }
+
+    .desktop-home::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(180deg, rgba(6,5,4,.43), rgba(6,5,4,.78)),
+        repeating-linear-gradient(90deg, rgba(200,151,70,.025) 0 1px, transparent 1px 7px),
+        radial-gradient(circle at 50% 12%, transparent 0 20%, rgba(0,0,0,.38) 72%);
+      pointer-events: none;
+    }
+
+    .desktop-machine {
+      width: min(var(--max), calc(100vw - 28px));
+      margin: 0 auto;
+      border: 2px solid #5a321c;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(9,8,6,.91);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(244,202,129,.24);
+      position: relative;
+    }
+
+    .desktop-machine::before,
+    .desktop-machine::after {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      left: 0;
+      right: 0;
+      height: 12px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10px 6px, #d4a55c 0 2px, #4b2817 3px 5px, transparent 6px) 0 0/28px 12px repeat-x,
+        linear-gradient(180deg, #2a180f, #9b6334 45%, #25150e 52%, #050403 100%);
+    }
+
+    .desktop-machine::before { top: 0; }
+    .desktop-machine::after { bottom: 0; transform: rotate(180deg); }
+
+    .machine-header {
+      min-height: 112px;
+      display: grid;
+      grid-template-columns: 190px 1fr 190px;
+      gap: 14px;
+      align-items: stretch;
+      padding: 22px 22px 14px;
+      border-bottom: 2px solid #56311d;
+      background:
+        linear-gradient(180deg, rgba(33,28,21,.98), rgba(8,7,6,.98)),
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(200,151,70,.03) 16px 17px);
+      position: relative;
+    }
+
+    .arcade-score {
+      min-width: 0;
+      padding: 16px 14px 12px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .arcade-score::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 24%;
+      background: linear-gradient(180deg, transparent, rgba(64,244,239,.08), transparent);
+      animation: scan 4.7s linear infinite;
+      pointer-events: none;
+    }
+
+    .score-label,
+    .score-value {
+      display: block;
+      font-family: "Press Start 2P", monospace;
+      text-transform: uppercase;
+    }
+
+    .score-label {
+      font-size: 9px;
+      color: var(--text-soft);
+      margin-bottom: 9px;
+    }
+
+    .score-value {
+      font-size: clamp(14px, 1.4vw, 20px);
+      color: var(--cyan);
+      line-height: 1.35;
+      animation: marqueeGlow 2.4s ease-in-out infinite;
+    }
+
+    .score-icons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--pink);
+      font-size: 15px;
+    }
+
+    .score-icons i:nth-child(even) { color: var(--cream); }
+
+    .brand-console {
+      min-width: 0;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .brand-console::before,
+    .brand-console::after {
+      content: "\f013";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      top: 26px;
+      color: #7d4e29;
+      font-size: 46px;
+      opacity: .58;
+      animation: cogRotate 24s linear infinite;
+    }
+
+    .brand-console::before { left: 8%; }
+    .brand-console::after { right: 8%; animation-direction: reverse; }
+
+    .brand-emblem {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 3px solid var(--brass);
+      color: var(--cream);
+      font-size: 26px;
+      background:
+        radial-gradient(circle at 36% 30%, rgba(255,255,255,.15), transparent 22%),
+        linear-gradient(145deg, #16373c, #0c1112 64%);
+      box-shadow: 0 0 0 5px #2c1a10, 0 0 0 7px #7d4e29, 0 0 25px rgba(200,151,70,.23);
+      z-index: 2;
+    }
+
+    .brand-plaque {
+      position: relative;
+      z-index: 2;
+      padding: 8px 34px 10px;
+      text-align: center;
+      clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
+      background:
+        linear-gradient(180deg, rgba(74,47,28,.98), rgba(19,13,9,.99));
+      border-top: 2px solid #bb8243;
+      border-bottom: 2px solid #3b2214;
+      box-shadow: 0 12px 24px rgba(0,0,0,.45);
+    }
+
+    .brand-title {
+      display: block;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(30px, 4vw, 58px);
+      line-height: .9;
+      font-weight: 700;
+      letter-spacing: .035em;
+      color: #e4c487;
+      text-transform: uppercase;
+      text-shadow: 0 2px 0 #5a321c, 0 6px 14px rgba(0,0,0,.7);
+    }
+
+    .brand-subtitle {
+      display: block;
+      margin-top: 8px;
+      color: #58c9ca;
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(8px, .8vw, 11px);
+      letter-spacing: .2em;
+    }
+
+    .hero-stage {
+      min-height: 385px;
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr minmax(210px, 300px);
+      align-items: center;
+      gap: 28px;
+      padding: 36px 34px 30px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(5,5,4,.93), rgba(13,11,8,.52) 24%, rgba(13,11,8,.49) 74%, rgba(5,5,4,.93)),
+        repeating-linear-gradient(90deg, transparent 0 11.8%, rgba(82,199,202,.06) 11.8% 12.1%),
+        linear-gradient(180deg, #17130e 0 54%, #4b301d 55%, #160e09 100%);
+    }
+
+    .hero-stage::before {
+      content: "";
+      position: absolute;
+      left: 16%;
+      right: 16%;
+      bottom: -18%;
+      height: 63%;
+      background:
+        repeating-linear-gradient(90deg, #3a2416 0 9%, #b37b43 9% 9.7%, #2d1b11 9.7% 18%),
+        linear-gradient(180deg, rgba(255,255,255,.06), transparent);
+      transform: perspective(600px) rotateX(58deg);
+      transform-origin: bottom;
+      opacity: .72;
+      box-shadow: 0 -8px 30px rgba(0,0,0,.5);
+      pointer-events: none;
+    }
+
+    .hero-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255,196,105,.11), transparent 28%),
+        repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.08) 3px 4px);
+      pointer-events: none;
+    }
+
+    .hero-aside {
+      position: relative;
+      z-index: 2;
+      padding: 18px;
+      min-height: 210px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 14px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .pixel-sign {
+      width: 100%;
+      display: grid;
+      place-items: center;
+      gap: 12px;
+      padding: 18px 12px;
+      border: 1px dashed rgba(64,244,239,.55);
+      background: #061316;
+      box-shadow: inset 0 0 26px rgba(64,244,239,.08), 0 0 18px rgba(64,244,239,.08);
+    }
+
+    .pixel-sign strong {
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(11px, 1.2vw, 16px);
+      color: var(--pink);
+      line-height: 1.5;
+      text-shadow: 0 0 10px rgba(255,89,182,.75);
+    }
+
+    .pixel-bowling {
+      display: flex;
+      align-items: end;
+      gap: 5px;
+      color: var(--cream);
+      font-size: 29px;
+      filter: drop-shadow(0 0 8px rgba(244,229,193,.3));
+    }
+
+    .pixel-bowling .ball { color: var(--cyan); font-size: 34px; }
+
+    .hero-copy {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 18px 0;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(46px, 6vw, 92px);
+      line-height: .92;
+      letter-spacing: .015em;
+      text-transform: uppercase;
+      color: #f1dfb8;
+      text-shadow: 0 3px 0 #6b3d23, 0 10px 28px rgba(0,0,0,.82);
+    }
+
+    .hero-copy p {
+      margin: 19px auto 0;
+      max-width: 650px;
+      color: #e9ddc4;
+      font-size: clamp(15px, 1.4vw, 20px);
+      line-height: 1.6;
+      text-shadow: 0 3px 12px #000;
+    }
+
+    .hero-quick-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 23px;
+    }
+
+    .quick-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 11px 16px;
+      border: 1px solid rgba(240,200,121,.5);
+      border-radius: 5px;
+      background: linear-gradient(180deg, rgba(65,43,27,.95), rgba(18,13,9,.98));
+      color: #f5e1b6;
+      font-family: "Oswald", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.48), 0 9px 22px rgba(0,0,0,.4);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .quick-link:hover,
+    .quick-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.48), 0 0 20px rgba(64,244,239,.14);
+      outline: none;
+    }
+
+    .mechanical-scoreboard {
+      width: 100%;
+      padding: 16px 13px;
+      border-radius: 8px;
+      background: #0b100d;
+      border: 1px solid rgba(255,200,91,.4);
+      box-shadow: inset 0 0 26px rgba(255,200,91,.045);
+    }
+
+    .scoreboard-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-family: "Press Start 2P", monospace;
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .scoreboard-frames {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .scoreboard-frames span {
+      min-height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,200,91,.55);
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 9px;
+      background: rgba(255,200,91,.02);
+    }
+
+    .desktop-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 2px solid #5a321c;
+      border-left: 1px solid #5a321c;
+      background: #090806;
+    }
+
+    .machine-card {
+      --accent: var(--cyan);
+      --surface: #102427;
+      position: relative;
+      min-height: 222px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 12px;
+      padding: 30px 24px 26px;
+      text-align: center;
+      overflow: hidden;
+      border-right: 1px solid #5a321c;
+      border-bottom: 1px solid #5a321c;
+      background:
+        radial-gradient(circle at 15% 10%, color-mix(in srgb, var(--accent) 17%, transparent), transparent 40%),
+        linear-gradient(145deg, color-mix(in srgb, var(--surface) 90%, #000), #0d0b09 88%);
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+      isolation: isolate;
+    }
+
+    .machine-card::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(240,200,121,.25);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.35);
+      z-index: -1;
+    }
+
+    .machine-card::after {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow:
+        0 0 9px var(--accent),
+        calc(100% + 4px) 0 0 transparent;
+      animation: pixelBlink 2.2s steps(1,end) infinite;
+    }
+
+    .machine-card:hover,
+    .machine-card:focus-visible {
+      z-index: 4;
+      transform: translateY(-4px) scale(1.015);
+      filter: saturate(1.12) brightness(1.06);
+      box-shadow: 0 20px 34px rgba(0,0,0,.46), inset 0 0 32px color-mix(in srgb, var(--accent) 11%, transparent);
+      outline: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
+      outline-offset: -7px;
+    }
+
+    .machine-card .card-icon {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 58%, #4f2d1b);
+      color: var(--accent);
+      font-size: 30px;
+      background: rgba(4,7,7,.56);
+      box-shadow: inset 0 0 18px color-mix(in srgb, var(--accent) 13%, transparent), 0 0 16px color-mix(in srgb, var(--accent) 14%, transparent);
+      clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 88%, 88% 100%, 12% 100%, 0 88%, 0 12%);
+    }
+
+    .machine-card .card-number {
+      color: var(--accent);
+      font-family: "Press Start 2P", monospace;
+      font-size: 8px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .machine-card h2 {
+      margin: 0;
+      color: #efd6a2;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(22px, 2vw, 30px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: .025em;
+    }
+
+    .machine-card p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.48;
+      font-size: 14px;
+      max-width: 27ch;
+    }
+
+    .machine-card .card-arrow {
+      color: var(--accent);
+      font-size: 17px;
+      transform: translateX(0);
+      transition: transform .2s ease;
+    }
+
+    .machine-card:hover .card-arrow { transform: translateX(5px); }
+
+    .theme-results { --accent: #54f5ef; --surface: #0e3235; }
+    .theme-schedule { --accent: #ffc15a; --surface: #3a2017; }
+    .theme-game { --accent: #ff69c3; --surface: #2f1c3c; }
+    .theme-analysis { --accent: #79b9ff; --surface: #102a31; }
+    .theme-records { --accent: #ff8a62; --surface: #321b24; }
+    .theme-news { --accent: #78f28e; --surface: #132d24; }
+    .theme-about { --accent: #a893ff; --surface: #1d243c; }
+    .theme-archive { --accent: #f4cf77; --surface: #302116; }
+
+    .machine-footer {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 24px 34px 28px;
+      border-top: 2px solid #5a321c;
+      background: linear-gradient(180deg, #16120e, #090806);
+    }
+
+    .footer-panel {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      border-radius: 7px;
+    }
+
+    .footer-panel i {
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .footer-panel strong {
+      display: block;
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 9px;
+      line-height: 1.6;
+    }
+
+    .footer-panel span {
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .motto {
+      text-align: center;
+      font-family: "Oswald", sans-serif;
+      font-size: 17px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: #e4c487;
+    }
+
+    .desktop-legal {
+      margin: 18px 0 8px;
+      text-align: center;
+      color: #9f9278;
+      font-size: 13px;
+    }
+
+    .desktop-legal a { border-bottom: 1px solid rgba(200,151,70,.35); }
+
+    /* ---------- MOBILE: separate layout ---------- */
+    .mobile-home {
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(26,182,181,.13), transparent 18rem),
+        radial-gradient(circle at 90% 22%, rgba(255,89,182,.09), transparent 16rem),
+        linear-gradient(180deg, #0c0b08 0%, #070604 100%);
+    }
+
+    .mobile-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(200,151,70,.38);
+      background: rgba(10,9,7,.94);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 7px 22px rgba(0,0,0,.35);
+    }
+
+    .mobile-brand {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .mobile-brand-icon {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 2px solid var(--brass);
+      background: linear-gradient(145deg, #15363a, #0c1011);
+      color: var(--cream);
+      box-shadow: 0 0 0 3px #28180f, 0 0 14px rgba(26,182,181,.15);
+    }
+
+    .mobile-brand-text {
+      min-width: 0;
+    }
+
+    .mobile-brand-text strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: "Oswald", sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: .035em;
+      color: #e9cd93;
+    }
+
+    .mobile-brand-text span {
+      display: block;
+      margin-top: 2px;
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 6px;
+      letter-spacing: .08em;
+    }
+
+    .mobile-menu-btn {
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(240,200,121,.42);
+      border-radius: 7px;
+      background: linear-gradient(180deg, #312115, #110d09);
+      color: #f0d7a2;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.45);
+      cursor: pointer;
+    }
+
+    .mobile-drawer {
+      display: none;
+      padding: 10px 14px 14px;
+      border-bottom: 1px solid rgba(200,151,70,.28);
+      background: rgba(10,9,7,.97);
+    }
+
+    .mobile-drawer.open { display: grid; gap: 8px; }
+
+    .mobile-drawer a {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(200,151,70,.22);
+      border-radius: 6px;
+      background: rgba(255,255,255,.025);
+      color: #ead9b7;
+      font-weight: 700;
+    }
+
+    .mobile-main {
+      width: min(100%, 680px);
+      margin: 0 auto;
+      padding: 14px 12px 34px;
+    }
+
+    .mobile-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 26px 18px 22px;
+      border-radius: 11px;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(13,24,25,.84), rgba(14,10,8,.96)),
+        repeating-linear-gradient(90deg, transparent 0 20px, rgba(64,244,239,.025) 20px 21px);
+    }
+
+    .mobile-hero::after {
+      content: "";
+      position: absolute;
+      left: -15%;
+      right: -15%;
+      bottom: -30%;
+      height: 48%;
+      background: repeating-linear-gradient(90deg, #3a2416 0 13%, #9a6738 13% 13.8%, #22150d 13.8% 26%);
+      transform: perspective(370px) rotateX(62deg);
+      transform-origin: bottom;
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .mobile-hero > * { position: relative; z-index: 2; }
+
+    .mobile-emblem {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      border: 2px solid var(--brass);
+      color: var(--cream);
+      font-size: 25px;
+      background: linear-gradient(145deg, #17444a, #0b1011 70%);
+      box-shadow: 0 0 0 4px #28180f, 0 0 22px rgba(26,182,181,.17);
+    }
+
+    .mobile-hero .pixel-lights { margin-bottom: 14px; }
+
+    .mobile-hero h1 {
+      margin: 0;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(38px, 12vw, 58px);
+      line-height: .98;
+      text-transform: uppercase;
+      color: #f2deb1;
+      text-shadow: 0 2px 0 #60371f, 0 8px 22px rgba(0,0,0,.74);
+    }
+
+    .mobile-hero p {
+      margin: 14px auto 0;
+      max-width: 35ch;
+      color: #d7c9a9;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .mobile-status {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 11px;
+      border: 1px solid rgba(64,244,239,.28);
+      border-radius: 5px;
+      background: rgba(4,17,18,.72);
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 7px;
+      line-height: 1.5;
+    }
+
+    .mobile-primary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mobile-primary {
+      --accent: var(--cyan);
+      min-height: 140px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 10px;
+      padding: 18px 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 42%, #503019);
+      border-radius: 9px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 60%),
+        linear-gradient(180deg, #211910, #0d0a08);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.48), 0 12px 24px rgba(0,0,0,.3);
+    }
+
+    .mobile-primary.schedule { --accent: var(--gold); }
+
+    .mobile-primary i {
+      font-size: 28px;
+      color: var(--accent);
+      filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 40%, transparent));
+    }
+
+    .mobile-primary strong {
+      font-family: "Oswald", sans-serif;
+      font-size: 21px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: #f1d8a6;
+    }
+
+    .mobile-primary span {
+      color: #bfae8d;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .mobile-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 3px 10px;
+      color: #dfc58e;
+      font-family: "Oswald", sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .mobile-section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(200,151,70,.55), transparent);
+    }
+
+    .mobile-link-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .mobile-link {
+      --accent: var(--cyan);
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: 50px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 11px 13px;
+      border: 1px solid rgba(200,151,70,.26);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 42%),
+        linear-gradient(180deg, #1c1711, #0e0c09);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.43), 0 8px 18px rgba(0,0,0,.22);
+    }
+
+    .mobile-link .link-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 52%, #4b2b19);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 20px;
+      background: rgba(0,0,0,.24);
+      box-shadow: inset 0 0 12px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .mobile-link strong {
+      display: block;
+      color: #ecd5a5;
+      font-family: "Oswald", sans-serif;
+      font-size: 19px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .mobile-link small {
+      display: block;
+      margin-top: 4px;
+      color: #ac9d82;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .mobile-link > i {
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .mobile-link.game { --accent: var(--pink); }
+    .mobile-link.analysis { --accent: var(--blue); }
+    .mobile-link.records { --accent: #ff8a62; }
+    .mobile-link.news { --accent: var(--green); }
+    .mobile-link.about { --accent: #a893ff; }
+    .mobile-link.archive { --accent: var(--gold); }
+
+    .mobile-footer {
+      margin-top: 22px;
+      padding: 16px 12px 6px;
+      text-align: center;
+      color: #8f836e;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .mobile-footer .pixel-lights { margin-bottom: 11px; }
+    .mobile-footer a { color: #d8bf8b; border-bottom: 1px solid rgba(216,191,139,.34); }
+
+    /* ---------- Responsive switch ---------- */
+    @media (max-width: 899px) {
+      .desktop-home { display: none; }
+      .mobile-home { display: block; }
+    }
+
+    @media (min-width: 900px) and (max-width: 1180px) {
+      .machine-header { grid-template-columns: 150px 1fr 150px; }
+      .hero-stage { grid-template-columns: 190px 1fr 210px; gap: 18px; padding-inline: 22px; }
+      .desktop-nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .machine-card { min-height: 210px; }
+    }
+
+    @media (max-width: 440px) {
+      .mobile-main { padding-inline: 9px; }
+      .mobile-topbar { padding-inline: 10px; }
+      .mobile-brand-text strong { font-size: 18px; }
+      .mobile-primary-grid { gap: 8px; }
+      .mobile-primary { min-height: 132px; padding-inline: 8px; }
+      .mobile-primary strong { font-size: 18px; }
+      .mobile-link { grid-template-columns: 44px 1fr auto; gap: 10px; padding-inline: 10px; }
+      .mobile-link .link-icon { width: 42px; height: 42px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#page-content">Direkt zur Navigation</a>
+  <span id="page-content" tabindex="-1"></span>
+
+  <!-- DESKTOP: own layout, intentionally more decorative -->
+  <div class="desktop-home" aria-label="Desktop-Startseite">
+    <video id="desktopVideo" class="desktop-video" muted loop playsinline preload="none" aria-hidden="true" data-src="Rauch7.mp4"></video>
+
+    <div class="desktop-machine">
+      <header class="machine-header">
+        <div class="arcade-score metal-frame" aria-hidden="true">
+          <span class="score-label">Player 1</span>
+          <span class="score-value">025680</span>
+          <div class="score-icons">
+            <i class="fa-solid fa-bowling-pin"></i>
+            <i class="fa-solid fa-bowling-pin"></i>
+            <i class="fa-solid fa-bowling-pin"></i>
+          </div>
+        </div>
+
+        <div class="brand-console">
+          <div class="brand-emblem"><i class="fa-solid fa-bowling-ball"></i></div>
+          <div class="brand-plaque">
+            <span class="brand-title">Strikeclub</span>
+            <span class="brand-subtitle">Velten</span>
+          </div>
+          <div class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="arcade-score metal-frame" aria-hidden="true">
+          <span class="score-label">High Score</span>
+          <span class="score-value">300300</span>
+          <div class="score-icons">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero-stage">
+        <aside class="hero-aside metal-frame" aria-hidden="true">
+          <div class="pixel-sign">
+            <strong>STRIKE!</strong>
+            <div class="pixel-bowling">
+              <i class="fa-solid fa-bowling-pin"></i>
+              <i class="fa-solid fa-bowling-pin"></i>
+              <i class="fa-solid fa-bowling-pin"></i>
+              <i class="fa-solid fa-bowling-ball ball"></i>
+            </div>
+          </div>
+          <div class="pixel-lights"><span></span><span></span><span></span><span></span></div>
+        </aside>
+
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <span class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span>Hausliga Velten</span>
+          </div>
+          <h1>Liga.<br />Spieltage.<br />Ergebnisse.</h1>
+          <p>Dein Club. Deine Liga. Dein Strike. Ergebnisse, Spielplan, Statistiken und News auf einen Blick.</p>
+          <div class="hero-quick-links">
+            <a class="quick-link" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i> Ergebnisse</a>
+            <a class="quick-link" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i> Spielplan</a>
+          </div>
+        </div>
+
+        <aside class="hero-aside metal-frame" aria-hidden="true">
+          <div class="mechanical-scoreboard">
+            <div class="scoreboard-top"><span>FRAME 10</span><span>278</span></div>
+            <div class="scoreboard-frames">
+              <span>X</span><span>9/</span><span>X</span><span>8/</span><span>X</span>
+              <span>7/</span><span>X</span><span>9/</span><span>X</span><span>X</span>
+            </div>
+          </div>
+          <div class="pixel-lights"><span></span><span></span><span></span><span></span></div>
+        </aside>
+      </section>
+
+      <main class="desktop-nav-grid">
+        <a class="machine-card theme-results" href="aktuelle_ergebnisse.html">
+          <span class="card-number">01 // Live</span>
+          <span class="card-icon"><i class="fa-solid fa-chart-column"></i></span>
+          <h2>Aktuelle Ergebnisse</h2>
+          <p>Spieltag, Einzelwertung und Mannschaftstabelle.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-schedule" href="spielplan.html">
+          <span class="card-number">02 // Saison</span>
+          <span class="card-icon"><i class="fa-solid fa-calendar-days"></i></span>
+          <h2>Spielplan</h2>
+          <p>Alle 14 Spieltage, Paarungen, Termine und Bahnen.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-game" href="bowling-minispiel.html">
+          <span class="card-number">03 // Arcade</span>
+          <span class="card-icon"><i class="fa-solid fa-gamepad"></i></span>
+          <h2>Mini-Spiel</h2>
+          <p>Bowling im Pixelmodus – antreten und Punkte sammeln.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-analysis" href="spieleranalyse.html">
+          <span class="card-number">04 // Stats</span>
+          <span class="card-icon"><i class="fa-solid fa-chart-line"></i></span>
+          <h2>Spieleranalyse</h2>
+          <p>Entwicklungen, Vergleiche und persönliche Statistiken.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-records" href="rekorde.html">
+          <span class="card-number">05 // Best</span>
+          <span class="card-icon"><i class="fa-solid fa-medal"></i></span>
+          <h2>Rekorde</h2>
+          <p>Highscores, Bestserien und besondere Leistungen.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-news" href="termine-news.html">
+          <span class="card-number">06 // News</span>
+          <span class="card-icon"><i class="fa-solid fa-newspaper"></i></span>
+          <h2>Termine &amp; News</h2>
+          <p>Ankündigungen, Clubtermine und wichtige Hinweise.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-about" href="Über-uns.html">
+          <span class="card-number">07 // Club</span>
+          <span class="card-icon"><i class="fa-solid fa-people-group"></i></span>
+          <h2>Über uns</h2>
+          <p>Unser Club, unsere Werte und die Menschen dahinter.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+
+        <a class="machine-card theme-archive" href="archiv.html">
+          <span class="card-number">08 // Archiv</span>
+          <span class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+          <h2>Ergebnis-Archiv</h2>
+          <p>Vergangene Saisons und veröffentlichte Endstände.</p>
+          <i class="fa-solid fa-angles-right card-arrow"></i>
+        </a>
+      </main>
+
+      <footer class="machine-footer">
+        <div class="footer-panel metal-frame">
+          <i class="fa-solid fa-bowling-ball"></i>
+          <div><strong>LIVE SYSTEM</strong><span>Ergebnisse aus Firebase</span></div>
+        </div>
+        <div class="motto">Strike together.<br />Win together.</div>
+        <div class="footer-panel metal-frame">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <div><strong>MOBILE READY</strong><span>Eigene Ansicht für Smartphones</span></div>
+        </div>
+      </footer>
+    </div>
+
+    <p class="desktop-legal">Strikeclub Velten · <a href="impressum.html">Impressum</a></p>
+  </div>
+
+  <!-- MOBILE: own compact layout, not a shrunken desktop -->
+  <div class="mobile-home" aria-label="Mobile Startseite">
+    <header class="mobile-topbar">
+      <a class="mobile-brand" href="index.html" aria-label="Strikeclub Velten Startseite">
+        <span class="mobile-brand-icon"><i class="fa-solid fa-bowling-ball"></i></span>
+        <span class="mobile-brand-text"><strong>Strikeclub Velten</strong><span>Hausliga online</span></span>
+      </a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Menü öffnen">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </header>
+
+    <nav class="mobile-drawer" id="mobileDrawer" aria-label="Schnellnavigation">
+      <a href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i> Aktuelle Ergebnisse</a>
+      <a href="spielplan.html"><i class="fa-solid fa-calendar-days"></i> Spielplan</a>
+      <a href="archiv.html"><i class="fa-solid fa-clock-rotate-left"></i> Ergebnis-Archiv</a>
+      <a href="impressum.html"><i class="fa-solid fa-circle-info"></i> Impressum</a>
+    </nav>
+
+    <main class="mobile-main">
+      <section class="mobile-hero metal-frame">
+        <div class="mobile-emblem"><i class="fa-solid fa-bowling-ball"></i></div>
+        <div class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <h1>Liga.<br />Spieltage.<br />Ergebnisse.</h1>
+        <p>Alle wichtigen Informationen zur Hausliga Velten – schnell erreichbar und für dein Smartphone optimiert.</p>
+        <div class="mobile-status"><i class="fa-solid fa-signal"></i> LIVE · FIREBASE</div>
+      </section>
+
+      <section class="mobile-primary-grid" aria-label="Häufig genutzt">
+        <a class="mobile-primary" href="aktuelle_ergebnisse.html">
+          <i class="fa-solid fa-trophy"></i>
+          <strong>Ergebnisse</strong>
+          <span>Aktueller Spieltag und Tabellen</span>
+        </a>
+        <a class="mobile-primary schedule" href="spielplan.html">
+          <i class="fa-solid fa-calendar-days"></i>
+          <strong>Spielplan</strong>
+          <span>Termine, Gegner und Bahnen</span>
+        </a>
+      </section>
+
+      <h2 class="mobile-section-title">Weitere Bereiche</h2>
+      <nav class="mobile-link-list" aria-label="Weitere Seiten">
+        <a class="mobile-link game" href="bowling-minispiel.html">
+          <span class="link-icon"><i class="fa-solid fa-gamepad"></i></span>
+          <span><strong>Mini-Spiel</strong><small>Bowling im Arcade-Modus</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+
+        <a class="mobile-link analysis" href="spieleranalyse.html">
+          <span class="link-icon"><i class="fa-solid fa-chart-line"></i></span>
+          <span><strong>Spieleranalyse</strong><small>Statistiken und Entwicklung</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+
+        <a class="mobile-link records" href="rekorde.html">
+          <span class="link-icon"><i class="fa-solid fa-medal"></i></span>
+          <span><strong>Rekorde</strong><small>Highscores und Bestleistungen</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+
+        <a class="mobile-link news" href="termine-news.html">
+          <span class="link-icon"><i class="fa-solid fa-newspaper"></i></span>
+          <span><strong>Termine &amp; News</strong><small>Neuigkeiten und Ankündigungen</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+
+        <a class="mobile-link about" href="Über-uns.html">
+          <span class="link-icon"><i class="fa-solid fa-people-group"></i></span>
+          <span><strong>Über uns</strong><small>Der Strikeclub Velten</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+
+        <a class="mobile-link archive" href="archiv.html">
+          <span class="link-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+          <span><strong>Ergebnis-Archiv</strong><small>Vergangene Saisons ansehen</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </nav>
+
+      <footer class="mobile-footer">
+        <div class="pixel-lights" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div>Strikeclub Velten · <a href="impressum.html">Impressum</a></div>
+        <div>© <span data-current-year></span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const menuButton = document.getElementById("mobileMenuBtn");
+      const drawer = document.getElementById("mobileDrawer");
+
+      if (menuButton && drawer) {
+        menuButton.addEventListener("click", () => {
+          const open = drawer.classList.toggle("open");
+          menuButton.setAttribute("aria-expanded", String(open));
+          menuButton.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+          const icon = menuButton.querySelector("i");
+          if (icon) icon.className = open ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+        });
+      }
+
+      document.querySelectorAll("[data-current-year]").forEach((node) => {
+        node.textContent = String(new Date().getFullYear());
+      });
+
+      const desktopVideo = document.getElementById("desktopVideo");
+      const desktopQuery = window.matchMedia("(min-width: 900px)");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const manageDesktopVideo = () => {
+        if (!desktopVideo) return;
+        const shouldPlay = desktopQuery.matches && !reducedMotion.matches;
+
+        if (shouldPlay) {
+          if (!desktopVideo.src) desktopVideo.src = desktopVideo.dataset.src || "";
+          desktopVideo.play().catch(() => {});
+        } else {
+          desktopVideo.pause();
+          desktopVideo.removeAttribute("src");
+          desktopVideo.load();
+        }
+      };
+
+      manageDesktopVideo();
+      desktopQuery.addEventListener?.("change", manageDesktopVideo);
+      reducedMotion.addEventListener?.("change", manageDesktopVideo);
+    })();
+  </script>
+</body>
+</html>
