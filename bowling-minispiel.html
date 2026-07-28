@@ -1531,7 +1531,295 @@
       .pocket-target { animation: none !important; }
     }
 
-  </style>
+  
+
+    /* ==============================================================
+       PHASE 9.1 — breitere Themenbahn, größere Pins, ruhige HUD-Zone
+       ============================================================== */
+    .game-grid {
+      grid-template-columns: minmax(0, 1.52fr) minmax(300px, .48fr);
+    }
+
+    .lane-stage {
+      background:
+        radial-gradient(circle at 50% 4%, rgba(63,242,237,.12), transparent 21%),
+        radial-gradient(circle at 15% 18%, rgba(255,85,182,.08), transparent 18%),
+        radial-gradient(circle at 86% 20%, rgba(255,208,113,.09), transparent 18%),
+        linear-gradient(180deg, #17120c 0 26%, #050504 26% 100%);
+    }
+
+    .back-wall {
+      background:
+        linear-gradient(90deg, transparent 0 8%, rgba(222,164,78,.08) 8% 8.4%, transparent 8.4% 91.6%, rgba(222,164,78,.08) 91.6% 92%, transparent 92%),
+        repeating-linear-gradient(90deg, rgba(255,208,113,.055) 0 2px, transparent 2px 46px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 3px, transparent 3px 7px),
+        radial-gradient(circle at 50% 8%, rgba(63,242,237,.10), transparent 24%),
+        linear-gradient(180deg, #2a190f 0%, #100c08 56%, #040403 100%);
+      border-bottom: 4px solid #7c4525;
+      box-shadow: inset 0 -34px 54px #000, inset 0 0 50px rgba(255,208,113,.035);
+    }
+
+    .monitor {
+      border-color: #6d3f22;
+      box-shadow:
+        inset 0 0 28px rgba(63,242,237,.11),
+        0 0 0 2px #120b07,
+        0 9px 22px #000;
+    }
+
+    .lane-gutters {
+      width: min(100%, 1180px);
+      height: 80%;
+      bottom: 1.2%;
+    }
+
+    .lane-gutters span {
+      width: 9.5%;
+      background:
+        linear-gradient(90deg, #050403, #27150c 20%, #9a5b2d 43%, #24150d 68%, #050403),
+        repeating-linear-gradient(0deg, transparent 0 30px, rgba(255,208,113,.12) 30px 31px);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,208,113,.19),
+        inset 0 0 22px #000,
+        0 0 18px rgba(63,242,237,.035);
+    }
+
+    .lane-surface,
+    .lane-board-lines {
+      width: min(90%, 1060px);
+      height: 80%;
+      bottom: 1.2%;
+      clip-path: polygon(1% 100%, 99% 100%, 64% 0%, 36% 0%);
+    }
+
+    .lane-surface {
+      background:
+        linear-gradient(90deg,
+          rgba(255,255,255,.12) 0%, transparent 8%, rgba(255,255,255,.07) 20%,
+          transparent 37%, rgba(255,255,255,.11) 50%, transparent 63%,
+          rgba(255,255,255,.07) 80%, transparent 92%, rgba(255,255,255,.12) 100%),
+        repeating-linear-gradient(90deg, rgba(255,244,212,.035) 0 13px, rgba(69,28,9,.10) 13px 27px),
+        repeating-linear-gradient(0deg, transparent 0 72px, rgba(91,44,18,.16) 72px 74px),
+        linear-gradient(180deg, #f0c779 0%, #cf9149 48%, #8d4d27 100%);
+      box-shadow:
+        inset 0 0 0 3px rgba(255,239,197,.11),
+        inset 0 -44px 58px rgba(55,23,9,.26),
+        0 0 0 2px #3d2314,
+        0 24px 54px #000;
+    }
+
+    .lane-surface::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 49.72%, rgba(63,242,237,.15) 49.86% 50.14%, transparent 50.28%),
+        repeating-linear-gradient(180deg, transparent 0 10.8%, rgba(255,208,113,.10) 10.8% 11.1%);
+      mix-blend-mode: screen;
+      opacity: .62;
+      pointer-events: none;
+    }
+
+    .lane-board-lines {
+      opacity: .72;
+      background: repeating-linear-gradient(90deg, transparent 0 31px, rgba(74,31,11,.24) 31px 33px);
+    }
+
+    .lane-board-lines::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 12%;
+      bottom: 5%;
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, transparent, rgba(63,242,237,.20) 35%, rgba(255,208,113,.28) 82%, transparent);
+      box-shadow: 0 0 12px rgba(63,242,237,.24);
+    }
+
+    .pin {
+      width: var(--pin-w, 42px);
+      height: var(--pin-h, 112px);
+      margin-left: calc(var(--pin-w, 42px) / -2);
+      margin-top: calc(var(--pin-h, 112px) / -2);
+      filter: none;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 600px;
+    }
+
+    .pin-body {
+      background:
+        radial-gradient(ellipse at 31% 9%, rgba(255,255,255,.98), transparent 28%),
+        radial-gradient(ellipse at 50% 4%, #fff 0 15%, transparent 16%),
+        radial-gradient(ellipse at 48% 48%, rgba(255,248,221,.95) 0 35%, transparent 36%),
+        linear-gradient(90deg, rgba(95,61,31,.30), transparent 18%, transparent 72%, rgba(46,31,20,.28)),
+        linear-gradient(180deg, #fffdf2 0%, #eadbb5 36%, #c6b08a 68%, #79614b 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(95,61,31,.52),
+        inset 10px 2px 12px rgba(255,255,255,.42),
+        inset -10px -18px 20px rgba(46,31,20,.24),
+        0 8px 12px rgba(0,0,0,.34);
+    }
+
+    .pin-body::before {
+      content: "";
+      position: absolute;
+      left: 28%;
+      right: 28%;
+      bottom: 8%;
+      height: 8%;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #efc46c, #6f3b1f 70%, #1d1009);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 0 7px rgba(255,208,113,.24);
+    }
+
+    .pin-body::after {
+      content: "";
+      position: absolute;
+      left: 43%;
+      top: 9%;
+      width: 14%;
+      height: 5%;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 7px rgba(63,242,237,.72);
+      opacity: .88;
+    }
+
+    .pin-stripe {
+      left: 19%;
+      right: 19%;
+      top: 18%;
+      height: 14%;
+      background:
+        linear-gradient(180deg,
+          #612d17 0 20%,
+          #e2a94c 20% 42%,
+          #3ff2ed 42% 57%,
+          #c77b35 57% 77%,
+          #512514 77% 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.44),
+        0 0 7px rgba(63,242,237,.32),
+        0 2px 3px rgba(0,0,0,.28);
+    }
+
+    .pin-highlight {
+      left: 28%;
+      top: 7%;
+      width: 18%;
+      height: 72%;
+      background: linear-gradient(180deg, rgba(255,255,255,.60), rgba(63,242,237,.08) 64%, transparent);
+      opacity: .82;
+    }
+
+    .pin-shadow {
+      bottom: -7%;
+      width: 88%;
+      height: 12%;
+      background: rgba(0,0,0,.30);
+      filter: blur(3px);
+    }
+
+    .pin.fallen {
+      filter: none;
+      animation: pinFallSmooth 1.02s cubic-bezier(.12,.72,.18,1) both;
+      animation-delay: var(--fall-delay, 0ms);
+    }
+
+    @keyframes pinFallSmooth {
+      0% {
+        transform: translate3d(0,0,0) rotateZ(0deg) scale(1);
+        opacity: 1;
+      }
+      18% {
+        transform: translate3d(calc(var(--fall-x,18px) * .05), calc(var(--fall-y,22px) * -.06), 0) rotateZ(calc(var(--fall-rot,72deg) * .12)) scale(1.015);
+        opacity: 1;
+      }
+      45% {
+        transform: translate3d(calc(var(--fall-x,18px) * .35), calc(var(--fall-y,22px) * .18), 0) rotateZ(calc(var(--fall-rot,72deg) * .45)) scale(.99);
+        opacity: 1;
+      }
+      72% {
+        transform: translate3d(calc(var(--fall-x,18px) * .76), calc(var(--fall-y,22px) * .66), 0) rotateZ(calc(var(--fall-rot,72deg) * .82)) scale(.93);
+        opacity: .98;
+      }
+      88% {
+        transform: translate3d(calc(var(--fall-x,18px) * .94), calc(var(--fall-y,22px) * .92), 0) rotateZ(calc(var(--fall-rot,72deg) * 1.02)) scale(.88);
+        opacity: .86;
+      }
+      100% {
+        transform: translate3d(var(--fall-x,18px), var(--fall-y,22px), 0) rotateZ(calc(var(--fall-rot,72deg) * 1.05)) scale(.84);
+        opacity: .20;
+      }
+    }
+
+    /* Instrument panel stays outside the center pin rack. */
+    .throw-stats-hud {
+      left: auto;
+      right: 10px;
+      top: 120px;
+      width: max-content;
+      max-width: 190px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      padding: 7px 10px;
+      line-height: 1.22;
+      text-align: right;
+      pointer-events: none;
+    }
+
+    body.game-focus .throw-stats-hud {
+      left: auto;
+      right: 8px;
+      top: calc(max(8px, var(--safe-top)) + 108px);
+      max-width: 168px;
+    }
+
+    @media (max-width: 1120px) {
+      .game-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .lane-surface,
+      .lane-board-lines {
+        width: 94%;
+        height: 80%;
+        bottom: 1.2%;
+        clip-path: polygon(0 100%, 100% 100%, 66% 0%, 34% 0%);
+      }
+      .lane-gutters { width: 100%; height: 80%; bottom: 1.2%; }
+      .lane-gutters span { width: 7%; }
+      .throw-stats-hud {
+        left: auto;
+        right: 6px;
+        top: 108px;
+        width: auto;
+        max-width: 132px;
+        padding: 6px 8px;
+        gap: 1px;
+        font-size: .64rem;
+        justify-content: end;
+      }
+      body.game-focus .throw-stats-hud {
+        right: 6px;
+        top: calc(max(8px, var(--safe-top)) + 104px);
+        max-width: 132px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .throw-stats-hud {
+        left: auto;
+        right: 5px;
+        max-width: 122px;
+        justify-content: end;
+      }
+    }
+
+</style>
 </head>
 
 <body>
@@ -1980,8 +2268,8 @@
     function fullRackSet() { return new Set(PIN_LAYOUT.map(pin => pin.id)); }
     function currentFrameData() { return frames[currentFrame]; }
     function getStandingPinsArray() { return PIN_LAYOUT.filter(pin => standingPins.has(pin.id)); }
-    function laneLeftAt(t) { return lerp(0.18, 0.40, clamp(t, 0, 1)); }
-    function laneRightAt(t) { return lerp(0.82, 0.60, clamp(t, 0, 1)); }
+    function laneLeftAt(t) { return lerp(0.08, 0.365, clamp(t, 0, 1)); }
+    function laneRightAt(t) { return lerp(0.92, 0.635, clamp(t, 0, 1)); }
     function getBallBaseSize() { return stageWidth <= 700 ? 86 : 98; }
 
 
@@ -1993,7 +2281,7 @@
 
     function getPinCollisionRadiusNorm(pin) {
       // Collision width follows the actually rendered pin body.
-      const pinWidthPx = 34 * getPinVisualScale(pin);
+      const pinWidthPx = 42 * getPinVisualScale(pin);
       return (pinWidthPx * 0.34) / Math.max(stageWidth, 1);
     }
 
@@ -2046,8 +2334,8 @@
         const pinScale = baseScale * lerp(0.82, 1.14, perspective);
         el.style.left = `${pin.x * stageWidth}px`;
         el.style.top = `${pin.y * stageHeight}px`;
-        el.style.setProperty("--pin-w", `${34 * pinScale}px`);
-        el.style.setProperty("--pin-h", `${92 * pinScale}px`);
+        el.style.setProperty("--pin-w", `${42 * pinScale}px`);
+        el.style.setProperty("--pin-h", `${112 * pinScale}px`);
         el.style.zIndex = String(150 + Math.round(pin.y * 1000));
       });
 
@@ -2094,7 +2382,7 @@
     function positionBallAtRest() {
       camera.style.transform = "translate3d(0,0,0) scale(1)";
       ballTrail.classList.remove("show");
-      ballRestX = clamp(ballRestX, 0.34, 0.66);
+      ballRestX = clamp(ballRestX, 0.22, 0.78);
       const restY = getRestYNorm();
       setBallVisualNorm(ballRestX, restY, 1, 0);
       positionGuide(ballRestX, restY);
@@ -2427,7 +2715,7 @@
       const upward = Math.max(0, -vy);
       const speed = Math.hypot(vx, vy);
       const restY = getRestYNorm();
-      const releaseX = clamp(point.x / stageWidth, 0.25, 0.75);
+      const releaseX = clamp(point.x / stageWidth, 0.18, 0.82);
       const releaseY = clamp(point.y / stageHeight, 0.50, restY);
       const power = clamp(upward / 1320, 0, 1.30);
       const angle = clamp(vx / Math.max(upward, 270), -0.76, 0.76);
@@ -2733,10 +3021,16 @@
       function finalizeThrow() {
         if (runId !== gameRunId || throwFinished) return;
         throwFinished = true;
-        isAnimating = false;
         ballTrail.classList.remove("show");
         stopRollingSound();
-        scheduleGameTimer(() => handlePostThrowState(knockedIds.length, simulation), 150, runId);
+
+        // Keep input locked until the visible pin movement has settled. Previously the
+        // rack could be reset while pins were still rotating, which looked like dropped frames.
+        const settleDelay = knockedIds.length ? 720 : 180;
+        scheduleGameTimer(() => {
+          isAnimating = false;
+          handlePostThrowState(knockedIds.length, simulation);
+        }, settleDelay, runId);
       }
 
       function frame(now) {
@@ -2938,7 +3232,7 @@
         showThrowHelp();
         return;
       }
-      ballRestX = clamp(release.releaseX, 0.34, 0.66);
+      ballRestX = clamp(release.releaseX, 0.22, 0.78);
       animateThrow(release);
     }
 
