@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
   <style>
@@ -705,8 +705,781 @@
       }
     }
   </style>
+
+<style id="strikeclub-steampunk-theme">
+  :root {
+    --steam-bg: #080705;
+    --steam-panel: #15110d;
+    --steam-panel-2: #211910;
+    --steam-metal: #322318;
+    --steam-brass: #c99748;
+    --steam-brass-light: #f0cd86;
+    --steam-copper: #a65b33;
+    --steam-cream: #f2e2bd;
+    --steam-muted: #b9aa8c;
+    --steam-cyan: #4df5ed;
+    --steam-pink: #ff63bd;
+    --steam-gold: #ffc85b;
+    --steam-green: #72f49a;
+    --steam-blue: #74b8ff;
+    --steam-shadow: 0 24px 70px rgba(0,0,0,.52);
+    --page-accent: var(--steam-cyan);
+    --page-accent-rgb: 77,245,237;
+    --page-secondary: var(--steam-pink);
+    --page-secondary-rgb: 255,99,189;
+  }
+
+  body.page-records { --page-accent: #ffbd59; --page-accent-rgb: 255,189,89; --page-secondary: #ff6e8c; --page-secondary-rgb: 255,110,140; }
+  body.page-analysis { --page-accent: #74b8ff; --page-accent-rgb: 116,184,255; --page-secondary: #ff63bd; --page-secondary-rgb: 255,99,189; }
+  body.page-about { --page-accent: #9c8cff; --page-accent-rgb: 156,140,255; --page-secondary: #58e8b3; --page-secondary-rgb: 88,232,179; }
+  body.page-news { --page-accent: #72f49a; --page-accent-rgb: 114,244,154; --page-secondary: #ffc85b; --page-secondary-rgb: 255,200,91; }
+  body.page-legal { --page-accent: #ffc85b; --page-accent-rgb: 255,200,91; --page-secondary: #4df5ed; --page-secondary-rgb: 77,245,237; }
+
+  html { color-scheme: dark; background: var(--steam-bg); }
+
+  body.steam-page {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--steam-cream);
+    font-family: "Roboto Slab", Georgia, serif;
+    background:
+      radial-gradient(circle at 8% 5%, rgba(var(--page-accent-rgb),.13), transparent 24rem),
+      radial-gradient(circle at 94% 16%, rgba(var(--page-secondary-rgb),.10), transparent 22rem),
+      radial-gradient(circle at 48% 92%, rgba(166,91,51,.14), transparent 30rem),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px),
+      linear-gradient(180deg, #0c0a07 0%, #060504 100%);
+    overflow-x: hidden;
+  }
+
+  body.steam-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .62;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.55), transparent 14%, transparent 86%, rgba(0,0,0,.55)),
+      repeating-linear-gradient(90deg, transparent 0 47px, rgba(201,151,72,.025) 47px 48px),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.08) 3px 4px);
+  }
+
+  body.steam-page a { color: inherit; }
+
+  /* Existing decorative scene becomes an industrial ambient layer. */
+  body.steam-page .scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  body.steam-page .glow {
+    opacity: .2;
+    filter: blur(92px) saturate(1.35);
+  }
+
+  body.steam-page .glow.one { background: rgba(var(--page-accent-rgb),.45); }
+  body.steam-page .glow.two { background: rgba(var(--page-secondary-rgb),.38); }
+  body.steam-page .glow.three { background: rgba(201,151,72,.28); }
+
+  body.steam-page .bg-shape {
+    opacity: .07 !important;
+    filter: sepia(1) saturate(.55) contrast(1.35);
+  }
+
+  body.steam-page .site {
+    position: relative;
+    z-index: 2;
+    width: min(1440px, calc(100% - 28px));
+    margin: 0 auto;
+    padding: 16px 0 38px;
+  }
+
+  body.page-legal .site { width: min(920px, calc(100% - 28px)); }
+
+  body.steam-page .topbar {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 0 0 14px;
+    padding: 8px 12px;
+    border: 1px solid rgba(240,205,134,.34);
+    border-radius: 10px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.025), transparent 30%),
+      linear-gradient(180deg, rgba(43,31,21,.97), rgba(12,10,7,.98));
+    box-shadow:
+      inset 0 0 0 2px rgba(54,31,17,.82),
+      inset 0 0 0 4px rgba(201,151,72,.10),
+      0 14px 34px rgba(0,0,0,.38);
+  }
+
+  body.steam-page .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    color: #ecd39e;
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+    text-shadow: 0 4px 14px rgba(0,0,0,.6);
+  }
+
+  body.steam-page .brand-mark {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: inline-grid;
+    place-items: center;
+    border: 2px solid var(--steam-brass);
+    border-radius: 50%;
+    color: var(--steam-cream);
+    background:
+      radial-gradient(circle at 34% 28%, rgba(255,255,255,.15), transparent 22%),
+      linear-gradient(145deg, rgba(var(--page-accent-rgb),.30), #0b1010 72%);
+    box-shadow:
+      0 0 0 3px #29180f,
+      0 0 16px rgba(var(--page-accent-rgb),.19);
+  }
+
+  body.steam-page .back-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 13px;
+    border: 1px solid rgba(240,205,134,.35);
+    border-radius: 6px;
+    color: #eed7aa;
+    background: linear-gradient(180deg, #332116, #110c08);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.38);
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .page,
+  body.steam-page .card {
+    position: relative;
+    padding: 24px;
+    border: 2px solid #6b4024;
+    border-radius: 14px;
+    overflow: hidden;
+    color: var(--steam-cream);
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.03), transparent 28%),
+      radial-gradient(circle at 12% 4%, rgba(var(--page-accent-rgb),.10), transparent 25rem),
+      radial-gradient(circle at 92% 10%, rgba(var(--page-secondary-rgb),.08), transparent 22rem),
+      linear-gradient(180deg, rgba(31,25,18,.98), rgba(10,9,7,.99));
+    border: 1px solid rgba(240,205,134,.42);
+    backdrop-filter: none;
+    box-shadow:
+      inset 0 0 0 2px rgba(55,31,17,.88),
+      inset 0 0 0 5px rgba(166,91,51,.12),
+      var(--steam-shadow);
+  }
+
+  body.steam-page .page::before,
+  body.steam-page .card::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    z-index: 0;
+    pointer-events: none;
+    border: 1px solid rgba(240,205,134,.17);
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.035), transparent 24%, transparent 76%, rgba(var(--page-secondary-rgb),.035)),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.035) 3px 4px);
+  }
+
+  body.steam-page .page::after,
+  body.steam-page .card::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    z-index: 5;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 4px 4px, #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at calc(100% - 4px) 4px, #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at 4px calc(100% - 4px), #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px),
+      radial-gradient(circle at calc(100% - 4px) calc(100% - 4px), #e0b76f 0 1px, #6c3e24 2px 3px, transparent 4px);
+  }
+
+  body.steam-page .page > *,
+  body.steam-page .card > * { position: relative; z-index: 2; }
+
+  body.steam-page .header {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+    padding: 4px 4px 20px;
+    border-bottom: 1px solid rgba(201,151,72,.30);
+  }
+
+  body.steam-page .header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: min(360px, 72%);
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--page-accent), var(--page-secondary), transparent);
+    box-shadow: 0 0 14px rgba(var(--page-accent-rgb),.34);
+  }
+
+  body.steam-page .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 8px 11px;
+    border: 1px solid rgba(var(--page-accent-rgb),.36);
+    border-radius: 4px;
+    color: var(--page-accent);
+    background: rgba(3,12,12,.58);
+    box-shadow: inset 0 0 14px rgba(var(--page-accent-rgb),.055);
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .eyebrow .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 1px;
+    background: var(--page-accent);
+    box-shadow: 0 0 8px var(--page-accent), 0 0 18px rgba(var(--page-accent-rgb),.55);
+    animation: steamBlink 1.8s steps(1,end) infinite;
+  }
+
+  body.steam-page h1 {
+    margin: 0 0 13px;
+    color: #f2dfb7;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(40px, 5vw, 74px);
+    line-height: .96;
+    font-weight: 700;
+    letter-spacing: .012em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 #64391f, 0 9px 24px rgba(0,0,0,.75);
+  }
+
+  body.steam-page .headline-accent {
+    color: transparent;
+    background: linear-gradient(100deg, var(--page-accent), var(--steam-brass-light) 46%, var(--page-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(var(--page-accent-rgb),.16));
+  }
+
+  body.steam-page .hero-text {
+    color: var(--steam-muted);
+    font-family: "Roboto Slab", serif;
+    font-weight: 500;
+    line-height: 1.72;
+  }
+
+  body.steam-page .footer-note {
+    margin-top: 17px;
+    padding: 0 8px;
+    color: #9f9178;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: none;
+  }
+
+  body.steam-page .footer-note a {
+    color: #d9bf89;
+    border-bottom: 1px solid rgba(217,191,137,.35);
+  }
+
+  body.steam-page .back-fab,
+  body.steam-page .refresh-fab {
+    position: fixed;
+    bottom: 16px;
+    z-index: 9999;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(240,205,134,.55);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #f7e7c4;
+    background:
+      linear-gradient(145deg, rgba(var(--page-accent-rgb),.20), transparent 48%),
+      linear-gradient(180deg, #3a2517, #100b08);
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.5),
+      0 10px 26px rgba(0,0,0,.46),
+      0 0 17px rgba(var(--page-accent-rgb),.10);
+    backdrop-filter: none;
+  }
+
+  body.steam-page .back-fab { left: 16px; }
+  body.steam-page .refresh-fab { right: 16px; }
+
+  body.steam-page .back-fab:hover,
+  body.steam-page .refresh-fab:hover {
+    transform: translateY(-2px);
+    border-color: var(--page-accent);
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.5),
+      0 12px 28px rgba(0,0,0,.5),
+      0 0 20px rgba(var(--page-accent-rgb),.22);
+  }
+
+  /* Reusable dark machine panels */
+  body.steam-page .analysis-panel,
+  body.steam-page .panel,
+  body.steam-page .overlay-banner,
+  body.steam-page .about-card,
+  body.steam-page .record-card,
+  body.steam-page .block {
+    color: var(--steam-cream);
+    border: 1px solid rgba(240,205,134,.27);
+    background:
+      radial-gradient(circle at 12% 0%, rgba(var(--page-accent-rgb),.08), transparent 45%),
+      linear-gradient(180deg, rgba(34,27,19,.97), rgba(13,11,8,.99));
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.37),
+      0 13px 30px rgba(0,0,0,.32);
+  }
+
+  body.steam-page .panel-head,
+  body.steam-page .analysis-panel .panel-head {
+    color: #eed9ad;
+    border-bottom: 1px solid rgba(201,151,72,.28);
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.09), transparent 55%),
+      linear-gradient(180deg, rgba(55,39,25,.98), rgba(20,15,11,.98));
+  }
+
+  body.steam-page .panel-title,
+  body.steam-page .overlay-title,
+  body.steam-page .about-card h2,
+  body.steam-page .block h2,
+  body.steam-page .status-headline {
+    color: #f0d8a7;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+  }
+
+  body.steam-page .panel-subtitle,
+  body.steam-page .overlay-text,
+  body.steam-page .about-card p,
+  body.steam-page .block p,
+  body.steam-page .record-detail,
+  body.steam-page .record-players,
+  body.steam-page .item-text,
+  body.steam-page .mini-text {
+    color: var(--steam-muted);
+  }
+
+  body.steam-page .chip-note,
+  body.steam-page .panel-chip,
+  body.steam-page .overlay-pill,
+  body.steam-page .meta-chip,
+  body.steam-page .record-chip {
+    border: 1px solid rgba(var(--page-accent-rgb),.30);
+    color: var(--page-accent);
+    background: rgba(4,15,15,.55);
+    box-shadow: inset 0 0 12px rgba(var(--page-accent-rgb),.05);
+  }
+
+  /* Records */
+  body.page-records .records-grid { gap: 13px; }
+  body.page-records .record-card {
+    position: relative;
+    padding: 20px;
+    border-radius: 9px;
+    overflow: hidden;
+  }
+
+  body.page-records .record-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(240,205,134,.12);
+    background: none;
+    pointer-events: none;
+  }
+
+  body.page-records .record-card.featured {
+    border-color: rgba(var(--page-accent-rgb),.56);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(var(--page-accent-rgb),.19), transparent 55%),
+      linear-gradient(180deg, #322117, #110d09);
+    box-shadow: 0 0 28px rgba(var(--page-accent-rgb),.10), 0 18px 36px rgba(0,0,0,.38);
+  }
+
+  body.page-records .record-label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+    line-height: 1.55;
+  }
+
+  body.page-records .record-value {
+    color: #f4dcae;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(31px, 4vw, 53px);
+    text-shadow: 0 0 18px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-records .record-players {
+    border: 1px solid rgba(201,151,72,.18);
+    border-radius: 5px;
+    background: rgba(0,0,0,.22);
+  }
+
+  body.page-records .error-box {
+    border: 1px solid rgba(255,103,126,.42);
+    color: #ffc2cd;
+    background: rgba(69,15,24,.52);
+  }
+
+  /* Player analysis */
+  body.page-analysis .analysis-panel {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  body.page-analysis .panel-body { background: rgba(5,5,4,.18); }
+
+  body.page-analysis .field {
+    border: 1px solid rgba(var(--page-accent-rgb),.40);
+    border-radius: 7px;
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.10), transparent),
+      linear-gradient(180deg, #251c14, #100c09);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.38), 0 12px 25px rgba(0,0,0,.29);
+  }
+
+  body.page-analysis .field label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  body.page-analysis .player-select {
+    color: #f2dfb7;
+    border: 1px solid rgba(var(--page-accent-rgb),.48);
+    border-radius: 5px;
+    background: #111718;
+    box-shadow: inset 0 0 16px rgba(var(--page-accent-rgb),.055);
+  }
+
+  body.page-analysis .field::after { color: var(--page-accent); }
+
+  body.page-analysis .player-select:focus {
+    border-color: var(--page-accent);
+    color: #fff0c9;
+    background: #121a1c;
+    box-shadow: 0 0 0 4px rgba(var(--page-accent-rgb),.10), 0 0 22px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-analysis .stat-card {
+    border: 1px solid rgba(201,151,72,.23);
+    border-radius: 7px;
+    background:
+      radial-gradient(circle at 90% 0%, rgba(var(--page-accent-rgb),.08), transparent 55%),
+      linear-gradient(180deg, #251d15, #100d09);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.35), 0 9px 20px rgba(0,0,0,.25);
+  }
+
+  body.page-analysis .stat-label {
+    color: var(--page-accent);
+    font-family: "Press Start 2P", monospace;
+    font-size: 6px;
+    line-height: 1.55;
+  }
+
+  body.page-analysis .stat-value {
+    color: #f0d7a5;
+    font-family: "Oswald", sans-serif;
+    font-size: 27px;
+    text-shadow: 0 0 12px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-analysis .stat-subtext { color: #9d917b; }
+
+  body.page-analysis .info-icon-btn {
+    color: var(--page-accent);
+    background: rgba(var(--page-accent-rgb),.08);
+    box-shadow: inset 0 0 0 1px rgba(var(--page-accent-rgb),.22);
+  }
+
+  body.page-analysis .chart-wrap,
+  body.page-analysis .chart-detail-box {
+    border: 1px solid rgba(201,151,72,.24);
+    border-radius: 8px;
+    color: var(--steam-cream);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 21px, rgba(var(--page-accent-rgb),.026) 21px 22px),
+      linear-gradient(180deg, #121716, #0a0907);
+    box-shadow: inset 0 0 24px rgba(var(--page-accent-rgb),.035);
+  }
+
+  body.page-analysis .chart-detail-title { color: var(--page-accent); }
+  body.page-analysis .chart-detail-chip {
+    color: #d9c49c;
+    border: 1px solid rgba(201,151,72,.23);
+    background: rgba(0,0,0,.25);
+  }
+
+  body.page-analysis .legend-note,
+  body.page-analysis .legend-item { color: #a99b82; }
+
+  body.page-analysis .status-section {
+    border-top-color: rgba(201,151,72,.25);
+  }
+
+  body.page-analysis .status-grid > * {
+    border-color: rgba(201,151,72,.22) !important;
+    color: #e3cc9d !important;
+    background: linear-gradient(180deg, #251d15, #100d09) !important;
+  }
+
+  body.page-analysis .info-modal-overlay { background: rgba(3,3,2,.78); backdrop-filter: blur(8px); }
+  body.page-analysis .info-modal-card {
+    border: 1px solid rgba(240,205,134,.48);
+    color: var(--steam-cream);
+    background: linear-gradient(180deg, #2c2118, #0f0c09);
+    box-shadow: var(--steam-shadow);
+  }
+  body.page-analysis .info-modal-title { color: #f0d8a7; font-family: "Oswald",sans-serif; text-transform: uppercase; }
+  body.page-analysis .info-modal-text { color: var(--steam-muted); }
+  body.page-analysis .info-modal-close {
+    color: var(--page-accent);
+    background: rgba(var(--page-accent-rgb),.08);
+  }
+
+  /* About */
+  body.page-about .about-grid { gap: 14px; }
+  body.page-about .about-card {
+    position: relative;
+    padding: 22px;
+    border-radius: 9px;
+    overflow: hidden;
+  }
+
+  body.page-about .about-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--page-accent), var(--page-secondary));
+    box-shadow: 0 0 14px rgba(var(--page-accent-rgb),.24);
+  }
+
+  body.page-about .about-card h2 { font-size: 25px; }
+  body.page-about .about-card p { line-height: 1.72; }
+
+  body.page-about .mail-btn {
+    margin-top: 14px;
+    min-height: 48px;
+    border: 1px solid rgba(var(--page-accent-rgb),.38);
+    border-radius: 5px;
+    color: var(--page-accent);
+    background: rgba(6,10,15,.55);
+    box-shadow: inset 0 0 14px rgba(var(--page-accent-rgb),.06);
+  }
+
+  /* News */
+  body.page-news .overlay-banner {
+    border-radius: 9px;
+    background:
+      linear-gradient(90deg, rgba(var(--page-accent-rgb),.12), rgba(var(--page-secondary-rgb),.06)),
+      linear-gradient(180deg, #2a2118, #110d09);
+  }
+
+  body.page-news .overlay-icon {
+    border: 1px solid rgba(var(--page-accent-rgb),.50);
+    border-radius: 6px;
+    color: var(--page-accent);
+    background: rgba(5,15,10,.62);
+    box-shadow: 0 0 18px rgba(var(--page-accent-rgb),.12);
+  }
+
+  body.page-news .panel { border-radius: 9px; }
+  body.page-news .item-card {
+    border: 1px solid rgba(201,151,72,.22);
+    border-radius: 7px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(var(--page-accent-rgb),.06), transparent 52%),
+      linear-gradient(180deg, #251d15, #100d09);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.33), 0 9px 20px rgba(0,0,0,.23);
+  }
+
+  body.page-news .item-tag {
+    color: var(--page-accent);
+    border-color: rgba(var(--page-accent-rgb),.26);
+    background: rgba(var(--page-accent-rgb),.055);
+  }
+
+  body.page-news .item-status {
+    border: 1px solid rgba(201,151,72,.28);
+    color: #e8cb93;
+    background: rgba(0,0,0,.24);
+  }
+
+  body.page-news .item-status.open { color: var(--steam-green); }
+  body.page-news .item-status.info { color: var(--steam-blue); }
+  body.page-news .item-status.soon { color: var(--steam-gold); }
+
+  body.page-news .item-title {
+    color: #f0d7a5;
+    font-family: "Oswald", sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+  }
+
+  body.page-news .highlight-strip,
+  body.page-news .mini-card {
+    border-color: rgba(201,151,72,.22);
+    color: var(--steam-cream);
+    background: linear-gradient(180deg, #251d15, #100d09);
+  }
+
+  body.page-news .mini-label { color: var(--page-accent); }
+  body.page-news .mini-value { color: #f0d7a5; font-family: "Oswald",sans-serif; }
+
+  /* Legal / Impressum */
+  body.page-legal .card { padding: 28px; }
+  body.page-legal .content { gap: 13px; }
+
+  body.page-legal .block {
+    position: relative;
+    padding: 18px 18px 18px 22px;
+    border-radius: 7px;
+  }
+
+  body.page-legal .block::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--page-accent), var(--page-secondary));
+    box-shadow: 0 0 10px rgba(var(--page-accent-rgb),.18);
+  }
+
+  body.page-legal .block h2 { margin-bottom: 9px; font-size: 21px; }
+  body.page-legal .block p { color: var(--steam-muted); }
+  body.page-legal .block a { color: var(--page-accent); }
+
+  @keyframes steamBlink {
+    0%, 68%, 100% { opacity: 1; }
+    69%, 80% { opacity: .18; }
+  }
+
+  @media (max-width: 900px) {
+    body.steam-page .site { width: min(100%, 720px); padding: 0 0 26px; }
+    body.steam-page .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      margin: 0;
+      padding: 9px 11px;
+      border-width: 0 0 1px;
+      border-radius: 0;
+      background: rgba(11,9,7,.95);
+      backdrop-filter: blur(10px);
+    }
+    body.steam-page .page,
+    body.steam-page .card {
+      margin: 10px 8px 0;
+      padding: 17px 12px 20px;
+      border-radius: 10px;
+    }
+    body.steam-page .header { padding: 2px 2px 16px; }
+    body.steam-page h1 { font-size: clamp(34px, 10vw, 54px); }
+    body.steam-page .brand { font-size: 17px; }
+    body.steam-page .brand-mark { flex-basis: 38px; width: 38px; height: 38px; }
+    body.steam-page .bg-shape { display: none; }
+
+    body.page-records .records-grid,
+    body.page-about .about-grid,
+    body.page-news .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    body.page-analysis .control-row { grid-template-columns: 1fr; }
+    body.page-analysis .stats-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    body.page-analysis .chart-wrap { padding: 9px 5px 10px; }
+
+    body.steam-page .back-fab,
+    body.steam-page .refresh-fab {
+      width: 46px;
+      height: 46px;
+      bottom: 12px;
+    }
+    body.steam-page .back-fab { left: 12px; }
+    body.steam-page .refresh-fab { right: 12px; }
+  }
+
+  @media (max-width: 520px) {
+    body.steam-page .topbar { min-height: 58px; }
+    body.steam-page .brand { font-size: 15px; }
+    body.steam-page .brand-mark { flex-basis: 35px; width: 35px; height: 35px; }
+    body.steam-page .back-link { min-height: 40px; padding: 7px 10px; font-size: 12px; }
+    body.steam-page .page,
+    body.steam-page .card { margin-inline: 5px; padding-inline: 10px; }
+    body.steam-page .eyebrow { font-size: 6.5px; }
+    body.steam-page h1 { font-size: clamp(31px, 10.5vw, 45px); }
+
+    body.page-analysis .stats-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+    body.page-analysis .stat-card { padding: 11px 9px; }
+    body.page-analysis .stat-value { font-size: 23px; }
+    body.page-analysis .stat-label { font-size: 5.4px; }
+    body.page-analysis .panel-body { padding: 9px; }
+    body.page-analysis .field { padding: 11px; }
+    body.page-analysis .player-select { padding: 12px 42px 12px 12px; }
+    body.page-analysis .field::after { right: 25px; bottom: 25px; }
+
+    body.page-news .overlay-left { align-items: center; }
+    body.page-news .overlay-icon { width: 44px; height: 44px; }
+    body.page-news .item-card { padding: 13px; }
+
+    body.page-legal .card { padding: 18px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body.steam-page *, body.steam-page *::before, body.steam-page *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+
 </head>
-<body>
+<body class="steam-page page-news">
   <div class="scene" aria-hidden="true">
     <div class="glow one"></div>
     <div class="glow two"></div>
