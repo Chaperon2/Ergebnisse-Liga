@@ -73,63 +73,6 @@ function tableCard({ key, theme, title, subtitle, stats = [], content }) {
   </article>`;
 }
 
-
-const DUEL_COLORS = ["#42e8f0", "#ff66bd", "#ffd05c", "#ff7a46", "#79ee70", "#9c75ff", "#28bed4", "#ee3b79"];
-
-function buildTeamColorMap(data) {
-  const names = data.teamStandings.rows.map((row) => row.name);
-  return new Map(names.map((name, index) => [name, DUEL_COLORS[index % DUEL_COLORS.length]]));
-}
-
-function renderCurrentMatchdayBoard(data, headers) {
-  const rowsByTeamId = new Map();
-  data.currentMatchday.rows.forEach((row) => {
-    if (!rowsByTeamId.has(row.teamId)) rowsByTeamId.set(row.teamId, []);
-    rowsByTeamId.get(row.teamId).push(row);
-  });
-  const teamNames = new Map(data.teamStandings.rows.map((row) => [row.teamId, row.name]));
-  const blocks = data.teamStandings.matchups.map((matchup) => {
-    const homeRows = rowsByTeamId.get(matchup.home.teamId) ?? [];
-    const awayRows = rowsByTeamId.get(matchup.away.teamId) ?? [];
-    const players = [...homeRows, ...awayRows];
-    const teamRoundTotals = [1,2,3,4].map((round) => players.reduce((sum, row) => sum + Number(row.scores?.[round - 1] ?? 0), 0));
-    const teamPins = players.reduce((sum, row) => sum + Number(row.total ?? 0), 0);
-    const bodyRows = players.map((row) => ({
-      cells: [row.rank, row.name, row.team, ...row.scores.map((score) => score ?? "–"), row.total, formatNumber(row.average)],
-      score200Indexes: row.scores.map((score, index) => Number(score) >= 200 ? index + 3 : -1).filter((index) => index >= 0),
-    }));
-    const table = renderTable({ headers, rows: bodyRows });
-    const totalCells = [
-      `<td class="team-total-label" colspan="3">Team-Pins</td>`,
-      ...teamRoundTotals.map((value) => `<td>${escapeHtml(value)}</td>`),
-      `<td>${escapeHtml(teamPins)}</td>`,
-      `<td>–</td>`,
-    ].join("");
-    const withTotal = table.replace("</tbody>", `<tr class="team-total-row">${totalCells}</tr></tbody>`);
-    return `<section class="match-result-block">
-      <div class="match-result-title"><span>${escapeHtml(teamNames.get(matchup.home.teamId) ?? matchup.home.teamId)}</span><span class="duel-vs">VS</span><span>${escapeHtml(teamNames.get(matchup.away.teamId) ?? matchup.away.teamId)}</span></div>
-      ${withTotal}
-    </section>`;
-  });
-  return `<div class="matchday-results-board">${blocks.join("")}</div>`;
-}
-
-function renderDirectDuels(data, teamNames, teamColors) {
-  return `<div class="direct-duels">${data.teamStandings.matchups.map((matchup) => {
-    const homeName = teamNames.get(matchup.home.teamId) ?? matchup.home.teamId;
-    const awayName = teamNames.get(matchup.away.teamId) ?? matchup.away.teamId;
-    const homeColor = teamColors.get(homeName) ?? DUEL_COLORS[0];
-    const awayColor = teamColors.get(awayName) ?? DUEL_COLORS[1];
-    const homeWinner = Number(matchup.home.points) > Number(matchup.away.points);
-    const awayWinner = Number(matchup.away.points) > Number(matchup.home.points);
-    return `<article class="direct-duel" style="--home-color:${homeColor};--away-color:${awayColor}">
-      <div class="duel-team ${homeWinner ? "duel-winner" : ""}" style="--team-color:${homeColor}"><span class="duel-team-name">${escapeHtml(homeName)}</span><span class="duel-team-pins">${escapeHtml(matchup.home.scoringPins)} Pins</span></div>
-      <div class="duel-score"><span>${escapeHtml(matchup.home.points)}</span><small>:</small><span>${escapeHtml(matchup.away.points)}</span></div>
-      <div class="duel-team ${awayWinner ? "duel-winner" : ""}" style="--team-color:${awayColor}"><span class="duel-team-name">${escapeHtml(awayName)}</span><span class="duel-team-pins">${escapeHtml(matchup.away.scoringPins)} Pins</span></div>
-    </article>`;
-  }).join("")}</div>`;
-}
-
 function render(data) {
   const matchday = data.matchday;
   const seasonName = data.seasonName ?? data.seasonId;
@@ -217,10 +160,9 @@ function render(data) {
     if (index < data.teamStandings.matchups.length - 1) matchupRows.push({ type: "blank" });
   });
 
-  const teamColors = buildTeamColorMap(data);
   const teamContent = `<div class="stacked-tables">
     <div class="subtable-shell"><div class="subtable-head"><h3 class="subtable-title">Mannschaftswertung</h3></div>${renderTable({ headers: teamHeaders, rows: teamRows })}</div>
-    <div class="subtable-shell"><div class="subtable-head"><h3 class="subtable-title">Direkte Vergleiche · Spieltag ${escapeHtml(matchday.number)} · ${escapeHtml(formatDate(matchday.date))}</h3></div>${renderDirectDuels(data, teamNames, teamColors)}</div>
+    <div class="subtable-shell"><div class="subtable-head"><h3 class="subtable-title">${escapeHtml(`Spieltag ${matchday.number} · ${formatDate(matchday.date)}`)}</h3></div>${renderTable({ headers: matchupHeaders, rows: matchupRows })}</div>
   </div>`;
 
   const leaderPlayer = data.individualStandings.rows?.[0];
@@ -244,7 +186,7 @@ function render(data) {
         `Bestes Spiel: ${data.currentMatchday.bestGame?.name ?? "–"} · ${data.currentMatchday.bestGame?.score ?? "–"}`,
         `Hausligaschnitt: ${formatNumber(data.currentMatchday.houseAverage)}`,
       ],
-      content: renderCurrentMatchdayBoard(data, dailyHeaders),
+      content: renderTable({ headers: dailyHeaders, rows: dailyRows }),
     }),
     tableCard({
       key: "einzel",

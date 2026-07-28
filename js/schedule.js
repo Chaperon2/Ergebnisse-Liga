@@ -168,7 +168,6 @@ function render(scheduleData, meta) {
   }
 
   const teamColors = buildTeamColorMap(matchdays);
-  container.classList.add("schedule-grid-dashboard");
   container.innerHTML = renderTeamLegend(teamColors) + matchdays.map((day) => {
     const played = Number(day.number) <= publishedThrough;
     const next = Number(day.number) === nextNumber;
