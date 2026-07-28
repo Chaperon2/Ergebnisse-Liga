@@ -89,3 +89,46 @@
     box-shadow: inset 3px 0 0 var(--gold) !important;
   }
 }
+
+/* ===== Phase 8.5: Dashboard-Tabellen nach Referenzmotiv ===== */
+.matchday-results-board{display:grid;gap:16px;padding:14px}
+.match-result-block{--duel-accent:var(--cyan);position:relative;overflow:hidden;border:1px solid rgba(200,151,70,.5);border-radius:9px;background:linear-gradient(180deg,rgba(8,15,16,.98),rgba(8,7,5,.98));box-shadow:inset 0 0 0 2px rgba(0,0,0,.55),inset 0 0 28px color-mix(in srgb,var(--duel-accent) 6%,transparent),0 13px 26px rgba(0,0,0,.32)}
+.match-result-block:nth-child(2){--duel-accent:var(--pink)}.match-result-block:nth-child(3){--duel-accent:var(--green)}.match-result-block:nth-child(4){--duel-accent:#ff7448}
+.match-result-title{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(200,151,70,.42);background:linear-gradient(180deg,rgba(35,22,13,.96),rgba(9,8,6,.98));font-family:"Oswald",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.045em;text-align:center;color:var(--duel-accent);text-shadow:0 0 12px color-mix(in srgb,var(--duel-accent) 46%,transparent)}
+.match-result-title .duel-vs{color:var(--gold);font-family:"Press Start 2P",monospace;font-size:9px}
+.match-result-block .table-wrap{border:0;border-radius:0;background:transparent;box-shadow:none}
+.match-result-block table{table-layout:fixed}
+.match-result-block thead th{background:#0b0b09;color:#e9c56f;border-color:rgba(200,151,70,.25);font-size:11px;padding:8px 6px}
+.match-result-block tbody td{font-size:12px;padding:8px 6px;border-color:rgba(200,151,70,.17)}
+.match-result-block tbody tr:nth-child(odd) td{background:rgba(255,255,255,.035)}
+.match-result-block tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--duel-accent) 7%,rgba(0,0,0,.25))}
+.match-result-block .team-total-row td{background:color-mix(in srgb,var(--duel-accent) 13%,#090806)!important;color:#dffcf4;font-weight:800;border-top:1px solid color-mix(in srgb,var(--duel-accent) 55%,transparent)}
+.match-result-block .team-total-label{text-align:left!important;color:var(--duel-accent)!important;font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.05em}
+
+.direct-duels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:14px}
+.direct-duel{--home-color:var(--cyan);--away-color:var(--pink);position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;min-height:132px;padding:18px;border:1px solid rgba(200,151,70,.48);border-radius:10px;background:radial-gradient(circle at 15% 50%,color-mix(in srgb,var(--home-color) 12%,transparent),transparent 35%),radial-gradient(circle at 85% 50%,color-mix(in srgb,var(--away-color) 12%,transparent),transparent 35%),linear-gradient(180deg,#17120d,#080706);box-shadow:inset 0 0 0 2px rgba(0,0,0,.6),0 13px 28px rgba(0,0,0,.35)}
+.direct-duel:before,.direct-duel:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#b3773c;box-shadow:0 0 0 1px #120b07}.direct-duel:before{left:8px;top:8px}.direct-duel:after{right:8px;bottom:8px}
+.duel-team{min-width:0;text-align:center}.duel-team-name{display:block;color:var(--team-color);font-family:"Oswald",sans-serif;font-size:clamp(16px,2vw,24px);font-weight:700;text-transform:uppercase;line-height:1.05;text-shadow:0 0 13px color-mix(in srgb,var(--team-color) 45%,transparent);overflow-wrap:anywhere}.duel-team-pins{display:block;margin-top:7px;color:#a99a7f;font-size:11px}.duel-score{display:flex;align-items:center;gap:8px;color:#ffd06e;font-family:"Oswald",sans-serif;font-size:clamp(34px,4vw,58px);font-weight:700;line-height:1;text-shadow:0 0 13px rgba(255,168,45,.45)}.duel-score small{font-size:.5em;color:#a96b2c}.duel-winner .duel-team-name{filter:brightness(1.25)}
+
+.schedule-grid-dashboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.schedule-grid-dashboard .team-color-legend{grid-column:1/-1}
+.schedule-grid-dashboard .schedule-day{margin:0;min-width:0;border-radius:9px;background:linear-gradient(180deg,rgba(12,15,14,.98),rgba(7,6,5,.98));box-shadow:inset 0 0 0 2px rgba(0,0,0,.58),0 12px 25px rgba(0,0,0,.3)}
+.schedule-grid-dashboard .schedule-day-head{padding:10px 12px;background:linear-gradient(180deg,#2a1b10,#0c0907);border-bottom:1px solid rgba(200,151,70,.42)}
+.schedule-grid-dashboard .schedule-day-head h2{font-size:19px}.schedule-grid-dashboard .schedule-day-head time{font-size:12px}
+.schedule-grid-dashboard .schedule-state{font-size:6px}
+.schedule-grid-dashboard .pairing-list{gap:6px;padding:10px}
+.schedule-grid-dashboard .pairing-row{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:6px;padding:0;border:0;background:transparent;box-shadow:none}
+.schedule-grid-dashboard .lane-badge{display:none}
+.schedule-grid-dashboard .team{min-height:32px;display:grid;place-items:center;padding:6px;border-radius:5px;font-size:11px;line-height:1.15;text-align:center;border-width:1px;box-shadow:inset 0 0 12px rgba(0,0,0,.3)}
+.schedule-grid-dashboard .versus{width:auto;height:32px;display:grid;place-items:center;color:var(--gold);font-size:10px;background:transparent;border:0;box-shadow:none}
+.schedule-grid-dashboard .schedule-day.is-next{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,200,91,.5),0 0 25px rgba(255,200,91,.21),inset 0 0 0 2px rgba(0,0,0,.58)}
+.schedule-grid-dashboard .schedule-day.pulse-target{animation:dashboardTarget 1.9s ease}
+@keyframes dashboardTarget{0%,100%{filter:none}30%,65%{filter:brightness(1.28);box-shadow:0 0 0 3px var(--cyan),0 0 35px rgba(64,244,239,.45)}}
+
+@media(max-width:1050px){.schedule-grid-dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.direct-duels{grid-template-columns:1fr}}
+@media(max-width:700px){
+ .matchday-results-board{padding:6px;gap:11px}.match-result-title{padding:8px 6px;gap:5px;font-size:13px}.match-result-title .duel-vs{font-size:7px}
+ .match-result-block thead th,.match-result-block tbody td{font-size:9px;padding:6px 2px}.match-result-block .col-rank{width:7%}.match-result-block .col-name{width:19%}.match-result-block .col-team{width:18%}.match-result-block .col-game{width:9%}.match-result-block .col-total{width:12%}.match-result-block .col-average{width:10%}
+ .direct-duels{padding:7px;gap:10px}.direct-duel{min-height:112px;padding:13px 8px;gap:6px}.duel-team-name{font-size:15px}.duel-team-pins{font-size:9px}.duel-score{font-size:34px;gap:5px}
+ .schedule-grid-dashboard{grid-template-columns:1fr;gap:10px}.schedule-grid-dashboard .team-color-legend{grid-column:auto}.schedule-grid-dashboard .schedule-day-head h2{font-size:18px}.schedule-grid-dashboard .team{font-size:11px}
+}
