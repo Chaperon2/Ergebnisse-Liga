@@ -617,3 +617,31 @@ tbody tr:nth-child(8n){--row-accent:#d72673}
   .results-view td.metric-best,
   .results-view td.metric-average{padding-left:1px;padding-right:1px}
 }
+
+/* Phase 8.9: 200er-Werte auf dunklen Zebrazeilen klar lesbar halten.
+   Die allgemeinere Zebra-Regel hatte nur den grünen Hintergrund überschrieben,
+   während die dunkle Textfarbe der 200er-Markierung bestehen blieb. */
+.results-view .section-spieltag tbody tr td.score-200,
+.results-view .section-einzel tbody tr td.score-200 {
+  color: #f3ffe9 !important;
+  background:
+    linear-gradient(180deg, rgba(42, 105, 55, .98), rgba(12, 47, 25, .98)) !important;
+  border-color: rgba(121, 255, 143, .52) !important;
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .92), 0 0 7px rgba(121, 255, 143, .34);
+  box-shadow:
+    inset 0 0 0 1px rgba(151, 255, 167, .34),
+    inset 0 0 12px rgba(109, 245, 141, .16),
+    0 0 7px rgba(109, 245, 141, .14);
+}
+
+.results-view .section-spieltag tbody tr td.score-200.daily-best-score,
+.results-view .section-einzel tbody tr td.score-200.daily-best-score {
+  color: #fff3b0 !important;
+  outline: 2px solid #ffd15d;
+  outline-offset: -3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 218, 104, .46),
+    inset 0 0 14px rgba(255, 196, 66, .18),
+    0 0 10px rgba(255, 190, 50, .22);
+}
