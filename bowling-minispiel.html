@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+<!-- Strikeclub Velten · Minispiel Phase 9 · Steampunk-Design und geometrische Pin-Kollision -->
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Bowling-Minispiel - Strikeclub Velten</title>
+  <meta name="theme-color" content="#090705" />
+  <meta name="description" content="Das Retro-Steampunk-Bowling-Minispiel des Strikeclub Velten." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -1152,6 +1155,382 @@
       .ghost-orbit,
       .ghost-launch { animation: none !important; }
     }
+  
+
+    /* ==============================================================
+       PHASE 9 · RETRO/STEAMPUNK ARCADE SKIN
+       ============================================================== */
+    :root {
+      --text: #f5e6c2;
+      --text-soft: #c8b891;
+      --muted: #8f826a;
+      --line: rgba(222, 164, 78, 0.30);
+      --accent: #3ff2ed;
+      --accent-2: #ff55b6;
+      --good: #77f18e;
+      --brass: #c78c39;
+      --brass-light: #ffd071;
+      --copper: #9f522c;
+      --panel-dark: #0b0907;
+      --panel-mid: #171109;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html { background: #060504; }
+
+    body {
+      font-family: "Roboto Slab", Georgia, serif;
+      background:
+        radial-gradient(circle at 12% 5%, rgba(255, 75, 176, .12), transparent 24rem),
+        radial-gradient(circle at 86% 9%, rgba(45, 239, 235, .12), transparent 24rem),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, #0b0907, #050403 72%);
+    }
+
+    .ambient::before { background: rgba(255, 86, 182, .16); }
+    .ambient::after { background: rgba(55, 241, 235, .14); }
+
+    .site { width: min(var(--max-width), calc(100% - 20px)); padding-top: 12px; }
+
+    .topbar {
+      padding: 11px 14px;
+      border: 1px solid rgba(222,164,78,.36);
+      border-radius: 12px;
+      background:
+        linear-gradient(180deg, rgba(43,29,17,.98), rgba(10,8,6,.98)),
+        repeating-linear-gradient(90deg, transparent 0 28px, rgba(255,208,113,.035) 28px 29px);
+      box-shadow: inset 0 0 0 2px #160e08, inset 0 0 0 4px rgba(159,82,44,.20), 0 16px 34px rgba(0,0,0,.46);
+    }
+
+    .brand, .skill-pill {
+      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(29,20,13,.95), rgba(8,7,5,.98));
+      border-color: rgba(222,164,78,.42);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.46), 0 0 18px rgba(255,208,113,.06);
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .035em;
+    }
+
+    .brand-mark {
+      border: 2px solid var(--brass);
+      background: radial-gradient(circle at 30% 24%, rgba(255,255,255,.22), transparent 22%), linear-gradient(145deg, #093c42, #071011 72%);
+      color: var(--accent);
+      box-shadow: 0 0 0 3px #2b190f, 0 0 18px rgba(63,242,237,.24);
+    }
+
+    .skill-pill { color: var(--accent); background: #061315; border-color: rgba(63,242,237,.38); }
+
+    .page {
+      border-radius: 15px;
+      border: 2px solid #5b321b;
+      background: linear-gradient(180deg, rgba(16,12,8,.98), rgba(6,5,4,.99));
+      box-shadow: 0 28px 90px rgba(0,0,0,.58), inset 0 0 0 1px rgba(255,208,113,.16);
+    }
+
+    .page::before, .card::before, .start-card::before, .modal-card::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      pointer-events: none;
+      border: 1px solid rgba(232,173,83,.19);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.38);
+      z-index: 0;
+    }
+
+    .hero {
+      border-bottom: 2px solid #5b321b;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(255,85,182,.09), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(63,242,237,.08), transparent 24%),
+        linear-gradient(180deg, #171009, #0a0806);
+    }
+
+    .eyebrow {
+      border-radius: 4px;
+      border-color: rgba(63,242,237,.34);
+      background: #061315;
+      color: var(--accent);
+      font-family: "Press Start 2P", monospace;
+      font-size: .62rem;
+      box-shadow: inset 0 0 18px rgba(63,242,237,.08), 0 0 16px rgba(63,242,237,.08);
+    }
+
+    .eyebrow .dot { border-radius: 1px; background: var(--pink, #ff55b6); box-shadow: 0 0 12px #ff55b6; }
+
+    h1 {
+      font-family: "Oswald", sans-serif;
+      letter-spacing: .015em;
+      text-transform: uppercase;
+      color: #f1d8a5;
+      text-shadow: 0 2px 0 #63371f, 0 0 24px rgba(255,208,113,.10), 0 10px 28px #000;
+    }
+
+    .headline-accent {
+      background: linear-gradient(90deg, #ff5bb7 0 24%, #ffd071 46%, #3ff2ed 76%, #8a7cff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(63,242,237,.16));
+    }
+
+    .info-pill {
+      border-radius: 7px;
+      border-color: rgba(255,208,113,.38);
+      background: linear-gradient(180deg, #26180e, #0c0906);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.44), 0 0 20px rgba(255,208,113,.07);
+    }
+
+    .info-label { color: var(--brass-light); font-family: "Press Start 2P", monospace; font-size: .58rem; }
+    .info-value { color: var(--accent); font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .04em; }
+
+    .game-grid { gap: 13px; padding: 13px; }
+
+    .card {
+      border-radius: 10px;
+      border: 1px solid rgba(222,164,78,.36);
+      background: linear-gradient(180deg, #171109, #080604);
+      box-shadow: inset 0 0 0 2px #100b07, 0 18px 44px rgba(0,0,0,.42);
+    }
+
+    .game-card { border-color: rgba(255,208,113,.44); background: #040403; }
+
+    .card-head {
+      border-bottom: 1px solid rgba(222,164,78,.34);
+      background: linear-gradient(180deg, #2b1b0f, #0d0906);
+    }
+
+    .card-title { color: #f0c978; font-family: "Oswald", sans-serif; font-size: 1.35rem; text-transform: uppercase; letter-spacing: .04em; }
+    .card-subtitle { color: #aa9a7b; }
+    .badge { border-radius: 4px; color: var(--accent); border-color: rgba(63,242,237,.32); background: #071416; font-family: "Press Start 2P", monospace; font-size: .55rem; }
+
+    .lane-stage {
+      border: 1px solid rgba(255,208,113,.22);
+      background:
+        radial-gradient(circle at 50% 1%, rgba(255,208,113,.17), transparent 25%),
+        linear-gradient(180deg, #18130d 0 27%, #070706 27% 100%);
+    }
+
+    .back-wall {
+      background:
+        radial-gradient(circle at 14% 22%, rgba(255,85,182,.14), transparent 12%),
+        radial-gradient(circle at 84% 18%, rgba(63,242,237,.13), transparent 12%),
+        repeating-linear-gradient(90deg, rgba(255,208,113,.065) 0 2px, transparent 2px 52px),
+        linear-gradient(180deg, #2b1a10 0%, #100d09 58%, #050504 100%);
+      border-bottom: 3px solid #6f3c20;
+      box-shadow: inset 0 -30px 50px #000, inset 0 0 44px rgba(255,208,113,.035);
+    }
+
+    .monitor-row { width: min(74%, 780px); gap: 12px; }
+    .monitor {
+      border: 4px solid #4f2b18;
+      border-radius: 5px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 4px, rgba(0,0,0,.24) 4px 5px),
+        radial-gradient(circle at 50% 50%, rgba(63,242,237,.18), transparent 55%),
+        #061416;
+      box-shadow: inset 0 0 25px rgba(63,242,237,.10), 0 8px 20px #000;
+    }
+    .monitor:nth-child(2) { background-color: #180817; box-shadow: inset 0 0 25px rgba(255,85,182,.12), 0 8px 20px #000; }
+    .monitor:nth-child(3) { background-color: #171006; box-shadow: inset 0 0 25px rgba(255,208,113,.12), 0 8px 20px #000; }
+
+    .lane-gutters {
+      position: absolute;
+      left: 50%;
+      bottom: 2%;
+      width: min(78%, 780px);
+      height: 78%;
+      transform: translateX(-50%);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .lane-gutters span {
+      position: absolute;
+      bottom: 0;
+      width: 13%;
+      height: 100%;
+      background: linear-gradient(90deg, #080706, #73411f 34%, #19100a 60%, #050403);
+      clip-path: polygon(0 100%, 100% 100%, 58% 0%, 42% 0%);
+      box-shadow: inset 0 0 0 1px rgba(255,208,113,.16), inset 0 0 18px #000;
+    }
+    .gutter-left { left: 0; }
+    .gutter-right { right: 0; transform: scaleX(-1); }
+
+    .lane-surface {
+      width: min(66%, 660px);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.10), transparent 10%, rgba(255,255,255,.08) 25%, transparent 40%, rgba(255,255,255,.10) 50%, transparent 62%, rgba(255,255,255,.08) 80%, transparent 91%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 11px, rgba(50,22,8,.08) 11px 23px),
+        linear-gradient(180deg, #e5b96d 0%, #c88b42 48%, #8b5028 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,239,197,.10), inset 0 -38px 48px rgba(55,23,9,.22), 0 22px 48px #000;
+    }
+
+    .lane-board-lines { opacity: .62; background: repeating-linear-gradient(90deg, transparent 0 29px, rgba(72,31,11,.22) 29px 31px); }
+
+    .pocket-target {
+      position: absolute;
+      left: 53.5%;
+      top: 29.2%;
+      z-index: 116;
+      width: 28px;
+      height: 28px;
+      transform: translate(-50%, -50%);
+      border: 2px solid rgba(63,242,237,.72);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(63,242,237,.62), inset 0 0 10px rgba(63,242,237,.22);
+      pointer-events: none;
+      animation: targetPulse 1.8s ease-in-out infinite;
+    }
+    .pocket-target::before, .pocket-target::after { content:""; position:absolute; background:rgba(63,242,237,.8); }
+    .pocket-target::before { width: 38px; height: 1px; left: -7px; top: 12px; }
+    .pocket-target::after { width: 1px; height: 38px; left: 12px; top: -7px; }
+    .pocket-target span { position:absolute; inset:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); }
+
+    .scoreboard-overlay {
+      border-radius: 6px;
+      border-color: rgba(255,208,113,.44);
+      background: rgba(5,7,6,.78);
+      box-shadow: inset 0 0 0 2px rgba(70,38,20,.82), 0 12px 30px rgba(0,0,0,.44);
+    }
+
+    .frame-card { border-radius: 3px; border-color: rgba(255,208,113,.23); background: rgba(24,17,10,.88); }
+    .frame-card.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(63,242,237,.22); }
+    .frame-head { background: linear-gradient(180deg, #553018, #1b1009); color: var(--brass-light); font-family: "Press Start 2P", monospace; }
+    .roll-cell { border-color: rgba(255,208,113,.18); color: #f6e5bd; font-family: "Oswald", sans-serif; }
+    .frame-total { color: var(--accent); font-family: "Press Start 2P", monospace; font-size: .6rem; }
+
+    .score-total-hud, .throw-stats-hud, .game-top-hud {
+      border-radius: 4px;
+      border-color: rgba(255,208,113,.34);
+      background: rgba(8,7,5,.80);
+      color: #f1d5a1;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.65), 0 8px 22px #000;
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .score-total-hud { color: var(--accent); }
+    .throw-stats-hud { color: var(--brass-light); }
+
+    .guide-ring {
+      border-color: rgba(255,208,113,.58);
+      background: radial-gradient(circle, transparent 0 44%, rgba(255,208,113,.07) 45%, transparent 62%), radial-gradient(circle, transparent 62%, rgba(63,242,237,.12) 63%, transparent 72%);
+      box-shadow: 0 0 34px rgba(255,208,113,.18), inset 0 0 28px rgba(63,242,237,.06);
+    }
+
+    .aim-path {
+      background: linear-gradient(180deg, rgba(63,242,237,0), rgba(63,242,237,.30), rgba(255,208,113,.62));
+      filter: drop-shadow(0 0 12px rgba(63,242,237,.44));
+    }
+
+    .ball {
+      background:
+        radial-gradient(circle at 38% 34%, rgba(0,0,0,.55) 0 5px, transparent 6px),
+        radial-gradient(circle at 55% 27%, rgba(0,0,0,.50) 0 5px, transparent 6px),
+        radial-gradient(circle at 60% 48%, rgba(0,0,0,.48) 0 5px, transparent 6px),
+        radial-gradient(circle at 28% 24%, rgba(255,255,255,.68), transparent 22%),
+        radial-gradient(circle at 64% 70%, rgba(255,85,182,.48), transparent 42%),
+        linear-gradient(145deg, #0a3541 0%, #157f91 44%, #2a1d68 72%, #a32883 100%);
+      box-shadow: inset -18px -18px 28px rgba(0,0,0,.28), inset 13px 13px 22px rgba(255,255,255,.12), 0 0 18px rgba(63,242,237,.28), 0 18px 32px rgba(0,0,0,.56);
+    }
+
+    .ball-trail { background: linear-gradient(90deg, transparent, rgba(63,242,237,.25) 32%, rgba(255,85,182,.62) 72%, #ffd071); filter: blur(1px) drop-shadow(0 0 18px rgba(63,242,237,.58)); }
+
+    .pin.fallen { animation-delay: var(--fall-delay, 0ms); }
+
+    .flash-message {
+      border-radius: 5px;
+      border: 1px solid rgba(255,208,113,.65);
+      background: linear-gradient(180deg, #5a3018, #160d08);
+      color: var(--brass-light);
+      font-family: "Press Start 2P", monospace;
+      font-size: .68rem;
+      box-shadow: inset 0 0 0 2px #080503, 0 0 24px rgba(255,208,113,.24);
+    }
+
+    .start-overlay { background: radial-gradient(circle at 50% 64%, rgba(63,242,237,.12), transparent 28%), rgba(3,3,2,.76); }
+    .start-card, .modal-card {
+      position: relative;
+      border-radius: 9px;
+      border-color: rgba(222,164,78,.48);
+      background: linear-gradient(180deg, #28190e, #090705);
+      box-shadow: inset 0 0 0 2px #0d0805, 0 26px 80px rgba(0,0,0,.62);
+    }
+    .start-card > *, .modal-card > * { position: relative; z-index: 1; }
+    .start-card h2, .modal-title { font-family: "Oswald", sans-serif; color: #f1d39a; text-transform: uppercase; letter-spacing: .03em; }
+    .start-badge, .modal-badge { border-radius: 4px; color: var(--accent); border-color: rgba(63,242,237,.34); background: #061315; font-family: "Press Start 2P", monospace; font-size: .56rem; }
+
+    .btn { border-radius: 5px; font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .04em; }
+    .btn.primary { border: 1px solid rgba(255,208,113,.52); background: linear-gradient(180deg, #70401f, #1b1009); color: var(--brass-light); box-shadow: inset 0 0 0 2px #090503, 0 0 20px rgba(255,208,113,.11); }
+    .btn.secondary { border-color: rgba(63,242,237,.28); background: #071416; color: var(--accent); }
+
+    .help-toggle, .game-end, .quick-restart, .refresh-fab, .back-fab {
+      border: 2px solid #7e4a27;
+      background: radial-gradient(circle at 35% 28%, rgba(255,255,255,.12), transparent 20%), linear-gradient(180deg, #4b2a16, #0d0906);
+      color: var(--brass-light);
+      box-shadow: inset 0 0 0 3px #0b0705, 0 0 0 1px rgba(255,208,113,.34), 0 12px 28px rgba(0,0,0,.52);
+    }
+    .refresh-fab { color: var(--accent); }
+
+    .help-popover {
+      border-radius: 8px;
+      border-color: rgba(222,164,78,.46);
+      background: rgba(18,12,8,.96);
+      box-shadow: inset 0 0 0 2px #080503, 0 18px 44px #000;
+    }
+
+    .leaderboard-wrap { position: relative; z-index: 1; }
+    .leaderboard-row {
+      border-radius: 5px;
+      border-color: rgba(222,164,78,.25);
+      background: linear-gradient(90deg, rgba(63,242,237,.055), transparent 42%), linear-gradient(180deg, #1b130c, #0b0805);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.48);
+    }
+    .leaderboard-row:nth-child(even) { background: linear-gradient(90deg, rgba(255,85,182,.05), transparent 42%), linear-gradient(180deg, #18100c, #090705); }
+    .leaderboard-rank { border-radius: 4px; border: 1px solid rgba(255,208,113,.34); background: #0b0a07; color: var(--brass-light); font-family: "Press Start 2P", monospace; font-size: .62rem; }
+    .leaderboard-name { color: #ead6aa; }
+    .leaderboard-score { color: var(--accent); font-family: "Press Start 2P", monospace; font-size: .68rem; }
+    .leaderboard-note { color: #8f826a; }
+
+    .leaderboard-input { border-radius: 5px; border-color: rgba(222,164,78,.34); background: #0a0806; color: #f5e6c2; }
+
+    @keyframes targetPulse { 0%,100% { opacity:.55; transform:translate(-50%,-50%) scale(.90); } 50% { opacity:1; transform:translate(-50%,-50%) scale(1.10); } }
+
+    @keyframes pinFall {
+      0% { transform: translate3d(0,0,0) rotate(0deg) scale(1); opacity: 1; }
+      42% { transform: translate3d(calc(var(--fall-x, 18px) * .34), calc(var(--fall-y, 22px) * .20), 0) rotate(calc(var(--fall-rot,72deg) * .38)) scale(.98); opacity: 1; }
+      78% { opacity: .72; }
+      100% { transform: translate3d(var(--fall-x,18px), var(--fall-y,22px), 0) rotate(var(--fall-rot,72deg)) scale(.80); opacity: 0; }
+    }
+
+    @media (max-width: 820px) {
+      .topbar { border-radius: 0 0 10px 10px; border-top: 0; }
+      .page { border-radius: 0; border-left: 0; border-right: 0; }
+      .hero { padding-top: 16px; }
+      .game-grid { padding: 0; }
+      .card { border-radius: 0; border-left: 0; border-right: 0; }
+      .lane-gutters { width: 96%; }
+      .pocket-target { width: 22px; height: 22px; }
+      .pocket-target::before { width:32px; left:-7px; top:9px; }
+      .pocket-target::after { height:32px; left:9px; top:-7px; }
+      .pocket-target span { inset:6px; }
+    }
+
+    @media (max-width: 390px) {
+      .skill-pill { font-size: .72rem; }
+      .flash-message { font-size: .56rem; }
+      .start-btn span,
+      .leaderboard-form .btn span,
+      .modal-actions .btn span { display: inline !important; }
+      .start-btn { min-height: 52px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pocket-target { animation: none !important; }
+    }
+
   </style>
 </head>
 
@@ -1166,7 +1545,7 @@
       </div>
       <div class="skill-pill">
         <i class="fa-solid fa-hand-point-up"></i>
-        <span>Flick-Wurf · Spin · Kamera-Follow</span>
+        <span>Flick-Wurf · Hook · echte Pin-Kollision</span>
       </div>
     </div>
 
@@ -1174,8 +1553,8 @@
       <div class="hero">
         <div>
           <div class="eyebrow"><span class="dot"></span><span>Mini-Spiel</span></div>
-          <h1>Eine Bahn. <span class="headline-accent">Ein sauberer Wurf.</span></h1>
-          <p class="intro">Ball greifen, kurz eindrehen und nach vorne schnippen. Power und Spin bleiben nach dem Abwurf sichtbar, bis du den nächsten Wurf beginnst.</p>
+          <h1>Eine Bahn. <span class="headline-accent">Ein mechanischer Strike.</span></h1>
+          <p class="intro">Ball seitlich positionieren und zügig nach oben schnippen. Ein schräger Wisch erzeugt Hook; sichtbarer Ballkontakt zählt jetzt zuverlässig als Treffer.</p>
         </div>
         <div class="info-pill">
           <span class="info-label">Leaderboard</span>
@@ -1190,7 +1569,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Spiel starten</h2>
-                <p>Tippe auf Start, dann öffnet sich der Spielmodus. Erst danach beginnt das Bowling-Spiel.</p>
+                <p>Tippe auf Start und spiele zehn Frames. Positioniere den Ball, wische nach oben und nutze einen leichten seitlichen Zug für Hook.</p>
                 <button class="btn primary start-btn" id="startGameBtn" type="button"><i class="fa-solid fa-play"></i><span>Spiel starten</span></button>
               </div>
             </div>
@@ -1232,7 +1611,7 @@
             <div class="help-popover hidden" id="helpPopover">
               <button class="help-close" id="helpCloseBtn" type="button" aria-label="Hinweis schließen"><i class="fa-solid fa-xmark"></i></button>
               <strong>Steuerung</strong>
-              <p>Tippe den Ball an, ziehe kurz im Kreis und schnippe ihn nach vorne. Uhrzeigersinn hookt nach rechts, gegen den Uhrzeigersinn nach links.</p>
+              <p>Ziehe den Ball an die gewünschte Startposition und wische zügig nach oben. Ein seitlicher Wisch erzeugt Hook. Die Leuchtlinie zeigt die ungefähre Richtung.</p>
               <div class="help-actions-inline">
                 <button class="btn secondary" id="fullscreenBtn" type="button"><i class="fa-solid fa-expand"></i><span>Vollbild</span></button>
                 <button class="btn secondary" id="resetGameBtn" type="button"><i class="fa-solid fa-rotate-left"></i><span>Neu</span></button>
@@ -1249,8 +1628,10 @@
                   <span></span><span></span><span></span><span></span><span></span>
                   <span></span><span></span><span></span><span></span><span></span>
                 </div>
+                <div class="lane-gutters" aria-hidden="true"><span class="gutter-left"></span><span class="gutter-right"></span></div>
                 <div class="lane-surface"></div>
                 <div class="lane-board-lines"></div>
+                <div class="pocket-target" aria-hidden="true"><span></span></div>
                 <div class="pin-deck" id="pinDeck"></div>
                 <div class="aim-path" id="aimPath"></div>
                 <div class="throw-ghost" id="throwGhost">nach vorne schnippen</div>
@@ -1603,6 +1984,37 @@
     function laneRightAt(t) { return lerp(0.82, 0.60, clamp(t, 0, 1)); }
     function getBallBaseSize() { return stageWidth <= 700 ? 86 : 98; }
 
+
+    function getPinVisualScale(pin) {
+      const baseScale = clamp(stageWidth / 900, 0.68, 1.02);
+      const perspective = clamp((pin.y - 0.228) / 0.072, 0, 1);
+      return baseScale * lerp(0.82, 1.14, perspective);
+    }
+
+    function getPinCollisionRadiusNorm(pin) {
+      // Collision width follows the actually rendered pin body.
+      const pinWidthPx = 34 * getPinVisualScale(pin);
+      return (pinWidthPx * 0.34) / Math.max(stageWidth, 1);
+    }
+
+    function getBallVisualScaleAt(t) {
+      // Mobile lanes are visually narrower, so the distant ball must shrink more strongly.
+      // This keeps the ball-to-pin ratio comparable on phones and desktops.
+      const endScale = stageWidth <= 700 ? 0.08 : 0.10;
+      return lerp(1.0, endScale, clamp(t, 0, 1));
+    }
+
+    function getBallCollisionRadiusNormAt(t) {
+      // Collision width follows the exact perspective scale used by the animation.
+      const ballRadiusPx = getBallBaseSize() * getBallVisualScaleAt(t) * 0.43;
+      return ballRadiusPx / Math.max(stageWidth, 1);
+    }
+
+    function pinDistance(a, b) {
+      // Vertical distances are weighted because the rack is shown in perspective.
+      return Math.hypot((a.x - b.x) * 1.0, (a.y - b.y) * 1.58);
+    }
+
     function getRestYNorm() {
       const baseRadius = getBallBaseSize() / 2;
       const safeBottom = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--safe-bottom")) || 0;
@@ -1711,6 +2123,7 @@
       pinDeck.querySelectorAll(".pin").forEach(el => {
         const pinId = Number(el.dataset.pinId);
         el.className = "pin";
+        el.style.removeProperty("--fall-delay");
 
         if (standingPins.has(pinId)) {
           el.style.removeProperty("--fall-x");
@@ -1724,6 +2137,7 @@
           el.style.setProperty("--fall-x", `${impact.fallX}px`);
           el.style.setProperty("--fall-y", `${impact.fallY}px`);
           el.style.setProperty("--fall-rot", `${impact.rotation}deg`);
+          el.style.setProperty("--fall-delay", `${Math.max(0, impact.delay || 0)}ms`);
         }
 
         if (knockedSet.has(pinId)) el.classList.add("fallen");
@@ -2091,127 +2505,177 @@
       const energyMap = {};
       const impactMap = {};
       const pocketX = 0.535;
-      const targetAtHead = path.xAtT(path.tForY(PIN_LAYOUT[0].y));
+      const headT = path.tForY(PIN_LAYOUT[0].y);
+      const targetAtHead = path.xAtT(headT);
       const pocketQuality = 1 - Math.min(1, Math.abs(targetAtHead - pocketX) / 0.072);
       const powerQuality = path.powerQuality;
       const usablePower = clamp(release.power, 0, 1.16);
       const carryQuality = clamp(
-        0.28 + powerQuality * 0.34 + usablePower * 0.24 + pocketQuality * 0.30,
-        0.22,
-        0.98
+        0.26 + powerQuality * 0.34 + usablePower * 0.24 + pocketQuality * 0.30,
+        0.20,
+        1.02
       );
 
-      // Etwas näher an der optischen Ballgröße. Vorher war die Kollisionszone zu dünn,
-      // wodurch der Ball sichtbar durch Pins laufen konnte, ohne Treffer zu zählen.
-      const hitRadius = 0.040 + clamp(release.power, 0.35, 1.0) * 0.018;
       let gutter = false;
-
-      // Kleine Toleranz, damit die Rinne nicht früher greift als die Optik vermuten lässt.
-      const laneMargin = 0.026;
-
-      for (let i = 0; i <= 26; i += 1) {
-        const t = i / 26;
+      const laneMargin = 0.018;
+      for (let i = 0; i <= 36; i += 1) {
+        const t = i / 36;
         const x = path.xAtT(t);
-        if (t > 0.14 && (x < laneLeftAt(t) - laneMargin || x > laneRightAt(t) + laneMargin)) {
+        const ballRadius = getBallCollisionRadiusNormAt(t);
+        // Only a meaningful part of the ball needs to leave the lane before it enters the gutter.
+        const edgeAllowance = ballRadius * 0.16;
+        if (t > 0.15 && (x < laneLeftAt(t) - laneMargin - edgeAllowance || x > laneRightAt(t) + laneMargin + edgeAllowance)) {
           gutter = true;
           break;
         }
       }
 
       if (!standing.length || release.power < 0.24 || gutter) {
-        return { knockedIds: [], impactMap, targetAtHead, path, gutter, pocketQuality, powerQuality, carryQuality };
+        return {
+          knockedIds: [], impactMap, targetAtHead, path, gutter,
+          pocketQuality, powerQuality, carryQuality,
+          impactT: 1.02, impactX: targetAtHead, impactY: PIN_LAYOUT[0].y
+        };
       }
 
+      const directContacts = [];
       standing.forEach(pin => {
         const t = path.tForY(pin.y);
-        const x = path.xAtT(t);
-        const dx = Math.abs(x - pin.x);
-
-        // row: 3 ist bei diesem Layout der Headpin. Deshalb bekommt er nicht weniger,
-        // sondern etwas mehr Toleranz, passend zur Perspektive und Ballgröße.
-        const perspectiveBonus = freshRack ? pin.row * 0.0025 : 0;
-        const radius = hitRadius + perspectiveBonus;
-        const nearHit = dx < radius;
-        const graze = dx < radius + 0.020 && Math.random() < 0.34 * carryQuality;
-
-        if (nearHit || graze) {
-          const directEnergy = clamp((1 - dx / (radius + 0.014)) * 0.78 + usablePower * 0.18 + powerQuality * 0.12, 0.15, 1.04);
-          knocked.add(pin.id);
-          energyMap[pin.id] = Math.max(energyMap[pin.id] || 0, directEnergy);
-          const direction = Math.sign(pin.x - x) || (Math.random() < 0.5 ? -1 : 1);
-          impactMap[pin.id] = { fallX: direction * randomBetween(18, 42), fallY: randomBetween(10, 32), rotation: direction * randomBetween(54, 104) };
+        const ballX = path.xAtT(t);
+        const dx = Math.abs(ballX - pin.x);
+        const contactRadius = getBallCollisionRadiusNormAt(t) + getPinCollisionRadiusNorm(pin);
+        if (dx <= contactRadius) {
+          const overlap = clamp(1 - dx / Math.max(contactRadius, 0.001), 0, 1);
+          directContacts.push({ pin, t, ballX, dx, contactRadius, overlap });
         }
       });
 
-      const waves = freshRack ? 4 : 3;
-      for (let wave = 0; wave < waves; wave += 1) {
-        const newlyKnocked = [];
+      // First visible contact wins. A visible overlap is no longer discarded by randomness.
+      directContacts.sort((a, b) => a.t - b.t || b.overlap - a.overlap);
+      const firstContact = directContacts[0] || null;
+      const impactT = firstContact ? firstContact.t : 1.02;
+      const impactX = firstContact ? firstContact.ballX : targetAtHead;
+      const impactY = firstContact ? firstContact.pin.y : PIN_LAYOUT[0].y;
+
+      directContacts.forEach((contact, index) => {
+        const { pin, overlap, ballX, t } = contact;
+        const directEnergy = clamp(
+          0.34 + overlap * 0.56 + usablePower * 0.22 + powerQuality * 0.14,
+          0.32,
+          1.24
+        );
+        knocked.add(pin.id);
+        energyMap[pin.id] = Math.max(energyMap[pin.id] || 0, directEnergy);
+        const direction = Math.sign(pin.x - ballX) || (release.curve >= 0 ? 1 : -1);
+        impactMap[pin.id] = {
+          fallX: direction * randomBetween(24, 52),
+          fallY: randomBetween(13, 38),
+          rotation: direction * randomBetween(68, 118),
+          delay: Math.round(clamp((t - impactT) * 1050 + index * 16, 0, 90))
+        };
+      });
+
+      // Pin-to-pin carry. Each wave uses the preceding wave as its source, so the visual
+      // chain reaction and the calculated result follow the rack geometry.
+      let frontier = directContacts.map(contact => contact.pin.id);
+      const maxWaves = freshRack ? 4 : 3;
+      for (let wave = 0; wave < maxWaves && frontier.length; wave += 1) {
+        const nextFrontier = [];
         standing.forEach(target => {
           if (knocked.has(target.id)) return;
-          let bestChance = 0;
-          let bestSource = null;
-          knocked.forEach(sourceId => {
+          let strongest = null;
+
+          frontier.forEach(sourceId => {
             const source = PIN_LAYOUT.find(pin => pin.id === sourceId);
             if (!source) return;
-            const dx = target.x - source.x;
-            const dy = target.y - source.y;
-            const distance = Math.hypot(dx * 1.0, dy * 1.50);
-            if (distance > 0.128) return;
-            const forwardCarry = dy < 0 ? 1.08 : 0.72;
-            const sideCarry = 1 - Math.min(0.26, Math.abs(dx) * 2.1);
-            const sourceEnergy = energyMap[sourceId] || 0.35;
-            const proximity = 1 - distance / 0.128;
-            const chance = sourceEnergy * carryQuality * proximity * forwardCarry * sideCarry * (0.90 - wave * 0.10);
-            if (chance > bestChance) { bestChance = chance; bestSource = source; }
+            const distance = pinDistance(source, target);
+            const maxDistance = 0.095 + wave * 0.004;
+            if (distance > maxDistance) return;
+
+            const sourceEnergy = energyMap[sourceId] || 0.34;
+            const proximity = 1 - distance / maxDistance;
+            const behindFactor = target.y < source.y ? 1.12 : (Math.abs(target.y - source.y) < 0.010 ? 0.94 : 0.68);
+            const lateralFactor = 1 - Math.min(0.28, Math.abs(target.x - source.x) * 2.3);
+            const transfer = sourceEnergy * carryQuality * proximity * behindFactor * lateralFactor * (0.92 - wave * 0.10);
+            if (!strongest || transfer > strongest.transfer) strongest = { source, transfer };
           });
-          if (bestChance > randomBetween(0.22, 0.66)) {
-            newlyKnocked.push(target.id);
-            energyMap[target.id] = clamp(bestChance * randomBetween(0.56, 0.88), 0.12, 0.86);
-            const dir = bestSource ? Math.sign(target.x - bestSource.x) || (Math.random() < 0.5 ? -1 : 1) : (Math.random() < 0.5 ? -1 : 1);
-            impactMap[target.id] = { fallX: dir * randomBetween(17, 48), fallY: randomBetween(8, 34), rotation: dir * randomBetween(46, 110) };
+
+          const threshold = 0.255 + wave * 0.055;
+          if (strongest && strongest.transfer >= threshold) {
+            knocked.add(target.id);
+            nextFrontier.push(target.id);
+            energyMap[target.id] = clamp(strongest.transfer * 0.72, 0.16, 0.92);
+            const direction = Math.sign(target.x - strongest.source.x) || (release.curve >= 0 ? 1 : -1);
+            impactMap[target.id] = {
+              fallX: direction * randomBetween(20, 55),
+              fallY: randomBetween(10, 40),
+              rotation: direction * randomBetween(58, 122),
+              delay: 72 + wave * 78 + Math.round(randomBetween(0, 42))
+            };
           }
         });
-        newlyKnocked.forEach(id => knocked.add(id));
+        frontier = nextFrontier;
       }
 
+      // A genuinely excellent pocket ball should be rewarded consistently rather than by luck.
       if (freshRack) {
-        const strikeWindow = pocketQuality > 0.78 && powerQuality > 0.58 && release.power > 0.54 && release.power < 1.05 && Math.abs(release.curve) < 0.46;
-        const luckyCarry = pocketQuality > 0.64 && powerQuality > 0.50 && Math.random() < 0.18;
-        if (strikeWindow || luckyCarry) {
-          standing.filter(pin => !knocked.has(pin.id)).forEach(pin => {
-            const helpChance = strikeWindow ? 0.58 : 0.28;
-            if (Math.random() < helpChance * carryQuality) {
-              knocked.add(pin.id);
-              const dir = pin.x >= 0.5 ? 1 : -1;
-              impactMap[pin.id] = { fallX: dir * randomBetween(22, 52), fallY: randomBetween(12, 40), rotation: dir * randomBetween(58, 116) };
-            }
-          });
-        }
+        const strikeWindow = pocketQuality >= 0.90 && powerQuality >= 0.62 && usablePower >= 0.56 && usablePower <= 1.04 && Math.abs(release.curve) <= 0.50;
+        const strongPocket = pocketQuality >= 0.82 && powerQuality >= 0.52 && usablePower >= 0.50;
 
-        // Nicht jeden guten, aber nicht perfekten 10er-Treffer künstlich wieder zerstören.
-        // Vorher wurden viele gefühlt saubere Treffer nachträglich bestraft.
-        if (knocked.size === 10 && !strikeWindow && pocketQuality < 0.72 && Math.random() < 0.38) {
-          const candidates = [...knocked].filter(id => id !== 0);
-          const leaveId = candidates[Math.floor(Math.random() * candidates.length)];
-          knocked.delete(leaveId);
-          delete impactMap[leaveId];
+        if (strikeWindow) {
+          standing.filter(pin => !knocked.has(pin.id)).forEach((pin, index) => {
+            knocked.add(pin.id);
+            const direction = pin.x >= pocketX ? 1 : -1;
+            impactMap[pin.id] = {
+              fallX: direction * randomBetween(28, 60),
+              fallY: randomBetween(15, 44),
+              rotation: direction * randomBetween(72, 128),
+              delay: 210 + index * 24
+            };
+          });
+        } else if (strongPocket && knocked.size >= 7) {
+          // Strong, slightly imperfect pocket hits normally carry one additional nearby pin.
+          const remaining = standing
+            .filter(pin => !knocked.has(pin.id))
+            .sort((a, b) => Math.abs(a.x - pocketX) - Math.abs(b.x - pocketX));
+          const extra = remaining[0];
+          if (extra && carryQuality >= 0.73) {
+            knocked.add(extra.id);
+            const direction = extra.x >= pocketX ? 1 : -1;
+            impactMap[extra.id] = {
+              fallX: direction * randomBetween(24, 50),
+              fallY: randomBetween(12, 38),
+              rotation: direction * randomBetween(62, 114),
+              delay: 245
+            };
+          }
         }
       }
 
-      if (!freshRack && standing.length <= 3 && release.power > 0.42) {
+      // Small spare leaves should react predictably to a centered, sufficiently strong ball.
+      if (!freshRack && standing.length <= 3 && directContacts.length && usablePower > 0.42) {
         const clusterX = standing.reduce((sum, pin) => sum + pin.x, 0) / standing.length;
-        const lineQuality = 1 - Math.min(1, Math.abs(targetAtHead - clusterX) / 0.078);
-        if (lineQuality > 0.78 && powerQuality > 0.36) {
-          standing.forEach(pin => {
-            if (!knocked.has(pin.id) && Math.random() < 0.72) {
-              knocked.add(pin.id);
-              const dir = pin.x >= clusterX ? 1 : -1;
-              impactMap[pin.id] = { fallX: dir * randomBetween(18, 44), fallY: randomBetween(10, 34), rotation: dir * randomBetween(46, 96) };
-            }
+        const lineQuality = 1 - Math.min(1, Math.abs(targetAtHead - clusterX) / 0.082);
+        if (lineQuality > 0.80 && powerQuality > 0.38) {
+          standing.forEach((pin, index) => {
+            if (knocked.has(pin.id)) return;
+            knocked.add(pin.id);
+            const direction = pin.x >= clusterX ? 1 : -1;
+            impactMap[pin.id] = {
+              fallX: direction * randomBetween(22, 48),
+              fallY: randomBetween(11, 36),
+              rotation: direction * randomBetween(58, 108),
+              delay: 105 + index * 48
+            };
           });
         }
       }
-      return { knockedIds: [...knocked], impactMap, targetAtHead, path, gutter, pocketQuality, powerQuality, carryQuality };
+
+      return {
+        knockedIds: [...knocked], impactMap, targetAtHead, path, gutter,
+        pocketQuality, powerQuality, carryQuality,
+        impactT, impactX, impactY
+      };
     }
 
     function updateBallTrail(previous, current, scale) {
@@ -2252,36 +2716,36 @@
       aimPath.classList.remove("show");
 
       function triggerImpact() {
-        if (runId !== gameRunId) return;
-        if (impactTriggered) return;
+        if (runId !== gameRunId || impactTriggered) return;
         impactTriggered = true;
         standingPins = new Set([...standingPins].filter(id => !knockedIds.includes(id)));
         lastImpactMap = { ...lastImpactMap, ...impactMap };
         renderPins(knockedIds, impactMap);
         if (knockedIds.length) {
           playHitSound(knockedIds.length);
-          showImpactBurst(clamp(simulation.targetAtHead, 0.34, 0.66), PIN_LAYOUT[0].y);
+          showImpactBurst(
+            clamp(simulation.impactX, 0.30, 0.70),
+            clamp(simulation.impactY, 0.20, 0.34)
+          );
         }
       }
 
       function finalizeThrow() {
-        if (runId !== gameRunId) return;
-        if (throwFinished) return;
+        if (runId !== gameRunId || throwFinished) return;
         throwFinished = true;
         isAnimating = false;
         ballTrail.classList.remove("show");
         stopRollingSound();
-        scheduleGameTimer(() => handlePostThrowState(knockedIds.length, simulation), 120, runId);
+        scheduleGameTimer(() => handlePostThrowState(knockedIds.length, simulation), 150, runId);
       }
 
       function frame(now) {
-        if (runId !== gameRunId) return;
-        if (throwFinished) return;
+        if (runId !== gameRunId || throwFinished) return;
         const raw = clamp((now - start) / duration, 0, 1);
         const t = easeOutCubic(raw);
         const xNorm = path.xAtT(t);
         const yNorm = path.yAtT(t);
-        const scale = lerp(1.0, 0.34, t);
+        const scale = getBallVisualScaleAt(t);
         const rotation = 1120 * t * (release.curve >= 0 ? 1 : -1) + (release.spin || 0) * 1100 * t;
         setBallVisualNorm(xNorm, yNorm, scale, rotation);
         updateBallTrail(previousTrailPoint, { xNorm, yNorm }, scale);
@@ -2289,9 +2753,12 @@
 
         camera.style.transform = "translate3d(0,0,0) scale(1)";
 
-        const ballTouchesPins = raw > 0.15 && yNorm <= PIN_LAYOUT[0].y + 0.016;
-        if (!impactTriggered && ballTouchesPins) triggerImpact();
-        if (raw >= 1) { triggerImpact(); finalizeThrow(); return; }
+        if (!impactTriggered && knockedIds.length && t >= simulation.impactT) triggerImpact();
+        if (raw >= 1) {
+          triggerImpact();
+          finalizeThrow();
+          return;
+        }
         requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
@@ -2323,6 +2790,7 @@
       renderScoreboard();
       if (simulation.gutter) { showFlash("RINNE"); playGutterSound(); }
       else if (pinsDown === 0) { showFlash("VORBEI"); playMissSound(); }
+      else if (pinsDown < 10) { showFlash(`${pinsDown} ${pinsDown === 1 ? "PIN" : "PINS"}`); }
 
       if (currentFrame < 9) {
         if (frame.throws.length === 1) {
