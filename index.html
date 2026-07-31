@@ -35,6 +35,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <link href="css/player-of-week.css?v=12.3" rel="stylesheet" />
 
   <style>
     :root {
@@ -1603,6 +1604,8 @@
         </nav>
       </header>
 
+      <div class="player-week-host desktop-player-week" id="playerWeekHomeDesktop" aria-live="polite"></div>
+
       <section class="dashboard">
         <div class="hero-main">
           <div class="hero-content">
@@ -1730,6 +1733,8 @@
     </header>
 
     <main class="mobile-main">
+      <div class="player-week-host mobile-player-week" id="playerWeekHomeMobile" aria-live="polite"></div>
+
       <section class="mobile-hero">
         <div class="mobile-hero-top"><span>Bowling Terminal</span><span class="pixel-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
         <div class="mobile-rack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -1784,6 +1789,7 @@
     </nav>
   </div>
 
+  <script type="module" src="js/player-of-week-home.js?v=12.3"></script>
   <script>
     (() => {
       document.querySelectorAll("[data-year]").forEach((node) => {
