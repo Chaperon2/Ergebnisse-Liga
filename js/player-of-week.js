@@ -152,9 +152,10 @@ function breakdownItem(label, value, max, className) {
   </div>`;
 }
 
-export function playerOfWeekMarkup(award, { compact = false } = {}) {
+export function playerOfWeekMarkup(award, { compact = false, fused = false, context = "" } = {}) {
   if (!award) {
-    return `<section class="player-week-card is-empty ${compact ? "is-compact" : ""}">
+    const emptyClasses = ["player-week-card", "is-empty", compact ? "is-compact" : "", fused ? "is-fused" : "", context ? `is-${context}` : ""].filter(Boolean).join(" ");
+    return `<section class="${emptyClasses}">
       <div class="pow-loading"><i class="fa-solid fa-satellite-dish"></i><span>Spieler der Woche wird geladen …</span></div>
     </section>`;
   }
@@ -163,7 +164,9 @@ export function playerOfWeekMarkup(award, { compact = false } = {}) {
     ? "Noch ohne Referenzschnitt"
     : `${signed(award.improvement)} Pins zum Referenzschnitt`;
 
-  return `<section class="player-week-card ${compact ? "is-compact" : ""}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
+  const cardClasses = ["player-week-card", compact ? "is-compact" : "", fused ? "is-fused" : "", context ? `is-${context}` : ""].filter(Boolean).join(" ");
+
+  return `<section class="${cardClasses}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
     <div class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></div>
     <div class="pow-main">
       <div class="pow-kicker"><span>Spieler der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
@@ -183,7 +186,7 @@ export function playerOfWeekMarkup(award, { compact = false } = {}) {
       <strong>${number(award.score)}</strong>
       <small>von 100</small>
     </div>
-    <div class="pow-breakdown">
+    ${fused ? "" : `<div class="pow-breakdown">
       ${breakdownItem("Tagesleistung", award.breakdown.performance, 45, "performance")}
       ${breakdownItem("Form", award.breakdown.form, 25, "form")}
       ${breakdownItem("Konstanz", award.breakdown.consistency, 20, "consistency")}
@@ -192,7 +195,7 @@ export function playerOfWeekMarkup(award, { compact = false } = {}) {
     <details class="pow-method">
       <summary>So wird gewertet</summary>
       <p><b>45 Punkte</b> für die Tagesleistung im Vergleich zum Teilnehmerfeld, <b>25 Punkte</b> für die Form gegenüber dem persönlichen Schnitt vor diesem Spieltag, <b>20 Punkte</b> für eine gleichmäßige Serie und <b>10 Punkte</b> für das beste Einzelspiel. Gewertet werden Spieler mit mindestens drei gültigen Spielen.</p>
-    </details>
+    </details>`}
   </section>`;
 }
 

@@ -1,5 +1,5 @@
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=12.3";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=12.4";
 
 const pageTitle = document.getElementById("pageTitle");
 const pageDate = document.getElementById("pageDate");
@@ -9,7 +9,7 @@ const warningText = document.getElementById("warningText");
 const summaryGrid = document.getElementById("summaryGrid");
 const liveState = document.getElementById("liveState");
 const playerWeekResults = document.getElementById("playerWeekResults");
-renderPlayerOfWeek(playerWeekResults, null, { compact: true });
+renderPlayerOfWeek(playerWeekResults, null, { compact: true, fused: true, context: "results" });
 
 function tendency(value) {
   const number = Number(value ?? 0);
@@ -81,7 +81,7 @@ function tableCard({ key, theme, title, subtitle, stats = [], content }) {
 }
 
 function render(data) {
-  renderPlayerOfWeek(playerWeekResults, data, { compact: true });
+  renderPlayerOfWeek(playerWeekResults, data, { compact: true, fused: true, context: "results" });
   const matchday = data.matchday;
   const seasonName = data.seasonName ?? data.seasonId;
   pageTitle.innerHTML = `${escapeHtml(seasonName)} · Spieltag ${Number(matchday.number)}. <span class="headline-accent">Ergebnisse im Überblick.</span>`;
