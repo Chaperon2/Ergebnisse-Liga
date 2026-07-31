@@ -8,207 +8,200 @@
 @media(max-width:390px){.player-week-card,.player-week-card.is-compact{grid-template-columns:minmax(0,1fr) 88px;padding-inline:9px}.pow-name strong{font-size:23px}.pow-avatar{display:none}.pow-score-panel strong{font-size:33px}.pow-stats strong{font-size:12px}.pow-breakdown-label span{max-width:75px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 @media(prefers-reduced-motion:reduce){.pow-crown{animation:none}}
 
-/* ===== Phase 12.4: Spieler der Woche mit der ersten Überschriftskachel verschmolzen ===== */
-.player-week-card.is-fused,
-.player-week-card.is-fused.is-compact{
-  grid-template-columns:minmax(0,1fr) 108px;
-  gap:12px;
-  padding:12px 13px;
-  border:1px solid rgba(243,205,124,.42);
-  border-left:4px solid var(--pow-gold);
-  border-radius:8px;
-  background:
-    radial-gradient(circle at 9% 15%,rgba(255,89,182,.11),transparent 32%),
-    radial-gradient(circle at 91% 18%,rgba(64,244,239,.11),transparent 34%),
-    linear-gradient(145deg,rgba(31,23,15,.97),rgba(6,12,12,.98));
-  box-shadow:
-    inset 0 0 0 2px rgba(0,0,0,.48),
-    inset 0 0 24px rgba(255,200,91,.035),
-    0 10px 24px rgba(0,0,0,.30);
+/* ===== Phase 12.5: echte Einzelkachel statt verschachtelter Überschrift + MVP-Karte ===== */
+.player-week-card.has-page-heading{
+  grid-template-rows:auto auto;
 }
-.player-week-card.is-fused:before{inset:5px;border-color:rgba(64,244,239,.15)}
-.player-week-card.is-fused:after{
-  content:"MVP";
-  right:8px;
-  top:7px;
-  color:rgba(255,255,255,.045);
-  font-size:37px;
-  transform:rotate(-5deg);
-}
-.player-week-card.is-fused .pow-crown{left:7px;top:6px;font-size:12px}
-.player-week-card.is-fused .pow-main{min-width:0}
-.player-week-card.is-fused .pow-kicker{margin-left:13px;font-size:6px;gap:7px}
-.player-week-card.is-fused .pow-kicker b{padding:4px 6px;font-size:5.5px}
-.player-week-card.is-fused .pow-name-row{gap:10px;margin-top:8px}
-.player-week-card.is-fused .pow-avatar{
-  flex-basis:44px;
-  width:44px;
-  height:44px;
-  font-size:20px;
-  border-width:1px;
-  box-shadow:0 0 0 3px #2b190f,0 0 15px rgba(64,244,239,.14);
-}
-.player-week-card.is-fused .pow-avatar span{width:19px;height:19px;font-size:9px}
-.player-week-card.is-fused .pow-name{min-width:0}
-.player-week-card.is-fused .pow-name strong{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:clamp(24px,2.4vw,34px);
-  line-height:.92;
-}
-.player-week-card.is-fused .pow-name span{margin-top:5px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.player-week-card.is-fused .pow-stats{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:5px;
-  margin-top:9px;
-}
-.player-week-card.is-fused .pow-stats>span{min-width:0;padding:6px 7px;background:rgba(255,255,255,.022)}
-.player-week-card.is-fused .pow-stats>span:nth-child(4){display:none}
-.player-week-card.is-fused .pow-stats small{font-size:6px;line-height:1.25}
-.player-week-card.is-fused .pow-stats strong{font-size:13px;white-space:nowrap}
-.player-week-card.is-fused .pow-score-panel,
-.player-week-card.is-fused.is-compact .pow-score-panel{
-  min-height:94px;
-  align-self:stretch;
-  border-color:rgba(255,200,91,.38);
-}
-.player-week-card.is-fused .pow-score-panel span,
-.player-week-card.is-fused .pow-score-panel small{font-size:5.3px}
-.player-week-card.is-fused .pow-score-panel strong,
-.player-week-card.is-fused.is-compact .pow-score-panel strong{font-size:37px}
-.player-week-card.is-fused .pow-loading{min-height:92px;font-size:12px}
 
-/* Startseite: die Auszeichnung ist Bestandteil des großen Hero-Moduls. */
-.desktop-player-week.player-week-fusion-home{
-  width:min(100%,690px);
-  margin:21px 0 0;
-  border-bottom:0;
-}
-.desktop-player-week.player-week-fusion-home .player-week-card{
-  border:1px solid rgba(243,205,124,.42);
-  border-left:4px solid var(--pow-gold);
-  border-radius:8px;
-}
-.player-week-card.is-home{
-  background:
-    radial-gradient(circle at 10% 15%,rgba(255,89,182,.13),transparent 31%),
-    radial-gradient(circle at 92% 19%,rgba(64,244,239,.14),transparent 34%),
-    linear-gradient(145deg,rgba(27,20,15,.94),rgba(5,14,15,.95));
-}
-.hero-content .player-week-fusion-home + .hero-actions{margin-top:15px}
-
-.mobile-hero.mobile-hero-with-player{
-  min-height:365px;
-  align-content:end;
-  padding-bottom:15px;
-}
-.mobile-hero-with-player .mobile-hero-copy{padding-right:88px}
-.mobile-hero-with-player .player-week-fusion-home{
+.pow-page-head{
   position:relative;
-  z-index:5;
-  width:100%;
-  margin:17px 0 0;
-}
-.mobile-hero-with-player .player-week-card.is-home{
-  background:
-    radial-gradient(circle at 10% 12%,rgba(255,89,182,.12),transparent 32%),
-    radial-gradient(circle at 92% 18%,rgba(64,244,239,.12),transparent 34%),
-    linear-gradient(145deg,rgba(29,21,15,.94),rgba(5,13,14,.96));
-  backdrop-filter:blur(3px);
+  z-index:3;
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:end;
+  margin:-2px -2px 2px;
+  padding:0 0 14px;
+  border-bottom:1px solid rgba(243,205,124,.24);
 }
 
-/* Ergebnisse: Titel, Datum und Auszeichnung bilden jetzt eine gemeinsame Kopfkonsole. */
-.results-view .hero.results-hero-fusion{padding:36px 30px 22px}
-.results-view .results-hero-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(380px,470px);
-  align-items:stretch;
-  gap:24px;
-}
-.results-view .results-hero-grid .hero-copy{align-self:center;max-width:none}
-.results-hero-side{
-  min-width:0;
-  display:grid;
-  grid-template-rows:auto 1fr;
-  gap:9px;
-}
-.results-hero-side .date-console{
-  min-width:0;
-  display:flex;
+.pow-page-copy{min-width:0}
+.pow-page-eyebrow{
+  display:inline-flex;
   align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  padding:10px 13px;
+  gap:8px;
+  margin-bottom:8px;
+  color:var(--pow-cyan);
+  font-family:"Press Start 2P",monospace;
+  font-size:7px;
+  line-height:1.5;
+  text-transform:uppercase;
 }
-.results-hero-side .date-console span{margin:0}
-.results-hero-side .date-console strong{font-size:21px;text-align:right}
-.results-view .player-week-fusion-results{margin-top:0;min-width:0}
-.results-view .player-week-card.is-results{
+.pow-page-eyebrow::before{
+  content:"";
+  width:7px;
+  height:7px;
+  background:var(--pow-green);
+  box-shadow:0 0 9px var(--pow-green);
+}
+.pow-page-copy h1{
+  margin:0;
+  color:#efd6a2;
+  font-family:"Oswald",sans-serif;
+  font-size:clamp(31px,3.8vw,58px);
+  line-height:.9;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  text-shadow:0 3px 0 #66371e,0 10px 20px rgba(0,0,0,.58);
+}
+.pow-page-copy h1 span{
+  color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  background-image:linear-gradient(90deg,var(--pow-cyan),#78b8ff 38%,var(--pow-pink) 75%,var(--pow-gold));
+  -webkit-text-stroke:.6px rgba(255,255,255,.22);
+}
+.pow-page-copy p{
+  max-width:760px;
+  margin:9px 0 0;
+  color:#b9aa8c;
+  font-size:12px;
+  line-height:1.5;
+}
+.pow-page-date{
+  min-width:150px;
+  padding:10px 12px;
+  border:1px solid rgba(64,244,239,.28);
+  background:#061416;
+  text-align:right;
+  box-shadow:inset 0 0 18px rgba(64,244,239,.055);
+}
+.pow-page-date small{
+  display:block;
+  color:#9e9179;
+  font-family:"Press Start 2P",monospace;
+  font-size:6px;
+  text-transform:uppercase;
+}
+.pow-page-date strong{
+  display:block;
+  margin-top:6px;
+  color:var(--pow-cyan);
+  font-family:"Oswald",sans-serif;
+  font-size:20px;
+  line-height:1;
+}
+
+.pow-page-actions{
+  position:relative;
+  z-index:3;
+  grid-column:1/-1;
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  padding-top:3px;
+}
+.pow-page-action{
+  min-height:43px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:9px 13px;
+  border:1px solid var(--pow-cyan);
+  border-radius:5px;
+  background:linear-gradient(90deg,rgba(64,244,239,.09),transparent 72%),linear-gradient(180deg,#241a11,#0d0a07);
+  color:#f0d7a4;
+  font-family:"Oswald",sans-serif;
+  font-size:14px;
+  font-weight:700;
+  text-transform:uppercase;
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.42),0 9px 20px rgba(0,0,0,.28);
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.pow-page-action.schedule{border-color:var(--pow-gold);background:linear-gradient(90deg,rgba(255,200,91,.09),transparent 72%),linear-gradient(180deg,#241a11,#0d0a07)}
+.pow-page-action:hover,.pow-page-action:focus-visible{transform:translateY(-2px);box-shadow:0 0 20px rgba(64,244,239,.14);outline:none}
+
+/* Startseite: der äußere Hero ist nur noch Layout. Die sichtbare Kachel ist die MVP-Karte. */
+.hero-content-award-only{
+  align-content:stretch;
+  padding:18px;
+  overflow:visible;
+}
+.hero-content-award-only .desktop-player-week{
+  display:block;
   height:100%;
-  border-radius:7px;
-  background:
-    radial-gradient(circle at 8% 15%,rgba(255,89,182,.11),transparent 31%),
-    radial-gradient(circle at 92% 19%,rgba(64,244,239,.11),transparent 34%),
-    linear-gradient(145deg,rgba(31,23,15,.96),rgba(5,13,14,.97));
+  border:0;
 }
-.results-view .results-hero-fusion .live-state{margin-top:13px}
+.hero-content-award-only .desktop-player-week .player-week-card{
+  min-height:100%;
+  border:1px solid rgba(243,205,124,.48);
+  border-left:6px solid var(--pow-gold);
+  border-radius:10px;
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.48),inset 0 0 36px rgba(255,200,91,.035),0 16px 36px rgba(0,0,0,.36);
+}
+.mobile-player-week-top{margin:0 0 10px}
+.mobile-player-week-top .player-week-card{border-radius:12px}
 
-@media(max-width:1120px){
-  .results-view .results-hero-grid{grid-template-columns:minmax(0,1fr) minmax(340px,410px);gap:16px}
-  .player-week-card.is-fused .pow-avatar{display:none}
-  .player-week-card.is-fused .pow-name strong{font-size:25px}
+/* Ergebnisse: Überschriftskachel vollständig entfernt; Karte und Titel sind ein Element. */
+.results-award-header{
+  position:relative;
+  padding:16px 16px 0;
+}
+.results-view .player-week-results-top{margin:0}
+.results-view .player-week-results-top .player-week-card{
+  border-radius:10px;
+}
+.results-live-state{
+  width:fit-content;
+  margin:10px 4px 0;
 }
 
-@media(max-width:860px){
-  .results-view .results-hero-grid{grid-template-columns:1fr}
-  .results-hero-side{grid-template-columns:180px minmax(0,1fr);grid-template-rows:1fr;align-items:stretch}
-  .results-hero-side .date-console{display:grid;align-content:center;justify-content:stretch;text-align:center}
-  .results-hero-side .date-console strong{text-align:center}
+/* Die erste Designfassung bleibt vollständig: Kennzahlen, vier Balken und Erklärung. */
+.player-week-card.is-compact .pow-method{display:block}
+.player-week-card.is-compact .pow-stats>span:nth-child(4){display:block}
+
+@media(max-width:1050px){
+  .hero-content-award-only{padding:13px}
 }
 
 @media(max-width:700px){
-  .player-week-card.is-fused,
-  .player-week-card.is-fused.is-compact,
-  .results-view .player-week-card.is-fused.is-compact{
-    grid-template-columns:minmax(0,1fr) 88px;
-    gap:8px;
-    padding:10px;
-  }
-  .player-week-card.is-fused:after{font-size:29px;right:5px}
-  .player-week-card.is-fused .pow-kicker{margin-left:11px;font-size:5px}
-  .player-week-card.is-fused .pow-kicker b{font-size:4.8px}
-  .player-week-card.is-fused .pow-avatar{display:none}
-  .player-week-card.is-fused .pow-name strong{font-size:23px}
-  .player-week-card.is-fused .pow-name span{font-size:10px}
-  .player-week-card.is-fused .pow-stats{grid-column:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:8px}
-  .player-week-card.is-fused .pow-stats>span{padding:5px 4px}
-  .player-week-card.is-fused .pow-stats small{font-size:5.2px}
-  .player-week-card.is-fused .pow-stats strong{font-size:11.5px}
-  .player-week-card.is-fused .pow-score-panel,
-  .player-week-card.is-fused.is-compact .pow-score-panel{min-height:88px}
-  .player-week-card.is-fused .pow-score-panel strong,
-  .player-week-card.is-fused.is-compact .pow-score-panel strong{font-size:31px}
-
-  .mobile-hero.mobile-hero-with-player{min-height:350px;padding-inline:12px}
-  .mobile-hero-with-player .mobile-hero-copy{padding-right:77px}
-  .mobile-hero-with-player .player-week-fusion-home{margin-top:14px}
-
-  .results-view .hero.results-hero-fusion{padding:30px 14px 18px}
-  .results-view .results-hero-grid{gap:12px}
-  .results-hero-side{grid-template-columns:1fr;grid-template-rows:auto auto;gap:8px}
-  .results-hero-side .date-console{display:flex;text-align:left;padding:9px 11px}
-  .results-hero-side .date-console strong{text-align:right;font-size:19px}
-  .results-view .player-week-card.is-results{margin-inline:0}
+  .pow-page-head{grid-template-columns:1fr;gap:9px;padding-bottom:11px}
+  .pow-page-copy h1{font-size:31px;line-height:.92}
+  .pow-page-copy p{font-size:10.5px}
+  .pow-page-date{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;text-align:left}
+  .pow-page-date strong{margin:0;font-size:17px;text-align:right}
+  .pow-page-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .pow-page-action{min-height:41px;padding:8px 7px;font-size:12px;text-align:center}
+  .hero-content-award-only{padding:9px}
+  .mobile-player-week-top .player-week-card{margin-inline:0}
+  .results-award-header{padding:8px 6px 0}
+  .results-view .player-week-results-top .player-week-card{margin-inline:0}
+  .results-live-state{margin:8px 7px 0}
 }
 
 @media(max-width:390px){
-  .mobile-hero.mobile-hero-with-player{min-height:338px}
-  .player-week-card.is-fused,
-  .player-week-card.is-fused.is-compact{grid-template-columns:minmax(0,1fr) 80px;padding-inline:8px}
-  .player-week-card.is-fused .pow-name strong{font-size:21px}
-  .player-week-card.is-fused .pow-score-panel strong{font-size:28px}
-  .player-week-card.is-fused .pow-stats small{font-size:4.7px}
-  .player-week-card.is-fused .pow-stats strong{font-size:10.5px}
+  .pow-page-copy h1{font-size:27px}
+  .pow-page-copy p{display:none}
+  .pow-page-actions{grid-template-columns:1fr}
+  .pow-page-action{min-height:38px}
 }
+
+.hero-main-award{grid-template-columns:minmax(0,1fr)}
+.hero-main-award .hero-content-award-only{min-width:0}
+.hero-main-award .player-week-card{width:100%}
+@media(max-width:700px){
+  .pow-stats>span:nth-child(4){grid-column:1/-1}
+}
+
+/* Höhere Spezifität, da die Startseite ihre Grundregeln nach dem externen Stylesheet lädt. */
+.hero-main.hero-main-award{grid-template-columns:minmax(0,1fr)}
+.hero-main.hero-main-award .hero-content.hero-content-award-only{
+  min-width:0;
+  width:100%;
+  padding:18px;
+  overflow:visible;
+  align-content:stretch;
+}
+@media(max-width:1050px){.hero-main.hero-main-award .hero-content.hero-content-award-only{padding:13px}}

@@ -152,11 +152,30 @@ function breakdownItem(label, value, max, className) {
   </div>`;
 }
 
-export function playerOfWeekMarkup(award, { compact = false, fused = false, context = "" } = {}) {
+function pageHeadingMarkup(heading) {
+  if (!heading) return "";
+  const eyebrow = heading.eyebrow ? `<span class="pow-page-eyebrow">${escapeHtml(heading.eyebrow)}</span>` : "";
+  const title = heading.title ? `<h1>${escapeHtml(heading.title)}${heading.accent ? ` <span>${escapeHtml(heading.accent)}</span>` : ""}</h1>` : "";
+  const description = heading.description ? `<p>${escapeHtml(heading.description)}</p>` : "";
+  const date = heading.date ? `<div class="pow-page-date"><small>${escapeHtml(heading.dateLabel ?? "Datum")}</small><strong>${escapeHtml(heading.date)}</strong></div>` : "";
+  return `<header class="pow-page-head"><div class="pow-page-copy">${eyebrow}${title}${description}</div>${date}</header>`;
+}
+
+function actionMarkup(actions) {
+  if (!Array.isArray(actions) || !actions.length) return "";
+  return `<nav class="pow-page-actions" aria-label="Schnellzugriffe">${actions.map((action) => `<a class="pow-page-action ${escapeHtml(action.className ?? "")}" href="${escapeHtml(action.href ?? "#")}"><i class="${escapeHtml(action.icon ?? "fa-solid fa-arrow-right")}"></i><span>${escapeHtml(action.label ?? "Öffnen")}</span></a>`).join("")}</nav>`;
+}
+
+export function playerOfWeekMarkup(award, { compact = false, context = "", heading = null, actions = [] } = {}) {
+  const classes = ["player-week-card", compact ? "is-compact" : "", context ? `is-${context}` : "", heading ? "has-page-heading" : ""].filter(Boolean).join(" ");
+  const pageHead = pageHeadingMarkup(heading);
+  const pageActions = actionMarkup(actions);
+
   if (!award) {
-    const emptyClasses = ["player-week-card", "is-empty", compact ? "is-compact" : "", fused ? "is-fused" : "", context ? `is-${context}` : ""].filter(Boolean).join(" ");
-    return `<section class="${emptyClasses}">
+    return `<section class="${classes} is-empty">
+      ${pageHead}
       <div class="pow-loading"><i class="fa-solid fa-satellite-dish"></i><span>Spieler der Woche wird geladen …</span></div>
+      ${pageActions}
     </section>`;
   }
 
@@ -164,9 +183,8 @@ export function playerOfWeekMarkup(award, { compact = false, fused = false, cont
     ? "Noch ohne Referenzschnitt"
     : `${signed(award.improvement)} Pins zum Referenzschnitt`;
 
-  const cardClasses = ["player-week-card", compact ? "is-compact" : "", fused ? "is-fused" : "", context ? `is-${context}` : ""].filter(Boolean).join(" ");
-
-  return `<section class="${cardClasses}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
+  return `<section class="${classes}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
+    ${pageHead}
     <div class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></div>
     <div class="pow-main">
       <div class="pow-kicker"><span>Spieler der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
@@ -186,7 +204,7 @@ export function playerOfWeekMarkup(award, { compact = false, fused = false, cont
       <strong>${number(award.score)}</strong>
       <small>von 100</small>
     </div>
-    ${fused ? "" : `<div class="pow-breakdown">
+    <div class="pow-breakdown">
       ${breakdownItem("Tagesleistung", award.breakdown.performance, 45, "performance")}
       ${breakdownItem("Form", award.breakdown.form, 25, "form")}
       ${breakdownItem("Konstanz", award.breakdown.consistency, 20, "consistency")}
@@ -195,7 +213,8 @@ export function playerOfWeekMarkup(award, { compact = false, fused = false, cont
     <details class="pow-method">
       <summary>So wird gewertet</summary>
       <p><b>45 Punkte</b> für die Tagesleistung im Vergleich zum Teilnehmerfeld, <b>25 Punkte</b> für die Form gegenüber dem persönlichen Schnitt vor diesem Spieltag, <b>20 Punkte</b> für eine gleichmäßige Serie und <b>10 Punkte</b> für das beste Einzelspiel. Gewertet werden Spieler mit mindestens drei gültigen Spielen.</p>
-    </details>`}
+    </details>
+    ${pageActions}
   </section>`;
 }
 

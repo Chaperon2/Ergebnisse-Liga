@@ -1,15 +1,32 @@
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=12.4";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=12.5";
 
-const pageTitle = document.getElementById("pageTitle");
-const pageDate = document.getElementById("pageDate");
 const sectionsGrid = document.getElementById("sectionsGrid");
 const warningPill = document.getElementById("warningPill");
 const warningText = document.getElementById("warningText");
 const summaryGrid = document.getElementById("summaryGrid");
 const liveState = document.getElementById("liveState");
 const playerWeekResults = document.getElementById("playerWeekResults");
-renderPlayerOfWeek(playerWeekResults, null, { compact: true, fused: true, context: "results" });
+
+function playerWeekOptions(data = null) {
+  const matchday = data?.matchday;
+  const seasonName = data?.seasonName ?? data?.seasonId ?? "Aktuelle Saison";
+  const matchdayNumber = Number(matchday?.number ?? 0);
+  return {
+    compact: true,
+    context: "results",
+    heading: {
+      eyebrow: "Aktuelle Ergebnisse",
+      title: matchdayNumber ? `${seasonName} · Spieltag ${matchdayNumber}` : "Spieltag wird geladen",
+      accent: "Ergebnisse im Überblick",
+      description: "Spieler der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
+      dateLabel: "Datum",
+      date: matchday?.date ? formatDate(matchday.date) : "–",
+    },
+  };
+}
+
+renderPlayerOfWeek(playerWeekResults, null, playerWeekOptions());
 
 function tendency(value) {
   const number = Number(value ?? 0);
@@ -81,11 +98,9 @@ function tableCard({ key, theme, title, subtitle, stats = [], content }) {
 }
 
 function render(data) {
-  renderPlayerOfWeek(playerWeekResults, data, { compact: true, fused: true, context: "results" });
+  renderPlayerOfWeek(playerWeekResults, data, playerWeekOptions(data));
   const matchday = data.matchday;
   const seasonName = data.seasonName ?? data.seasonId;
-  pageTitle.innerHTML = `${escapeHtml(seasonName)} · Spieltag ${Number(matchday.number)}. <span class="headline-accent">Ergebnisse im Überblick.</span>`;
-  pageDate.textContent = formatDate(matchday.date);
 
   const dailyHeaders = [
     { label: "Platz", mobile: "Pl." },

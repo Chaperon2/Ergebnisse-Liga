@@ -1,43 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#090806" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Strikeclub Velten" />
-
-  <title>Strikeclub Velten · Liga, Spieltage &amp; Ergebnisse</title>
-  <meta name="description" content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." />
-
-  <meta property="og:title" content="Strikeclub Velten · Liga, Spieltage &amp; Ergebnisse" />
-  <meta property="og:description" content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." />
-  <meta property="og:url" content="https://www.strikeclub-velten.de/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Strikeclub Velten" />
-  <meta property="og:locale" content="de_DE" />
-  <meta property="og:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Strikeclub Velten im Retro-Steampunk-Arcade-Design" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" />
-
-  <link rel="icon" type="image/png" sizes="32x32" href="images/strikeclub-steampunk-icon-32.png?v=6" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/strikeclub-steampunk-icon-192.png?v=6" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/strikeclub-steampunk-icon-180.png?v=6" />
-  <link rel="manifest" href="site.webmanifest?v=6" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Press+Start+2P&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
-  <link href="css/player-of-week.css?v=12.4" rel="stylesheet" />
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#090806" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Strikeclub Velten" name="apple-mobile-web-app-title"/>
+<title>Strikeclub Velten · Liga, Spieltage &amp; Ergebnisse</title>
+<meta content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." name="description"/>
+<meta content="Strikeclub Velten · Liga, Spieltage &amp; Ergebnisse" property="og:title"/>
+<meta content="Aktuelle Ergebnisse, Spielplan, Statistiken, Rekorde und News des Strikeclub Velten." property="og:description"/>
+<meta content="https://www.strikeclub-velten.de/" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="Strikeclub Velten" property="og:site_name"/>
+<meta content="de_DE" property="og:locale"/>
+<meta content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="Strikeclub Velten im Retro-Steampunk-Arcade-Design" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://www.strikeclub-velten.de/images/linkvorschau-steampunk.jpg?v=6" name="twitter:image"/>
+<link href="images/strikeclub-steampunk-icon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="images/strikeclub-steampunk-icon-192.png?v=6" rel="icon" sizes="192x192" type="image/png"/>
+<link href="images/strikeclub-steampunk-icon-180.png?v=6" rel="apple-touch-icon" sizes="180x180"/>
+<link href="site.webmanifest?v=6" rel="manifest"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Press+Start+2P&amp;family=Roboto+Slab:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+<link href="css/player-of-week.css?v=12.5" rel="stylesheet"/>
+<style>
     :root {
       --ink: #070604;
       --ink-2: #0d0b08;
@@ -1572,217 +1567,169 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#desktopNavigation">Direkt zur Navigation</a>
+<a class="skip-link" href="#desktopNavigation">Direkt zur Navigation</a>
+<div aria-label="Desktop-Startseite" class="desktop-shell">
+<video aria-hidden="true" class="desktop-video" data-src="Rauch7.mp4" id="desktopVideo" loop="" muted="" playsinline="" preload="none"></video>
+<div class="console">
+<header class="console-top">
+<a aria-label="Strikeclub Velten Startseite" class="brand-block" href="index.html">
+<span class="brand-wheel"><i class="fa-solid fa-bowling-ball"></i></span>
+<span class="brand-copy"><strong>Strikeclub Velten</strong><span>Hausliga · Control Center</span></span>
+</a>
+<div aria-label="Systemstatus" class="system-ticker">
+<div class="ticker-track">
+<span><i class="fa-solid fa-signal"></i> Live Ergebnisse</span>
+<span><i class="fa-solid fa-calendar-check"></i> 14 Spieltage</span>
+<span><i class="fa-solid fa-people-group"></i> 8 Teams</span>
+<span><i class="fa-solid fa-bowling-ball"></i> Strikeclub Velten</span>
+<span><i class="fa-solid fa-signal"></i> Live Ergebnisse</span>
+<span><i class="fa-solid fa-calendar-check"></i> 14 Spieltage</span>
+<span><i class="fa-solid fa-people-group"></i> 8 Teams</span>
+<span><i class="fa-solid fa-bowling-ball"></i> Strikeclub Velten</span>
+</div>
+</div>
+<nav aria-label="Schnellnavigation" class="top-links">
+<a class="top-link" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnisse</span></a>
+<a class="top-link" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Spielplan</span></a>
+<a class="top-link" href="archiv.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Archiv</span></a>
+</nav>
+</header>
+<section class="dashboard">
+<div class="hero-main hero-main-award">
+<div class="hero-content hero-content-award-only">
+<div aria-live="polite" class="player-week-host desktop-player-week" id="playerWeekHomeDesktop"></div>
+</div>
 
-  <div class="desktop-shell" aria-label="Desktop-Startseite">
-    <video id="desktopVideo" class="desktop-video" muted loop playsinline preload="none" aria-hidden="true" data-src="Rauch7.mp4"></video>
-
-    <div class="console">
-      <header class="console-top">
-        <a class="brand-block" href="index.html" aria-label="Strikeclub Velten Startseite">
-          <span class="brand-wheel"><i class="fa-solid fa-bowling-ball"></i></span>
-          <span class="brand-copy"><strong>Strikeclub Velten</strong><span>Hausliga · Control Center</span></span>
-        </a>
-
-        <div class="system-ticker" aria-label="Systemstatus">
-          <div class="ticker-track">
-            <span><i class="fa-solid fa-signal"></i> Live Ergebnisse</span>
-            <span><i class="fa-solid fa-calendar-check"></i> 14 Spieltage</span>
-            <span><i class="fa-solid fa-people-group"></i> 8 Teams</span>
-            <span><i class="fa-solid fa-bowling-ball"></i> Strikeclub Velten</span>
-            <span><i class="fa-solid fa-signal"></i> Live Ergebnisse</span>
-            <span><i class="fa-solid fa-calendar-check"></i> 14 Spieltage</span>
-            <span><i class="fa-solid fa-people-group"></i> 8 Teams</span>
-            <span><i class="fa-solid fa-bowling-ball"></i> Strikeclub Velten</span>
-          </div>
-        </div>
-
-        <nav class="top-links" aria-label="Schnellnavigation">
-          <a class="top-link" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnisse</span></a>
-          <a class="top-link" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Spielplan</span></a>
-          <a class="top-link" href="archiv.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Archiv</span></a>
-        </nav>
-      </header>
-
-      <section class="dashboard">
-        <div class="hero-main">
-          <div class="hero-content">
-            <div class="hero-kicker"><span class="pixel-dots" aria-hidden="true"><i></i><i></i><i></i></span> Liga-Terminal online</div>
-            <h1 class="hero-title"><span class="strike">Strikeclub</span><span class="velten">Velten</span></h1>
-            <div class="player-week-host desktop-player-week player-week-fusion-home" id="playerWeekHomeDesktop" aria-live="polite"></div>
-            <div class="hero-actions">
-              <a class="hero-action" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-chart-column"></i> Aktuelle Ergebnisse</a>
-              <a class="hero-action schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i> Zum Spielplan</a>
-            </div>
-          </div>
-
-          <div class="lane-console" aria-hidden="true">
-            <div class="lane-screen"><strong>FRAME 10 · READY</strong><span>278</span></div>
-            <div class="pin-rack">
-              <i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i>
-              <i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i>
-            </div>
-            <div class="lane-ball"></div>
-            <div class="lane-caption"><span>Bowling System</span><span>STRIKE MODE</span></div>
-          </div>
-        </div>
-
-        <aside class="side-stack">
-          <div class="status-bank" aria-label="Ligainformationen">
-            <div class="status-cell"><small>Modus</small><strong>Live</strong><span>Veröffentlichte Saisondaten</span></div>
-            <div class="status-cell"><small>Saison</small><strong>14</strong><span>Spieltage pro Saison</span></div>
-            <div class="status-cell"><small>Liga</small><strong>8</strong><span>Teams im Wettbewerb</span></div>
-            <div class="status-cell"><small>Bahnen</small><strong>4</strong><span>Feste Bahnpaarungen</span></div>
-          </div>
-
-          <div class="mission-panel">
-            <span class="mission-label">Arcade-Modul verfügbar</span>
-            <h2>Dein Wurf.<br />Dein Highscore.</h2>
-            <p>Das überarbeitete Minispiel nutzt dieselbe Steampunk-Neon-Oberfläche wie die Liga und besitzt eine nachvollziehbarere Pin-Kollision.</p>
-            <a href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i> Spiel starten</a>
-          </div>
-        </aside>
-      </section>
-
-      <main class="nav-zone" id="desktopNavigation">
-        <h2 class="nav-zone-title"><span class="pixel-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Liga-Module</h2>
-
-        <nav class="nav-bento" aria-label="Hauptnavigation">
-          <a class="nav-card nav-results" href="aktuelle_ergebnisse.html">
-            <span class="nav-icon"><i class="fa-solid fa-chart-column"></i></span>
-            <small>01 // Live</small>
-            <strong>Aktuelle Ergebnisse</strong>
-            <span>Spieltag, Spielergebnisse, Einzelwertung und Mannschaftsauswertung.</span>
-          </a>
-
-          <a class="nav-card nav-schedule" href="spielplan.html">
-            <span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span>
-            <small>02 // Saison</small>
-            <strong>Spielplan</strong>
-            <span>Alle Termine, Gegner und Bahnpaarungen auf einen Blick.</span>
-          </a>
-
-          <a class="nav-card nav-game" href="bowling-minispiel.html">
-            <small>03 // Arcade</small>
-            <strong>Mini-Spiel</strong>
-            <span>Flick-Wurf, Spin und gemeinsames Top-10-Leaderboard.</span>
-            <span class="game-teaser" aria-hidden="true">
-              <i class="teaser-ball"></i>
-              <span class="teaser-pins"><i></i><i></i><i></i></span>
-              <i class="teaser-impact"></i>
-            </span>
-            <span class="game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span>
-          </a>
-
-          <a class="nav-card nav-analysis" href="spieleranalyse.html">
-            <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
-            <small>04 // Verlauf</small>
-            <strong>Spieleranalyse</strong>
-            <span>Persönliche Entwicklung, Schnitt und Einzelspiel-Verlauf.</span>
-          </a>
-
-          <a class="nav-card nav-records" href="rekorde.html">
-            <span class="nav-icon"><i class="fa-solid fa-medal"></i></span>
-            <small>05 // Best</small>
-            <strong>Rekorde</strong>
-            <span>Bestmarken der Saison.</span>
-          </a>
-
-          <a class="nav-card nav-news" href="termine-news.html">
-            <span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>
-            <small>06 // Club</small>
-            <strong>News</strong>
-            <span>Termine und Hinweise.</span>
-          </a>
-
-          <a class="nav-card nav-about" href="Über-uns.html">
-            <span class="nav-icon"><i class="fa-solid fa-people-group"></i></span>
-            <small>07 // Wir</small>
-            <strong>Über uns</strong>
-            <span>Der Strikeclub Velten.</span>
-          </a>
-
-          <a class="nav-card nav-archive" href="archiv.html">
-            <span class="nav-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
-            <small>08 // Historie</small>
-            <strong>Archiv</strong>
-            <span>Vergangene Saisons.</span>
-          </a>
-        </nav>
-      </main>
-
-      <footer class="console-footer">
-        <div class="footer-unit"><i class="fa-solid fa-database"></i><div><strong>LIVE DATA</strong><span>Öffentliche Liga-Daten</span></div></div>
-        <div class="footer-motto">Strike together.<br />Win together.</div>
-        <div class="footer-unit"><i class="fa-solid fa-mobile-screen-button"></i><div><strong>APP MODE</strong><span>Optimiert für Homescreen</span></div></div>
-      </footer>
-    </div>
-
-    <p class="desktop-legal">Strikeclub Velten · <a href="impressum.html">Impressum</a> · © <span data-year></span></p>
-  </div>
-
-  <div class="mobile-shell" aria-label="Mobile Startseite">
-    <header class="mobile-top">
-      <a class="mobile-brand" href="index.html" aria-label="Strikeclub Velten Startseite">
-        <span class="mobile-logo"><i class="fa-solid fa-bowling-ball"></i></span>
-        <span class="mobile-brand-copy"><strong>Strikeclub Velten</strong><span>Hausliga Control Center</span></span>
-      </a>
-      <span class="mobile-live"><i class="fa-solid fa-signal"></i> Live</span>
-    </header>
-
-    <main class="mobile-main">
-      <section class="mobile-hero mobile-hero-with-player">
-        <div class="mobile-hero-top"><span>Bowling Terminal</span><span class="pixel-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
-        <div class="mobile-rack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="mobile-hero-copy">
-          <small>Hausliga online</small>
-          <h1>Strikeclub<span>Velten</span></h1>
-        </div>
-        <div class="player-week-host mobile-player-week player-week-fusion-home" id="playerWeekHomeMobile" aria-live="polite"></div>
-      </section>
-
-      <section class="mobile-primary" aria-label="Häufig genutzt">
-        <a class="mobile-primary-card" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><strong>Ergebnisse</strong><span>Spieltag und Tabellen</span></a>
-        <a class="mobile-primary-card schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><strong>Spielplan</strong><span>Termine und Bahnen</span></a>
-      </section>
-
-      <h2 class="mobile-section-title">Weitere Module</h2>
-      <nav class="mobile-bento" aria-label="Weitere Seiten">
-        <a class="mobile-card wide game" href="bowling-minispiel.html">
-          <span class="mobile-game-copy">
-            <span class="mobile-card-icon"><i class="fa-solid fa-gamepad"></i></span>
-            <span class="mobile-game-text"><strong>Mini-Spiel</strong><small>Bowling im Arcade-Modus</small><span class="mobile-game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span></span>
-          </span>
-          <span class="game-teaser" aria-hidden="true">
-            <i class="teaser-ball"></i>
-            <span class="teaser-pins"><i></i><i></i><i></i></span>
-            <i class="teaser-impact"></i>
-          </span>
-        </a>
-        <a class="mobile-card analysis" href="spieleranalyse.html"><span class="mobile-card-icon"><i class="fa-solid fa-chart-line"></i></span><strong>Analyse</strong><small>Spielerverlauf</small></a>
-        <a class="mobile-card records" href="rekorde.html"><span class="mobile-card-icon"><i class="fa-solid fa-medal"></i></span><strong>Rekorde</strong><small>Bestmarken</small></a>
-        <a class="mobile-card news" href="termine-news.html"><span class="mobile-card-icon"><i class="fa-solid fa-newspaper"></i></span><strong>News</strong><small>Termine &amp; Hinweise</small></a>
-        <a class="mobile-card about" href="Über-uns.html"><span class="mobile-card-icon"><i class="fa-solid fa-people-group"></i></span><strong>Über uns</strong><small>Der Club</small></a>
-        <a class="mobile-card wide archive" href="archiv.html"><span class="mobile-card-icon"><i class="fa-solid fa-clock-rotate-left"></i></span><span><strong>Ergebnis-Archiv</strong><small>Vergangene Saisons ansehen</small></span><i class="fa-solid fa-chevron-right"></i></a>
-      </nav>
-
-      <footer class="mobile-footer">
-        <div class="pixel-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <div>Strikeclub Velten · <a href="impressum.html">Impressum</a></div>
-        <div>© <span data-year></span></div>
-      </footer>
-    </main>
-
-    <nav class="mobile-dock" aria-label="App-Navigation">
-      <a class="dock-item active" href="index.html"><i class="fa-solid fa-house"></i><span>Start</span></a>
-      <a class="dock-item results" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnis</span></a>
-      <a class="dock-item schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Plan</span></a>
-      <a class="dock-item game" href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i><span>Spiel</span></a>
-    </nav>
-  </div>
-
-  <script type="module" src="js/player-of-week-home.js?v=12.4"></script>
-  <script>
+</div>
+<aside class="side-stack">
+<div aria-label="Ligainformationen" class="status-bank">
+<div class="status-cell"><small>Modus</small><strong>Live</strong><span>Veröffentlichte Saisondaten</span></div>
+<div class="status-cell"><small>Saison</small><strong>14</strong><span>Spieltage pro Saison</span></div>
+<div class="status-cell"><small>Liga</small><strong>8</strong><span>Teams im Wettbewerb</span></div>
+<div class="status-cell"><small>Bahnen</small><strong>4</strong><span>Feste Bahnpaarungen</span></div>
+</div>
+<div class="mission-panel">
+<span class="mission-label">Arcade-Modul verfügbar</span>
+<h2>Dein Wurf.<br/>Dein Highscore.</h2>
+<p>Das überarbeitete Minispiel nutzt dieselbe Steampunk-Neon-Oberfläche wie die Liga und besitzt eine nachvollziehbarere Pin-Kollision.</p>
+<a href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i> Spiel starten</a>
+</div>
+</aside>
+</section>
+<main class="nav-zone" id="desktopNavigation">
+<h2 class="nav-zone-title"><span aria-hidden="true" class="pixel-dots"><i></i><i></i><i></i><i></i></span> Liga-Module</h2>
+<nav aria-label="Hauptnavigation" class="nav-bento">
+<a class="nav-card nav-results" href="aktuelle_ergebnisse.html">
+<span class="nav-icon"><i class="fa-solid fa-chart-column"></i></span>
+<small>01 // Live</small>
+<strong>Aktuelle Ergebnisse</strong>
+<span>Spieltag, Spielergebnisse, Einzelwertung und Mannschaftsauswertung.</span>
+</a>
+<a class="nav-card nav-schedule" href="spielplan.html">
+<span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span>
+<small>02 // Saison</small>
+<strong>Spielplan</strong>
+<span>Alle Termine, Gegner und Bahnpaarungen auf einen Blick.</span>
+</a>
+<a class="nav-card nav-game" href="bowling-minispiel.html">
+<small>03 // Arcade</small>
+<strong>Mini-Spiel</strong>
+<span>Flick-Wurf, Spin und gemeinsames Top-10-Leaderboard.</span>
+<span aria-hidden="true" class="game-teaser">
+<i class="teaser-ball"></i>
+<span class="teaser-pins"><i></i><i></i><i></i></span>
+<i class="teaser-impact"></i>
+</span>
+<span class="game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span>
+</a>
+<a class="nav-card nav-analysis" href="spieleranalyse.html">
+<span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+<small>04 // Verlauf</small>
+<strong>Spieleranalyse</strong>
+<span>Persönliche Entwicklung, Schnitt und Einzelspiel-Verlauf.</span>
+</a>
+<a class="nav-card nav-records" href="rekorde.html">
+<span class="nav-icon"><i class="fa-solid fa-medal"></i></span>
+<small>05 // Best</small>
+<strong>Rekorde</strong>
+<span>Bestmarken der Saison.</span>
+</a>
+<a class="nav-card nav-news" href="termine-news.html">
+<span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>
+<small>06 // Club</small>
+<strong>News</strong>
+<span>Termine und Hinweise.</span>
+</a>
+<a class="nav-card nav-about" href="Über-uns.html">
+<span class="nav-icon"><i class="fa-solid fa-people-group"></i></span>
+<small>07 // Wir</small>
+<strong>Über uns</strong>
+<span>Der Strikeclub Velten.</span>
+</a>
+<a class="nav-card nav-archive" href="archiv.html">
+<span class="nav-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+<small>08 // Historie</small>
+<strong>Archiv</strong>
+<span>Vergangene Saisons.</span>
+</a>
+</nav>
+</main>
+<footer class="console-footer">
+<div class="footer-unit"><i class="fa-solid fa-database"></i><div><strong>LIVE DATA</strong><span>Öffentliche Liga-Daten</span></div></div>
+<div class="footer-motto">Strike together.<br/>Win together.</div>
+<div class="footer-unit"><i class="fa-solid fa-mobile-screen-button"></i><div><strong>APP MODE</strong><span>Optimiert für Homescreen</span></div></div>
+</footer>
+</div>
+<p class="desktop-legal">Strikeclub Velten · <a href="impressum.html">Impressum</a> · © <span data-year=""></span></p>
+</div>
+<div aria-label="Mobile Startseite" class="mobile-shell">
+<header class="mobile-top">
+<a aria-label="Strikeclub Velten Startseite" class="mobile-brand" href="index.html">
+<span class="mobile-logo"><i class="fa-solid fa-bowling-ball"></i></span>
+<span class="mobile-brand-copy"><strong>Strikeclub Velten</strong><span>Hausliga Control Center</span></span>
+</a>
+<span class="mobile-live"><i class="fa-solid fa-signal"></i> Live</span>
+</header>
+<main class="mobile-main">
+<div aria-live="polite" class="player-week-host mobile-player-week mobile-player-week-top" id="playerWeekHomeMobile"></div>
+<section aria-label="Häufig genutzt" class="mobile-primary">
+<a class="mobile-primary-card" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><strong>Ergebnisse</strong><span>Spieltag und Tabellen</span></a>
+<a class="mobile-primary-card schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><strong>Spielplan</strong><span>Termine und Bahnen</span></a>
+</section>
+<h2 class="mobile-section-title">Weitere Module</h2>
+<nav aria-label="Weitere Seiten" class="mobile-bento">
+<a class="mobile-card wide game" href="bowling-minispiel.html">
+<span class="mobile-game-copy">
+<span class="mobile-card-icon"><i class="fa-solid fa-gamepad"></i></span>
+<span class="mobile-game-text"><strong>Mini-Spiel</strong><small>Bowling im Arcade-Modus</small><span class="mobile-game-cta">Jetzt spielen <i class="fa-solid fa-arrow-right"></i></span></span>
+</span>
+<span aria-hidden="true" class="game-teaser">
+<i class="teaser-ball"></i>
+<span class="teaser-pins"><i></i><i></i><i></i></span>
+<i class="teaser-impact"></i>
+</span>
+</a>
+<a class="mobile-card analysis" href="spieleranalyse.html"><span class="mobile-card-icon"><i class="fa-solid fa-chart-line"></i></span><strong>Analyse</strong><small>Spielerverlauf</small></a>
+<a class="mobile-card records" href="rekorde.html"><span class="mobile-card-icon"><i class="fa-solid fa-medal"></i></span><strong>Rekorde</strong><small>Bestmarken</small></a>
+<a class="mobile-card news" href="termine-news.html"><span class="mobile-card-icon"><i class="fa-solid fa-newspaper"></i></span><strong>News</strong><small>Termine &amp; Hinweise</small></a>
+<a class="mobile-card about" href="Über-uns.html"><span class="mobile-card-icon"><i class="fa-solid fa-people-group"></i></span><strong>Über uns</strong><small>Der Club</small></a>
+<a class="mobile-card wide archive" href="archiv.html"><span class="mobile-card-icon"><i class="fa-solid fa-clock-rotate-left"></i></span><span><strong>Ergebnis-Archiv</strong><small>Vergangene Saisons ansehen</small></span><i class="fa-solid fa-chevron-right"></i></a>
+</nav>
+<footer class="mobile-footer">
+<div aria-hidden="true" class="pixel-dots"><i></i><i></i><i></i><i></i></div>
+<div>Strikeclub Velten · <a href="impressum.html">Impressum</a></div>
+<div>© <span data-year=""></span></div>
+</footer>
+</main>
+<nav aria-label="App-Navigation" class="mobile-dock">
+<a class="dock-item active" href="index.html"><i class="fa-solid fa-house"></i><span>Start</span></a>
+<a class="dock-item results" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnis</span></a>
+<a class="dock-item schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Plan</span></a>
+<a class="dock-item game" href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i><span>Spiel</span></a>
+</nav>
+</div>
+<script src="js/player-of-week-home.js?v=12.5" type="module"></script>
+<script>
     (() => {
       document.querySelectorAll("[data-year]").forEach((node) => {
         node.textContent = String(new Date().getFullYear());
