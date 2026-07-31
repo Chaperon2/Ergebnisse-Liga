@@ -1,5 +1,5 @@
 import { watchPublicResults } from "./public-data.js";
-import { playerOfWeekMarkup, calculatePlayerOfWeek } from "./player-of-week.js?v=12.5";
+import { playerOfWeekMarkup, calculatePlayerOfWeek } from "./player-of-week.js?v=12.6";
 
 const desktopHost = document.getElementById("playerWeekHomeDesktop");
 const mobileHost = document.getElementById("playerWeekHomeMobile");
@@ -11,19 +11,7 @@ const heading = {
   description: "Aktuelle Auszeichnung des zuletzt veröffentlichten Spieltags.",
 };
 
-const actions = [
-  {
-    href: "aktuelle_ergebnisse.html",
-    icon: "fa-solid fa-chart-column",
-    label: "Aktuelle Ergebnisse",
-  },
-  {
-    href: "spielplan.html",
-    icon: "fa-solid fa-calendar-days",
-    label: "Zum Spielplan",
-    className: "schedule",
-  },
-];
+const actions = [];
 
 function options() {
   return { compact: true, context: "home", heading, actions };

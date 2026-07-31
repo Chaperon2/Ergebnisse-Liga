@@ -1,5 +1,5 @@
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=12.5";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=12.6";
 
 const sectionsGrid = document.getElementById("sectionsGrid");
 const warningPill = document.getElementById("warningPill");
@@ -271,7 +271,9 @@ watchPublicResults({
     }
   },
   onSeasonChange: (seasonId) => {
-    pageTitle.innerHTML = `Ergebnisse werden geladen. <span class="headline-accent">${escapeHtml(seasonId)}</span>`;
-    pageDate.textContent = "–";
+    const loadingOptions = playerWeekOptions();
+    loadingOptions.heading.title = `${seasonId} · Ergebnisse werden geladen`;
+    loadingOptions.heading.date = "–";
+    renderPlayerOfWeek(playerWeekResults, null, loadingOptions);
   },
 });

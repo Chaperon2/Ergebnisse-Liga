@@ -185,12 +185,11 @@ export function playerOfWeekMarkup(award, { compact = false, context = "", headi
 
   return `<section class="${classes}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
     ${pageHead}
-    <div class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></div>
     <div class="pow-main">
       <div class="pow-kicker"><span>Spieler der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
       <div class="pow-name-row">
         <div class="pow-avatar"><i class="fa-solid fa-bowling-ball"></i><span>★</span></div>
-        <div class="pow-name"><strong>${escapeHtml(award.name)}</strong><span>${escapeHtml(award.team)}</span></div>
+        <div class="pow-name"><span class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></span><strong>${escapeHtml(award.name)}</strong><span>${escapeHtml(award.team)}</span></div>
       </div>
       <div class="pow-stats">
         <span><small>Tages-Ø</small><strong>${number(award.average)}</strong></span>
