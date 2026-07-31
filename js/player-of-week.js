@@ -174,7 +174,7 @@ export function playerOfWeekMarkup(award, { compact = false, context = "", headi
   if (!award) {
     return `<section class="${classes} is-empty">
       ${pageHead}
-      <div class="pow-loading"><i class="fa-solid fa-satellite-dish"></i><span>Spieler der Woche wird geladen …</span></div>
+      <div class="pow-loading"><i class="fa-solid fa-satellite-dish"></i><span>Spieler/in der Woche wird geladen …</span></div>
       ${pageActions}
     </section>`;
   }
@@ -183,10 +183,10 @@ export function playerOfWeekMarkup(award, { compact = false, context = "", headi
     ? "Noch ohne Referenzschnitt"
     : `${signed(award.improvement)} Pins zum Referenzschnitt`;
 
-  return `<section class="${classes}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
+  return `<section class="${classes}" aria-label="Spieler/in der Woche: ${escapeHtml(award.name)}">
     ${pageHead}
     <div class="pow-main">
-      <div class="pow-kicker"><span>Spieler der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
+      <div class="pow-kicker"><span>Spieler/in der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
       <div class="pow-name-row">
         <div class="pow-avatar"><i class="fa-solid fa-bowling-ball"></i><span>★</span></div>
         <div class="pow-name"><span class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></span><strong>${escapeHtml(award.name)}</strong><span>${escapeHtml(award.team)}</span></div>

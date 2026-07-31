@@ -1,5 +1,5 @@
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=12.6";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=12.8";
 
 const sectionsGrid = document.getElementById("sectionsGrid");
 const warningPill = document.getElementById("warningPill");
@@ -19,7 +19,7 @@ function playerWeekOptions(data = null) {
       eyebrow: "Aktuelle Ergebnisse",
       title: matchdayNumber ? `${seasonName} · Spieltag ${matchdayNumber}` : "Spieltag wird geladen",
       accent: "Ergebnisse im Überblick",
-      description: "Spieler der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
+      description: "Spieler/in der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
       dateLabel: "Datum",
       date: matchday?.date ? formatDate(matchday.date) : "–",
     },

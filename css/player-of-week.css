@@ -258,3 +258,28 @@
     font-size: clamp(20px, 7vw, 26px);
   }
 }
+
+
+/* ===== Phase 12.8: „Spieler/in der Woche“ immer in einer Zeile ===== */
+.pow-kicker > span {
+  white-space: nowrap;
+  max-width: 100%;
+  letter-spacing: .018em;
+}
+
+@media (max-width: 700px) {
+  .pow-kicker > span {
+    width: auto;
+    max-width: 100%;
+    font-size: clamp(18px, 5.6vw, 22px);
+    line-height: 1;
+    letter-spacing: .008em;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 390px) {
+  .pow-kicker > span {
+    font-size: clamp(17px, 5.5vw, 20px);
+  }
+}
