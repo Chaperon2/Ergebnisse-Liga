@@ -7,3 +7,208 @@
 @media(max-width:700px){.player-week-card,.player-week-card.is-compact,.results-view .player-week-card.is-compact{grid-template-columns:1fr 104px;gap:10px;padding:14px 12px;border-left-width:4px}.player-week-card:after{font-size:40px}.pow-crown{left:7px;top:6px}.pow-kicker{margin-left:12px;font-size:5.6px}.pow-name-row{gap:9px}.pow-avatar{flex-basis:44px;width:44px;height:44px;font-size:20px}.pow-avatar span{width:19px;height:19px;font-size:9px}.pow-name strong{font-size:27px}.pow-name span{font-size:11px}.pow-score-panel,.player-week-card.is-compact .pow-score-panel{min-height:98px}.pow-score-panel strong,.player-week-card.is-compact .pow-score-panel strong{font-size:38px}.pow-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:10px}.pow-stats>span{min-width:0;padding:6px}.pow-stats>span:nth-child(4){display:none}.pow-stats small{font-size:6.5px}.pow-stats strong{font-size:14px}.pow-breakdown{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pow-breakdown-label{font-size:8px}.pow-breakdown-label strong{font-size:11px}.pow-method{grid-column:1/-1;font-size:10px}.desktop-player-week{display:none}.results-view .player-week-host{margin-top:14px}.results-view .player-week-card{margin-inline:-3px}}
 @media(max-width:390px){.player-week-card,.player-week-card.is-compact{grid-template-columns:minmax(0,1fr) 88px;padding-inline:9px}.pow-name strong{font-size:23px}.pow-avatar{display:none}.pow-score-panel strong{font-size:33px}.pow-stats strong{font-size:12px}.pow-breakdown-label span{max-width:75px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 @media(prefers-reduced-motion:reduce){.pow-crown{animation:none}}
+
+/* ===== Phase 12.4: Spieler der Woche mit der ersten Überschriftskachel verschmolzen ===== */
+.player-week-card.is-fused,
+.player-week-card.is-fused.is-compact{
+  grid-template-columns:minmax(0,1fr) 108px;
+  gap:12px;
+  padding:12px 13px;
+  border:1px solid rgba(243,205,124,.42);
+  border-left:4px solid var(--pow-gold);
+  border-radius:8px;
+  background:
+    radial-gradient(circle at 9% 15%,rgba(255,89,182,.11),transparent 32%),
+    radial-gradient(circle at 91% 18%,rgba(64,244,239,.11),transparent 34%),
+    linear-gradient(145deg,rgba(31,23,15,.97),rgba(6,12,12,.98));
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,.48),
+    inset 0 0 24px rgba(255,200,91,.035),
+    0 10px 24px rgba(0,0,0,.30);
+}
+.player-week-card.is-fused:before{inset:5px;border-color:rgba(64,244,239,.15)}
+.player-week-card.is-fused:after{
+  content:"MVP";
+  right:8px;
+  top:7px;
+  color:rgba(255,255,255,.045);
+  font-size:37px;
+  transform:rotate(-5deg);
+}
+.player-week-card.is-fused .pow-crown{left:7px;top:6px;font-size:12px}
+.player-week-card.is-fused .pow-main{min-width:0}
+.player-week-card.is-fused .pow-kicker{margin-left:13px;font-size:6px;gap:7px}
+.player-week-card.is-fused .pow-kicker b{padding:4px 6px;font-size:5.5px}
+.player-week-card.is-fused .pow-name-row{gap:10px;margin-top:8px}
+.player-week-card.is-fused .pow-avatar{
+  flex-basis:44px;
+  width:44px;
+  height:44px;
+  font-size:20px;
+  border-width:1px;
+  box-shadow:0 0 0 3px #2b190f,0 0 15px rgba(64,244,239,.14);
+}
+.player-week-card.is-fused .pow-avatar span{width:19px;height:19px;font-size:9px}
+.player-week-card.is-fused .pow-name{min-width:0}
+.player-week-card.is-fused .pow-name strong{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:clamp(24px,2.4vw,34px);
+  line-height:.92;
+}
+.player-week-card.is-fused .pow-name span{margin-top:5px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-week-card.is-fused .pow-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:5px;
+  margin-top:9px;
+}
+.player-week-card.is-fused .pow-stats>span{min-width:0;padding:6px 7px;background:rgba(255,255,255,.022)}
+.player-week-card.is-fused .pow-stats>span:nth-child(4){display:none}
+.player-week-card.is-fused .pow-stats small{font-size:6px;line-height:1.25}
+.player-week-card.is-fused .pow-stats strong{font-size:13px;white-space:nowrap}
+.player-week-card.is-fused .pow-score-panel,
+.player-week-card.is-fused.is-compact .pow-score-panel{
+  min-height:94px;
+  align-self:stretch;
+  border-color:rgba(255,200,91,.38);
+}
+.player-week-card.is-fused .pow-score-panel span,
+.player-week-card.is-fused .pow-score-panel small{font-size:5.3px}
+.player-week-card.is-fused .pow-score-panel strong,
+.player-week-card.is-fused.is-compact .pow-score-panel strong{font-size:37px}
+.player-week-card.is-fused .pow-loading{min-height:92px;font-size:12px}
+
+/* Startseite: die Auszeichnung ist Bestandteil des großen Hero-Moduls. */
+.desktop-player-week.player-week-fusion-home{
+  width:min(100%,690px);
+  margin:21px 0 0;
+  border-bottom:0;
+}
+.desktop-player-week.player-week-fusion-home .player-week-card{
+  border:1px solid rgba(243,205,124,.42);
+  border-left:4px solid var(--pow-gold);
+  border-radius:8px;
+}
+.player-week-card.is-home{
+  background:
+    radial-gradient(circle at 10% 15%,rgba(255,89,182,.13),transparent 31%),
+    radial-gradient(circle at 92% 19%,rgba(64,244,239,.14),transparent 34%),
+    linear-gradient(145deg,rgba(27,20,15,.94),rgba(5,14,15,.95));
+}
+.hero-content .player-week-fusion-home + .hero-actions{margin-top:15px}
+
+.mobile-hero.mobile-hero-with-player{
+  min-height:365px;
+  align-content:end;
+  padding-bottom:15px;
+}
+.mobile-hero-with-player .mobile-hero-copy{padding-right:88px}
+.mobile-hero-with-player .player-week-fusion-home{
+  position:relative;
+  z-index:5;
+  width:100%;
+  margin:17px 0 0;
+}
+.mobile-hero-with-player .player-week-card.is-home{
+  background:
+    radial-gradient(circle at 10% 12%,rgba(255,89,182,.12),transparent 32%),
+    radial-gradient(circle at 92% 18%,rgba(64,244,239,.12),transparent 34%),
+    linear-gradient(145deg,rgba(29,21,15,.94),rgba(5,13,14,.96));
+  backdrop-filter:blur(3px);
+}
+
+/* Ergebnisse: Titel, Datum und Auszeichnung bilden jetzt eine gemeinsame Kopfkonsole. */
+.results-view .hero.results-hero-fusion{padding:36px 30px 22px}
+.results-view .results-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(380px,470px);
+  align-items:stretch;
+  gap:24px;
+}
+.results-view .results-hero-grid .hero-copy{align-self:center;max-width:none}
+.results-hero-side{
+  min-width:0;
+  display:grid;
+  grid-template-rows:auto 1fr;
+  gap:9px;
+}
+.results-hero-side .date-console{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:10px 13px;
+}
+.results-hero-side .date-console span{margin:0}
+.results-hero-side .date-console strong{font-size:21px;text-align:right}
+.results-view .player-week-fusion-results{margin-top:0;min-width:0}
+.results-view .player-week-card.is-results{
+  height:100%;
+  border-radius:7px;
+  background:
+    radial-gradient(circle at 8% 15%,rgba(255,89,182,.11),transparent 31%),
+    radial-gradient(circle at 92% 19%,rgba(64,244,239,.11),transparent 34%),
+    linear-gradient(145deg,rgba(31,23,15,.96),rgba(5,13,14,.97));
+}
+.results-view .results-hero-fusion .live-state{margin-top:13px}
+
+@media(max-width:1120px){
+  .results-view .results-hero-grid{grid-template-columns:minmax(0,1fr) minmax(340px,410px);gap:16px}
+  .player-week-card.is-fused .pow-avatar{display:none}
+  .player-week-card.is-fused .pow-name strong{font-size:25px}
+}
+
+@media(max-width:860px){
+  .results-view .results-hero-grid{grid-template-columns:1fr}
+  .results-hero-side{grid-template-columns:180px minmax(0,1fr);grid-template-rows:1fr;align-items:stretch}
+  .results-hero-side .date-console{display:grid;align-content:center;justify-content:stretch;text-align:center}
+  .results-hero-side .date-console strong{text-align:center}
+}
+
+@media(max-width:700px){
+  .player-week-card.is-fused,
+  .player-week-card.is-fused.is-compact,
+  .results-view .player-week-card.is-fused.is-compact{
+    grid-template-columns:minmax(0,1fr) 88px;
+    gap:8px;
+    padding:10px;
+  }
+  .player-week-card.is-fused:after{font-size:29px;right:5px}
+  .player-week-card.is-fused .pow-kicker{margin-left:11px;font-size:5px}
+  .player-week-card.is-fused .pow-kicker b{font-size:4.8px}
+  .player-week-card.is-fused .pow-avatar{display:none}
+  .player-week-card.is-fused .pow-name strong{font-size:23px}
+  .player-week-card.is-fused .pow-name span{font-size:10px}
+  .player-week-card.is-fused .pow-stats{grid-column:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:8px}
+  .player-week-card.is-fused .pow-stats>span{padding:5px 4px}
+  .player-week-card.is-fused .pow-stats small{font-size:5.2px}
+  .player-week-card.is-fused .pow-stats strong{font-size:11.5px}
+  .player-week-card.is-fused .pow-score-panel,
+  .player-week-card.is-fused.is-compact .pow-score-panel{min-height:88px}
+  .player-week-card.is-fused .pow-score-panel strong,
+  .player-week-card.is-fused.is-compact .pow-score-panel strong{font-size:31px}
+
+  .mobile-hero.mobile-hero-with-player{min-height:350px;padding-inline:12px}
+  .mobile-hero-with-player .mobile-hero-copy{padding-right:77px}
+  .mobile-hero-with-player .player-week-fusion-home{margin-top:14px}
+
+  .results-view .hero.results-hero-fusion{padding:30px 14px 18px}
+  .results-view .results-hero-grid{gap:12px}
+  .results-hero-side{grid-template-columns:1fr;grid-template-rows:auto auto;gap:8px}
+  .results-hero-side .date-console{display:flex;text-align:left;padding:9px 11px}
+  .results-hero-side .date-console strong{text-align:right;font-size:19px}
+  .results-view .player-week-card.is-results{margin-inline:0}
+}
+
+@media(max-width:390px){
+  .mobile-hero.mobile-hero-with-player{min-height:338px}
+  .player-week-card.is-fused,
+  .player-week-card.is-fused.is-compact{grid-template-columns:minmax(0,1fr) 80px;padding-inline:8px}
+  .player-week-card.is-fused .pow-name strong{font-size:21px}
+  .player-week-card.is-fused .pow-score-panel strong{font-size:28px}
+  .player-week-card.is-fused .pow-stats small{font-size:4.7px}
+  .player-week-card.is-fused .pow-stats strong{font-size:10.5px}
+}
