@@ -3,8 +3,8 @@
   "short_name": "Strikeclub",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#090d14",
-  "theme_color": "#090d14",
+  "background_color": "#f3ecdf",
+  "theme_color": "#f3ecdf",
   "icons": [
     {
       "src": "images/strikeclub-elegant-icon-192.png?v=2",

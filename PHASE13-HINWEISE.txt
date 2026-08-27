@@ -1,0 +1,21 @@
+STRIKECLUB VELTEN – WEBSITE PHASE 13.0
+
+Diese Website basiert auf der beigefügten Ergebnisse-Liga-main.zip.
+
+Neu:
+- hellere, freundlichere Steampunk-/Arcade-Farbwelt auf allen öffentlichen Seiten
+- Vorbereitung der Oberfläche auf 10 Teams und 18 Spieltage
+- fünfte Paarung/Bahn 9+10 im Spielplan
+- zwei zusätzliche Teamfarben für Team 9 und DummyTeam
+
+WICHTIG:
+Die eigentliche DummyTeam-Berechnung (160/150/140) läuft in Firebase Functions.
+Dafür zusätzlich das vollständige Firebase-Paket Phase 13 deployen.
+
+DummyTeam-Regel:
+- team-10 = DummyTeam
+- keine Dummy-Spielerprofile
+- pro Runde feste Werte 160 + 150 + 140 = 450 Pins
+- vier Runden = 1800 Pins
+- Mannschaftspunkte werden normal gegen den realen Gegner berechnet
+- DummyTeam spielt immer auf Bahn 9+10
