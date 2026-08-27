@@ -645,3 +645,7 @@ tbody tr:nth-child(8n){--row-accent:#d72673}
     inset 0 0 14px rgba(255, 196, 66, .18),
     0 0 10px rgba(255, 190, 50, .22);
 }
+
+/* Phase 13: zusätzliche Teamfarben für 10-Team-Liga */
+.team-color-9{--team-accent:#3f7899}.team-color-10{--team-accent:#69727c}
+.duel-color-9{--duel-accent:#3f7899}.duel-color-10{--duel-accent:#69727c}

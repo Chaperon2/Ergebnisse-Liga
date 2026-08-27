@@ -177,7 +177,7 @@ function render(data) {
     cells: [row.rank, { html: true, value: tendency(row.trend) }, row.name, row.points, row.pins, row.matchdays, formatNumber(row.average)],
   }));
   const teamNames = new Map(data.teamStandings.rows.map((row) => [row.teamId, row.name]));
-  const teamColorMap = new Map(data.teamStandings.rows.map((row, index) => [row.teamId, `duel-color-${(index % 8) + 1}`]));
+  const teamColorMap = new Map(data.teamStandings.rows.map((row, index) => [row.teamId, `duel-color-${(index % 10) + 1}`]));
   const teamDuels = data.teamStandings.matchups.map((matchup) => {
     const homeName = teamNames.get(matchup.home.teamId) ?? matchup.home.teamId;
     const awayName = teamNames.get(matchup.away.teamId) ?? matchup.away.teamId;
@@ -204,9 +204,10 @@ function render(data) {
 
   const leaderPlayer = data.individualStandings.rows?.[0];
   const leaderTeam = data.teamStandings.rows?.[0];
+  const displayMatchdayCount = Number(data.matchdayCount ?? (data.teamStandings.rows?.length === 10 ? 18 : 14));
   if (summaryGrid) {
     summaryGrid.innerHTML = [
-      ["Spieltag", `${matchday.number} / ${data.matchdayCount ?? 14}`, "fa-calendar-day"],
+      ["Spieltag", `${matchday.number} / ${displayMatchdayCount}`, "fa-calendar-day"],
       ["Bestes Spiel", `${data.currentMatchday.bestGame?.name ?? "–"} · ${data.currentMatchday.bestGame?.score ?? "–"}`, "fa-bolt"],
       ["Führender Spieler", leaderPlayer ? `${leaderPlayer.name} · Ø ${formatNumber(leaderPlayer.average)}` : "–", "fa-user-astronaut"],
       ["Führendes Team", leaderTeam ? `${leaderTeam.name} · ${leaderTeam.points} Punkte` : "–", "fa-people-group"],

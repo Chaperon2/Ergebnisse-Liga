@@ -26,6 +26,8 @@ const TEAM_COLOR_CLASSES = [
   "team-color-6",
   "team-color-7",
   "team-color-8",
+  "team-color-9",
+  "team-color-10",
 ];
 
 function normalizeTeamName(value) {
@@ -49,6 +51,8 @@ const KNOWN_TEAM_COLORS = new Map([
   ["malibu", "team-color-6"],
   ["lady dianas", "team-color-7"],
   ["all stars", "team-color-8"],
+  ["dummyteam", "team-color-10"],
+  ["dummy team", "team-color-10"],
 ]);
 
 function buildTeamColorMap(matchdays) {
@@ -158,9 +162,9 @@ function configureJumpButton(matchdays) {
   };
 }
 
-function nextMatchdayNumber(matchdays, publishedThrough) {
-  if (publishedThrough > 0 && publishedThrough < 14) return publishedThrough + 1;
-  if (publishedThrough >= 14) return null;
+function nextMatchdayNumber(matchdays, publishedThrough, matchdayCount) {
+  if (publishedThrough > 0 && publishedThrough < matchdayCount) return publishedThrough + 1;
+  if (publishedThrough >= matchdayCount) return null;
   const today = new Date().toISOString().slice(0, 10);
   return matchdays.find((day) => day.date >= today)?.number ?? matchdays[0]?.number ?? null;
 }
@@ -183,11 +187,16 @@ function render(scheduleData, meta) {
   }
 
   const publishedThrough = Number(meta.publishedThrough ?? 0);
-  const nextNumber = nextMatchdayNumber(matchdays, publishedThrough);
+  const matchdayCount = Number(scheduleData.matchdayCount ?? matchdays.length);
+  const teamCount = Number(scheduleData.teamCount ?? new Set(matchdays.flatMap((day) => (day.pairings ?? []).flatMap((pairing) => [pairing.homeTeamId, pairing.awayTeamId]))).size);
+  const lanePairs = Array.isArray(scheduleData.lanePairs) && scheduleData.lanePairs.length
+    ? scheduleData.lanePairs
+    : [...new Set(matchdays.flatMap((day) => (day.pairings ?? []).map((pairing) => pairing.lanePair)).filter(Boolean))];
+  const nextNumber = nextMatchdayNumber(matchdays, publishedThrough, matchdayCount);
   const focusDay = relevantMatchday(matchdays);
   const seasonLabel = scheduleData.seasonName ?? scheduleData.seasonId ?? "Saison";
   title.textContent = `Spielplan · ${seasonLabel}`;
-  summary.textContent = publishedThrough >= 14
+  summary.textContent = publishedThrough >= matchdayCount
     ? "Die Saison ist abgeschlossen. Alle Begegnungen und Bahnpaarungen bleiben sichtbar."
     : publishedThrough > 0
       ? `Ergebnisse sind bis Spieltag ${publishedThrough} veröffentlicht. Spieltag ${nextNumber} ist als Nächstes vorgesehen.`
@@ -196,9 +205,9 @@ function render(scheduleData, meta) {
   if (overview) {
     overview.className = "schedule-overview-bar";
     overview.innerHTML = [
-      ["fa-calendar-days", `${matchdays.length} Spieltage`],
-      ["fa-people-group", "8 Teams"],
-      ["fa-road", "Bahnen 1+2 · 3+4 · 5+6 · 7+8"],
+      ["fa-calendar-days", `${matchdayCount} Spieltage`],
+      ["fa-people-group", `${teamCount} Teams`],
+      ["fa-road", `Bahnen ${lanePairs.join(" · ")}`],
       ["fa-signal", `${publishedThrough} veröffentlicht`],
     ].map(([icon, value]) => `<span><i class="fa-solid ${icon}"></i>${escapeHtml(value)}</span>`).join("");
   }
