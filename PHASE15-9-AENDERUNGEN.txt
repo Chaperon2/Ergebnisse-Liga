@@ -1,0 +1,12 @@
+PHASE 15.9 – FRONTEND-ÄNDERUNGEN
+
+- Spiele ab 200 Pins werden kräftig blau mit weißer, fetter Schrift hervorgehoben.
+- Die 200+-Erkennung wird beim Tabellenrendern zusätzlich direkt aus dem Zellwert abgeleitet.
+- Rekordhalter und Team-/Kadernamen auf der Rekordseite sind kontrastreich schwarz.
+- Teamfarben im Spielplan sind intensiver und deutlicher voneinander unterscheidbar.
+- Die Teamfarben-Legende verwendet helle farbige Flächen statt schwarzer Hintergründe.
+- Bahn + VS füllen das mittlere Feld besser aus; VS ist groß, fett und schwarz.
+- „Bestes Spiel“ und „Hausligaschnitt“ sind auf der Ergebnisseite größer, fetter und dunkler.
+- Spielernamen bleiben anklickbar, der blaue Unterstrich ist entfernt.
+
+Hinweis: Die Positionsänderung im Adminbereich und die rückwirkende Neuberechnung sind nur im vollständigen Firebase-Paket enthalten.
