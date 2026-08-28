@@ -1,0 +1,6 @@
+PHASE 15.10
+
+- Rekorde: Infobalken besser lesbar und passend zum hellen Steampunk-/Papierdesign.
+- Ergebnisse: Teamnamen bleiben immer in einer Zeile; bei kleinen Displays horizontal scrollen statt umbrechen.
+- Ergebnisse >= 200: kräftig rote Zelle, weiße größere fette Schrift; zusätzliche Inline-Absicherung gegen Theme-/Hover-Überschreibungen.
+- Cache-Version relevanter CSS-/JS-Dateien auf 15.10 erhöht.

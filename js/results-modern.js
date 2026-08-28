@@ -94,12 +94,17 @@ function renderTable({ headers, rows, sectionClass = "" }) {
       const classes = [headerClass(headers[index])];
       const label = headerText(headers[index]).toLowerCase();
       const rawValue = cell && typeof cell === "object" ? cell.value : cell;
-      const numericValue = Number(rawValue);
+      const numericValue = typeof rawValue === "number"
+        ? rawValue
+        : Number(String(rawValue ?? "").replace(/[^0-9,.-]/g, "").replace(",", "."));
       const isGameScore = label.startsWith("spiel ") || label.includes("bestes spiel");
       const isScore200 = row.score200Indexes?.includes(index) || (isGameScore && Number.isFinite(numericValue) && numericValue >= 200);
       if (isScore200) classes.push("score-200");
       if (cell && typeof cell === "object" && cell.className) classes.push(cell.className);
-      return `<td class="${classes.join(" ")}"${isScore200 ? ' data-score-200="true"' : ""}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
+      const score200Attrs = isScore200
+        ? ` data-score-200="true" data-score-value="${numericValue}" style="background:#a51528 !important;background-image:linear-gradient(180deg,#d9273f 0%,#9d1025 100%) !important;color:#ffffff !important;font-weight:950 !important;font-size:1.14em !important;text-shadow:0 1px 1px rgba(0,0,0,.65) !important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.38),0 0 0 2px #74101d !important;"`
+        : "";
+      return `<td class="${classes.join(" ")}"${score200Attrs}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
     }).join("")}</tr>`;
   }).join("")}</tbody></table></div>`;
 }
