@@ -1,0 +1,11 @@
+PHASE 15.8 – FRONTEND-ÄNDERUNGEN
+
+- Gold-/Metallschleier auf Rekorde, Analyse und News entfernt.
+- „von 100“ beim Spieler der Woche weiter nach unten gesetzt.
+- Abschlusslinie über der letzten Ergebniszeile entfernt.
+- Einzelwertung: Name-Spalte schmaler, Team-Spalte breiter, Werte einzeilig.
+- Einzelspiele ab 200 Pins deutlich kontrastreich markiert.
+- Spielernamen in den Ergebnissen öffnen direkt die zugehörige Spieleranalyse.
+- Eine ggf. ausgewählte Saison wird beim Wechsel zur Spieleranalyse beibehalten.
+
+Hinweis: Die neue rückwirkende Firebase-Adminfunktion ist nur im vollständigen Firebase-Paket enthalten.
