@@ -45,6 +45,21 @@ function headerMarkup(header) {
   return `<span class="header-full">${escapeHtml(label)}</span><span class="header-mobile">${escapeHtml(mobile)}</span>`;
 }
 
+function playerAnalysisCell(playerId, name) {
+  const id = String(playerId ?? "").trim();
+  const safeName = escapeHtml(name ?? "");
+  if (!id) return safeName;
+  const params = new URLSearchParams();
+  params.set("spieler", id);
+  const seasonId = new URLSearchParams(window.location.search).get("saison");
+  if (seasonId) params.set("saison", seasonId);
+  const href = `spieleranalyse.html?${params.toString()}`;
+  return {
+    html: true,
+    value: `<a class="player-analysis-link" href="${escapeHtml(href)}" aria-label="${safeName} in der Spieleranalyse öffnen">${safeName}</a>`,
+  };
+}
+
 function headerClass(header) {
   const value = headerText(header).toLowerCase();
   if (value.includes("platz")) return "col-rank";
@@ -124,7 +139,7 @@ function render(data) {
     return {
       cells: [
         row.rank,
-        row.name,
+        playerAnalysisCell(row.playerId, row.name),
         row.team,
         ...scoreCells,
         row.total,
@@ -152,7 +167,7 @@ function render(data) {
     cells: [
       row.rank,
       { html: true, value: tendency(row.trend) },
-      row.name,
+      playerAnalysisCell(row.playerId, row.name),
       row.team,
       row.games,
       { value: row.bestSeries, className: "metric-series" },

@@ -540,3 +540,85 @@ body.page-news .scene .bg-shape {
   color: #ffffff !important;
   background: #285fA4 !important;
 }
+
+/* ===== Phase 15.8: Ergebnis-Lesbarkeit & ruhige Infoseiten ===== */
+/* Auf Analyse, Rekorde und News keinen durchgehenden Gold-/Metallfilm über den Inhalt legen. */
+body.page-analysis .page::before,
+body.page-records .page::before,
+body.page-news .page::before {
+  background: none !important;
+  opacity: 1 !important;
+}
+body.page-analysis .page::after,
+body.page-records .page::after,
+body.page-news .page::after {
+  opacity: 1 !important;
+  background:
+    radial-gradient(circle at 4px 4px,#e0b76f 0 1px,#6c3e24 2px 3px,transparent 4px),
+    radial-gradient(circle at calc(100% - 4px) 4px,#e0b76f 0 1px,#6c3e24 2px 3px,transparent 4px),
+    radial-gradient(circle at 4px calc(100% - 4px),#e0b76f 0 1px,#6c3e24 2px 3px,transparent 4px),
+    radial-gradient(circle at calc(100% - 4px) calc(100% - 4px),#e0b76f 0 1px,#6c3e24 2px 3px,transparent 4px) !important;
+}
+
+/* Die dekorative Abschlusslinie der Karten darf die letzte Tabellenzeile nicht überdecken. */
+.results-view .table-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Einzelwertung: Namen etwas kompakter, Teamspalte breiter und alle Inhalte einzeilig. */
+.results-view .section-einzel .table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.results-view .section-einzel table {
+  min-width: 1080px;
+  table-layout: fixed;
+}
+.results-view .section-einzel th,
+.results-view .section-einzel td {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+.results-view .section-einzel .col-rank { width: 5% !important; }
+.results-view .section-einzel .col-trend { width: 6% !important; }
+.results-view .section-einzel .col-name { width: 12% !important; }
+.results-view .section-einzel .col-team { width: 18% !important; }
+.results-view .section-einzel .col-200 { width: 8% !important; }
+
+/* Spielernamen führen direkt in die Analyse des gewählten Spielers. */
+.results-view .player-analysis-link {
+  color: inherit !important;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(47,111,189,.58);
+  text-underline-offset: 3px;
+}
+.results-view .player-analysis-link:hover,
+.results-view .player-analysis-link:focus-visible {
+  color: #174f91 !important;
+  text-decoration-color: currentColor;
+}
+
+/* Jedes Einzelspiel ab 200 Pins bekommt eine deutlich erkennbare, kontrastreiche Zelle. */
+.results-view .section-spieltag tbody tr td.score-200,
+.results-view .section-einzel tbody tr td.score-200,
+.results-view .section-spieltag tbody tr td.score-200.daily-best-score,
+.results-view .section-einzel tbody tr td.score-200.daily-best-score {
+  color: #ffffff !important;
+  background: linear-gradient(180deg,#14784a 0%,#075331 100%) !important;
+  border-color: #064729 !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.20),
+    inset 0 -8px 16px rgba(0,0,0,.16),
+    0 0 0 1px rgba(6,71,41,.28) !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.55) !important;
+  font-weight: 900 !important;
+}
+.results-view .section-spieltag tbody tr:hover td.score-200,
+.results-view .section-einzel tbody tr:hover td.score-200 {
+  color: #ffffff !important;
+  background: linear-gradient(180deg,#178957 0%,#08613a 100%) !important;
+}

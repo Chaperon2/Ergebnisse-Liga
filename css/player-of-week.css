@@ -283,3 +283,16 @@
     font-size: clamp(17px, 5.5vw, 20px);
   }
 }
+
+/* ===== Phase 15.8: Abstand unter der Wochenwertung ===== */
+.pow-score-panel strong,
+.player-week-card.is-compact .pow-score-panel strong {
+  margin-bottom: 10px;
+}
+.pow-score-panel small,
+.player-week-card.is-compact .pow-score-panel small {
+  display: block;
+  margin-top: 3px;
+  line-height: 1.45;
+}
+

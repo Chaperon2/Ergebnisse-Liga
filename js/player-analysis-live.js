@@ -29,7 +29,7 @@ let chartRows = [];
 
 function selectedPlayerFromUrl() {
   const value = new URLSearchParams(window.location.search).get("spieler");
-  return value && /^[a-z0-9-]{2,60}$/.test(value) ? value : null;
+  return value && value.length <= 120 ? value : null;
 }
 
 function updatePlayerUrl(playerId) {
