@@ -622,3 +622,161 @@ body.page-news .page::after {
   color: #ffffff !important;
   background: linear-gradient(180deg,#178957 0%,#08613a 100%) !important;
 }
+
+
+/* ===== Phase 15.9: gezielte Lesbarkeits- und Spielplan-Korrekturen ===== */
+
+/* 200+ muss unabhängig von älteren Tabellen-/Hoverregeln dominant sichtbar bleiben. */
+.results-view td.score-200,
+.results-view td[data-score-200="true"],
+.results-view .section-spieltag tbody tr td.score-200,
+.results-view .section-einzel tbody tr td.score-200,
+.results-view .section-spieltag tbody tr:hover td.score-200,
+.results-view .section-einzel tbody tr:hover td.score-200 {
+  color:#ffffff !important;
+  background:#075fbd !important;
+  background-image:linear-gradient(180deg,#0b73df 0%,#064b99 100%) !important;
+  border-color:#043b79 !important;
+  outline:2px solid rgba(4,59,121,.42) !important;
+  outline-offset:-2px !important;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),0 2px 7px rgba(6,64,128,.26) !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.55) !important;
+  font-weight:950 !important;
+  font-size:1.08em !important;
+}
+
+/* Ergebnis-Kennzahlen oben an den Tabellen: größer, kräftiger, dunkler. */
+.results-view .stats-chips .stat-chip,
+.results-view .stats-chips .stat-best,
+.results-view .stats-chips .stat-average {
+  min-height:34px !important;
+  padding:8px 11px !important;
+  color:#23170d !important;
+  font-family:"Oswald",sans-serif !important;
+  font-size:12px !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  letter-spacing:.012em !important;
+  text-shadow:none !important;
+}
+.results-view .stats-chips .stat-best {
+  background:#f6d477 !important;
+  border-color:#a96b13 !important;
+}
+.results-view .stats-chips .stat-average {
+  background:#bfe5df !important;
+  border-color:#287b78 !important;
+}
+
+/* Spielernamen bleiben Links, aber ohne blauen Unterstrich. */
+.results-view .player-analysis-link,
+.results-view .player-analysis-link:hover,
+.results-view .player-analysis-link:focus-visible {
+  text-decoration:none !important;
+  text-decoration-line:none !important;
+  border-bottom:0 !important;
+}
+.results-view .player-analysis-link { cursor:pointer; }
+
+/* Rekorde: Rekordhalter und Kadernamen kontrastreich dunkel. */
+body.page-records .record-value,
+body.page-records .record-players {
+  color:#111111 !important;
+  text-shadow:none !important;
+}
+body.page-records .record-value { font-weight:900 !important; }
+body.page-records .record-players { font-weight:800 !important; }
+
+/* Spielplan: intensive, deutlich getrennte Teamfarben. */
+.schedule-view .team-color-1{--team-accent:#1267e8 !important}
+.schedule-view .team-color-2{--team-accent:#169447 !important}
+.schedule-view .team-color-3{--team-accent:#e2a600 !important}
+.schedule-view .team-color-4{--team-accent:#d93632 !important}
+.schedule-view .team-color-5{--team-accent:#7b3fb3 !important}
+.schedule-view .team-color-6{--team-accent:#00979c !important}
+.schedule-view .team-color-7{--team-accent:#e96f00 !important}
+.schedule-view .team-color-8{--team-accent:#cc1f67 !important}
+.schedule-view .team-color-9{--team-accent:#6d4c41 !important}
+.schedule-view .team-color-10{--team-accent:#68737d !important}
+
+.schedule-view .schedule-team-legend {
+  background:linear-gradient(180deg,#fffaf0,#efdfc4) !important;
+  border-color:#b47a36 !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.78),0 6px 16px rgba(81,53,22,.10) !important;
+}
+.schedule-view .team-color-chip {
+  min-height:34px !important;
+  border:2px solid var(--team-accent) !important;
+  background:color-mix(in srgb,var(--team-accent) 38%,#ffffff) !important;
+  color:#17120d !important;
+  font-weight:900 !important;
+  font-size:11px !important;
+  text-shadow:none !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.65) !important;
+}
+.schedule-view .team-color-chip i {
+  color:var(--team-accent) !important;
+  filter:none !important;
+  font-size:12px !important;
+}
+.schedule-view .team.team-colored {
+  min-height:34px !important;
+  border:2px solid var(--team-accent) !important;
+  background:color-mix(in srgb,var(--team-accent) 32%,#ffffff) !important;
+  color:#17120d !important;
+  font-weight:800 !important;
+  text-shadow:none !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.62) !important;
+}
+
+/* Bahn + VS füllen die komplette Mittelfläche und sind sofort lesbar. */
+.schedule-view .pairing-row {
+  grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr) !important;
+}
+.schedule-view .versus {
+  width:58px !important;
+  min-width:58px !important;
+  height:44px !important;
+  min-height:44px !important;
+  display:grid !important;
+  grid-template-rows:1fr 1fr !important;
+  place-items:center !important;
+  align-content:stretch !important;
+  gap:0 !important;
+  padding:3px 2px !important;
+  border:2px solid #a66c29 !important;
+  border-radius:5px !important;
+  background:linear-gradient(180deg,#f8e8c9,#dfbd85) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.72) !important;
+}
+.schedule-view .versus small {
+  align-self:end !important;
+  color:#2b2118 !important;
+  font-family:"Oswald",sans-serif !important;
+  font-size:8px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  text-shadow:none !important;
+}
+.schedule-view .versus b {
+  align-self:start !important;
+  color:#000000 !important;
+  font-family:"Oswald",sans-serif !important;
+  font-size:14px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  text-shadow:none !important;
+}
+
+@media(max-width:700px){
+  .results-view .stats-chips .stat-chip,
+  .results-view .stats-chips .stat-best,
+  .results-view .stats-chips .stat-average{font-size:10px !important;padding:7px 8px !important;min-height:31px !important}
+  .schedule-view .team-color-chip{font-size:10px !important;min-height:31px !important}
+  .schedule-view .pairing-row{grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr) !important}
+  .schedule-view .versus{width:52px !important;min-width:52px !important;height:42px !important;min-height:42px !important}
+  .schedule-view .versus small{font-size:7px !important}
+  .schedule-view .versus b{font-size:13px !important}
+}

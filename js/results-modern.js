@@ -92,9 +92,14 @@ function renderTable({ headers, rows, sectionClass = "" }) {
     const rowClasses = [row.pairStart ? "pair-start" : "", row.pairEnd ? "pair-end" : ""].filter(Boolean).join(" ");
     return `<tr class="${rowClasses}">${row.cells.map((cell, index) => {
       const classes = [headerClass(headers[index])];
-      if (row.score200Indexes?.includes(index)) classes.push("score-200");
+      const label = headerText(headers[index]).toLowerCase();
+      const rawValue = cell && typeof cell === "object" ? cell.value : cell;
+      const numericValue = Number(rawValue);
+      const isGameScore = label.startsWith("spiel ") || label.includes("bestes spiel");
+      const isScore200 = row.score200Indexes?.includes(index) || (isGameScore && Number.isFinite(numericValue) && numericValue >= 200);
+      if (isScore200) classes.push("score-200");
       if (cell && typeof cell === "object" && cell.className) classes.push(cell.className);
-      return `<td class="${classes.join(" ")}">${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
+      return `<td class="${classes.join(" ")}"${isScore200 ? ' data-score-200="true"' : ""}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
     }).join("")}</tr>`;
   }).join("")}</tbody></table></div>`;
 }
