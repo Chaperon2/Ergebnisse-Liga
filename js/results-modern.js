@@ -105,6 +105,22 @@ function renderTable({ headers, rows, sectionClass = "" }) {
 }
 
 
+function applyStrong200Style(cell) {
+  if (!cell?.style?.setProperty) return;
+  cell.classList.add("score-200", "score-200-strong");
+  cell.dataset.score200 = "true";
+  cell.style.setProperty("background-color", "#f59e0b", "important");
+  cell.style.setProperty("background-image", "linear-gradient(180deg,#ffbf32 0%,#f28a00 100%)", "important");
+  cell.style.setProperty("color", "#17110a", "important");
+  cell.style.setProperty("font-weight", "900", "important");
+  cell.style.setProperty("font-size", "1.16em", "important");
+  cell.style.setProperty("border-color", "#9a5200", "important");
+  cell.style.setProperty("outline", "2px solid #9a5200", "important");
+  cell.style.setProperty("outline-offset", "-2px", "important");
+  cell.style.setProperty("box-shadow", "inset 0 0 0 2px rgba(255,255,255,.42),0 1px 4px rgba(103,55,0,.24)", "important");
+  cell.style.setProperty("text-shadow", "0 1px 0 rgba(255,255,255,.25)", "important");
+}
+
 function markStrong200Cells(root = sectionsGrid) {
   if (!root?.querySelectorAll) return;
   root.querySelectorAll("table").forEach((table) => {
@@ -124,10 +140,7 @@ function markStrong200Cells(root = sectionsGrid) {
         if (!cell) return;
         const text = String(cell.textContent ?? "").trim().replace(/\s+/g, "");
         if (!/^\d{2,3}$/.test(text)) return;
-        if (Number(text) >= 200) {
-          cell.classList.add("score-200", "score-200-strong");
-          cell.dataset.score200 = "true";
-        }
+        if (Number(text) >= 200) applyStrong200Style(cell);
       });
     });
   });
