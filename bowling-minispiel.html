@@ -2203,6 +2203,33 @@
   .pin.pin-falling, .pin.fallen { filter:none !important; will-change:transform,opacity !important; backface-visibility:hidden !important; }
   .pin.pin-falling .pin-shadow, .pin.fallen .pin-shadow { opacity:.38; filter:none !important; }
 </style>
+
+<style id="phase20-slot-touch-pin-reset">
+  /* Phase 20: true reel centering, single-tap selection and robust rack resets. */
+  .slot-item {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+    justify-items: center !important;
+    align-items: center !important;
+    place-items: center !important;
+    text-align: center !important;
+  }
+  .slot-item .slot-icon {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    margin: 0 auto !important;
+  }
+  .slot-choice {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (hover:none), (pointer:coarse) {
+    .slot-choice.ready:hover { transform:none !important; }
+  }
+</style>
+
 </head>
 
 <body>
@@ -3222,6 +3249,14 @@
       layoutScene();
     }
 
+    function resetFullRackVisuals() {
+      // A fresh DOM rack prevents stale Web-Animation/inline styles from leaking into the next rack.
+      pinDeck.querySelectorAll(".pin").forEach(stopPinFallAnimation);
+      standingPins = fullRackSet();
+      lastImpactMap = {};
+      setupPins();
+    }
+
     function layoutScene() {
       stageWidth = laneStage.clientWidth || 800;
       stageHeight = laneStage.clientHeight || 900;
@@ -3308,34 +3343,49 @@
 
     function stopPinFallAnimation(el) {
       if (el._fallAnimation) {
-        try { el._fallAnimation.cancel(); } catch {}
+        const animation = el._fallAnimation;
         el._fallAnimation = null;
+        try { animation.onfinish = null; animation.cancel(); } catch {}
       }
       el.classList.remove("pin-falling");
     }
 
-    function animatePinFall(el, impact = {}) {
+    function clearPinInlineState(el) {
       stopPinFallAnimation(el);
+      el.style.removeProperty("transform");
+      el.style.removeProperty("opacity");
+      el.style.removeProperty("visibility");
+      el.style.removeProperty("display");
+      el.style.removeProperty("--fall-delay");
+      el.style.removeProperty("--fall-x");
+      el.style.removeProperty("--fall-y");
+      el.style.removeProperty("--fall-rot");
+    }
+
+    function animatePinFall(el, impact = {}) {
+      clearPinInlineState(el);
       const x = Number(impact.fallX) || 18;
       const y = Number(impact.fallY) || 22;
       const rot = Number(impact.rotation) || 72;
-      // Kleine Staffelung erhält die Kettenreaktion, ohne sichtbare Start-Stotterer.
-      const delay = Math.min(72, Math.max(0, Number(impact.delay) || 0) * .34);
+      // Only a very small stagger remains; all transforms stay compositor-friendly.
+      const delay = Math.min(28, Math.max(0, Number(impact.delay) || 0) * .12);
       el.classList.add("pin-falling");
       const animation = el.animate([
         { transform:"translate3d(0,0,0) rotateZ(0deg) scale(1)", opacity:1, offset:0 },
-        { transform:`translate3d(${x*.07}px,${y*-.08}px,0) rotateZ(${rot*.14}deg) scale(1.012)`, opacity:1, offset:.18 },
-        { transform:`translate3d(${x*.38}px,${y*.22}px,0) rotateZ(${rot*.48}deg) scale(.99)`, opacity:1, offset:.46 },
-        { transform:`translate3d(${x*.78}px,${y*.70}px,0) rotateZ(${rot*.86}deg) scale(.93)`, opacity:.95, offset:.76 },
-        { transform:`translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.84)`, opacity:.16, offset:1 }
-      ], { duration:860, delay, easing:"cubic-bezier(.16,.72,.18,1)", fill:"forwards" });
+        { transform:`translate3d(${x*.12}px,${y*-.06}px,0) rotateZ(${rot*.18}deg) scale(1.01)`, opacity:1, offset:.22 },
+        { transform:`translate3d(${x*.58}px,${y*.40}px,0) rotateZ(${rot*.62}deg) scale(.96)`, opacity:1, offset:.62 },
+        { transform:`translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.86)`, opacity:.32, offset:1 }
+      ], { duration:760, delay, easing:"cubic-bezier(.18,.72,.22,1)", fill:"forwards" });
       el._fallAnimation = animation;
       animation.onfinish = () => {
         if (el._fallAnimation !== animation) return;
-        el.style.transform = `translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.84)`;
-        el.style.opacity = ".16";
-        el.classList.remove("pin-falling");
         el._fallAnimation = null;
+        el.classList.remove("pin-falling", "fallen");
+        el.classList.add("gone");
+        // Fallen pins disappear completely after the fall instead of remaining on the deck.
+        el.style.transform = `translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.86)`;
+        el.style.opacity = "0";
+        el.style.visibility = "hidden";
       };
     }
 
@@ -3343,16 +3393,13 @@
       const knockedSet = new Set(knockedPins);
       pinDeck.querySelectorAll(".pin").forEach(el => {
         const pinId = Number(el.dataset.pinId);
-        stopPinFallAnimation(el);
+        clearPinInlineState(el);
         el.className = "pin";
-        el.style.removeProperty("--fall-delay");
-        el.style.removeProperty("transform");
-        el.style.removeProperty("opacity");
 
         if (standingPins.has(pinId)) {
-          el.style.removeProperty("--fall-x");
-          el.style.removeProperty("--fall-y");
-          el.style.removeProperty("--fall-rot");
+          // Standing pins are always restored to a fully visible neutral state.
+          el.style.opacity = "1";
+          el.style.visibility = "visible";
           return;
         }
 
@@ -3369,6 +3416,8 @@
           animatePinFall(el, impact);
         } else {
           el.classList.add("gone");
+          el.style.opacity = "0";
+          el.style.visibility = "hidden";
         }
       });
     }
@@ -4035,9 +4084,7 @@
         scheduleGameTimer(() => openEndGameModal(), 380);
         return;
       }
-      standingPins = fullRackSet();
-      lastImpactMap = {};
-      renderPins([]);
+      resetFullRackVisuals();
       positionBallAtRest();
       showThrowHelp();
       renderScoreboard();
@@ -4063,9 +4110,6 @@
             showFlash("STRIKE");
             playStrikeSound();
             continuation = () => {
-              standingPins = fullRackSet();
-              lastImpactMap = {};
-              renderPins([]);
               advanceToNextFrame();
             };
           } else {
@@ -4078,9 +4122,6 @@
         } else {
           if (frame.throws[0] + frame.throws[1] === 10) { showFlash("SPARE"); playSpareSound(); }
           continuation = () => {
-            standingPins = fullRackSet();
-            lastImpactMap = {};
-            renderPins([]);
             advanceToNextFrame();
           };
         }
@@ -4093,9 +4134,7 @@
           }
           continuation = () => {
             if (t[0] === 10) {
-              standingPins = fullRackSet();
-              lastImpactMap = {};
-              renderPins([]);
+              resetFullRackVisuals();
             }
             positionBallAtRest();
             showThrowHelp();
@@ -4109,9 +4148,7 @@
             }
             continuation = () => {
               if (t[1] === 10) {
-                standingPins = fullRackSet();
-                lastImpactMap = {};
-                renderPins([]);
+                resetFullRackVisuals();
               }
               positionBallAtRest();
               showThrowHelp();
@@ -4121,9 +4158,7 @@
             showFlash("SPARE");
             playSpareSound();
             continuation = () => {
-              standingPins = fullRackSet();
-              lastImpactMap = {};
-              renderPins([]);
+              resetFullRackVisuals();
               positionBallAtRest();
               showThrowHelp();
               updateStatus();
@@ -4196,8 +4231,7 @@
       hideThrowStats();
       hideModal();
       laneStage.classList.remove("help-hidden");
-      renderPins([]);
-      layoutScene();
+      setupPins();
       renderScoreboard();
       renderPassiveRack();
       renderLeaderboard();
@@ -4367,12 +4401,22 @@
 
     ball.addEventListener("pointerdown", handlePointerDown);
     ball.addEventListener("pointermove", handlePointerMove);
-    powerupSlotChoices.addEventListener("click", event => {
+    function handlePowerupSlotSelection(event) {
       const choice = event.target.closest(".slot-choice.ready");
-      if (!choice || choice.disabled || slotSpinning) return;
+      if (!choice || choice.disabled || slotSpinning) return false;
       const slotIndex = Number(choice.dataset.slotIndex);
       const item = pendingPowerupChoices[slotIndex];
-      if (item) selectPowerupPreview(item.id, slotIndex);
+      if (!item) return false;
+      selectPowerupPreview(item.id, slotIndex);
+      return true;
+    }
+
+    powerupSlotChoices.addEventListener("pointerup", event => {
+      if (handlePowerupSlotSelection(event)) event.preventDefault();
+    });
+    // Keyboard activation still uses click; pointer-generated clicks are ignored to avoid double firing.
+    powerupSlotChoices.addEventListener("click", event => {
+      if (event.detail === 0) handlePowerupSlotSelection(event);
     });
 
     activatePowerupBtn.addEventListener("click", () => {
