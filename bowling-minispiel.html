@@ -2230,6 +2230,36 @@
   }
 </style>
 
+
+  <style id="phase22-leaderboard-scroll-clean-ui">
+    /* Minispiel-Seite muss außerhalb der Kugel normal vertikal scrollbar bleiben. */
+    .lane-stage { touch-action: pan-y !important; }
+    .ball { touch-action: none !important; }
+    .start-overlay, .powerup-overlay {
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+    .start-card { max-height: none; }
+
+    /* Startauswahl: nur die beiden Modus-Kacheln. */
+    .start-card .start-badge,
+    .start-card > h2,
+    .start-card .mode-intro { display: none !important; }
+    .start-card { padding: 14px !important; }
+    .mode-picker { margin-top: 0 !important; }
+
+    /* Slot-Auswahl: oberhalb der Slots nur die Überschrift zeigen. */
+    .slot-panel .powerup-kicker,
+    .slot-panel .powerup-subtitle { display: none !important; }
+    .slot-panel > h3 {
+      margin: 0 0 14px !important;
+      color: #ffd84d !important;
+      font-weight: 900 !important;
+      text-shadow: 0 0 14px rgba(255,216,77,.28);
+    }
+  </style>
 </head>
 
 <body>
@@ -2243,7 +2273,7 @@
       </div>
       <div class="skill-pill">
         <i class="fa-solid fa-hand-point-up"></i>
-        <span>2 Modi · 3er-Slot · 60 Powerups</span>
+        <span>2 Modi · 3er-Slot · 72 Powerups</span>
       </div>
     </div>
 
@@ -2274,7 +2304,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots pro Frame · 60 Powerups · 3 Passive</small></span>
+                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots pro Frame · 72 Powerups · 3 Passive</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2443,9 +2473,12 @@
 
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
+    // Beide Modi nutzen denselben, bereits bewährten Firebase-Knoten wie Classic.
+    // Neue Einträge tragen ein mode-Feld; alte Einträge ohne mode gelten als Classic.
+    const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
     const leaderboardRefs = {
-      classic: database.ref("leaderboards/bowlingMinigame"),
-      powerup: database.ref("leaderboards/bowlingMinigamePowerup")
+      classic: leaderboardRef,
+      powerup: leaderboardRef
     };
 
     const PIN_LAYOUT = [
@@ -3698,7 +3731,11 @@
       return Object.entries(raw || {})
         .map(([id, value]) => ({ id, name: String(value?.name || "Unbekannt").trim().slice(0, 24), score: Number(value?.score || 0), createdAt: Number(value?.createdAt || 0), storedMode: value?.mode || null }))
         .filter(entry => entry.name && Number.isFinite(entry.score))
-        .filter(entry => !mode || !entry.storedMode || entry.storedMode === mode)
+        .filter(entry => {
+          if (!mode) return true;
+          if (mode === "classic") return !entry.storedMode || entry.storedMode === "classic";
+          return entry.storedMode === "powerup";
+        })
         .filter(entry => mode !== "classic" || entry.score <= 300)
         .sort((a, b) => b.score - a.score || a.createdAt - b.createdAt);
     }
@@ -3759,15 +3796,15 @@
     }
 
     function startLeaderboardListener() {
-      Object.entries(leaderboardRefs).forEach(([mode, ref]) => {
-        ref.on("value", snapshot => {
-          leaderboardEntries[mode] = normalizeLeaderboardEntries(snapshot.val(), mode);
-          renderLeaderboard();
-          leaderboardBadge.innerHTML = `<i class="fa-solid fa-signal"></i><span>live</span>`;
-        }, error => {
-          leaderboardBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>Fehler</span>`;
-          leaderboardNote.textContent = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
-        });
+      leaderboardRef.on("value", snapshot => {
+        const raw = snapshot.val();
+        leaderboardEntries.classic = normalizeLeaderboardEntries(raw, "classic");
+        leaderboardEntries.powerup = normalizeLeaderboardEntries(raw, "powerup");
+        renderLeaderboard();
+        leaderboardBadge.innerHTML = `<i class="fa-solid fa-signal"></i><span>live</span>`;
+      }, error => {
+        leaderboardBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>Fehler</span>`;
+        leaderboardNote.textContent = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
       });
     }
 
