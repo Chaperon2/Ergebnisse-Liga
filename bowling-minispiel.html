@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Strikeclub Velten · Minispiel Phase 17 · Classic + Powerup Slotmachine -->
+<!-- Strikeclub Velten · Minispiel Phase 21 · Frame-Powerups + Slot-Sounds -->
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -2265,7 +2265,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Wähle deinen Modus</h2>
-                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du vor dem ersten Wurf und danach nur nach komplett abgeschlossenen Frames drei Slot-Walzen. Offener Frame = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Bis zu 3 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
+                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du vor dem ersten Wurf und danach nur nach komplett abgeschlossenen Frames drei Slot-Walzen. Offener Frame = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Vor dem ersten Wurf gibt es eine Bronze-Auswahl; nach dem letzten Wurf werden ausschließlich Sofortpunkte angeboten. Bis zu 3 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2571,6 +2571,9 @@
         nextStrikeBonus: 0,
         nextSpareBonus: 0,
         nextFrameBonus: 0,
+        nextCleanFrameBonus: 0,
+        nextOpenFrameBonus: 0,
+        nextFrameScoreMultiplier: 1,
         guaranteedClearThrows: 0,
         jackpotThrows: 0,
         assistThrows: 0,
@@ -2579,78 +2582,92 @@
         permanentSpareBonus: 0,
         permanentFrameBonus: 0,
         permanentHighRollBonus: 0,
+        permanentFirstBallPinBonus: 0,
         bonusMultiplier: 1
       };
     }
 
+    // Phase 21: Powerups sind auf den Rhythmus "vor Frame 1 / nach abgeschlossenem Frame" zugeschnitten.
+    // kind: score = sofortige Punkte, active = einmaliger/temporärer Vorteil, passive = maximal 3 Dauerboni.
     const POWERUPS = [
-      // Bronze · normale Würfe
-      { id:"b1", tier:"bronze", name:"Kleines Polster", icon:"fa-coins", desc:"Sofort +5 Punkte.", apply(){ addPowerupBonus(5); } },
-      { id:"b2", tier:"bronze", name:"Bonus-Chip", icon:"fa-ticket", desc:"Sofort +8 Punkte.", apply(){ addPowerupBonus(8); } },
-      { id:"b3", tier:"bronze", name:"Pin-Prämie", icon:"fa-thumbtack", desc:"Beim nächsten Wurf +1 Punkt pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 1; } },
-      { id:"b4", tier:"bronze", name:"Achter-Alarm", icon:"fa-8", desc:"Beim nächsten Wurf ab 8 Pins zusätzlich +12 Punkte.", apply(){ powerupState.nextHighRollBonus += 12; } },
-      { id:"b5", tier:"bronze", name:"Mini-Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 1 zusätzlichen Pin mit.", apply(){ powerupState.nextAutoPins += 1; } },
-      { id:"b6", tier:"bronze", name:"Breite Tasche", icon:"fa-arrows-left-right", desc:"Der nächste Wurf bekommt eine breitere Trefferzone.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .20); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); } },
-      { id:"b7", tier:"bronze", name:"Ruhige Hand", icon:"fa-hand", desc:"Der nächste Wurf läuft deutlich stabiler.", apply(){ powerupState.stability = Math.max(powerupState.stability, .70); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
-      { id:"b8", tier:"bronze", name:"Rinnenschutz", icon:"fa-shield", desc:"Der nächste Rinnenwurf wird gerettet und trifft mindestens 4 Pins.", apply(){ powerupState.gutterShieldThrows += 1; } },
-      { id:"b9", tier:"bronze", name:"Ersatzkugel", icon:"fa-bowling-ball", desc:"Der nächste Wurf trifft mindestens 5 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 5); } },
-      { id:"b10", tier:"bronze", name:"Spare-Samen", icon:"fa-seedling", desc:"Der nächste Spare bringt zusätzlich +15 Punkte.", apply(){ powerupState.nextSpareBonus += 15; } },
-      { id:"b11", tier:"bronze", name:"Frame-Zins", icon:"fa-piggy-bank", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +3 Punkte.", apply(){ powerupState.permanentFrameBonus += 3; } },
-      { id:"b12", tier:"bronze", name:"Pin-Aktie", icon:"fa-chart-line", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +1 Punkt wert.", apply(){ powerupState.permanentPinBonus += 1; } },
-      { id:"b13", tier:"bronze", name:"Spare-Sparbuch", icon:"fa-book", desc:"DAUERHAFT: Jeder weitere Spare bringt +8 Punkte.", apply(){ powerupState.permanentSpareBonus += 8; } },
-      { id:"b14", tier:"bronze", name:"Achter-Abo", icon:"fa-star", desc:"DAUERHAFT: Jeder Wurf mit mindestens 8 Pins bringt +4 Punkte.", apply(){ powerupState.permanentHighRollBonus += 4; } },
-      { id:"b15", tier:"bronze", name:"Doppel-Schutz", icon:"fa-shield-halved", desc:"Die nächsten 2 Rinnenwürfe werden gerettet.", apply(){ powerupState.gutterShieldThrows += 2; } },
-      { id:"b16", tier:"bronze", name:"Hilfslinie", icon:"fa-route", desc:"Der nächste Wurf bekommt automatische Linienhilfe.", apply(){ powerupState.assistThrows += 1; } },
-      { id:"b17", tier:"bronze", name:"Zielhilfe XL", icon:"fa-crosshairs", desc:"Für die nächsten 2 Würfe ist die Trefferzone breiter.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .26); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 2); } },
-      { id:"b18", tier:"bronze", name:"Konstanz", icon:"fa-wave-square", desc:"Für die nächsten 2 Würfe wird die Streuung reduziert.", apply(){ powerupState.stability = Math.max(powerupState.stability, .65); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 2); } },
-      { id:"b19", tier:"bronze", name:"Pin-Vorschuss", icon:"fa-money-bill-wave", desc:"Sofort +12 Punkte.", apply(){ addPowerupBonus(12); } },
-      { id:"b20", tier:"bronze", name:"Strike-Los", icon:"fa-bolt", desc:"Der nächste Strike bringt zusätzlich +25 Punkte.", apply(){ powerupState.nextStrikeBonus += 25; } },
+      // BRONZE · offener Frame / Startauswahl
+      { id:"b1", tier:"bronze", kind:"score", name:"Kleines Polster", icon:"fa-coins", desc:"Sofort +5 Punkte.", apply(){ addPowerupBonus(5); } },
+      { id:"b2", tier:"bronze", kind:"score", name:"Bonus-Chip", icon:"fa-ticket", desc:"Sofort +8 Punkte.", apply(){ addPowerupBonus(8); } },
+      { id:"b3", tier:"bronze", kind:"score", name:"Zehner", icon:"fa-star", desc:"Sofort +10 Punkte.", apply(){ addPowerupBonus(10); } },
+      { id:"b4", tier:"bronze", kind:"score", name:"Pin-Vorschuss", icon:"fa-money-bill-wave", desc:"Sofort +12 Punkte.", apply(){ addPowerupBonus(12); } },
+      { id:"b5", tier:"bronze", kind:"score", name:"Bronze-Bonus", icon:"fa-medal", desc:"Sofort +14 Punkte.", apply(){ addPowerupBonus(14); } },
+      { id:"b6", tier:"bronze", kind:"score", name:"Lucky Chip", icon:"fa-gift", desc:"Sofort +16 Punkte.", apply(){ addPowerupBonus(16); } },
+      { id:"b7", tier:"bronze", kind:"active", name:"Pin-Prämie", icon:"fa-thumbtack", desc:"Beim ersten Wurf des nächsten Frames: +1 Punkt pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 1; } },
+      { id:"b8", tier:"bronze", kind:"active", name:"Achter-Alarm", icon:"fa-bullseye", desc:"Beim ersten Wurf des nächsten Frames ab 8 Pins: +12 Punkte.", apply(){ powerupState.nextHighRollBonus += 12; } },
+      { id:"b9", tier:"bronze", kind:"active", name:"Mini-Magnet", icon:"fa-magnet", desc:"Der erste Wurf des nächsten Frames nimmt bis zu 1 zusätzlichen Pin mit.", apply(){ powerupState.nextAutoPins += 1; } },
+      { id:"b10", tier:"bronze", kind:"active", name:"Breite Tasche", icon:"fa-arrows-left-right", desc:"Im nächsten Frame ist die Trefferzone deutlich breiter.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .20); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 3); } },
+      { id:"b11", tier:"bronze", kind:"active", name:"Ruhige Hand", icon:"fa-hand", desc:"Im nächsten Frame wird die Streuung deutlich reduziert.", apply(){ powerupState.stability = Math.max(powerupState.stability, .70); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 3); } },
+      { id:"b12", tier:"bronze", kind:"active", name:"Rinnenschutz", icon:"fa-shield-halved", desc:"Im nächsten Frame werden Rinnenwürfe gerettet.", apply(){ powerupState.gutterShieldThrows = Math.max(powerupState.gutterShieldThrows, 3); } },
+      { id:"b13", tier:"bronze", kind:"active", name:"Ersatzkugel", icon:"fa-bowling-ball", desc:"Der erste Wurf des nächsten Frames trifft mindestens 5 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 5); } },
+      { id:"b14", tier:"bronze", kind:"active", name:"Spare-Samen", icon:"fa-seedling", desc:"Der nächste Spare bringt zusätzlich +20 Punkte – egal in welchem späteren Frame.", apply(){ powerupState.nextSpareBonus += 20; } },
+      { id:"b15", tier:"bronze", kind:"active", name:"Strike-Los", icon:"fa-bolt", desc:"Der nächste Strike bringt zusätzlich +30 Punkte – egal in welchem späteren Frame.", apply(){ powerupState.nextStrikeBonus += 30; } },
+      { id:"b16", tier:"bronze", kind:"active", name:"Frame-Booster", icon:"fa-gauge-high", desc:"Der nächste abgeschlossene Frame bringt zusätzlich +20 Punkte.", apply(){ powerupState.nextFrameBonus += 20; } },
+      { id:"b17", tier:"bronze", kind:"active", name:"Hilfslinie", icon:"fa-route", desc:"Im nächsten Frame: Linienhilfe, stabilerer Lauf und Schutz vor der Rinne.", apply(){ powerupState.assistThrows = Math.max(powerupState.assistThrows, 3); } },
+      { id:"b18", tier:"bronze", kind:"active", name:"Comeback", icon:"fa-arrow-trend-up", desc:"Wenn der erste Wurf des nächsten Frames höchstens 4 Pins trifft, gibt es +18 Punkte.", apply(){ powerupState.nextLowRollBonus += 18; } },
+      { id:"b19", tier:"bronze", kind:"active", name:"Sauber-Bonus", icon:"fa-broom", desc:"Ist der nächste Frame ein Spare oder Strike, gibt es +25 Punkte.", apply(){ powerupState.nextCleanFrameBonus += 25; } },
+      { id:"b20", tier:"bronze", kind:"passive", name:"Frame-Zins", icon:"fa-piggy-bank", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +3 Punkte.", apply(){ powerupState.permanentFrameBonus += 3; } },
+      { id:"b21", tier:"bronze", kind:"passive", name:"Pin-Aktie", icon:"fa-chart-line", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +1 Punkt wert.", apply(){ powerupState.permanentPinBonus += 1; } },
+      { id:"b22", tier:"bronze", kind:"passive", name:"Spare-Sparbuch", icon:"fa-book", desc:"DAUERHAFT: Jeder weitere Spare bringt +8 Punkte.", apply(){ powerupState.permanentSpareBonus += 8; } },
+      { id:"b23", tier:"bronze", kind:"passive", name:"Achter-Abo", icon:"fa-fire", desc:"DAUERHAFT: Jeder Wurf mit mindestens 8 Pins bringt +4 Punkte.", apply(){ powerupState.permanentHighRollBonus += 4; } },
+      { id:"b24", tier:"bronze", kind:"passive", name:"Erster Eindruck", icon:"fa-hand-sparkles", desc:"DAUERHAFT: Beim ersten Wurf jedes künftigen Frames gibt es +1 Punkt pro gefälltem Pin.", apply(){ powerupState.permanentFirstBallPinBonus += 1; } },
 
-      // Silber · Spare
-      { id:"s1", tier:"silver", name:"Spare-Kasse", icon:"fa-sack-dollar", desc:"Sofort +18 Punkte.", apply(){ addPowerupBonus(18); } },
-      { id:"s2", tier:"silver", name:"Silberregen", icon:"fa-cloud-rain", desc:"Sofort +25 Punkte.", apply(){ addPowerupBonus(25); } },
-      { id:"s3", tier:"silver", name:"Doppel-Prämie", icon:"fa-2", desc:"Beim nächsten Wurf +2 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 2; } },
-      { id:"s4", tier:"silver", name:"Starker Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 2 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 2; } },
-      { id:"s5", tier:"silver", name:"Achter-Garantie", icon:"fa-shield-halved", desc:"Beim nächsten Wurf fallen mindestens 8 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 8); } },
-      { id:"s6", tier:"silver", name:"Präzisionslaser", icon:"fa-crosshairs", desc:"Nächster Wurf: breite Trefferzone und stark reduzierte Streuung.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .34); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); powerupState.stability = Math.max(powerupState.stability, .82); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
-      { id:"s7", tier:"silver", name:"Spare-Jäger", icon:"fa-bullseye", desc:"Der nächste Spare ist +35 Punkte wert.", apply(){ powerupState.nextSpareBonus += 35; } },
-      { id:"s8", tier:"silver", name:"Strike-Jäger", icon:"fa-bolt", desc:"Der nächste Strike ist +45 Punkte wert.", apply(){ powerupState.nextStrikeBonus += 45; } },
-      { id:"s9", tier:"silver", name:"Comeback", icon:"fa-arrow-trend-up", desc:"Beim nächsten Wurf mit höchstens 4 Pins gibt es +20 Punkte.", apply(){ powerupState.nextLowRollBonus += 20; } },
-      { id:"s10", tier:"silver", name:"Frame-Booster", icon:"fa-gauge-high", desc:"Beim nächsten Wurf +3 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 3; } },
-      { id:"s11", tier:"silver", name:"Silber-Abo", icon:"fa-calendar-check", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +6 Punkte.", apply(){ powerupState.permanentFrameBonus += 6; } },
-      { id:"s12", tier:"silver", name:"Pin-Rendite", icon:"fa-arrow-trend-up", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +1 Punkt wert.", apply(){ powerupState.permanentPinBonus += 1; } },
-      { id:"s13", tier:"silver", name:"Spare-Rente", icon:"fa-vault", desc:"DAUERHAFT: Jeder weitere Spare bringt +15 Punkte.", apply(){ powerupState.permanentSpareBonus += 15; } },
-      { id:"s14", tier:"silver", name:"Strike-Zins", icon:"fa-coins", desc:"DAUERHAFT: Jeder weitere Strike bringt +18 Punkte.", apply(){ powerupState.permanentStrikeBonus += 18; } },
-      { id:"s15", tier:"silver", name:"Highroller-Abo", icon:"fa-fire", desc:"DAUERHAFT: Jeder Wurf mit mindestens 8 Pins bringt +7 Punkte.", apply(){ powerupState.permanentHighRollBonus += 7; } },
-      { id:"s16", tier:"silver", name:"Doppelmagnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 3 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 3; } },
-      { id:"s17", tier:"silver", name:"Rinnenversicherung", icon:"fa-umbrella", desc:"Die nächsten 3 Rinnenwürfe werden gerettet.", apply(){ powerupState.gutterShieldThrows += 3; } },
-      { id:"s18", tier:"silver", name:"Perfekte Doppel-Linie", icon:"fa-route", desc:"Für die nächsten 2 Würfe: kein Gutter, stabile Linie, breite Trefferzone.", apply(){ powerupState.assistThrows += 2; } },
-      { id:"s19", tier:"silver", name:"Bonus-Verstärker", icon:"fa-percent", desc:"DAUERHAFT: Alle künftig verdienten Powerup-Punkte werden um 15 % erhöht.", apply(){ powerupState.bonusMultiplier += .15; } },
-      { id:"s20", tier:"silver", name:"Frame-Doppel", icon:"fa-layer-group", desc:"Der nächste abgeschlossene Frame bringt zusätzlich +30 Punkte.", apply(){ powerupState.nextFrameBonus += 30; } },
+      // SILBER · Spare
+      { id:"s1", tier:"silver", kind:"score", name:"Spare-Kasse", icon:"fa-sack-dollar", desc:"Sofort +18 Punkte.", apply(){ addPowerupBonus(18); } },
+      { id:"s2", tier:"silver", kind:"score", name:"Silber-Chip", icon:"fa-ticket", desc:"Sofort +22 Punkte.", apply(){ addPowerupBonus(22); } },
+      { id:"s3", tier:"silver", kind:"score", name:"Silberregen", icon:"fa-cloud-rain", desc:"Sofort +25 Punkte.", apply(){ addPowerupBonus(25); } },
+      { id:"s4", tier:"silver", kind:"score", name:"Spare-Prämie", icon:"fa-medal", desc:"Sofort +30 Punkte.", apply(){ addPowerupBonus(30); } },
+      { id:"s5", tier:"silver", kind:"score", name:"Silber-Jackpot", icon:"fa-coins", desc:"Sofort +35 Punkte.", apply(){ addPowerupBonus(35); } },
+      { id:"s6", tier:"silver", kind:"score", name:"Vierzig Plus", icon:"fa-gem", desc:"Sofort +40 Punkte.", apply(){ addPowerupBonus(40); } },
+      { id:"s7", tier:"silver", kind:"active", name:"Doppel-Prämie", icon:"fa-thumbtack", desc:"Beim ersten Wurf des nächsten Frames: +2 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 2; } },
+      { id:"s8", tier:"silver", kind:"active", name:"Starker Magnet", icon:"fa-magnet", desc:"Der erste Wurf des nächsten Frames nimmt bis zu 2 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 2; } },
+      { id:"s9", tier:"silver", kind:"active", name:"Achter-Garantie", icon:"fa-shield-heart", desc:"Der erste Wurf des nächsten Frames trifft mindestens 8 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 8); } },
+      { id:"s10", tier:"silver", kind:"active", name:"Präzisionslaser", icon:"fa-crosshairs", desc:"Im nächsten Frame: große Trefferzone und stark reduzierte Streuung.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .34); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 3); powerupState.stability = Math.max(powerupState.stability, .82); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 3); } },
+      { id:"s11", tier:"silver", kind:"active", name:"Spare-Jäger", icon:"fa-bullseye", desc:"Der nächste Spare bringt zusätzlich +45 Punkte.", apply(){ powerupState.nextSpareBonus += 45; } },
+      { id:"s12", tier:"silver", kind:"active", name:"Strike-Jäger", icon:"fa-bolt", desc:"Der nächste Strike bringt zusätzlich +55 Punkte.", apply(){ powerupState.nextStrikeBonus += 55; } },
+      { id:"s13", tier:"silver", kind:"active", name:"Comeback XL", icon:"fa-arrow-trend-up", desc:"Wenn der erste Wurf des nächsten Frames höchstens 4 Pins trifft, gibt es +28 Punkte.", apply(){ powerupState.nextLowRollBonus += 28; } },
+      { id:"s14", tier:"silver", kind:"active", name:"Frame-Doppel", icon:"fa-layer-group", desc:"Der nächste abgeschlossene Frame bringt zusätzlich +40 Punkte.", apply(){ powerupState.nextFrameBonus += 40; } },
+      { id:"s15", tier:"silver", kind:"active", name:"Clean-Sweep", icon:"fa-broom", desc:"Ist der nächste Frame ein Spare oder Strike, gibt es +55 Punkte.", apply(){ powerupState.nextCleanFrameBonus += 55; } },
+      { id:"s16", tier:"silver", kind:"active", name:"Schadensbegrenzung", icon:"fa-life-ring", desc:"Bleibt der nächste Frame offen, gibt es trotzdem +25 Punkte.", apply(){ powerupState.nextOpenFrameBonus += 25; } },
+      { id:"s17", tier:"silver", kind:"active", name:"Abräumer", icon:"fa-wand-magic-sparkles", desc:"Der erste Wurf des nächsten Frames räumt garantiert alle aktuell stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 1; } },
+      { id:"s18", tier:"silver", kind:"active", name:"Doppel-Linie", icon:"fa-route", desc:"Im nächsten Frame: starke Linienhilfe und kein Gutter.", apply(){ powerupState.assistThrows = Math.max(powerupState.assistThrows, 3); } },
+      { id:"s19", tier:"silver", kind:"active", name:"Highroller", icon:"fa-fire", desc:"Beim ersten Wurf des nächsten Frames ab 8 Pins: +25 Punkte.", apply(){ powerupState.nextHighRollBonus += 25; } },
+      { id:"s20", tier:"silver", kind:"passive", name:"Silber-Abo", icon:"fa-calendar-check", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +6 Punkte.", apply(){ powerupState.permanentFrameBonus += 6; } },
+      { id:"s21", tier:"silver", kind:"passive", name:"Pin-Rendite", icon:"fa-chart-line", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +1 Punkt wert.", apply(){ powerupState.permanentPinBonus += 1; } },
+      { id:"s22", tier:"silver", kind:"passive", name:"Spare-Rente", icon:"fa-vault", desc:"DAUERHAFT: Jeder weitere Spare bringt +15 Punkte.", apply(){ powerupState.permanentSpareBonus += 15; } },
+      { id:"s23", tier:"silver", kind:"passive", name:"Strike-Zins", icon:"fa-coins", desc:"DAUERHAFT: Jeder weitere Strike bringt +18 Punkte.", apply(){ powerupState.permanentStrikeBonus += 18; } },
+      { id:"s24", tier:"silver", kind:"passive", name:"Bonus-Verstärker", icon:"fa-percent", desc:"DAUERHAFT: Alle künftig verdienten Powerup-Punkte werden um 15 % erhöht.", apply(){ powerupState.bonusMultiplier += .15; } },
 
-      // Gold · Strike
-      { id:"g1", tier:"gold", name:"Strike-Krone", icon:"fa-crown", desc:"Sofort +35 Punkte.", apply(){ addPowerupBonus(35); } },
-      { id:"g2", tier:"gold", name:"Goldregen", icon:"fa-sun", desc:"Sofort +50 Punkte.", apply(){ addPowerupBonus(50); } },
-      { id:"g3", tier:"gold", name:"Strike-Magnet", icon:"fa-wand-magic-sparkles", desc:"Der nächste Wurf räumt garantiert alle noch stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 1; } },
-      { id:"g4", tier:"gold", name:"Pin-Jackpot", icon:"fa-gem", desc:"Beim nächsten Wurf +5 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 5; } },
-      { id:"g5", tier:"gold", name:"Königstreffer", icon:"fa-chess-king", desc:"Der nächste Strike bringt zusätzlich +75 Punkte.", apply(){ powerupState.nextStrikeBonus += 75; } },
-      { id:"g6", tier:"gold", name:"Perfekte Linie", icon:"fa-route", desc:"Für die nächsten 2 Würfe: kein Gutter, große Trefferzone und stabile Linie.", apply(){ powerupState.assistThrows += 2; } },
-      { id:"g7", tier:"gold", name:"Pin-Rasierer", icon:"fa-scissors", desc:"Der nächste Wurf nimmt bis zu 3 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 3; } },
-      { id:"g8", tier:"gold", name:"Jackpot", icon:"fa-dice", desc:"Nächster Wurf: Strike = +100 Punkte, sonst +20.", apply(){ powerupState.jackpotThrows += 1; } },
-      { id:"g9", tier:"gold", name:"Dauerfeuer", icon:"fa-fire", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +2 Punkte wert.", apply(){ powerupState.permanentPinBonus += 2; } },
-      { id:"g10", tier:"gold", name:"Strike-Serie", icon:"fa-trophy", desc:"DAUERHAFT: Jeder weitere Strike bringt +30 Punkte.", apply(){ powerupState.permanentStrikeBonus += 30; } },
-      { id:"g11", tier:"gold", name:"Gold-Abo", icon:"fa-gem", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +12 Punkte.", apply(){ powerupState.permanentFrameBonus += 12; } },
-      { id:"g12", tier:"gold", name:"Spare-König", icon:"fa-crown", desc:"DAUERHAFT: Jeder weitere Spare bringt +25 Punkte.", apply(){ powerupState.permanentSpareBonus += 25; } },
-      { id:"g13", tier:"gold", name:"Neuner-Maschine", icon:"fa-9", desc:"DAUERHAFT: Jeder Wurf mit mindestens 8 Pins bringt +12 Punkte.", apply(){ powerupState.permanentHighRollBonus += 12; } },
-      { id:"g14", tier:"gold", name:"Bonus-Turbo", icon:"fa-rocket", desc:"DAUERHAFT: Alle künftig verdienten Powerup-Punkte werden um 25 % erhöht.", apply(){ powerupState.bonusMultiplier += .25; } },
-      { id:"g15", tier:"gold", name:"Unkaputtbar", icon:"fa-shield-heart", desc:"Die nächsten 4 Rinnenwürfe werden gerettet.", apply(){ powerupState.gutterShieldThrows += 4; } },
-      { id:"g16", tier:"gold", name:"Strike-Doppelschlag", icon:"fa-bolt-lightning", desc:"Die nächsten 2 Würfe räumen garantiert alle stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 2; } },
-      { id:"g17", tier:"gold", name:"Perfekte Serie", icon:"fa-wand-magic-sparkles", desc:"Für die nächsten 3 Würfe: maximale Linienhilfe und kein Gutter.", apply(){ powerupState.assistThrows += 3; } },
-      { id:"g18", tier:"gold", name:"Mega-Jackpot", icon:"fa-sack-dollar", desc:"Der nächste Strike bringt zusätzlich +125 Punkte.", apply(){ powerupState.nextStrikeBonus += 125; } },
-      { id:"g19", tier:"gold", name:"Zehner-Garantie", icon:"fa-bullseye", desc:"Der nächste Wurf räumt den kompletten aktuell stehenden Satz ab.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 10); } },
-      { id:"g20", tier:"gold", name:"Legendärer Zins", icon:"fa-star", desc:"DAUERHAFT: +1 pro Pin, +15 pro Strike, +10 pro Spare und +5 pro Frame.", apply(){ powerupState.permanentPinBonus += 1; powerupState.permanentStrikeBonus += 15; powerupState.permanentSpareBonus += 10; powerupState.permanentFrameBonus += 5; } }
+      // GOLD · Strike
+      { id:"g1", tier:"gold", kind:"score", name:"Strike-Krone", icon:"fa-crown", desc:"Sofort +35 Punkte.", apply(){ addPowerupBonus(35); } },
+      { id:"g2", tier:"gold", kind:"score", name:"Gold-Chip", icon:"fa-ticket", desc:"Sofort +45 Punkte.", apply(){ addPowerupBonus(45); } },
+      { id:"g3", tier:"gold", kind:"score", name:"Goldregen", icon:"fa-sun", desc:"Sofort +50 Punkte.", apply(){ addPowerupBonus(50); } },
+      { id:"g4", tier:"gold", kind:"score", name:"Strike-Prämie", icon:"fa-medal", desc:"Sofort +60 Punkte.", apply(){ addPowerupBonus(60); } },
+      { id:"g5", tier:"gold", kind:"score", name:"Gold-Jackpot", icon:"fa-gem", desc:"Sofort +75 Punkte.", apply(){ addPowerupBonus(75); } },
+      { id:"g6", tier:"gold", kind:"score", name:"Neunzig Plus", icon:"fa-trophy", desc:"Sofort +90 Punkte.", apply(){ addPowerupBonus(90); } },
+      { id:"g7", tier:"gold", kind:"active", name:"Strike-Magnet", icon:"fa-wand-magic-sparkles", desc:"Der erste Wurf des nächsten Frames räumt garantiert alle stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 1; } },
+      { id:"g8", tier:"gold", kind:"active", name:"Pin-Jackpot", icon:"fa-gem", desc:"Beim ersten Wurf des nächsten Frames: +5 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 5; } },
+      { id:"g9", tier:"gold", kind:"active", name:"Königstreffer", icon:"fa-chess-king", desc:"Der nächste Strike bringt zusätzlich +100 Punkte.", apply(){ powerupState.nextStrikeBonus += 100; } },
+      { id:"g10", tier:"gold", kind:"active", name:"Perfekte Linie", icon:"fa-route", desc:"Im nächsten Frame: maximale Linienhilfe und kein Gutter.", apply(){ powerupState.assistThrows = Math.max(powerupState.assistThrows, 3); } },
+      { id:"g11", tier:"gold", kind:"active", name:"Pin-Rasierer", icon:"fa-scissors", desc:"Der erste Wurf des nächsten Frames nimmt bis zu 3 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 3; } },
+      { id:"g12", tier:"gold", kind:"active", name:"Jackpot", icon:"fa-dice", desc:"Beim ersten Wurf des nächsten Frames: Strike = +100 Punkte, sonst +20.", apply(){ powerupState.jackpotThrows = Math.max(powerupState.jackpotThrows, 1); } },
+      { id:"g13", tier:"gold", kind:"active", name:"Frame-Rakete", icon:"fa-rocket", desc:"Der nächste abgeschlossene Frame bringt zusätzlich +70 Punkte.", apply(){ powerupState.nextFrameBonus += 70; } },
+      { id:"g14", tier:"gold", kind:"active", name:"Neuner-Garantie", icon:"fa-bullseye", desc:"Der erste Wurf des nächsten Frames trifft mindestens 9 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 9); } },
+      { id:"g15", tier:"gold", kind:"active", name:"Clean-Krone", icon:"fa-crown", desc:"Ist der nächste Frame ein Spare oder Strike, gibt es +90 Punkte.", apply(){ powerupState.nextCleanFrameBonus += 90; } },
+      { id:"g16", tier:"gold", kind:"active", name:"Spare-König", icon:"fa-star", desc:"Der nächste Spare bringt zusätzlich +70 Punkte.", apply(){ powerupState.nextSpareBonus += 70; } },
+      { id:"g17", tier:"gold", kind:"active", name:"Unkaputtbar", icon:"fa-shield-heart", desc:"Im nächsten Frame: kein Gutter, sehr stabile Linie und sehr große Trefferzone.", apply(){ powerupState.gutterShieldThrows = Math.max(powerupState.gutterShieldThrows, 3); powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .48); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 3); powerupState.stability = Math.max(powerupState.stability, .90); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 3); } },
+      { id:"g18", tier:"gold", kind:"active", name:"Overdrive", icon:"fa-bolt-lightning", desc:"Alle Powerup-Punkte, die du im nächsten Frame erspielst, werden verdoppelt.", apply(){ powerupState.nextFrameScoreMultiplier = Math.max(powerupState.nextFrameScoreMultiplier, 2); } },
+      { id:"g19", tier:"gold", kind:"active", name:"Perfekter Frame", icon:"fa-award", desc:"Ist der nächste Frame ein Spare oder Strike, gibt es zusätzlich +120 Punkte.", apply(){ powerupState.nextCleanFrameBonus += 120; } },
+      { id:"g20", tier:"gold", kind:"passive", name:"Dauerfeuer", icon:"fa-fire", desc:"DAUERHAFT: Jeder künftig gefällte Pin ist +2 Punkte wert.", apply(){ powerupState.permanentPinBonus += 2; } },
+      { id:"g21", tier:"gold", kind:"passive", name:"Strike-Serie", icon:"fa-trophy", desc:"DAUERHAFT: Jeder weitere Strike bringt +30 Punkte.", apply(){ powerupState.permanentStrikeBonus += 30; } },
+      { id:"g22", tier:"gold", kind:"passive", name:"Gold-Abo", icon:"fa-gem", desc:"DAUERHAFT: Jeder künftig abgeschlossene Frame bringt +12 Punkte.", apply(){ powerupState.permanentFrameBonus += 12; } },
+      { id:"g23", tier:"gold", kind:"passive", name:"Bonus-Turbo", icon:"fa-rocket", desc:"DAUERHAFT: Alle künftig verdienten Powerup-Punkte werden um 25 % erhöht.", apply(){ powerupState.bonusMultiplier += .25; } },
+      { id:"g24", tier:"gold", kind:"passive", name:"Legendärer Zins", icon:"fa-star", desc:"DAUERHAFT: +1 pro Pin, +15 pro Strike, +10 pro Spare und +5 pro Frame.", apply(){ powerupState.permanentPinBonus += 1; powerupState.permanentStrikeBonus += 15; powerupState.permanentSpareBonus += 10; powerupState.permanentFrameBonus += 5; } }
     ];
-
 
     function addFrameBonus(points, frameIndex = currentFrame) {
       if (gameMode !== "powerup") return 0;
@@ -2679,11 +2696,11 @@
     function tierMeta(tier) {
       if (tier === "gold") return { label:"Gold · Strike", title:"STRIKE! Gold-Slot", subtitle:"Die Gold-Walze enthält die stärksten Effekte – inklusive mächtiger Dauerboni." };
       if (tier === "silver") return { label:"Silber · Spare", title:"SPARE! Silber-Slot", subtitle:"Die Silber-Walze enthält starke Hilfen, Punkteboni und dauerhafte Upgrades." };
-      return { label:"Bronze · normaler Wurf", title:"Bronze-Powerup", subtitle:"Die Bronze-Walze läuft. Spare schaltet Silber frei, Strike Gold." };
+      return { label:"Bronze · offener Frame", title:"Bronze-Powerup", subtitle:"Bronze folgt auf einen offenen Frame. Spare schaltet Silber frei, Strike Gold." };
     }
 
     function isPassivePowerup(item) {
-      return Boolean(item && /^DAUERHAFT:/i.test(String(item.desc || "").trim()));
+      return Boolean(item && (item.kind === "passive" || /^DAUERHAFT:/i.test(String(item.desc || "").trim())));
     }
 
     function slotItemMarkup(item) {
@@ -2706,7 +2723,9 @@
     function availablePowerupPool(tier, isFinalThrow = false) {
       const passiveFull = passivePowerups.length >= MAX_PASSIVES;
       let pool = POWERUPS.filter(item => item.tier === tier);
-      if (passiveFull || isFinalThrow) pool = pool.filter(item => !isPassivePowerup(item));
+      // Nach dem letzten Wurf sind ausschließlich sofortige Punkte sinnvoll.
+      if (isFinalThrow) return pool.filter(item => item.kind === "score");
+      if (passiveFull) pool = pool.filter(item => !isPassivePowerup(item));
       return pool;
     }
 
@@ -2742,13 +2761,14 @@
       powerupSelectionIcon.className = `powerup-selection-icon ${item.tier}`;
       powerupSelectionIcon.innerHTML = `<i class="fa-solid ${item.icon}"></i>`;
       powerupSelectionName.textContent = item.name;
-      powerupSelectionMeta.innerHTML = `<span class="powerup-selection-tag">${tierLabel}</span>${isPassivePowerup(item) ? '<span class="powerup-selection-tag passive">Passiv · Rest der Runde</span>' : '<span class="powerup-selection-tag">Aktiv</span>'}`;
+      const kindLabel = item.kind === "score" ? "Sofortpunkte" : "Aktiv";
+      powerupSelectionMeta.innerHTML = `<span class="powerup-selection-tag">${tierLabel}</span>${isPassivePowerup(item) ? '<span class="powerup-selection-tag passive">Passiv · Rest der Runde</span>' : `<span class="powerup-selection-tag">${kindLabel}</span>`}`;
       powerupSelectionDesc.textContent = item.desc.replace(/^DAUERHAFT:\s*/i, "");
       powerupSelectionPlaceholder.classList.add("hidden");
       powerupSelectionCopy.classList.remove("hidden");
       activatePowerupBtn.classList.remove("hidden");
       activatePowerupBtn.disabled = false;
-      playButtonSound();
+      playPowerupPreviewSound(item.tier);
     }
 
     function showPowerupChoice(tier, continuation, isFinalThrow = false) {
@@ -2777,9 +2797,8 @@
       hideThrowHelp();
       powerupTierLabel.textContent = meta.label;
       document.getElementById("powerupTitle").textContent = `${meta.title} · Wähle 1 von 3`;
-      const finalBonus = tier === "gold" ? 50 : tier === "silver" ? 25 : 10;
       powerupSubtitle.textContent = isFinalThrow
-        ? `${meta.subtitle} Letzter Wurf: Passive Effekte werden nicht mehr angeboten; dein gewähltes Powerup erhält +${finalBonus} Abschlussbonus.`
+        ? `Letzter Wurf: Hier erscheinen nur noch echte Sofortpunkte. Keine passiven oder später wirkenden Effekte.`
         : `${meta.subtitle} Drei Walzen laufen gleichzeitig. Nach dem Stopp wird die erste Wirkung sofort angezeigt; du kannst jederzeit eines der drei Symbole antippen und anschließend auswählen.`;
 
       powerupSlotChoices.innerHTML = choices.map((_, index) => slotChoiceMarkup(index)).join("");
@@ -2787,7 +2806,7 @@
       powerupSelectionPlaceholder.textContent = "Die drei Walzen laufen …";
       powerupOverlay.classList.remove("hidden");
       powerupOverlay.setAttribute("aria-hidden", "false");
-      playTone(tier === "gold" ? 760 : tier === "silver" ? 620 : 500, .08, "square", .025, 0);
+      playSlotSpinSound(tier);
 
       const allMachines = [...powerupSlotChoices.querySelectorAll("[data-slot-machine]")];
       choices.forEach((selected, index) => {
@@ -2823,7 +2842,6 @@
           choice.setAttribute("aria-label", `Slot ${index + 1}: Powerup auswählen`);
         });
         selectPowerupPreview(choices[0].id, 0);
-        playTone(tier === "gold" ? 980 : tier === "silver" ? 820 : 680, .14, "triangle", .035, 0);
       }, 2450);
     }
 
@@ -2832,14 +2850,10 @@
       const item = pendingPowerupChoices.find(entry => entry.id === powerupId);
       if (!item) return;
       if (isPassivePowerup(item) && passivePowerups.length >= MAX_PASSIVES) return;
-      playButtonSound();
       if (isPassivePowerup(item)) passivePowerups.push(item);
       item.apply();
       renderPassiveRack();
-      if (powerupFinalChoice) {
-        const finalBonus = item.tier === "gold" ? 50 : item.tier === "silver" ? 25 : 10;
-        addPowerupBonus(finalBonus);
-      }
+      playPowerupAcquireSound(item);
       powerupFinalChoice = false;
       powerupChoosing = false;
       slotSpinning = false;
@@ -2947,8 +2961,14 @@
       const spare = isSpareRoll(frameIndex, throws);
       const frameComplete = isFrameCompleteAfterThrow(frameIndex, throws);
 
+      const firstThrowOfFrame = (throws || []).length === 1;
+      const frameTier = frameComplete ? classifyFramePowerupTier(frameIndex, throws) : null;
+      const cleanFrame = frameComplete && frameTier !== "bronze";
+      const openFrame = frameComplete && frameTier === "bronze";
+
       earned += pinsDown * powerupState.permanentPinBonus;
       earned += pinsDown * powerupState.nextPinBonus;
+      if (firstThrowOfFrame) earned += pinsDown * powerupState.permanentFirstBallPinBonus;
       if (pinsDown >= 8) {
         earned += powerupState.nextHighRollBonus;
         earned += powerupState.permanentHighRollBonus;
@@ -2965,11 +2985,17 @@
       if (frameComplete) {
         earned += powerupState.permanentFrameBonus;
         earned += powerupState.nextFrameBonus;
+        if (cleanFrame) earned += powerupState.nextCleanFrameBonus;
+        if (openFrame) earned += powerupState.nextOpenFrameBonus;
       }
       if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
 
+      earned *= Math.max(1, Number(powerupState.nextFrameScoreMultiplier) || 1);
       const awarded = earned > 0 ? addFrameBonus(earned, frameIndex) : 0;
-      if (awarded > 0) showFlash(`+${awarded} POWERUP`);
+      if (awarded > 0) {
+        showFlash(`+${awarded} POWERUP`);
+        playPowerupPointsSound(awarded);
+      }
 
       powerupState.nextPinBonus = 0;
       powerupState.nextHighRollBonus = 0;
@@ -2990,7 +3016,21 @@
       if (powerupState.assistThrows > 0) powerupState.assistThrows -= 1;
       if (strike && powerupState.nextStrikeBonus > 0) powerupState.nextStrikeBonus = 0;
       if (spare && powerupState.nextSpareBonus > 0) powerupState.nextSpareBonus = 0;
-      if (frameComplete && powerupState.nextFrameBonus > 0) powerupState.nextFrameBonus = 0;
+      if (frameComplete) {
+        powerupState.nextFrameBonus = 0;
+        powerupState.nextCleanFrameBonus = 0;
+        powerupState.nextOpenFrameBonus = 0;
+        powerupState.nextFrameScoreMultiplier = 1;
+        // Framebezogene Hilfen dürfen nach einem Strike nicht versehentlich in den nächsten Frame rutschen.
+        powerupState.collisionBoost = 0;
+        powerupState.collisionBoostThrows = 0;
+        powerupState.stability = 0;
+        powerupState.stabilityThrows = 0;
+        powerupState.gutterShieldThrows = 0;
+        powerupState.guaranteedClearThrows = 0;
+        powerupState.jackpotThrows = 0;
+        powerupState.assistThrows = 0;
+      }
       return awarded;
     }
 
@@ -3063,6 +3103,65 @@
       if (!audioUnlocked) return;
       playTone(540, 0.045, "triangle", 0.018, 0);
       playTone(760, 0.035, "sine", 0.012, 0.025);
+    }
+
+    function tierSoundBase(tier) {
+      return tier === "gold" ? 760 : tier === "silver" ? 610 : 470;
+    }
+
+    function playSlotSpinSound(tier) {
+      if (!audioUnlocked) return;
+      const base = tierSoundBase(tier);
+      playNoise({ duration: 2.15, volume: 0.010, filterType: "bandpass", frequency: base * 1.9, q: 2.6 });
+      const ticks = [0,.11,.22,.33,.44,.56,.68,.81,.94,1.08,1.23,1.39,1.56,1.74,1.94,2.15];
+      ticks.forEach((delay, index) => {
+        const freq = base + (index % 3) * 62;
+        playTone(freq, 0.022, "square", index > 12 ? 0.018 : 0.012, delay);
+      });
+      // Drei Walzen rasten hörbar nacheinander ein.
+      scheduleGameTimer(() => playSlotStopSound(tier, 0), 1870);
+      scheduleGameTimer(() => playSlotStopSound(tier, 1), 2100);
+      scheduleGameTimer(() => playSlotStopSound(tier, 2), 2330);
+    }
+
+    function playSlotStopSound(tier, index = 0) {
+      if (!audioUnlocked) return;
+      const base = tierSoundBase(tier) + index * 55;
+      playTone(base, 0.045, "square", 0.025, 0);
+      playTone(base * 1.5, 0.075, "triangle", 0.022, 0.035);
+      if (tier === "gold") playTone(base * 2, 0.10, "sine", 0.014, 0.08);
+    }
+
+    function playPowerupPreviewSound(tier) {
+      if (!audioUnlocked) return;
+      const base = tierSoundBase(tier);
+      playTone(base * 1.15, 0.032, "sine", 0.014, 0);
+      playTone(base * 1.42, 0.035, "triangle", 0.010, 0.025);
+    }
+
+    function playPowerupAcquireSound(item) {
+      if (!audioUnlocked || !item) return;
+      const base = tierSoundBase(item.tier);
+      if (item.kind === "passive") {
+        playTone(base * .75, 0.13, "triangle", 0.030, 0);
+        playTone(base, 0.16, "triangle", 0.030, 0.08);
+        playTone(base * 1.5, 0.20, "sine", 0.025, 0.17);
+        playNoise({ duration: 0.22, volume: 0.012, delay: 0.05, filterType: "highpass", frequency: 1800, q: 1.1 });
+      } else if (item.kind === "score") {
+        playTone(base * 1.2, 0.055, "square", 0.024, 0);
+        playTone(base * 1.55, 0.075, "triangle", 0.028, 0.055);
+        playTone(base * 2.05, 0.12, "sine", 0.022, 0.12);
+      } else {
+        playTone(base, 0.055, "sawtooth", 0.018, 0);
+        playTone(base * 1.6, 0.11, "triangle", 0.026, 0.055);
+      }
+    }
+
+    function playPowerupPointsSound(points) {
+      if (!audioUnlocked || !(points > 0)) return;
+      const lift = Math.min(360, Math.max(0, Number(points) || 0) * 3);
+      playTone(520 + lift, 0.045, "triangle", 0.014, 0.24);
+      playTone(700 + lift, 0.060, "sine", 0.012, 0.29);
     }
 
     function playStartSound() {
