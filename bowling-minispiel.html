@@ -2260,6 +2260,67 @@
       text-shadow: 0 0 14px rgba(255,216,77,.28);
     }
   </style>
+
+  <style id="phase23-passive-firebase-fix">
+    /* Passive Boni als kleine Leiste direkt unter der Scoreanzeige – nicht mehr am Ball. */
+    .scoreboard-overlay .passive-rack {
+      position: absolute !important;
+      z-index: 3 !important;
+      top: calc(100% + 5px) !important;
+      left: 50% !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translateX(-50%) !important;
+      width: auto !important;
+      min-width: 126px;
+      max-width: 180px;
+      margin: 0 !important;
+      padding: 4px 6px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 8px;
+      background: rgba(7,8,7,.82) !important;
+      border: 1px solid rgba(255,208,113,.25) !important;
+      box-shadow: 0 5px 16px rgba(0,0,0,.22) !important;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+    }
+    .scoreboard-overlay .passive-rack.hidden { display: none !important; }
+    .scoreboard-overlay .passive-rack-head {
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+    .scoreboard-overlay .passive-rack-title { display: none !important; }
+    .scoreboard-overlay .passive-rack-count {
+      font-size: .62rem !important;
+      line-height: 1;
+      color: #ffd071 !important;
+      min-width: 22px;
+      text-align: center;
+    }
+    .scoreboard-overlay .passive-slots {
+      display: grid !important;
+      grid-template-columns: repeat(3, 25px) !important;
+      gap: 4px !important;
+    }
+    .scoreboard-overlay .passive-slot {
+      width: 25px !important;
+      height: 25px !important;
+      aspect-ratio: auto !important;
+      border-radius: 6px !important;
+      font-size: .62rem !important;
+    }
+    @media (max-width: 560px) {
+      .scoreboard-overlay .passive-rack { top: calc(100% + 3px) !important; min-width: 116px; padding: 3px 5px !important; }
+      .scoreboard-overlay .passive-slots { grid-template-columns: repeat(3, 23px) !important; }
+      .scoreboard-overlay .passive-slot { width: 23px !important; height: 23px !important; }
+    }
+  </style>
 </head>
 
 <body>
@@ -2336,16 +2397,15 @@
               </div>
             </div>
 
-            <div class="passive-rack hidden" id="passiveRack" aria-live="polite">
-              <div class="passive-rack-head">
-                <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Passive</span>
-                <span class="passive-rack-count" id="passiveRackCount">0/3</span>
-              </div>
-              <div class="passive-slots" id="passiveSlots"></div>
-            </div>
-
             <div class="scoreboard-overlay">
               <div class="scoreboard-grid" id="scoreboard"></div>
+              <div class="passive-rack hidden" id="passiveRack" aria-live="polite">
+                <div class="passive-rack-head">
+                  <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Passive</span>
+                  <span class="passive-rack-count" id="passiveRackCount">0/3</span>
+                </div>
+                <div class="passive-slots" id="passiveSlots"></div>
+              </div>
               <div class="summary-strip">
                 <div class="summary-box"><span class="summary-label">Gesamt</span><div class="summary-value" id="summaryTotal">0</div></div>
                 <div class="summary-box"><span class="summary-label">Strikes</span><div class="summary-value" id="summaryStrikes">0</div></div>
@@ -3727,9 +3787,33 @@
       return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
     }
 
+    function decodeLeaderboardEntry(id, value) {
+      const storedName = String(value?.name || "Unbekannt").trim().slice(0, 24);
+      const storedScore = Number(value?.score || 0);
+      const createdAt = Number(value?.createdAt || 0);
+
+      // Neue Powerup-Einträge bleiben exakt im alten Classic-Datenschema
+      // (name, score, createdAt). Modus + echter >300-Score stecken nur im Key.
+      // Format: p_<score-in-base36>_<firebase-push-key>
+      const keyMatch = String(id || "").match(/^p_([0-9a-z]+)_/i);
+      if (keyMatch) {
+        const decodedScore = parseInt(keyMatch[1], 36);
+        return {
+          id,
+          name: storedName,
+          score: Number.isFinite(decodedScore) ? decodedScore : storedScore,
+          createdAt,
+          storedMode: "powerup"
+        };
+      }
+
+      // Kompatibilität zu einem eventuell bereits geschriebenen mode-Feld.
+      return { id, name: storedName, score: storedScore, createdAt, storedMode: value?.mode || null };
+    }
+
     function normalizeLeaderboardEntries(raw, mode = null) {
       return Object.entries(raw || {})
-        .map(([id, value]) => ({ id, name: String(value?.name || "Unbekannt").trim().slice(0, 24), score: Number(value?.score || 0), createdAt: Number(value?.createdAt || 0), storedMode: value?.mode || null }))
+        .map(([id, value]) => decodeLeaderboardEntry(id, value))
         .filter(entry => entry.name && Number.isFinite(entry.score))
         .filter(entry => {
           if (!mode) return true;
@@ -3784,14 +3868,39 @@
 
     async function submitLeaderboardEntry(name, score, mode = gameMode) {
       const cleanName = String(name || "").trim().slice(0, 24);
+      const finalScore = Math.max(0, Math.round(Number(score) || 0));
       if (!cleanName) throw new Error("Bitte einen Namen eingeben.");
+
       const ref = leaderboardRefs[mode];
       const freshSnapshot = await ref.once("value");
       const freshEntries = normalizeLeaderboardEntries(freshSnapshot.val(), mode);
-      if (freshEntries.length >= 10 && score < freshEntries[9].score) return false;
-      const newRef = ref.push();
-      await newRef.set({ name: cleanName, score, mode, createdAt: firebase.database.ServerValue.TIMESTAMP });
-      await pruneLeaderboard(mode);
+      if (freshEntries.length >= 10 && finalScore < freshEntries[9].score) return false;
+
+      if (mode === "powerup") {
+        // Realtime-Database-kompatibel zum alten Classic-Schema:
+        // keine zusätzlichen Felder und im score-Feld maximal 300.
+        // Der echte Powerup-Score (auch >300) wird verlustfrei im Key codiert.
+        const pushKey = ref.push().key;
+        const encodedKey = `p_${finalScore.toString(36)}_${pushKey}`;
+        const storedScore = Math.min(finalScore, 300);
+        await ref.child(encodedKey).set({
+          name: cleanName,
+          score: storedScore,
+          createdAt: firebase.database.ServerValue.TIMESTAMP
+        });
+      } else {
+        // Classic bleibt exakt wie in der ursprünglich funktionierenden Version.
+        const newRef = ref.push();
+        await newRef.set({
+          name: cleanName,
+          score: Math.min(finalScore, 300),
+          createdAt: firebase.database.ServerValue.TIMESTAMP
+        });
+      }
+
+      // Ein erfolgreicher Eintrag soll nicht als Fehler erscheinen, nur weil
+      // eine spätere Top-10-Bereinigung durch strengere Delete-Regeln scheitert.
+      try { await pruneLeaderboard(mode); } catch (cleanupError) { console.warn("Leaderboard cleanup skipped:", cleanupError); }
       return true;
     }
 
@@ -4463,7 +4572,14 @@
       event.preventDefault();
       const name = leaderboardNameInput.value.trim();
       const score = getFinalScore();
+      const submitButton = leaderboardForm.querySelector('button[type="submit"]');
       if (!name) { modalText.textContent = "Bitte gib einen Namen ein."; leaderboardNameInput.focus(); return; }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        submitButton.querySelector("span").textContent = "Speichere …";
+      }
       try {
         const saved = await submitLeaderboardEntry(name, score, gameMode);
         hideModal();
@@ -4479,7 +4595,15 @@
           enterGameFocus();
         }, 650);
       } catch (error) {
-        modalText.textContent = `Speichern fehlgeschlagen: ${error.message}`;
+        const message = String(error?.message || error || "Unbekannter Fehler");
+        modalText.textContent = `Speichern fehlgeschlagen: ${message}`;
+        console.error("Leaderboard save failed", error);
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+          submitButton.querySelector("span").textContent = "Im Leaderboard eintragen";
+        }
       }
     });
 
