@@ -156,7 +156,11 @@ function configureJumpButton(matchdays) {
   jumpToCurrentBtn.onclick = () => {
     const card = document.querySelector(`#spieltag-${Number(target.number)}`);
     if (!card) return;
-    card.scrollIntoView({ behavior: "smooth", block: "start" });
+    const topbar = document.querySelector(".topbar");
+    const topbarHeight = topbar?.getBoundingClientRect().height ?? 0;
+    const breathingRoom = 14;
+    const targetTop = card.getBoundingClientRect().top + window.scrollY - topbarHeight - breathingRoom;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
     card.classList.add("pulse-target");
     window.setTimeout(() => card.classList.remove("pulse-target"), 1900);
   };
@@ -225,11 +229,11 @@ function render(scheduleData, meta) {
         <time datetime="${escapeHtml(day.date)}">${escapeHtml(formatDate(day.date))}</time>
       </header>
       <div class="pairing-list">
-        ${(day.pairings ?? []).map((pairing) => `<div class="pairing-row">
-          <strong class="team team-colored home ${teamColorClass(pairing.homeTeam, teamColors)}">${escapeHtml(pairing.homeTeam)}</strong>
-          <span class="versus"><small>Bahn ${escapeHtml(pairing.lanePair)}</small><b>VS</b></span>
-          <strong class="team team-colored away ${teamColorClass(pairing.awayTeam, teamColors)}">${escapeHtml(pairing.awayTeam)}</strong>
-        </div>`).join("")}
+        ${(day.pairings ?? []).map((pairing) => (`<div class="pairing-row">
+            <strong class="team team-colored home ${teamColorClass(pairing.homeTeam, teamColors)}"><span>${escapeHtml(pairing.homeTeam)}</span></strong>
+            <span class="versus"><small>Bahn ${escapeHtml(pairing.lanePair)}</small><b>VS</b></span>
+            <strong class="team team-colored away ${teamColorClass(pairing.awayTeam, teamColors)}"><span>${escapeHtml(pairing.awayTeam)}</span></strong>
+          </div>`)).join("")}
       </div>
     </article>`;
   }).join("");
