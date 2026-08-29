@@ -1983,66 +1983,84 @@
 </style>
 <link rel="stylesheet" href="css/bright-theme.css?v=16.0" />
 <style id="phase17-modes-slot">
-  .mode-intro { margin-bottom: 14px !important; }
-  .mode-picker { display:grid; gap:10px; margin-top:14px; }
-  .mode-card { width:100%; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:14px; border:1px solid rgba(255,208,113,.32); border-radius:10px; background:linear-gradient(180deg,#1a120c,#090705); color:#f5e6c2; text-align:left; cursor:pointer; box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 10px 24px rgba(0,0,0,.24); transition:transform .18s ease, border-color .18s ease, filter .18s ease; }
-  .mode-card:hover { transform:translateY(-2px); filter:brightness(1.08); border-color:rgba(63,242,237,.58); }
+  .mode-picker { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+  .mode-card { width:100%; border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:15px; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; text-align:left; color:#fff; cursor:pointer; transition:.18s ease; }
+  .mode-card:hover { transform:translateY(-2px); border-color:rgba(63,242,237,.44); }
+  .mode-card.classic { background:linear-gradient(90deg,rgba(255,208,113,.09),transparent 42%),linear-gradient(180deg,#17120d,#090705); }
   .mode-card.powerup { background:linear-gradient(90deg,rgba(63,242,237,.08),transparent 38%),linear-gradient(180deg,#1a120c,#090705); }
-  .mode-icon { width:44px; height:44px; display:grid; place-items:center; border-radius:8px; background:#061315; border:1px solid rgba(63,242,237,.32); color:#3ff2ed; font-size:1.15rem; }
-  .mode-card.classic .mode-icon { color:#ffd071; border-color:rgba(255,208,113,.34); background:#181008; }
-  .mode-copy { display:grid; gap:3px; min-width:0; }
-  .mode-copy strong { font-family:"Oswald",sans-serif; font-size:1.05rem; text-transform:uppercase; letter-spacing:.025em; }
-  .mode-copy small { color:#a99b82; font-weight:700; line-height:1.35; }
-  .mode-go { color:#f1d39a; }
+  .mode-icon { width:42px; height:42px; border-radius:11px; display:grid; place-items:center; background:rgba(255,255,255,.06); font-size:1.05rem; }
+  .mode-copy { min-width:0; }
+  .mode-copy strong { display:block; font-family:"Oswald",sans-serif; font-size:1rem; text-transform:uppercase; }
+  .mode-copy small { display:block; margin-top:4px; color:#bfb39d; line-height:1.35; font-weight:700; }
+  .mode-go { color:#3ff2ed; }
 
-  .slot-panel { max-width:560px !important; }
-  .slot-machine { position:relative; margin:15px auto 12px; width:min(100%,470px); padding:14px 28px; border:2px solid rgba(255,208,113,.56); border-radius:14px; background:linear-gradient(180deg,#4b2b17 0%,#120b07 12%,#050403 88%,#3c2213 100%); box-shadow:inset 0 0 0 3px #070403,inset 0 0 28px rgba(255,208,113,.08),0 18px 40px rgba(0,0,0,.38); overflow:hidden; }
-  .slot-window { height:108px; overflow:hidden; border:2px solid rgba(63,242,237,.40); border-radius:8px; background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 24%,transparent 76%,rgba(0,0,0,.28)),#071013; box-shadow:inset 0 12px 18px rgba(0,0,0,.62),inset 0 -12px 18px rgba(0,0,0,.62); }
+  .slot-panel { width:min(96vw,980px) !important; max-width:980px !important; max-height:min(92vh,820px); overflow:auto; }
+  .slot-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:15px auto 8px; }
+  .slot-choice { appearance:none; border:1px solid rgba(255,208,113,.26); border-radius:15px; background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.10)); padding:10px; color:inherit; cursor:default; text-align:left; transition:.18s ease; min-width:0; }
+  .slot-choice.ready { cursor:pointer; }
+  .slot-choice.ready:hover { transform:translateY(-3px); border-color:rgba(63,242,237,.76); box-shadow:0 12px 28px rgba(0,0,0,.25),0 0 0 1px rgba(63,242,237,.18) inset; }
+  .slot-choice.ready:focus-visible { outline:3px solid rgba(63,242,237,.55); outline-offset:2px; }
+  .slot-choice.chosen { border-color:#3ff2ed; box-shadow:0 0 0 2px rgba(63,242,237,.18) inset; }
+  .slot-choice-label { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 2px 8px; color:#cfc3ad; font-size:.69rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+  .slot-choice-label span:last-child { color:#3ff2ed; opacity:0; transition:.18s ease; }
+  .slot-choice.ready .slot-choice-label span:last-child { opacity:1; }
+  .slot-machine { position:relative; width:100%; padding:12px 22px; border:2px solid rgba(255,208,113,.56); border-radius:12px; background:linear-gradient(180deg,#4b2b17 0%,#120b07 12%,#050403 88%,#3c2213 100%); box-shadow:inset 0 0 0 3px #070403,inset 0 0 28px rgba(255,208,113,.08),0 12px 28px rgba(0,0,0,.32); overflow:hidden; }
+  .slot-window { height:118px; overflow:hidden; border:2px solid rgba(63,242,237,.40); border-radius:8px; background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 24%,transparent 76%,rgba(0,0,0,.28)),#071013; box-shadow:inset 0 12px 18px rgba(0,0,0,.62),inset 0 -12px 18px rgba(0,0,0,.62); }
   .slot-reel { will-change:transform; }
-  .slot-item { height:108px; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; align-content:center; column-gap:12px; padding:12px 16px; color:#f8f3e7; }
-  .slot-item .slot-icon { grid-row:1 / span 2; width:46px; height:46px; display:grid; place-items:center; border-radius:8px; border:1px solid currentColor; font-size:1.15rem; }
-  .slot-item strong { align-self:end; font-family:"Oswald",sans-serif; font-size:1.05rem; text-transform:uppercase; line-height:1.1; }
-  .slot-item small { align-self:start; margin-top:5px; color:#c7bda8; font-weight:700; line-height:1.25; }
+  .slot-item { height:118px; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; align-content:center; column-gap:10px; padding:11px 12px; color:#f8f3e7; }
+  .slot-item .slot-icon { grid-row:1 / span 2; width:42px; height:42px; display:grid; place-items:center; border-radius:8px; border:1px solid currentColor; font-size:1.05rem; }
+  .slot-item strong { align-self:end; font-family:"Oswald",sans-serif; font-size:.98rem; text-transform:uppercase; line-height:1.08; overflow-wrap:anywhere; }
+  .slot-item small { align-self:start; margin-top:5px; color:#c7bda8; font-size:.72rem; font-weight:700; line-height:1.3; }
   .slot-item.bronze { color:#e7a36a; }
   .slot-item.silver { color:#d9e4ef; }
   .slot-item.gold { color:#ffd35d; }
-  .slot-pointer { position:absolute; z-index:4; left:7px; top:50%; transform:translateY(-50%); color:#3ff2ed; font-size:1.25rem; filter:drop-shadow(0 0 7px rgba(63,242,237,.6)); }
+  .slot-pointer { position:absolute; z-index:4; left:5px; top:50%; transform:translateY(-50%); color:#3ff2ed; font-size:1.1rem; filter:drop-shadow(0 0 7px rgba(63,242,237,.6)); }
   .slot-lights { position:absolute; inset:5px; display:flex; justify-content:space-between; pointer-events:none; }
-  .slot-lights span { width:5px; height:5px; border-radius:50%; background:#ffd071; box-shadow:0 0 7px rgba(255,208,113,.55); animation:slotBlink .55s steps(1) infinite alternate; }
+  .slot-lights span { width:4px; height:4px; border-radius:50%; background:#ffd071; box-shadow:0 0 7px rgba(255,208,113,.55); animation:slotBlink .55s steps(1) infinite alternate; }
   .slot-lights span:nth-child(even) { animation-delay:.27s; }
   .slot-machine.spinning .slot-lights span { background:#3ff2ed; box-shadow:0 0 9px rgba(63,242,237,.8); }
-  .slot-result { width:min(100%,470px); margin:10px auto 0; padding:12px 14px; border-radius:9px; border:1px solid rgba(63,242,237,.28); background:#071013; color:#efe6d2; text-align:left; }
-  .slot-result.hidden { display:none; }
-  .slot-result strong { display:block; color:#3ff2ed; font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:1rem; margin-bottom:4px; }
-  .slot-result span { color:#bfb39d; font-size:.83rem; line-height:1.4; font-weight:700; }
-  .slot-claim { width:min(100%,470px); margin:10px auto 0; justify-content:center; }
-  .slot-claim:disabled { opacity:.42; cursor:not-allowed; filter:grayscale(.4); }
+  .slot-result { margin:8px 2px 0; min-height:74px; padding:10px 11px; border-radius:9px; border:1px solid rgba(63,242,237,.18); background:#071013; color:#efe6d2; text-align:left; }
+  .slot-result.hidden { visibility:hidden; }
+  .slot-result strong { display:block; color:#3ff2ed; font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:.9rem; margin-bottom:4px; }
+  .slot-result span { color:#bfb39d; font-size:.72rem; line-height:1.35; font-weight:700; }
   @keyframes slotBlink { from{opacity:.35} to{opacity:1} }
 
-  .frame-total { position:relative; display:flex !important; align-items:center; justify-content:center; gap:3px; flex-wrap:nowrap; }
-  .frame-bonus-mark { display:inline-block; color:#ffd35d; font-family:"Roboto Slab",serif; font-size:.42rem; font-weight:900; line-height:1; vertical-align:top; transform:translateY(-2px); }
-  .frame-card.powerup-frame { box-shadow:inset 0 -2px 0 rgba(63,242,237,.10); }
-  .game-mode-badge { color:#3ff2ed !important; }
+  .passive-rack { position:absolute; z-index:19; right:10px; bottom:10px; width:min(46%,230px); padding:8px 9px; border:1px solid rgba(255,208,113,.28); border-radius:12px; background:rgba(6,8,9,.86); box-shadow:0 10px 28px rgba(0,0,0,.28); backdrop-filter:blur(8px); }
+  .passive-rack.hidden { display:none; }
+  .passive-rack-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; }
+  .passive-rack-title { display:flex; align-items:center; gap:6px; color:#ffd071; font-family:"Oswald",sans-serif; font-size:.72rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+  .passive-rack-count { color:#3ff2ed; font-size:.72rem; font-weight:900; }
+  .passive-slots { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; }
+  .passive-slot { aspect-ratio:1; min-width:0; display:grid; place-items:center; border:1px dashed rgba(255,255,255,.18); border-radius:8px; background:rgba(255,255,255,.03); color:rgba(255,255,255,.24); font-size:.72rem; position:relative; }
+  .passive-slot.filled { border-style:solid; border-color:rgba(255,208,113,.48); background:linear-gradient(180deg,rgba(255,208,113,.11),rgba(63,242,237,.04)); color:#ffd071; }
+  .passive-slot.filled::after { content:""; position:absolute; inset:3px; border:1px solid rgba(63,242,237,.12); border-radius:5px; pointer-events:none; }
+  .passive-slot i { position:relative; z-index:2; }
 
-  .leaderboard-mode-tabs { display:grid; grid-template-columns:1fr 1fr; gap:7px; padding:10px 12px 0; }
-  .leaderboard-tab { border:1px solid rgba(255,208,113,.25); border-radius:7px; padding:9px 10px; background:#0a0806; color:#a99b82; font-weight:900; cursor:pointer; }
-  .leaderboard-tab.active { color:#f4dfb3; border-color:rgba(63,242,237,.48); background:linear-gradient(180deg,#0b2021,#061011); box-shadow:inset 0 0 0 1px rgba(63,242,237,.08); }
+  .frame-card.powerup-frame { box-shadow:inset 0 -2px 0 rgba(63,242,237,.10); }
+  .frame-power-bonus { color:#3ff2ed; font-size:.62rem; font-weight:900; margin-left:4px; white-space:nowrap; }
+  .leaderboard-tabs { display:flex; gap:7px; margin:10px 0 12px; }
+  .leaderboard-tab { border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.035); color:#bfb39d; border-radius:8px; padding:7px 10px; font-weight:900; cursor:pointer; }
+  .leaderboard-tab.active { color:#3ff2ed; border-color:rgba(63,242,237,.35); background:rgba(63,242,237,.08); }
   .leaderboard-tab[data-leaderboard-mode="powerup"].active { color:#ffd35d; }
 
-  body.mode-classic .powerup-overlay { display:none !important; }
-  body.mode-classic .frame-bonus-mark { display:none; }
+  body.mode-classic .powerup-overlay, body.mode-classic .passive-rack { display:none !important; }
+  body.mode-classic .frame-power-bonus { display:none; }
 
-  @media (max-width:700px) {
-    .mode-card { padding:11px; grid-template-columns:auto 1fr; }
-    .mode-go { display:none; }
-    .mode-icon { width:38px; height:38px; }
-    .slot-machine { padding:11px 22px; }
-    .slot-window,.slot-item { height:92px; }
-    .slot-item { padding:8px 11px; column-gap:9px; }
-    .slot-item .slot-icon { width:38px; height:38px; font-size:.95rem; }
-    .slot-item strong { font-size:.9rem; }
-    .slot-item small { font-size:.7rem; }
-    .frame-bonus-mark { font-size:.34rem; }
+  @media (max-width:760px) {
+    .mode-picker { grid-template-columns:1fr; }
+    .slot-panel { width:min(96vw,620px) !important; padding:12px !important; }
+    .slot-choices { grid-template-columns:1fr; gap:9px; }
+    .slot-choice { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:8px; align-items:stretch; padding:8px; }
+    .slot-choice-label { grid-column:1 / -1; }
+    .slot-result { margin:0; min-height:0; }
+    .slot-window,.slot-item { height:90px; }
+    .slot-item { padding:7px 9px; column-gap:8px; }
+    .slot-item .slot-icon { width:34px; height:34px; font-size:.86rem; }
+    .slot-item strong { font-size:.82rem; }
+    .slot-item small { font-size:.64rem; line-height:1.22; }
+    .passive-rack { right:6px; bottom:7px; width:min(60%,210px); padding:6px 7px; }
+    .passive-rack-title,.passive-rack-count { font-size:.62rem; }
+    .passive-slots { gap:4px; }
   }
 </style>
 </head>
@@ -2058,7 +2076,7 @@
       </div>
       <div class="skill-pill">
         <i class="fa-solid fa-hand-point-up"></i>
-        <span>2 Modi · Slotmachine · 60 Powerups</span>
+        <span>2 Modi · 3er-Slot · 60 Powerups</span>
       </div>
     </div>
 
@@ -2080,7 +2098,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Wähle deinen Modus</h2>
-                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus läuft nach jedem Wurf eine Slotmachine: normaler Wurf = Bronze, Spare = Silber, Strike = Gold. Dauerhafte Effekte können sich über die ganze Runde stapeln und Scores weit über 300 ermöglichen.</p>
+                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du nach jedem Wurf mit mindestens einem gefällten Pin drei Slot-Walzen: normaler Wurf = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Bis zu 5 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2089,7 +2107,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>Slotmachine nach jedem Wurf · 60 Powerups · Score ohne Obergrenze</small></span>
+                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Slot-Walzen nach Treffern · 60 Powerups · 5 Passive</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2100,19 +2118,19 @@
 
             <div class="powerup-overlay hidden" id="powerupOverlay" aria-hidden="true">
               <div class="powerup-panel slot-panel" role="dialog" aria-modal="true" aria-labelledby="powerupTitle">
-                <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup Slot</span></div>
-                <h3 id="powerupTitle">Powerup-Slot</h3>
-                <p class="powerup-subtitle" id="powerupSubtitle">Die Walze entscheidet, welches Powerup du bekommst.</p>
-                <div class="slot-machine" id="powerupSlotMachine">
-                  <div class="slot-pointer" aria-hidden="true"><i class="fa-solid fa-caret-right"></i></div>
-                  <div class="slot-window">
-                    <div class="slot-reel" id="powerupSlotReel"></div>
-                  </div>
-                  <div class="slot-lights" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                </div>
-                <div class="slot-result hidden" id="powerupSlotResult"></div>
-                <button class="btn primary slot-claim" id="powerupClaimBtn" type="button" disabled><i class="fa-solid fa-hand"></i><span>Powerup nehmen</span></button>
+                <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup Slots</span></div>
+                <h3 id="powerupTitle">Wähle 1 von 3 Powerups</h3>
+                <p class="powerup-subtitle" id="powerupSubtitle">Drei Walzen rattern durch die verfügbaren Powerups. Nach dem Stopp wählst du eines davon.</p>
+                <div class="slot-choices" id="powerupSlotChoices" aria-label="Drei Powerup-Auswahlen"></div>
               </div>
+            </div>
+
+            <div class="passive-rack hidden" id="passiveRack" aria-live="polite">
+              <div class="passive-rack-head">
+                <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Passive</span>
+                <span class="passive-rack-count" id="passiveRackCount">0/5</span>
+              </div>
+              <div class="passive-slots" id="passiveSlots"></div>
             </div>
 
             <div class="scoreboard-overlay">
@@ -2309,10 +2327,10 @@
     const powerupOverlay = document.getElementById("powerupOverlay");
     const powerupTierLabel = document.getElementById("powerupTierLabel");
     const powerupSubtitle = document.getElementById("powerupSubtitle");
-    const powerupSlotMachine = document.getElementById("powerupSlotMachine");
-    const powerupSlotReel = document.getElementById("powerupSlotReel");
-    const powerupSlotResult = document.getElementById("powerupSlotResult");
-    const powerupClaimBtn = document.getElementById("powerupClaimBtn");
+    const powerupSlotChoices = document.getElementById("powerupSlotChoices");
+    const passiveRack = document.getElementById("passiveRack");
+    const passiveRackCount = document.getElementById("passiveRackCount");
+    const passiveSlots = document.getElementById("passiveSlots");
     const leaderboardClassicTab = document.getElementById("leaderboardClassicTab");
     const leaderboardPowerupTab = document.getElementById("leaderboardPowerupTab");
 
@@ -2343,8 +2361,9 @@
     let powerupState = null;
     let pendingPowerupContinuation = null;
     let powerupFinalChoice = false;
-    let pendingPowerup = null;
+    let pendingPowerupChoices = [];
     let slotSpinning = false;
+    let passivePowerups = [];
 
     function freshPowerupState() {
       return {
@@ -2472,6 +2491,10 @@
       return { label:"Bronze · normaler Wurf", title:"Bronze-Powerup", subtitle:"Die Bronze-Walze läuft. Spare schaltet Silber frei, Strike Gold." };
     }
 
+    function isPassivePowerup(item) {
+      return Boolean(item && /^DAUERHAFT:/i.test(String(item.desc || "").trim()));
+    }
+
     function slotItemMarkup(item) {
       return `<div class="slot-item ${item.tier}">
         <span class="slot-icon"><i class="fa-solid ${item.icon}"></i></span>
@@ -2480,63 +2503,119 @@
       </div>`;
     }
 
+    function renderPassiveRack() {
+      const enabled = gameMode === "powerup";
+      passiveRack.classList.toggle("hidden", !enabled);
+      passiveRackCount.textContent = `${passivePowerups.length}/5`;
+      passiveSlots.innerHTML = Array.from({ length:5 }, (_, index) => {
+        const item = passivePowerups[index];
+        if (!item) return `<span class="passive-slot" title="Freier Passiv-Slot"><i class="fa-solid fa-plus"></i></span>`;
+        return `<span class="passive-slot filled" title="${escapeHtml(item.name)} – ${escapeHtml(item.desc)}"><i class="fa-solid ${item.icon}"></i></span>`;
+      }).join("");
+    }
+
+    function availablePowerupPool(tier, isFinalThrow = false) {
+      const passiveFull = passivePowerups.length >= 5;
+      let pool = POWERUPS.filter(item => item.tier === tier);
+      if (passiveFull || isFinalThrow) pool = pool.filter(item => !isPassivePowerup(item));
+      return pool;
+    }
+
+    function slotChoiceMarkup(index) {
+      return `<button class="slot-choice" type="button" data-slot-index="${index}" disabled>
+        <div class="slot-choice-label"><span>Slot ${index + 1}</span><span><i class="fa-solid fa-hand-pointer"></i> wählen</span></div>
+        <div class="slot-machine spinning" data-slot-machine="${index}">
+          <div class="slot-pointer" aria-hidden="true"><i class="fa-solid fa-caret-right"></i></div>
+          <div class="slot-window"><div class="slot-reel" data-slot-reel="${index}"></div></div>
+          <div class="slot-lights" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="slot-result hidden" data-slot-result="${index}"></div>
+      </button>`;
+    }
+
     function showPowerupChoice(tier, continuation, isFinalThrow = false) {
       if (gameMode !== "powerup") {
         if (typeof continuation === "function") continuation();
         return;
       }
       const meta = tierMeta(tier);
-      const pool = POWERUPS.filter(item => item.tier === tier);
-      const selected = pool[Math.floor(Math.random() * pool.length)];
-      const sequence = [...shuffled(pool), ...shuffled(pool), ...shuffled(pool), selected];
-      pendingPowerup = selected;
+      const pool = availablePowerupPool(tier, isFinalThrow);
+      if (!pool.length) {
+        if (typeof continuation === "function") continuation();
+        return;
+      }
+      const choices = shuffled(pool).slice(0, Math.min(3, pool.length));
+      while (choices.length < 3 && pool.length) {
+        const extra = pool[Math.floor(Math.random() * pool.length)];
+        if (!choices.some(item => item.id === extra.id) || pool.length < 3) choices.push(extra);
+      }
+
+      pendingPowerupChoices = choices;
       powerupChoosing = true;
       slotSpinning = true;
       pendingPowerupContinuation = continuation;
       powerupFinalChoice = isFinalThrow;
       hideThrowHelp();
       powerupTierLabel.textContent = meta.label;
-      document.getElementById("powerupTitle").textContent = meta.title;
+      document.getElementById("powerupTitle").textContent = `${meta.title} · Wähle 1 von 3`;
       const finalBonus = tier === "gold" ? 50 : tier === "silver" ? 25 : 10;
       powerupSubtitle.textContent = isFinalThrow
-        ? `${meta.subtitle} Letzter Wurf: Das gezogene Powerup erhält zusätzlich +${finalBonus} Abschlussbonus.`
-        : `${meta.subtitle} Die Walze stoppt zufällig auf einem von ${pool.length} Powerups.`;
-      powerupSlotResult.classList.add("hidden");
-      powerupSlotResult.innerHTML = "";
-      powerupClaimBtn.disabled = true;
-      powerupSlotMachine.classList.add("spinning");
-      powerupSlotReel.style.transition = "none";
-      powerupSlotReel.style.transform = "translateY(0)";
-      powerupSlotReel.innerHTML = sequence.map(slotItemMarkup).join("");
+        ? `${meta.subtitle} Letzter Wurf: Passive Effekte werden nicht mehr angeboten; dein gewähltes Powerup erhält +${finalBonus} Abschlussbonus.`
+        : `${meta.subtitle} Drei Walzen laufen gleichzeitig. Nach dem Stopp kannst du genau eines der drei Powerups wählen.`;
+
+      powerupSlotChoices.innerHTML = choices.map((_, index) => slotChoiceMarkup(index)).join("");
       powerupOverlay.classList.remove("hidden");
       powerupOverlay.setAttribute("aria-hidden", "false");
       playTone(tier === "gold" ? 760 : tier === "silver" ? 620 : 500, .08, "square", .025, 0);
 
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        const slotWindow = powerupSlotMachine.querySelector(".slot-window");
-        const rowHeight = Math.max(1, slotWindow?.clientHeight || 108);
-        const target = (sequence.length - 1) * rowHeight;
-        powerupSlotReel.style.transition = "transform 2.25s cubic-bezier(.12,.72,.12,1)";
-        powerupSlotReel.style.transform = `translateY(-${target}px)`;
-      }));
+      const allMachines = [...powerupSlotChoices.querySelectorAll("[data-slot-machine]")];
+      choices.forEach((selected, index) => {
+        const reel = powerupSlotChoices.querySelector(`[data-slot-reel="${index}"]`);
+        const machine = powerupSlotChoices.querySelector(`[data-slot-machine="${index}"]`);
+        const localPool = shuffled(pool);
+        const filler = [...localPool, ...shuffled(pool), ...shuffled(pool), selected];
+        reel.style.transition = "none";
+        reel.style.transform = "translateY(0)";
+        reel.innerHTML = filler.map(slotItemMarkup).join("");
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const rowHeight = Math.max(1, machine.querySelector(".slot-window")?.clientHeight || 118);
+          const target = (filler.length - 1) * rowHeight;
+          reel.style.transition = `transform ${1.85 + index * .22}s cubic-bezier(.12,.72,.12,1)`;
+          reel.style.transform = `translateY(-${target}px)`;
+        }));
+      });
 
       scheduleGameTimer(() => {
-        if (!powerupChoosing || pendingPowerup?.id !== selected.id) return;
+        if (!powerupChoosing) return;
         slotSpinning = false;
-        powerupSlotMachine.classList.remove("spinning");
-        powerupSlotResult.innerHTML = `<strong><i class="fa-solid ${selected.icon}"></i> ${escapeHtml(selected.name)}</strong><span>${escapeHtml(selected.desc)}</span>`;
-        powerupSlotResult.classList.remove("hidden");
-        powerupClaimBtn.disabled = false;
+        allMachines.forEach(machine => machine.classList.remove("spinning"));
+        choices.forEach((selected, index) => {
+          const reel = powerupSlotChoices.querySelector(`[data-slot-reel="${index}"]`);
+          const result = powerupSlotChoices.querySelector(`[data-slot-result="${index}"]`);
+          const choice = powerupSlotChoices.querySelector(`[data-slot-index="${index}"]`);
+          // Nach dem Rattern wird nur das Endergebnis im Fenster gezeigt. So ist es garantiert vollständig lesbar.
+          reel.style.transition = "none";
+          reel.style.transform = "translateY(0)";
+          reel.innerHTML = slotItemMarkup(selected);
+          result.innerHTML = `<strong><i class="fa-solid ${selected.icon}"></i> ${escapeHtml(selected.name)}${isPassivePowerup(selected) ? ' · PASSIV' : ''}</strong><span>${escapeHtml(selected.desc)}</span>`;
+          result.classList.remove("hidden");
+          choice.disabled = false;
+          choice.classList.add("ready");
+        });
         playTone(tier === "gold" ? 980 : tier === "silver" ? 820 : 680, .14, "triangle", .035, 0);
-      }, 2350);
+      }, 2450);
     }
 
     function choosePowerup(powerupId) {
       if (!powerupChoosing || slotSpinning) return;
-      const item = POWERUPS.find(entry => entry.id === powerupId) || pendingPowerup;
-      if (!item || item.id !== pendingPowerup?.id) return;
+      const item = pendingPowerupChoices.find(entry => entry.id === powerupId);
+      if (!item) return;
+      if (isPassivePowerup(item) && passivePowerups.length >= 5) return;
       playButtonSound();
+      if (isPassivePowerup(item)) passivePowerups.push(item);
       item.apply();
+      renderPassiveRack();
       if (powerupFinalChoice) {
         const finalBonus = item.tier === "gold" ? 50 : item.tier === "silver" ? 25 : 10;
         addPowerupBonus(finalBonus);
@@ -2544,7 +2623,12 @@
       powerupFinalChoice = false;
       powerupChoosing = false;
       slotSpinning = false;
-      pendingPowerup = null;
+      pendingPowerupChoices = [];
+      powerupSlotChoices.querySelectorAll(".slot-choice").forEach(choice => {
+        choice.disabled = true;
+        choice.classList.remove("ready");
+        if (choice.dataset.slotIndex && pendingPowerupChoices[Number(choice.dataset.slotIndex)]?.id === item.id) choice.classList.add("chosen");
+      });
       powerupOverlay.classList.add("hidden");
       powerupOverlay.setAttribute("aria-hidden", "true");
       showFlash(`${item.name}`);
@@ -3824,11 +3908,11 @@
       }
 
       const finalThrow = currentFrame === 9 && (frame.throws.length >= 3 || (frame.throws.length === 2 && frame.throws[0] !== 10 && frame.throws[0] + frame.throws[1] < 10));
-      if (gameMode === "powerup") {
-        // Powerup-Modus: nach jedem Wurf läuft die Slotmachine, danach geht das Spiel weiter.
+      if (gameMode === "powerup" && pinsDown > 0) {
+        // Powerup nur wenn mindestens ein Pin gefallen ist. Drei Walzen liefern danach 3 auswählbare Optionen.
         scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 520);
       } else {
-        // Classic-Modus: keine Powerup-Pause, normales Bowling bleibt unverändert.
+        // Classic oder 0 Pins: keine Powerup-Pause.
         scheduleGameTimer(() => { if (typeof continuation === "function") continuation(); }, 180);
       }
     }
@@ -3850,11 +3934,10 @@
       powerupState = freshPowerupState();
       pendingPowerupContinuation = null;
       powerupFinalChoice = false;
-      pendingPowerup = null;
+      pendingPowerupChoices = [];
       slotSpinning = false;
-      powerupSlotMachine.classList.remove("spinning");
-      powerupClaimBtn.disabled = true;
-      powerupSlotResult.classList.add("hidden");
+      passivePowerups = [];
+      powerupSlotChoices.innerHTML = "";
       powerupOverlay.classList.add("hidden");
       powerupOverlay.setAttribute("aria-hidden", "true");
       standingPins = fullRackSet();
@@ -3871,6 +3954,7 @@
       renderPins([]);
       layoutScene();
       renderScoreboard();
+      renderPassiveRack();
       renderLeaderboard();
       updateStatus();
     }
@@ -3984,7 +4068,6 @@
     [
       classicModeBtn,
       powerupModeBtn,
-      powerupClaimBtn,
       playAgainBtn,
       closeModalBtn,
       resetGameBtn,
@@ -4011,7 +4094,9 @@
       hideModal();
       powerupChoosing = false;
       slotSpinning = false;
-      pendingPowerup = null;
+      pendingPowerupChoices = [];
+      passivePowerups = [];
+      renderPassiveRack();
       powerupOverlay.classList.add("hidden");
       powerupOverlay.setAttribute("aria-hidden", "true");
       startOverlay.classList.remove("hidden");
@@ -4029,8 +4114,11 @@
 
     ball.addEventListener("pointerdown", handlePointerDown);
     ball.addEventListener("pointermove", handlePointerMove);
-    powerupClaimBtn.addEventListener("click", () => {
-      if (pendingPowerup) choosePowerup(pendingPowerup.id);
+    powerupSlotChoices.addEventListener("click", event => {
+      const choice = event.target.closest(".slot-choice.ready");
+      if (!choice || choice.disabled || slotSpinning) return;
+      const item = pendingPowerupChoices[Number(choice.dataset.slotIndex)];
+      if (item) choosePowerup(item.id);
     });
 
     leaderboardClassicTab.addEventListener("click", () => {
