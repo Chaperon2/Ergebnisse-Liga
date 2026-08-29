@@ -2191,6 +2191,18 @@
     .powerup-selection-detail { padding:11px; min-height:104px; }
   }
 </style>
+
+<style id="phase19-frame-powerups-centered-smooth-pins">
+  /* Phase 19: centered symbol reels, three passive slots, compositor pin animation. */
+  .slot-window { position:relative; }
+  .slot-reel { width:100% !important; }
+  .slot-item { width:100% !important; box-sizing:border-box; justify-items:center !important; align-items:center !important; }
+  .slot-item .slot-icon { margin-inline:auto !important; justify-self:center !important; align-self:center !important; }
+  .passive-slots { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  .pin.fallen { animation:none !important; }
+  .pin.pin-falling, .pin.fallen { filter:none !important; will-change:transform,opacity !important; backface-visibility:hidden !important; }
+  .pin.pin-falling .pin-shadow, .pin.fallen .pin-shadow { opacity:.38; filter:none !important; }
+</style>
 </head>
 
 <body>
@@ -2226,7 +2238,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Wähle deinen Modus</h2>
-                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du nach jedem Wurf mit mindestens einem gefällten Pin drei Slot-Walzen: normaler Wurf = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Bis zu 5 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
+                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du vor dem ersten Wurf und danach nur nach komplett abgeschlossenen Frames drei Slot-Walzen. Offener Frame = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Bis zu 3 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2235,7 +2247,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots nach Treffern · 60 Powerups · 5 Passive</small></span>
+                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots pro Frame · 60 Powerups · 3 Passive</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2248,10 +2260,10 @@
               <div class="powerup-panel slot-panel" role="dialog" aria-modal="true" aria-labelledby="powerupTitle">
                 <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup Slots</span></div>
                 <h3 id="powerupTitle">Wähle 1 von 3 Powerups</h3>
-                <p class="powerup-subtitle" id="powerupSubtitle">Drei Walzen rattern durch die verfügbaren Powerups. Nach dem Stopp siehst du nur die Symbole. Tippe eines an, lies unten die Wirkung und aktiviere es anschließend.</p>
+                <p class="powerup-subtitle" id="powerupSubtitle">Drei Walzen rattern durch die verfügbaren Powerups. Nach dem Stopp siehst du nur die Symbole. Tippe eines an, lies unten sofort die Wirkung und wähle es anschließend aus.</p>
                 <div class="slot-choices" id="powerupSlotChoices" aria-label="Drei Powerup-Auswahlen"></div>
                 <div class="powerup-selection-detail" id="powerupSelectionDetail" aria-live="polite">
-                  <div class="powerup-selection-placeholder" id="powerupSelectionPlaceholder">Nach dem Stopp: Symbol antippen, Wirkung lesen und dann aktivieren.</div>
+                  <div class="powerup-selection-placeholder" id="powerupSelectionPlaceholder">Nach dem Stopp: Symbol antippen, Wirkung lesen und dann auswählen.</div>
                   <div class="powerup-selection-copy hidden" id="powerupSelectionCopy">
                     <div class="powerup-selection-head">
                       <span class="powerup-selection-icon" id="powerupSelectionIcon"><i class="fa-solid fa-bolt"></i></span>
@@ -2262,7 +2274,7 @@
                     </div>
                     <p class="powerup-selection-desc" id="powerupSelectionDesc"></p>
                   </div>
-                  <button class="powerup-activate hidden" id="activatePowerupBtn" type="button" disabled><i class="fa-solid fa-check"></i> Powerup aktivieren</button>
+                  <button class="powerup-activate hidden" id="activatePowerupBtn" type="button" disabled><i class="fa-solid fa-check"></i> Powerup auswählen</button>
                 </div>
               </div>
             </div>
@@ -2270,7 +2282,7 @@
             <div class="passive-rack hidden" id="passiveRack" aria-live="polite">
               <div class="passive-rack-head">
                 <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Passive</span>
-                <span class="passive-rack-count" id="passiveRackCount">0/5</span>
+                <span class="passive-rack-count" id="passiveRackCount">0/3</span>
               </div>
               <div class="passive-slots" id="passiveSlots"></div>
             </div>
@@ -2515,6 +2527,7 @@
     let slotSpinning = false;
     let selectedPowerupId = null;
     let passivePowerups = [];
+    const MAX_PASSIVES = 3;
 
     function freshPowerupState() {
       return {
@@ -2655,8 +2668,8 @@
     function renderPassiveRack() {
       const enabled = gameMode === "powerup";
       passiveRack.classList.toggle("hidden", !enabled);
-      passiveRackCount.textContent = `${passivePowerups.length}/5`;
-      passiveSlots.innerHTML = Array.from({ length:5 }, (_, index) => {
+      passiveRackCount.textContent = `${passivePowerups.length}/${MAX_PASSIVES}`;
+      passiveSlots.innerHTML = Array.from({ length:MAX_PASSIVES }, (_, index) => {
         const item = passivePowerups[index];
         if (!item) return `<span class="passive-slot" title="Freier Passiv-Slot"><i class="fa-solid fa-plus"></i></span>`;
         return `<span class="passive-slot filled" title="${escapeHtml(item.name)} – ${escapeHtml(item.desc)}"><i class="fa-solid ${item.icon}"></i></span>`;
@@ -2664,7 +2677,7 @@
     }
 
     function availablePowerupPool(tier, isFinalThrow = false) {
-      const passiveFull = passivePowerups.length >= 5;
+      const passiveFull = passivePowerups.length >= MAX_PASSIVES;
       let pool = POWERUPS.filter(item => item.tier === tier);
       if (passiveFull || isFinalThrow) pool = pool.filter(item => !isPassivePowerup(item));
       return pool;
@@ -2740,7 +2753,7 @@
       const finalBonus = tier === "gold" ? 50 : tier === "silver" ? 25 : 10;
       powerupSubtitle.textContent = isFinalThrow
         ? `${meta.subtitle} Letzter Wurf: Passive Effekte werden nicht mehr angeboten; dein gewähltes Powerup erhält +${finalBonus} Abschlussbonus.`
-        : `${meta.subtitle} Drei Walzen laufen gleichzeitig. Nach dem Stopp kannst du genau eines der drei Powerups wählen.`;
+        : `${meta.subtitle} Drei Walzen laufen gleichzeitig. Nach dem Stopp wird die erste Wirkung sofort angezeigt; du kannst jederzeit eines der drei Symbole antippen und anschließend auswählen.`;
 
       powerupSlotChoices.innerHTML = choices.map((_, index) => slotChoiceMarkup(index)).join("");
       resetPowerupPreview();
@@ -2782,7 +2795,7 @@
           choice.classList.add("ready");
           choice.setAttribute("aria-label", `Slot ${index + 1}: Powerup auswählen`);
         });
-        powerupSelectionPlaceholder.textContent = "Wähle eines der drei Symbole. Danach siehst du hier, was das Powerup macht.";
+        selectPowerupPreview(choices[0].id, 0);
         playTone(tier === "gold" ? 980 : tier === "silver" ? 820 : 680, .14, "triangle", .035, 0);
       }, 2450);
     }
@@ -2791,7 +2804,7 @@
       if (!powerupChoosing || slotSpinning) return;
       const item = pendingPowerupChoices.find(entry => entry.id === powerupId);
       if (!item) return;
-      if (isPassivePowerup(item) && passivePowerups.length >= 5) return;
+      if (isPassivePowerup(item) && passivePowerups.length >= MAX_PASSIVES) return;
       playButtonSound();
       if (isPassivePowerup(item)) passivePowerups.push(item);
       item.apply();
@@ -2830,6 +2843,15 @@
         if (t.length === 2 && t[0] !== 10 && t[0] + t[1] === 10) return "silver";
         if (t.length >= 3 && t[0] === 10 && t[t.length - 2] < 10 && t[t.length - 2] + last === 10) return "silver";
       }
+      return "bronze";
+    }
+
+    function classifyFramePowerupTier(frameIndex, throws) {
+      const t = throws || [];
+      if (!t.length) return "bronze";
+      // Die Wertigkeit richtet sich nach dem Frame-Ergebnis, nicht nach dem letzten Bonuswurf.
+      if (t[0] === 10) return "gold";
+      if (t.length >= 2 && t[0] + t[1] === 10) return "silver";
       return "bronze";
     }
 
@@ -3284,12 +3306,48 @@
       throwStatsHud.classList.remove("hidden");
     }
 
+    function stopPinFallAnimation(el) {
+      if (el._fallAnimation) {
+        try { el._fallAnimation.cancel(); } catch {}
+        el._fallAnimation = null;
+      }
+      el.classList.remove("pin-falling");
+    }
+
+    function animatePinFall(el, impact = {}) {
+      stopPinFallAnimation(el);
+      const x = Number(impact.fallX) || 18;
+      const y = Number(impact.fallY) || 22;
+      const rot = Number(impact.rotation) || 72;
+      // Kleine Staffelung erhält die Kettenreaktion, ohne sichtbare Start-Stotterer.
+      const delay = Math.min(72, Math.max(0, Number(impact.delay) || 0) * .34);
+      el.classList.add("pin-falling");
+      const animation = el.animate([
+        { transform:"translate3d(0,0,0) rotateZ(0deg) scale(1)", opacity:1, offset:0 },
+        { transform:`translate3d(${x*.07}px,${y*-.08}px,0) rotateZ(${rot*.14}deg) scale(1.012)`, opacity:1, offset:.18 },
+        { transform:`translate3d(${x*.38}px,${y*.22}px,0) rotateZ(${rot*.48}deg) scale(.99)`, opacity:1, offset:.46 },
+        { transform:`translate3d(${x*.78}px,${y*.70}px,0) rotateZ(${rot*.86}deg) scale(.93)`, opacity:.95, offset:.76 },
+        { transform:`translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.84)`, opacity:.16, offset:1 }
+      ], { duration:860, delay, easing:"cubic-bezier(.16,.72,.18,1)", fill:"forwards" });
+      el._fallAnimation = animation;
+      animation.onfinish = () => {
+        if (el._fallAnimation !== animation) return;
+        el.style.transform = `translate3d(${x}px,${y}px,0) rotateZ(${rot}deg) scale(.84)`;
+        el.style.opacity = ".16";
+        el.classList.remove("pin-falling");
+        el._fallAnimation = null;
+      };
+    }
+
     function renderPins(knockedPins = [], impactMap = {}) {
       const knockedSet = new Set(knockedPins);
       pinDeck.querySelectorAll(".pin").forEach(el => {
         const pinId = Number(el.dataset.pinId);
+        stopPinFallAnimation(el);
         el.className = "pin";
         el.style.removeProperty("--fall-delay");
+        el.style.removeProperty("transform");
+        el.style.removeProperty("opacity");
 
         if (standingPins.has(pinId)) {
           el.style.removeProperty("--fall-x");
@@ -3298,16 +3356,20 @@
           return;
         }
 
-        const impact = impactMap[pinId] || lastImpactMap[pinId];
-        if (impact) {
-          el.style.setProperty("--fall-x", `${impact.fallX}px`);
-          el.style.setProperty("--fall-y", `${impact.fallY}px`);
-          el.style.setProperty("--fall-rot", `${impact.rotation}deg`);
-          el.style.setProperty("--fall-delay", `${Math.max(0, impact.delay || 0)}ms`);
-        }
+        const impact = impactMap[pinId] || lastImpactMap[pinId] || {};
+        const fallX = Number(impact.fallX) || 18;
+        const fallY = Number(impact.fallY) || 22;
+        const fallRot = Number(impact.rotation) || 72;
+        el.style.setProperty("--fall-x", `${fallX}px`);
+        el.style.setProperty("--fall-y", `${fallY}px`);
+        el.style.setProperty("--fall-rot", `${fallRot}deg`);
 
-        if (knockedSet.has(pinId)) el.classList.add("fallen");
-        else el.classList.add("gone");
+        if (knockedSet.has(pinId)) {
+          el.classList.add("fallen");
+          animatePinFall(el, impact);
+        } else {
+          el.classList.add("gone");
+        }
       });
     }
 
@@ -3930,7 +3992,7 @@
 
         // Keep input locked until the visible pin movement has settled. Previously the
         // rack could be reset while pins were still rotating, which looked like dropped frames.
-        const settleDelay = knockedIds.length ? 940 : 180;
+        const settleDelay = knockedIds.length ? 900 : 180;
         scheduleGameTimer(() => {
           isAnimating = false;
           handlePostThrowState(knockedIds.length, simulation);
@@ -3993,7 +4055,6 @@
       else if (pinsDown === 0) { showFlash("VORBEI"); playMissSound(); }
       else if (pinsDown < 10) { showFlash(`${pinsDown} ${pinsDown === 1 ? "PIN" : "PINS"}`); }
 
-      const rewardTier = classifyPowerupTier(frameIndex, frame.throws);
       let continuation = null;
 
       if (currentFrame < 9) {
@@ -4087,13 +4148,16 @@
         }
       }
 
-      const finalThrow = currentFrame === 9 && (frame.throws.length >= 3 || (frame.throws.length === 2 && frame.throws[0] !== 10 && frame.throws[0] + frame.throws[1] < 10));
-      if (gameMode === "powerup" && pinsDown > 0) {
-        // Powerup nur wenn mindestens ein Pin gefallen ist. Drei Walzen liefern danach 3 auswählbare Optionen.
-        scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 520);
+      const frameComplete = isFrameCompleteAfterThrow(frameIndex, frame.throws);
+      const framePins = frame.throws.reduce((sum, value) => sum + (Number(value) || 0), 0);
+      const finalThrow = frameIndex === 9 && frameComplete;
+      if (gameMode === "powerup" && frameComplete && framePins > 0) {
+        // Powerups gibt es nur nach einem komplett abgeschlossenen Frame.
+        const rewardTier = classifyFramePowerupTier(frameIndex, frame.throws);
+        scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 420);
       } else {
-        // Classic oder 0 Pins: keine Powerup-Pause.
-        scheduleGameTimer(() => { if (typeof continuation === "function") continuation(); }, 180);
+        // Innerhalb eines Frames gibt es keine Slot-Unterbrechung. Ein kompletter 0-Pin-Frame erhält ebenfalls kein Powerup.
+        scheduleGameTimer(() => { if (typeof continuation === "function") continuation(); }, 150);
       }
     }
 
@@ -4138,6 +4202,14 @@
       renderPassiveRack();
       renderLeaderboard();
       updateStatus();
+      if (gameMode === "powerup") {
+        // Einmalige Start-Auswahl vor dem allerersten Wurf.
+        showPowerupChoice("bronze", () => {
+          positionBallAtRest();
+          showThrowHelp();
+          updateStatus();
+        }, false);
+      }
     }
 
     function handlePointerDown(event) {
