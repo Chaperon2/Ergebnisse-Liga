@@ -2063,6 +2063,134 @@
     .passive-slots { gap:4px; }
   }
 </style>
+<style id="phase18-icon-slots-fluid-pins">
+  /* Phase 18: three compact icon reels + explicit preview/activate flow */
+  .slot-panel { width:min(94vw,720px) !important; max-width:720px !important; }
+  .slot-choices {
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:12px !important;
+    margin:15px auto 12px !important;
+  }
+  .slot-choice {
+    display:block !important;
+    min-width:0;
+    padding:8px !important;
+    text-align:center;
+    border:1px solid rgba(255,208,113,.28);
+    border-radius:14px;
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.14));
+  }
+  .slot-choice.ready { cursor:pointer; }
+  .slot-choice.ready:hover { transform:translateY(-3px); }
+  .slot-choice.chosen {
+    border-color:#3ff2ed !important;
+    background:linear-gradient(180deg,rgba(63,242,237,.10),rgba(0,0,0,.16));
+    box-shadow:0 0 0 2px rgba(63,242,237,.18) inset,0 0 22px rgba(63,242,237,.13) !important;
+  }
+  .slot-choice-label {
+    display:block !important;
+    margin:0 0 6px !important;
+    text-align:center;
+    font-size:.62rem !important;
+    color:#aa9e89 !important;
+  }
+  .slot-choice-label span:last-child { display:none !important; }
+  .slot-machine { padding:9px 12px !important; border-radius:11px; }
+  .slot-window { height:92px !important; }
+  .slot-item {
+    height:92px !important;
+    display:grid !important;
+    place-items:center !important;
+    padding:0 !important;
+  }
+  .slot-item .slot-icon {
+    grid-row:auto !important;
+    width:58px !important;
+    height:58px !important;
+    display:grid !important;
+    place-items:center;
+    border-radius:13px;
+    border:2px solid currentColor !important;
+    font-size:1.55rem !important;
+    background:rgba(0,0,0,.20);
+    box-shadow:inset 0 0 18px rgba(255,255,255,.04),0 8px 18px rgba(0,0,0,.22);
+  }
+  .slot-item strong,.slot-item small,.slot-result { display:none !important; }
+  .slot-pointer { left:3px; font-size:.9rem; }
+
+  .powerup-selection-detail {
+    margin:12px 0 0;
+    padding:13px 14px;
+    min-height:112px;
+    border:1px solid rgba(63,242,237,.22);
+    border-radius:12px;
+    background:linear-gradient(180deg,rgba(63,242,237,.045),rgba(0,0,0,.13)),#071013;
+    text-align:left;
+  }
+  .powerup-selection-placeholder {
+    min-height:70px;
+    display:grid;
+    place-items:center;
+    color:#a99e89;
+    font-weight:800;
+    text-align:center;
+    line-height:1.4;
+  }
+  .powerup-selection-placeholder.hidden,.powerup-selection-copy.hidden,.powerup-activate.hidden { display:none !important; }
+  .powerup-selection-head { display:flex; align-items:center; gap:10px; margin-bottom:7px; }
+  .powerup-selection-icon {
+    flex:0 0 auto; width:42px; height:42px; display:grid; place-items:center; border-radius:9px;
+    border:1px solid #3ff2ed; color:#3ff2ed; background:rgba(63,242,237,.07); font-size:1.05rem;
+  }
+  .powerup-selection-icon.bronze { color:#e7a36a; border-color:#e7a36a; background:rgba(231,163,106,.08); }
+  .powerup-selection-icon.silver { color:#d9e4ef; border-color:#d9e4ef; background:rgba(217,228,239,.08); }
+  .powerup-selection-icon.gold { color:#ffd35d; border-color:#ffd35d; background:rgba(255,211,93,.08); }
+  .powerup-selection-title { min-width:0; }
+  .powerup-selection-title strong { display:block; color:#f6e8c8; font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:1.02rem; }
+  .powerup-selection-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:3px; }
+  .powerup-selection-tag { padding:2px 6px; border-radius:999px; border:1px solid rgba(255,208,113,.30); color:#d9c49b; font-size:.61rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+  .powerup-selection-tag.passive { border-color:rgba(63,242,237,.34); color:#3ff2ed; }
+  .powerup-selection-desc { margin:0; color:#c9bea8; font-size:.80rem; font-weight:700; line-height:1.45; }
+  .powerup-activate {
+    width:100%; margin-top:11px; min-height:44px; border:1px solid rgba(63,242,237,.48); border-radius:9px;
+    background:linear-gradient(180deg,#0f4a4c,#071c1d); color:#eaffff; font-family:"Oswald",sans-serif;
+    font-size:.88rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; cursor:pointer;
+    box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),0 8px 20px rgba(0,0,0,.22);
+  }
+  .powerup-activate:hover { filter:brightness(1.12); }
+  .powerup-activate:disabled { opacity:.45; cursor:not-allowed; filter:none; }
+
+  /* Fluid pin fall: shorter chain delays, GPU-friendly transforms and a continuous arc. */
+  .pin {
+    transform-origin:50% 88% !important;
+    will-change:transform,opacity !important;
+    backface-visibility:hidden !important;
+  }
+  .pin.fallen {
+    animation:pinFallFluid 1.12s cubic-bezier(.16,.72,.20,1) both !important;
+    animation-delay:var(--fall-delay,0ms) !important;
+  }
+  @keyframes pinFallFluid {
+    0%   { transform:translate3d(0,0,0) rotateZ(0deg) scale(1); opacity:1; }
+    22%  { transform:translate3d(calc(var(--fall-x,18px)*.08),calc(var(--fall-y,22px)*-.08),0) rotateZ(calc(var(--fall-rot,72deg)*.16)) scale(1.01); opacity:1; }
+    52%  { transform:translate3d(calc(var(--fall-x,18px)*.43),calc(var(--fall-y,22px)*.28),0) rotateZ(calc(var(--fall-rot,72deg)*.52)) scale(.985); opacity:1; }
+    78%  { transform:translate3d(calc(var(--fall-x,18px)*.82),calc(var(--fall-y,22px)*.72),0) rotateZ(calc(var(--fall-rot,72deg)*.88)) scale(.92); opacity:.94; }
+    100% { transform:translate3d(var(--fall-x,18px),var(--fall-y,22px),0) rotateZ(var(--fall-rot,72deg)) scale(.84); opacity:.18; }
+  }
+
+  @media (max-width:760px) {
+    .slot-panel { width:min(96vw,560px) !important; }
+    .slot-choices { grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:7px !important; }
+    .slot-choice { padding:6px !important; }
+    .slot-choice-label { font-size:.54rem !important; }
+    .slot-machine { padding:7px 8px !important; }
+    .slot-window,.slot-item { height:76px !important; }
+    .slot-item .slot-icon { width:46px !important; height:46px !important; font-size:1.18rem !important; border-radius:10px; }
+    .slot-lights { inset:3px; }
+    .powerup-selection-detail { padding:11px; min-height:104px; }
+  }
+</style>
 </head>
 
 <body>
@@ -2107,7 +2235,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Slot-Walzen nach Treffern · 60 Powerups · 5 Passive</small></span>
+                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots nach Treffern · 60 Powerups · 5 Passive</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2120,8 +2248,22 @@
               <div class="powerup-panel slot-panel" role="dialog" aria-modal="true" aria-labelledby="powerupTitle">
                 <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup Slots</span></div>
                 <h3 id="powerupTitle">Wähle 1 von 3 Powerups</h3>
-                <p class="powerup-subtitle" id="powerupSubtitle">Drei Walzen rattern durch die verfügbaren Powerups. Nach dem Stopp wählst du eines davon.</p>
+                <p class="powerup-subtitle" id="powerupSubtitle">Drei Walzen rattern durch die verfügbaren Powerups. Nach dem Stopp siehst du nur die Symbole. Tippe eines an, lies unten die Wirkung und aktiviere es anschließend.</p>
                 <div class="slot-choices" id="powerupSlotChoices" aria-label="Drei Powerup-Auswahlen"></div>
+                <div class="powerup-selection-detail" id="powerupSelectionDetail" aria-live="polite">
+                  <div class="powerup-selection-placeholder" id="powerupSelectionPlaceholder">Nach dem Stopp: Symbol antippen, Wirkung lesen und dann aktivieren.</div>
+                  <div class="powerup-selection-copy hidden" id="powerupSelectionCopy">
+                    <div class="powerup-selection-head">
+                      <span class="powerup-selection-icon" id="powerupSelectionIcon"><i class="fa-solid fa-bolt"></i></span>
+                      <div class="powerup-selection-title">
+                        <strong id="powerupSelectionName">Powerup</strong>
+                        <div class="powerup-selection-meta" id="powerupSelectionMeta"></div>
+                      </div>
+                    </div>
+                    <p class="powerup-selection-desc" id="powerupSelectionDesc"></p>
+                  </div>
+                  <button class="powerup-activate hidden" id="activatePowerupBtn" type="button" disabled><i class="fa-solid fa-check"></i> Powerup aktivieren</button>
+                </div>
               </div>
             </div>
 
@@ -2328,6 +2470,14 @@
     const powerupTierLabel = document.getElementById("powerupTierLabel");
     const powerupSubtitle = document.getElementById("powerupSubtitle");
     const powerupSlotChoices = document.getElementById("powerupSlotChoices");
+    const powerupSelectionDetail = document.getElementById("powerupSelectionDetail");
+    const powerupSelectionPlaceholder = document.getElementById("powerupSelectionPlaceholder");
+    const powerupSelectionCopy = document.getElementById("powerupSelectionCopy");
+    const powerupSelectionIcon = document.getElementById("powerupSelectionIcon");
+    const powerupSelectionName = document.getElementById("powerupSelectionName");
+    const powerupSelectionMeta = document.getElementById("powerupSelectionMeta");
+    const powerupSelectionDesc = document.getElementById("powerupSelectionDesc");
+    const activatePowerupBtn = document.getElementById("activatePowerupBtn");
     const passiveRack = document.getElementById("passiveRack");
     const passiveRackCount = document.getElementById("passiveRackCount");
     const passiveSlots = document.getElementById("passiveSlots");
@@ -2363,6 +2513,7 @@
     let powerupFinalChoice = false;
     let pendingPowerupChoices = [];
     let slotSpinning = false;
+    let selectedPowerupId = null;
     let passivePowerups = [];
 
     function freshPowerupState() {
@@ -2496,10 +2647,8 @@
     }
 
     function slotItemMarkup(item) {
-      return `<div class="slot-item ${item.tier}">
+      return `<div class="slot-item ${item.tier}" aria-hidden="true">
         <span class="slot-icon"><i class="fa-solid ${item.icon}"></i></span>
-        <strong>${escapeHtml(item.name)}</strong>
-        <small>${escapeHtml(item.desc)}</small>
       </div>`;
     }
 
@@ -2522,15 +2671,44 @@
     }
 
     function slotChoiceMarkup(index) {
-      return `<button class="slot-choice" type="button" data-slot-index="${index}" disabled>
-        <div class="slot-choice-label"><span>Slot ${index + 1}</span><span><i class="fa-solid fa-hand-pointer"></i> wählen</span></div>
+      return `<button class="slot-choice" type="button" data-slot-index="${index}" disabled aria-label="Powerup Slot ${index + 1}">
+        <div class="slot-choice-label"><span>Slot ${index + 1}</span><span>auswählen</span></div>
         <div class="slot-machine spinning" data-slot-machine="${index}">
           <div class="slot-pointer" aria-hidden="true"><i class="fa-solid fa-caret-right"></i></div>
           <div class="slot-window"><div class="slot-reel" data-slot-reel="${index}"></div></div>
           <div class="slot-lights" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         </div>
-        <div class="slot-result hidden" data-slot-result="${index}"></div>
       </button>`;
+    }
+
+    function resetPowerupPreview() {
+      selectedPowerupId = null;
+      powerupSelectionPlaceholder.classList.remove("hidden");
+      powerupSelectionCopy.classList.add("hidden");
+      activatePowerupBtn.classList.add("hidden");
+      activatePowerupBtn.disabled = true;
+      powerupSlotChoices.querySelectorAll(".slot-choice").forEach(choice => choice.classList.remove("chosen"));
+    }
+
+    function selectPowerupPreview(powerupId, slotIndex) {
+      if (!powerupChoosing || slotSpinning) return;
+      const item = pendingPowerupChoices.find(entry => entry.id === powerupId);
+      if (!item) return;
+      selectedPowerupId = item.id;
+      powerupSlotChoices.querySelectorAll(".slot-choice").forEach(choice => {
+        choice.classList.toggle("chosen", Number(choice.dataset.slotIndex) === Number(slotIndex));
+      });
+      const tierLabel = item.tier === "gold" ? "Gold" : item.tier === "silver" ? "Silber" : "Bronze";
+      powerupSelectionIcon.className = `powerup-selection-icon ${item.tier}`;
+      powerupSelectionIcon.innerHTML = `<i class="fa-solid ${item.icon}"></i>`;
+      powerupSelectionName.textContent = item.name;
+      powerupSelectionMeta.innerHTML = `<span class="powerup-selection-tag">${tierLabel}</span>${isPassivePowerup(item) ? '<span class="powerup-selection-tag passive">Passiv · Rest der Runde</span>' : '<span class="powerup-selection-tag">Aktiv</span>'}`;
+      powerupSelectionDesc.textContent = item.desc.replace(/^DAUERHAFT:\s*/i, "");
+      powerupSelectionPlaceholder.classList.add("hidden");
+      powerupSelectionCopy.classList.remove("hidden");
+      activatePowerupBtn.classList.remove("hidden");
+      activatePowerupBtn.disabled = false;
+      playButtonSound();
     }
 
     function showPowerupChoice(tier, continuation, isFinalThrow = false) {
@@ -2552,6 +2730,7 @@
 
       pendingPowerupChoices = choices;
       powerupChoosing = true;
+      selectedPowerupId = null;
       slotSpinning = true;
       pendingPowerupContinuation = continuation;
       powerupFinalChoice = isFinalThrow;
@@ -2564,6 +2743,8 @@
         : `${meta.subtitle} Drei Walzen laufen gleichzeitig. Nach dem Stopp kannst du genau eines der drei Powerups wählen.`;
 
       powerupSlotChoices.innerHTML = choices.map((_, index) => slotChoiceMarkup(index)).join("");
+      resetPowerupPreview();
+      powerupSelectionPlaceholder.textContent = "Die drei Walzen laufen …";
       powerupOverlay.classList.remove("hidden");
       powerupOverlay.setAttribute("aria-hidden", "false");
       playTone(tier === "gold" ? 760 : tier === "silver" ? 620 : 500, .08, "square", .025, 0);
@@ -2592,17 +2773,16 @@
         allMachines.forEach(machine => machine.classList.remove("spinning"));
         choices.forEach((selected, index) => {
           const reel = powerupSlotChoices.querySelector(`[data-slot-reel="${index}"]`);
-          const result = powerupSlotChoices.querySelector(`[data-slot-result="${index}"]`);
           const choice = powerupSlotChoices.querySelector(`[data-slot-index="${index}"]`);
-          // Nach dem Rattern wird nur das Endergebnis im Fenster gezeigt. So ist es garantiert vollständig lesbar.
+          // Nach dem Rattern bleibt nur das Symbol stehen. Details erscheinen erst nach Auswahl darunter.
           reel.style.transition = "none";
           reel.style.transform = "translateY(0)";
           reel.innerHTML = slotItemMarkup(selected);
-          result.innerHTML = `<strong><i class="fa-solid ${selected.icon}"></i> ${escapeHtml(selected.name)}${isPassivePowerup(selected) ? ' · PASSIV' : ''}</strong><span>${escapeHtml(selected.desc)}</span>`;
-          result.classList.remove("hidden");
           choice.disabled = false;
           choice.classList.add("ready");
+          choice.setAttribute("aria-label", `Slot ${index + 1}: Powerup auswählen`);
         });
+        powerupSelectionPlaceholder.textContent = "Wähle eines der drei Symbole. Danach siehst du hier, was das Powerup macht.";
         playTone(tier === "gold" ? 980 : tier === "silver" ? 820 : 680, .14, "triangle", .035, 0);
       }, 2450);
     }
@@ -2623,12 +2803,12 @@
       powerupFinalChoice = false;
       powerupChoosing = false;
       slotSpinning = false;
-      pendingPowerupChoices = [];
       powerupSlotChoices.querySelectorAll(".slot-choice").forEach(choice => {
         choice.disabled = true;
         choice.classList.remove("ready");
-        if (choice.dataset.slotIndex && pendingPowerupChoices[Number(choice.dataset.slotIndex)]?.id === item.id) choice.classList.add("chosen");
       });
+      pendingPowerupChoices = [];
+      selectedPowerupId = null;
       powerupOverlay.classList.add("hidden");
       powerupOverlay.setAttribute("aria-hidden", "true");
       showFlash(`${item.name}`);
@@ -3582,7 +3762,7 @@
           fallX: direction * randomBetween(24, 52),
           fallY: randomBetween(13, 38),
           rotation: direction * randomBetween(68, 118),
-          delay: Math.round(clamp((t - impactT) * 1050 + index * 16, 0, 90))
+          delay: Math.round(clamp((t - impactT) * 620 + index * 8, 0, 48))
         };
       });
 
@@ -3621,7 +3801,7 @@
               fallX: direction * randomBetween(20, 55),
               fallY: randomBetween(10, 40),
               rotation: direction * randomBetween(58, 122),
-              delay: 72 + wave * 78 + Math.round(randomBetween(0, 42))
+              delay: 34 + wave * 42 + Math.round(randomBetween(0, 20))
             };
           }
         });
@@ -3641,7 +3821,7 @@
               fallX: direction * randomBetween(28, 60),
               fallY: randomBetween(15, 44),
               rotation: direction * randomBetween(72, 128),
-              delay: 210 + index * 24
+              delay: 92 + index * 12
             };
           });
         } else if (strongPocket && knocked.size >= 7) {
@@ -3657,7 +3837,7 @@
               fallX: direction * randomBetween(24, 50),
               fallY: randomBetween(12, 38),
               rotation: direction * randomBetween(62, 114),
-              delay: 245
+              delay: 118
             };
           }
         }
@@ -3676,7 +3856,7 @@
               fallX: direction * randomBetween(22, 48),
               fallY: randomBetween(11, 36),
               rotation: direction * randomBetween(58, 108),
-              delay: 105 + index * 48
+              delay: 52 + index * 24
             };
           });
         }
@@ -3750,7 +3930,7 @@
 
         // Keep input locked until the visible pin movement has settled. Previously the
         // rack could be reset while pins were still rotating, which looked like dropped frames.
-        const settleDelay = knockedIds.length ? 720 : 180;
+        const settleDelay = knockedIds.length ? 940 : 180;
         scheduleGameTimer(() => {
           isAnimating = false;
           handlePostThrowState(knockedIds.length, simulation);
@@ -3936,6 +4116,7 @@
       powerupFinalChoice = false;
       pendingPowerupChoices = [];
       slotSpinning = false;
+      selectedPowerupId = null;
       passivePowerups = [];
       powerupSlotChoices.innerHTML = "";
       powerupOverlay.classList.add("hidden");
@@ -4117,8 +4298,14 @@
     powerupSlotChoices.addEventListener("click", event => {
       const choice = event.target.closest(".slot-choice.ready");
       if (!choice || choice.disabled || slotSpinning) return;
-      const item = pendingPowerupChoices[Number(choice.dataset.slotIndex)];
-      if (item) choosePowerup(item.id);
+      const slotIndex = Number(choice.dataset.slotIndex);
+      const item = pendingPowerupChoices[slotIndex];
+      if (item) selectPowerupPreview(item.id, slotIndex);
+    });
+
+    activatePowerupBtn.addEventListener("click", () => {
+      if (!selectedPowerupId || slotSpinning || !powerupChoosing) return;
+      choosePowerup(selectedPowerupId);
     });
 
     leaderboardClassicTab.addEventListener("click", () => {
