@@ -825,19 +825,6 @@ body.page-records .live-data-state.error {
 }
 body.page-records .live-data-state.error i { color:#b4233c !important; }
 
-/* Ergebnisse: Teamnamen dürfen in keiner Tabelle umbrechen. */
-.results-view th.col-team,
-.results-view td.col-team {
-  min-width:150px !important;
-  white-space:nowrap !important;
-  word-break:keep-all !important;
-  overflow-wrap:normal !important;
-  hyphens:none !important;
-}
-.results-view .section-spieltag table { min-width:1020px !important; }
-.results-view .section-einzel table { min-width:1160px !important; }
-.results-view .section-team table { min-width:900px !important; }
-
 /* 200+: bewusst extrem kontrastreich. Inline-Stil aus results-modern.js ist die letzte Absicherung. */
 .results-view td.score-200,
 .results-view td[data-score-200="true"] {
@@ -861,9 +848,7 @@ body.page-records .live-data-state.error i { color:#b4233c !important; }
 
 @media(max-width:700px){
   body.page-records .live-data-state{font-size:13px !important;padding:12px 13px !important;margin:0 2px 14px !important}
-  .results-view th.col-team,.results-view td.col-team{min-width:140px !important}
 }
-
 /* ===== Spielplan: Datum pro Spieltag kontrastreich und gut lesbar ===== */
 .schedule-view .schedule-day time {
   color:#24180f !important;
@@ -886,4 +871,12 @@ body.page-records .live-data-state.error i { color:#b4233c !important; }
     font-size:11px !important;
     padding:4px 6px !important;
   }
+}
+
+/* NUR die beiden Teamnamen im direkten Duell unter den Ergebnistabellen. */
+.results-view .duel-shell > .team-duels > .team-duel > .duel-team > strong {
+  white-space:nowrap !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+  hyphens:none !important;
 }
