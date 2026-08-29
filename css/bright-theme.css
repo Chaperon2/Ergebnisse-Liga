@@ -782,70 +782,108 @@ body.page-records .record-players { font-weight:800 !important; }
   .schedule-view .versus b{font-size:13px !important}
 }
 
-
-/* ===== Phase 15.11: sichere Tabellenkorrektur ohne Layout-Aufblähung ===== */
-/* Rekorde: Status/Infobalken kontrastreich und passend zur hellen Messing-/Papieroptik. */
+/* ===== Phase 15.10: Rekorde-Infobalken, einzeilige Teamnamen, garantiertes 200+ ===== */
+/* Rekorde: heller Statusbalken, passend zur restlichen Papier-/Messingoptik. */
 body.page-records .live-data-state {
-  position: relative !important;
-  z-index: 2 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin: 2px 0 18px !important;
-  padding: 12px 15px !important;
-  border: 1px solid #9b6a2e !important;
-  border-left: 5px solid #177f82 !important;
-  border-radius: 8px !important;
-  background: linear-gradient(180deg,#fffaf0 0%,#ead9bc 100%) !important;
-  color: #241a11 !important;
-  font-family: "Roboto Slab",serif !important;
-  font-size: 14px !important;
-  line-height: 1.45 !important;
-  font-weight: 800 !important;
-  text-shadow: none !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.72),0 7px 18px rgba(73,47,20,.10) !important;
+  position:relative !important;
+  z-index:2 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:11px !important;
+  margin:-8px 0 18px !important;
+  padding:13px 16px !important;
+  border:1px solid #a97734 !important;
+  border-left:6px solid #087f83 !important;
+  border-radius:9px !important;
+  background:linear-gradient(180deg,#fff9ec 0%,#ead7b8 100%) !important;
+  color:#2b2117 !important;
+  font-family:"Roboto Slab",serif !important;
+  font-size:14px !important;
+  line-height:1.45 !important;
+  font-weight:900 !important;
+  letter-spacing:.005em !important;
+  text-shadow:none !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.78),0 8px 20px rgba(74,47,19,.12) !important;
 }
-body.page-records .live-data-state i { color:#177f82 !important; font-size:16px !important; filter:none !important; }
-body.page-records .live-data-state span { color:#241a11 !important; }
-body.page-records .live-data-state.fallback { border-left-color:#b77a13 !important; background:linear-gradient(180deg,#fff8df,#efdfb6) !important; }
-body.page-records .live-data-state.error { border-color:#b74657 !important; border-left-color:#b4233c !important; background:linear-gradient(180deg,#fff1f3,#f2d0d6) !important; color:#611625 !important; }
+body.page-records .live-data-state i {
+  flex:0 0 auto !important;
+  color:#087f83 !important;
+  font-size:16px !important;
+  filter:none !important;
+}
+body.page-records .live-data-state span { color:#2b2117 !important; }
+body.page-records .live-data-state.fallback {
+  border-left-color:#b77a13 !important;
+  background:linear-gradient(180deg,#fff8dd,#f1dfae) !important;
+  color:#3b2a0e !important;
+}
+body.page-records .live-data-state.error {
+  border-color:#b84959 !important;
+  border-left-color:#b4233c !important;
+  background:linear-gradient(180deg,#fff0f2,#f6cfd5) !important;
+  color:#651625 !important;
+}
 body.page-records .live-data-state.error i { color:#b4233c !important; }
 
-/* Ergebnisse: nur die Teamzellen bleiben einzeilig. Keine riesigen Tabellen-Mindestbreiten. */
+/* Ergebnisse: Teamnamen dürfen in keiner Tabelle umbrechen. */
 .results-view th.col-team,
 .results-view td.col-team {
-  white-space: nowrap !important;
-  overflow-wrap: normal !important;
-  word-break: keep-all !important;
-  hyphens: none !important;
+  min-width:150px !important;
+  white-space:nowrap !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+  hyphens:none !important;
 }
+.results-view .section-spieltag table { min-width:1020px !important; }
+.results-view .section-einzel table { min-width:1160px !important; }
+.results-view .section-team table { min-width:900px !important; }
 
-/* Phase 15.12: 200+ dauerhaft sichtbar. Orange, kontrastreich, ohne Einfluss auf Tabellenbreiten. */
-.results-view td.score-200-strong,
-.results-view td[data-score-200="true"],
-.results-view tbody tr:hover td.score-200-strong,
+/* 200+: bewusst extrem kontrastreich. Inline-Stil aus results-modern.js ist die letzte Absicherung. */
+.results-view td.score-200,
+.results-view td[data-score-200="true"] {
+  background:#a51528 !important;
+  background-image:linear-gradient(180deg,#d9273f 0%,#9d1025 100%) !important;
+  color:#ffffff !important;
+  border-color:#74101d !important;
+  outline:2px solid #74101d !important;
+  outline-offset:-2px !important;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.38),0 0 0 2px #74101d !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.65) !important;
+  font-weight:950 !important;
+  font-size:1.14em !important;
+}
+.results-view tbody tr:hover td.score-200,
 .results-view tbody tr:hover td[data-score-200="true"] {
-  background-color: #f59e0b !important;
-  background-image: linear-gradient(180deg,#ffbf32 0%,#f28a00 100%) !important;
-  color: #17110a !important;
-  border-color: #9a5200 !important;
-  outline: 2px solid #9a5200 !important;
-  outline-offset: -2px !important;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.42),0 1px 4px rgba(103,55,0,.24) !important;
-  text-shadow: 0 1px 0 rgba(255,255,255,.25) !important;
-  font-weight: 900 !important;
-  font-size: 1.16em !important;
+  background:#8e0e20 !important;
+  background-image:linear-gradient(180deg,#c71e35 0%,#850b1c 100%) !important;
+  color:#ffffff !important;
 }
 
 @media(max-width:700px){
-  body.page-records .live-data-state { margin:0 2px 14px !important; padding:11px 12px !important; font-size:12px !important; }
+  body.page-records .live-data-state{font-size:13px !important;padding:12px 13px !important;margin:0 2px 14px !important}
+  .results-view th.col-team,.results-view td.col-team{min-width:140px !important}
+}
 
-  /* Spieltag bleibt kompakt wie bisher, Team bekommt nur etwas mehr Raum. */
-  .results-view .section-spieltag .col-name { width:15% !important; }
-  .results-view .section-spieltag .col-team { width:19% !important; font-size:clamp(6px,1.85vw,8px) !important; }
-  .results-view .section-spieltag .col-total { width:11% !important; }
-  .results-view .section-spieltag .col-average { width:7% !important; }
+/* ===== Spielplan: Datum pro Spieltag kontrastreich und gut lesbar ===== */
+.schedule-view .schedule-day time {
+  color:#24180f !important;
+  background:#fff8eb !important;
+  border:1px solid #a66c29 !important;
+  border-radius:5px !important;
+  padding:4px 8px !important;
+  font-family:"Roboto Slab",serif !important;
+  font-size:12px !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+  text-shadow:none !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.78) !important;
+  white-space:nowrap !important;
+}
 
-  /* Mannschaftswertung: Teamspalte etwas großzügiger, ohne die Tabelle breiter als den Viewport zu machen. */
-  .results-view .section-team .subtable-shell:first-child .col-team { width:32% !important; font-size:clamp(6px,1.85vw,8px) !important; }
+@media(max-width:700px){
+  .schedule-view .schedule-day time {
+    font-size:11px !important;
+    padding:4px 6px !important;
+  }
 }
