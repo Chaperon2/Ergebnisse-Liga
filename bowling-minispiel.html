@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Bowling-Minispiel - Strikeclub Velten</title>
   <meta name="theme-color" content="#f3ecdf" />
-  <meta name="description" content="Bowling-Minispiel des Strikeclub Velten mit Classic Bowling und Powerup Bowling, Slotmachine und getrennten Leaderboards." />
+  <meta name="description" content="Bowling-Minispiel des Strikeclub Velten mit Classic Bowling und Strike Rush, Slotmachine und getrennten Leaderboards." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -2321,6 +2321,113 @@
       .scoreboard-overlay .passive-slot { width: 23px !important; height: 23px !important; }
     }
   </style>
+
+<style id="phase23-strike-rush-leaderboards">
+  .leaderboard-boards {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    padding:0 12px 12px;
+  }
+  .leaderboard-board {
+    min-width:0;
+    overflow:hidden;
+    border:1px solid rgba(222,164,78,.28);
+    border-radius:10px;
+    background:linear-gradient(180deg,rgba(24,16,12,.92),rgba(8,7,5,.96));
+    box-shadow:0 12px 30px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.025);
+  }
+  .leaderboard-board[data-board-mode="powerup"] {
+    border-color:rgba(63,242,237,.24);
+    background:linear-gradient(180deg,rgba(10,26,25,.42),rgba(12,8,6,.97) 34%);
+  }
+  .leaderboard-board-head {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 12px 10px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .leaderboard-board-head > div { min-width:0; }
+  .leaderboard-board-head strong {
+    display:block;
+    color:#f4dfb4;
+    font-family:"Oswald",sans-serif;
+    font-size:1rem;
+    font-weight:900;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+  .leaderboard-board[data-board-mode="powerup"] .leaderboard-board-head strong { color:#52f5ee; }
+  .leaderboard-board-head small { display:block; margin-top:2px; color:#978a72; font-size:.68rem; font-weight:800; }
+  .leaderboard-board-icon {
+    width:38px;
+    height:38px;
+    flex:0 0 38px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,208,113,.34);
+    border-radius:8px;
+    background:#0b0907;
+    color:#ffd071;
+  }
+  .leaderboard-board-icon.rush { border-color:rgba(63,242,237,.38); color:#52f5ee; background:rgba(63,242,237,.06); }
+  .leaderboard-board .leaderboard-wrap { padding:10px; }
+  .leaderboard-board .leaderboard-row { padding:9px 10px; }
+  .leaderboard-board .leaderboard-rank { width:32px; height:32px; }
+  .leaderboard-board .leaderboard-note { margin-top:8px; text-align:center; font-size:.68rem; }
+
+  /* Desktop: beide Ranglisten direkt vergleichen. */
+  @media (min-width:761px) {
+    .leaderboard-mode-tabs { display:none !important; }
+    .leaderboard-board { display:block !important; }
+  }
+
+  /* Mobil: große, eindeutige Umschalter statt zwei gequetschter Listen. */
+  @media (max-width:760px) {
+    .leaderboard-boards { grid-template-columns:1fr; padding:0 10px 10px; gap:0; }
+    .leaderboard-board { display:none; }
+    .leaderboard-board.active { display:block; }
+    .leaderboard-mode-tabs {
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+      margin:10px;
+      padding:5px;
+      border:1px solid rgba(255,208,113,.20);
+      border-radius:12px;
+      background:#090705;
+    }
+    .leaderboard-tab {
+      min-height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:9px 10px !important;
+      border:1px solid transparent !important;
+      border-radius:9px !important;
+      background:transparent !important;
+      color:#9f927b !important;
+      box-shadow:none !important;
+    }
+    .leaderboard-tab i { font-size:1rem; }
+    .leaderboard-tab span { display:block; min-width:0; text-align:left; }
+    .leaderboard-tab strong { display:block; color:inherit; font-family:"Oswald",sans-serif; font-size:.88rem; font-weight:900; text-transform:uppercase; }
+    .leaderboard-tab small { display:block; margin-top:2px; color:#746b5d; font-size:.58rem; font-weight:800; }
+    .leaderboard-tab.active {
+      color:#ffd071 !important;
+      border-color:rgba(255,208,113,.48) !important;
+      background:linear-gradient(180deg,rgba(255,208,113,.13),rgba(255,208,113,.045)) !important;
+      box-shadow:inset 0 0 0 1px rgba(255,208,113,.06),0 5px 16px rgba(0,0,0,.25) !important;
+    }
+    .leaderboard-tab[data-leaderboard-mode="powerup"].active {
+      color:#52f5ee !important;
+      border-color:rgba(82,245,238,.48) !important;
+      background:linear-gradient(180deg,rgba(82,245,238,.13),rgba(82,245,238,.045)) !important;
+    }
+  }
+</style>
 </head>
 
 <body>
@@ -2345,7 +2452,7 @@
           </div>
         <div class="info-pill">
           <span class="info-label">Spielmodi</span>
-          <div class="info-value">Classic · Powerup</div>
+          <div class="info-value">Classic · Strike Rush</div>
         </div>
       </div>
 
@@ -2356,7 +2463,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Wähle deinen Modus</h2>
-                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Powerup-Modus bekommst du vor dem ersten Wurf und danach nur nach komplett abgeschlossenen Frames drei Slot-Walzen. Offener Frame = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Vor dem ersten Wurf gibt es eine Bronze-Auswahl; nach dem letzten Wurf werden ausschließlich Sofortpunkte angeboten. Bis zu 3 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
+                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. Im Strike-Rush-Modus bekommst du vor dem ersten Wurf und danach nur nach komplett abgeschlossenen Frames drei Slot-Walzen. Offener Frame = Bronze, Spare = Silber, Strike = Gold. Du wählst 1 von 3 Powerups. Vor dem ersten Wurf gibt es eine Bronze-Auswahl; nach dem letzten Wurf werden ausschließlich Sofortpunkte angeboten. Bis zu 3 passive Dauerboni bleiben für den Rest der Runde aktiv.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2365,7 +2472,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Powerup Bowling</strong><small>3 Symbol-Slots pro Frame · 72 Powerups · 3 Passive</small></span>
+                    <span class="mode-copy"><strong>Strike Rush</strong><small>3 Symbol-Slots pro Frame · 72 Powerups · 3 Passive</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2482,17 +2589,35 @@
           <div class="card-head">
             <div class="card-title-wrap">
               <h2 class="card-title">Leaderboards</h2>
-              <div class="card-subtitle">Classic und Powerup getrennt</div>
+              <div class="card-subtitle">Zwei Modi · zwei eigene Ranglisten</div>
             </div>
             <div class="badge" id="leaderboardBadge"><i class="fa-solid fa-signal"></i><span>live</span></div>
           </div>
           <div class="leaderboard-mode-tabs" role="tablist" aria-label="Leaderboard auswählen">
-            <button class="leaderboard-tab active" id="leaderboardClassicTab" type="button" data-leaderboard-mode="classic"><i class="fa-solid fa-bowling-ball"></i> Classic</button>
-            <button class="leaderboard-tab" id="leaderboardPowerupTab" type="button" data-leaderboard-mode="powerup"><i class="fa-solid fa-bolt"></i> Powerup</button>
+            <button class="leaderboard-tab active" id="leaderboardClassicTab" type="button" data-leaderboard-mode="classic"><i class="fa-solid fa-bowling-ball"></i><span><strong>Classic</strong><small>bis 300</small></span></button>
+            <button class="leaderboard-tab" id="leaderboardPowerupTab" type="button" data-leaderboard-mode="powerup"><i class="fa-solid fa-bolt"></i><span><strong>Strike Rush</strong><small>Bonus-Modus</small></span></button>
           </div>
-          <div class="leaderboard-wrap">
-            <div class="leaderboard-list" id="leaderboardList"></div>
-            <div class="leaderboard-note" id="leaderboardNote">Scores werden live geladen.</div>
+          <div class="leaderboard-boards">
+            <section class="leaderboard-board active" id="leaderboardClassicBoard" data-board-mode="classic" aria-label="Classic Leaderboard">
+              <div class="leaderboard-board-head">
+                <span class="leaderboard-board-icon classic"><i class="fa-solid fa-bowling-ball"></i></span>
+                <div><strong>Classic Bowling</strong><small>Top 10 · maximal 300</small></div>
+              </div>
+              <div class="leaderboard-wrap">
+                <div class="leaderboard-list" id="leaderboardClassicList"></div>
+                <div class="leaderboard-note" id="leaderboardClassicNote">Scores werden live geladen.</div>
+              </div>
+            </section>
+            <section class="leaderboard-board" id="leaderboardRushBoard" data-board-mode="powerup" aria-label="Strike Rush Leaderboard">
+              <div class="leaderboard-board-head">
+                <span class="leaderboard-board-icon rush"><i class="fa-solid fa-bolt"></i></span>
+                <div><strong>Strike Rush</strong><small>Top 10 · Scores über 300 möglich</small></div>
+              </div>
+              <div class="leaderboard-wrap">
+                <div class="leaderboard-list" id="leaderboardRushList"></div>
+                <div class="leaderboard-note" id="leaderboardRushNote">Scores werden live geladen.</div>
+              </div>
+            </section>
           </div>
         </section>
       </div>
@@ -2578,9 +2703,13 @@
     const summaryStrikes = document.getElementById("summaryStrikes");
     const summarySpares = document.getElementById("summarySpares");
     const summaryState = document.getElementById("summaryState");
-    const leaderboardList = document.getElementById("leaderboardList");
+    const leaderboardClassicList = document.getElementById("leaderboardClassicList");
+    const leaderboardRushList = document.getElementById("leaderboardRushList");
+    const leaderboardClassicNote = document.getElementById("leaderboardClassicNote");
+    const leaderboardRushNote = document.getElementById("leaderboardRushNote");
+    const leaderboardClassicBoard = document.getElementById("leaderboardClassicBoard");
+    const leaderboardRushBoard = document.getElementById("leaderboardRushBoard");
     const leaderboardBadge = document.getElementById("leaderboardBadge");
-    const leaderboardNote = document.getElementById("leaderboardNote");
     const leaderboardModal = document.getElementById("leaderboardModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalText = document.getElementById("modalText");
@@ -3829,18 +3958,21 @@
     }
 
     function renderLeaderboardTabs() {
-      leaderboardClassicTab.classList.toggle("active", leaderboardViewMode === "classic");
-      leaderboardPowerupTab.classList.toggle("active", leaderboardViewMode === "powerup");
+      const classicActive = leaderboardViewMode === "classic";
+      leaderboardClassicTab.classList.toggle("active", classicActive);
+      leaderboardPowerupTab.classList.toggle("active", !classicActive);
+      leaderboardClassicTab.setAttribute("aria-selected", String(classicActive));
+      leaderboardPowerupTab.setAttribute("aria-selected", String(!classicActive));
+      leaderboardClassicBoard.classList.toggle("active", classicActive);
+      leaderboardRushBoard.classList.toggle("active", !classicActive);
     }
 
-    function renderLeaderboard() {
-      const entries = currentLeaderboardEntries();
-      const top10 = entries.slice(0, 10);
-      const label = leaderboardViewMode === "powerup" ? "Powerup Bowling" : "Classic Bowling";
+    function renderLeaderboardList(mode, target, note, label) {
+      const top10 = (leaderboardEntries[mode] || []).slice(0, 10);
       if (!top10.length) {
-        leaderboardList.innerHTML = `<div class="leaderboard-empty">Noch keine Einträge im ${label}-Leaderboard. Das erste fertige Spiel setzt den ersten Wert.</div>`;
+        target.innerHTML = `<div class="leaderboard-empty">Noch keine Einträge bei ${label}. Das erste fertige Spiel setzt den ersten Wert.</div>`;
       } else {
-        leaderboardList.innerHTML = top10.map((entry, index) => `
+        target.innerHTML = top10.map((entry, index) => `
           <div class="leaderboard-row">
             <div class="leaderboard-rank">${index + 1}</div>
             <div class="leaderboard-name">${escapeHtml(entry.name)}</div>
@@ -3848,7 +3980,12 @@
           </div>
         `).join("");
       }
-      leaderboardNote.textContent = `${label} · Top 10 · live synchronisiert.`;
+      note.textContent = `Top 10 · live synchronisiert`;
+    }
+
+    function renderLeaderboard() {
+      renderLeaderboardList("classic", leaderboardClassicList, leaderboardClassicNote, "Classic Bowling");
+      renderLeaderboardList("powerup", leaderboardRushList, leaderboardRushNote, "Strike Rush");
       renderLeaderboardTabs();
     }
 
@@ -3913,7 +4050,9 @@
         leaderboardBadge.innerHTML = `<i class="fa-solid fa-signal"></i><span>live</span>`;
       }, error => {
         leaderboardBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>Fehler</span>`;
-        leaderboardNote.textContent = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
+        const message = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
+        leaderboardClassicNote.textContent = message;
+        leaderboardRushNote.textContent = message;
       });
     }
 
@@ -3941,7 +4080,7 @@
 
     function openEndGameModal() {
       const score = getFinalScore();
-      const modeLabel = gameMode === "powerup" ? "Powerup" : "Classic";
+      const modeLabel = gameMode === "powerup" ? "Strike Rush" : "Classic";
       if (qualifiesForLeaderboard(score, gameMode)) {
         showModal("Spiel beendet", `${score} Punkte im ${modeLabel}-Modus. Der Score reicht aktuell für das ${modeLabel}-Top-10-Leaderboard. Trag deinen Namen ein.`, true);
       } else {
