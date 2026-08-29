@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- Strikeclub Velten · Minispiel Phase 9 · Steampunk-Design und geometrische Pin-Kollision -->
+<!-- Strikeclub Velten · Minispiel Phase 16 · Powerup-Draft und geometrische Pin-Kollision -->
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Bowling-Minispiel - Strikeclub Velten</title>
   <meta name="theme-color" content="#f3ecdf" />
-  <meta name="description" content="Das Retro-Steampunk-Bowling-Minispiel des Strikeclub Velten." />
+  <meta name="description" content="Bowling-Minispiel des Strikeclub Velten mit 30 Powerups, Flick-Wurf und Bonus-Scores über 300." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1819,8 +1819,169 @@
       }
     }
 
+
+    /* Phase 16 · Powerup Draft after every throw */
+    .powerup-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1280;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(114,183,255,0.20), transparent 34%),
+        rgba(2,5,9,0.74);
+      backdrop-filter: blur(14px);
+    }
+
+    .powerup-overlay.hidden { display: none; }
+
+    .powerup-panel {
+      width: min(880px, 100%);
+      max-height: calc(100% - 18px);
+      overflow: auto;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(6,10,17,0.94);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.52);
+    }
+
+    .powerup-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(247,251,255,0.72);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .powerup-panel h3 {
+      margin: 7px 0 4px;
+      text-align: center;
+      font-size: clamp(1.55rem, 4vw, 2.4rem);
+      line-height: 1;
+      letter-spacing: -.055em;
+    }
+
+    .powerup-subtitle {
+      margin: 0 auto 15px;
+      max-width: 60ch;
+      color: rgba(247,251,255,0.70);
+      text-align: center;
+      font-size: .84rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .powerup-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .powerup-card {
+      position: relative;
+      min-height: 184px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 14px 28px rgba(0,0,0,.24);
+      transition: transform .14s ease, border-color .14s ease, filter .14s ease;
+    }
+
+    .powerup-card:hover { transform: translateY(-3px); filter: brightness(1.08); }
+    .powerup-card:active { transform: translateY(0) scale(.985); }
+
+    .powerup-card.bronze {
+      background: linear-gradient(145deg, rgba(108,68,43,.96), rgba(40,27,22,.96));
+      border-color: rgba(235,169,116,.48);
+    }
+    .powerup-card.silver {
+      background: linear-gradient(145deg, rgba(73,91,111,.98), rgba(28,38,50,.98));
+      border-color: rgba(191,222,255,.55);
+    }
+    .powerup-card.gold {
+      background: linear-gradient(145deg, rgba(137,96,20,.98), rgba(52,35,5,.98));
+      border-color: rgba(255,214,92,.72);
+      box-shadow: 0 14px 34px rgba(255,190,42,.12), 0 14px 28px rgba(0,0,0,.28);
+    }
+
+    .powerup-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.09) 48%, transparent 74%);
+      transform: translateX(-80%);
+      transition: transform .35s ease;
+    }
+    .powerup-card:hover::after { transform: translateX(80%); }
+
+    .powerup-tier {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.88);
+      font-size: .64rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .powerup-name { font-size: 1.02rem; font-weight: 900; letter-spacing: -.03em; }
+    .powerup-desc { color: rgba(255,255,255,.78); font-size: .78rem; line-height: 1.4; font-weight: 700; }
+    .powerup-pick { display: inline-flex; align-items: center; gap: 6px; font-size: .72rem; font-weight: 900; }
+
+    .powerup-bonus-hud {
+      position: absolute;
+      top: 82px;
+      right: 12px;
+      z-index: 735;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,214,92,.28);
+      background: rgba(43,29,5,.48);
+      backdrop-filter: blur(10px);
+      color: #ffe59a;
+      font-size: .72rem;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .powerup-bonus-hud strong { color: #fff2c5; }
+
+    @media (max-width: 700px) {
+      .powerup-overlay { padding: 10px; align-items: center; }
+      .powerup-panel { padding: 13px; max-height: calc(100% - 8px); border-radius: 19px; }
+      .powerup-options { grid-template-columns: 1fr; gap: 8px; }
+      .powerup-card { min-height: 0; grid-template-columns: auto 1fr; grid-template-rows: auto auto auto; column-gap: 10px; padding: 11px; }
+      .powerup-tier { grid-column: 1; grid-row: 1 / span 2; align-self: start; }
+      .powerup-name { grid-column: 2; grid-row: 1; }
+      .powerup-desc { grid-column: 2; grid-row: 2; }
+      .powerup-pick { grid-column: 2; grid-row: 3; }
+      .powerup-bonus-hud { top: 108px; right: 6px; font-size: .64rem; padding: 6px 8px; }
+    }
+
 </style>
-<link rel="stylesheet" href="css/bright-theme.css?v=15.9" />
+<link rel="stylesheet" href="css/bright-theme.css?v=16.0" />
 </head>
 
 <body>
@@ -1834,7 +1995,7 @@
       </div>
       <div class="skill-pill">
         <i class="fa-solid fa-hand-point-up"></i>
-        <span>Flick-Wurf · Hook · echte Pin-Kollision</span>
+        <span>Flick-Wurf · Hook · 30 Powerups</span>
       </div>
     </div>
 
@@ -1856,8 +2017,19 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Spiel starten</h2>
-                <p>Tippe auf Start und spiele zehn Frames. Positioniere den Ball, wische nach oben und nutze einen leichten seitlichen Zug für Hook.</p>
+                <p>Tippe auf Start und spiele zehn Frames. Nach jedem Wurf wählst du 1 von 3 Powerups. Spare bringt Silber, Strike bringt Gold – und Bonuspunkte können deinen Score weit über 300 treiben.</p>
                 <button class="btn primary start-btn" id="startGameBtn" type="button"><i class="fa-solid fa-play"></i><span>Spiel starten</span></button>
+              </div>
+            </div>
+
+
+
+            <div class="powerup-overlay hidden" id="powerupOverlay" aria-hidden="true">
+              <div class="powerup-panel" role="dialog" aria-modal="true" aria-labelledby="powerupTitle">
+                <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup</span></div>
+                <h3 id="powerupTitle">Wähle 1 von 3</h3>
+                <p class="powerup-subtitle" id="powerupSubtitle">Nach jedem Wurf bekommst du drei zufällige Verbesserungen. Gute Würfe schalten stärkere Stufen frei.</p>
+                <div class="powerup-options" id="powerupOptions"></div>
               </div>
             </div>
 
@@ -1877,6 +2049,8 @@
             </div>
 
             <div class="score-total-hud" id="scoreTotalHud">0 Punkte</div>
+            <div class="powerup-bonus-hud" id="powerupBonusHud"><i class="fa-solid fa-bolt"></i><span>Powerup-Bonus <strong id="powerupBonusValue">+0</strong></span></div>
+
             <div class="throw-stats-hud hidden" id="throwStatsHud">
               <span id="throwPowerText">Power 0%</span>
               <span class="throw-stat-muted">·</span>
@@ -2044,6 +2218,11 @@
     const quickRestartBtn = document.getElementById("quickRestartBtn");
     const startOverlay = document.getElementById("startOverlay");
     const startGameBtn = document.getElementById("startGameBtn");
+    const powerupOverlay = document.getElementById("powerupOverlay");
+    const powerupTierLabel = document.getElementById("powerupTierLabel");
+    const powerupSubtitle = document.getElementById("powerupSubtitle");
+    const powerupOptions = document.getElementById("powerupOptions");
+    const powerupBonusValue = document.getElementById("powerupBonusValue");
 
     let frames = [];
     let currentFrame = 0;
@@ -2065,6 +2244,257 @@
     let lastImpactMap = {};
     let gameRunId = 0;
     let pendingGameTimers = [];
+    let powerupChoosing = false;
+    let powerupBonusScore = 0;
+    let powerupState = null;
+    let pendingPowerupContinuation = null;
+    let powerupFinalChoice = false;
+
+    function freshPowerupState() {
+      return {
+        nextPinBonus: 0,
+        nextHighRollBonus: 0,
+        nextLowRollBonus: 0,
+        nextAutoPins: 0,
+        nextMinPins: 0,
+        collisionBoost: 0,
+        collisionBoostThrows: 0,
+        stability: 0,
+        stabilityThrows: 0,
+        gutterShieldThrows: 0,
+        nextStrikeBonus: 0,
+        nextSpareBonus: 0,
+        guaranteedClearThrows: 0,
+        jackpotThrows: 0,
+        assistThrows: 0,
+        permanentPinBonus: 0,
+        permanentStrikeBonus: 0
+      };
+    }
+
+    const POWERUPS = [
+      // Bronze · normale Würfe
+      { id:"b1", tier:"bronze", name:"Kleines Polster", icon:"fa-coins", desc:"Sofort +5 Bonuspunkte.", apply(){ addPowerupBonus(5); } },
+      { id:"b2", tier:"bronze", name:"Bonus-Chip", icon:"fa-ticket", desc:"Sofort +8 Bonuspunkte.", apply(){ addPowerupBonus(8); } },
+      { id:"b3", tier:"bronze", name:"Pin-Prämie", icon:"fa-thumbtack", desc:"Beim nächsten Wurf +1 Punkt pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 1; } },
+      { id:"b4", tier:"bronze", name:"Achter-Alarm", icon:"fa-8", desc:"Fallen beim nächsten Wurf mindestens 8 Pins, gibt es +12 Punkte.", apply(){ powerupState.nextHighRollBonus += 12; } },
+      { id:"b5", tier:"bronze", name:"Mini-Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 1 zusätzlichen stehenden Pin mit.", apply(){ powerupState.nextAutoPins += 1; } },
+      { id:"b6", tier:"bronze", name:"Breite Tasche", icon:"fa-arrows-left-right", desc:"Die Trefferzone ist beim nächsten Wurf deutlich breiter.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .20); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); } },
+      { id:"b7", tier:"bronze", name:"Ruhige Hand", icon:"fa-hand", desc:"Der nächste Wurf verzeiht unruhige Power und läuft stabiler.", apply(){ powerupState.stability = Math.max(powerupState.stability, .70); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
+      { id:"b8", tier:"bronze", name:"Rinnenschutz", icon:"fa-shield", desc:"Der nächste Rinnenwurf wird gerettet und trifft mindestens 4 Pins.", apply(){ powerupState.gutterShieldThrows += 1; } },
+      { id:"b9", tier:"bronze", name:"Ersatzkugel", icon:"fa-bowling-ball", desc:"Der nächste Wurf fällt auf mindestens 5 Pins an.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 5); } },
+      { id:"b10", tier:"bronze", name:"Spare-Samen", icon:"fa-seedling", desc:"Dein nächster Spare bringt zusätzlich +15 Punkte.", apply(){ powerupState.nextSpareBonus += 15; } },
+
+      // Silber · Spare
+      { id:"s1", tier:"silver", name:"Spare-Kasse", icon:"fa-sack-dollar", desc:"Sofort +18 Bonuspunkte.", apply(){ addPowerupBonus(18); } },
+      { id:"s2", tier:"silver", name:"Silberregen", icon:"fa-cloud-rain", desc:"Sofort +25 Bonuspunkte.", apply(){ addPowerupBonus(25); } },
+      { id:"s3", tier:"silver", name:"Doppel-Prämie", icon:"fa-2", desc:"Beim nächsten Wurf +2 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 2; } },
+      { id:"s4", tier:"silver", name:"Starker Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 2 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 2; } },
+      { id:"s5", tier:"silver", name:"Achter-Garantie", icon:"fa-shield-halved", desc:"Beim nächsten Wurf fallen mindestens 8 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 8); } },
+      { id:"s6", tier:"silver", name:"Präzisionslaser", icon:"fa-crosshairs", desc:"Nächster Wurf: viel breitere Trefferzone und stark reduzierte Streuung.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .34); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); powerupState.stability = Math.max(powerupState.stability, .82); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
+      { id:"s7", tier:"silver", name:"Spare-Jäger", icon:"fa-bullseye", desc:"Der nächste Spare ist +35 Bonuspunkte wert.", apply(){ powerupState.nextSpareBonus += 35; } },
+      { id:"s8", tier:"silver", name:"Strike-Jäger", icon:"fa-bolt", desc:"Der nächste Strike ist +45 Bonuspunkte wert.", apply(){ powerupState.nextStrikeBonus += 45; } },
+      { id:"s9", tier:"silver", name:"Comeback", icon:"fa-arrow-trend-up", desc:"Fallen beim nächsten Wurf höchstens 4 Pins, erhältst du trotzdem +20 Punkte.", apply(){ powerupState.nextLowRollBonus += 20; } },
+      { id:"s10", tier:"silver", name:"Frame-Booster", icon:"fa-gauge-high", desc:"Beim nächsten Wurf +3 Bonuspunkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 3; } },
+
+      // Gold · Strike
+      { id:"g1", tier:"gold", name:"Strike-Krone", icon:"fa-crown", desc:"Sofort +35 Bonuspunkte.", apply(){ addPowerupBonus(35); } },
+      { id:"g2", tier:"gold", name:"Goldregen", icon:"fa-sun", desc:"Sofort +50 Bonuspunkte.", apply(){ addPowerupBonus(50); } },
+      { id:"g3", tier:"gold", name:"Strike-Magnet", icon:"fa-wand-magic-sparkles", desc:"Der nächste Wurf räumt garantiert alle noch stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 1; } },
+      { id:"g4", tier:"gold", name:"Pin-Jackpot", icon:"fa-gem", desc:"Beim nächsten Wurf +5 Bonuspunkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 5; } },
+      { id:"g5", tier:"gold", name:"Königstreffer", icon:"fa-chess-king", desc:"Der nächste Strike bringt zusätzlich +75 Punkte.", apply(){ powerupState.nextStrikeBonus += 75; } },
+      { id:"g6", tier:"gold", name:"Perfekte Linie", icon:"fa-route", desc:"Für die nächsten 2 Würfe: kein Gutter, große Trefferzone und stabile Linie.", apply(){ powerupState.assistThrows += 2; } },
+      { id:"g7", tier:"gold", name:"Pin-Rasierer", icon:"fa-scissors", desc:"Der nächste Wurf nimmt bis zu 3 zusätzliche stehende Pins mit.", apply(){ powerupState.nextAutoPins += 3; } },
+      { id:"g8", tier:"gold", name:"Jackpot", icon:"fa-dice", desc:"Nächster Wurf: Strike = +100, sonst immerhin +20 Punkte.", apply(){ powerupState.jackpotThrows += 1; } },
+      { id:"g9", tier:"gold", name:"Dauerfeuer", icon:"fa-fire", desc:"Für den Rest des Spiels: +2 Punkte für jeden gefällten Pin.", apply(){ powerupState.permanentPinBonus += 2; } },
+      { id:"g10", tier:"gold", name:"Strike-Serie", icon:"fa-trophy", desc:"Für den Rest des Spiels bringt jeder weitere Strike +30 Punkte.", apply(){ powerupState.permanentStrikeBonus += 30; } }
+    ];
+
+
+
+    function addPowerupBonus(points) {
+      const value = Math.max(0, Number(points) || 0);
+      powerupBonusScore += value;
+      updatePowerupHud();
+      renderScoreboard();
+    }
+
+    function updatePowerupHud() {
+      powerupBonusValue.textContent = `+${powerupBonusScore}`;
+    }
+
+    function randomPowerups(tier, count = 3) {
+      const pool = POWERUPS.filter(item => item.tier === tier);
+      const copy = [...pool];
+      const picks = [];
+      while (copy.length && picks.length < count) {
+        const index = Math.floor(Math.random() * copy.length);
+        picks.push(copy.splice(index, 1)[0]);
+      }
+      return picks;
+    }
+
+    function tierMeta(tier) {
+      if (tier === "gold") return { label:"Gold · Strike-Belohnung", title:"STRIKE! Wähle ein Gold-Powerup", subtitle:"Strike geschafft – jetzt kommen die stärksten Effekte. Diese Powerups können dein Spiel komplett eskalieren." };
+      if (tier === "silver") return { label:"Silber · Spare-Belohnung", title:"SPARE! Wähle ein Silber-Powerup", subtitle:"Sauber geräumt. Silber-Powerups sind deutlich stärker und geben große Hilfen oder Bonuspunkte." };
+      return { label:"Bronze · Wurf-Belohnung", title:"Wähle ein Bronze-Powerup", subtitle:"Nach jedem normalen Wurf stehen drei zufällige Powerups zur Wahl. Spare und Strike schalten bessere Stufen frei." };
+    }
+
+    function showPowerupChoice(tier, continuation, isFinalThrow = false) {
+      const meta = tierMeta(tier);
+      const options = randomPowerups(tier, 3);
+      powerupChoosing = true;
+      pendingPowerupContinuation = continuation;
+      powerupFinalChoice = isFinalThrow;
+      hideThrowHelp();
+      powerupTierLabel.textContent = meta.label;
+      document.getElementById("powerupTitle").textContent = meta.title;
+      const finalBonus = tier === "gold" ? 50 : tier === "silver" ? 25 : 10;
+      powerupSubtitle.textContent = isFinalThrow ? `${meta.subtitle} Letzter Wurf: Deine Wahl erhält zusätzlich +${finalBonus} Abschlussbonus.` : meta.subtitle;
+      powerupOptions.innerHTML = options.map(item => `
+        <button class="powerup-card ${item.tier}" type="button" data-powerup-id="${item.id}">
+          <span class="powerup-tier"><i class="fa-solid ${item.icon}"></i>${item.tier === "gold" ? "Gold" : item.tier === "silver" ? "Silber" : "Bronze"}</span>
+          <span class="powerup-name">${item.name}</span>
+          <span class="powerup-desc">${item.desc}</span>
+          <span class="powerup-pick"><i class="fa-solid fa-hand-pointer"></i> Auswählen</span>
+        </button>
+      `).join("");
+      powerupOverlay.classList.remove("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function choosePowerup(powerupId) {
+      if (!powerupChoosing) return;
+      const item = POWERUPS.find(entry => entry.id === powerupId);
+      if (!item) return;
+      playButtonSound();
+      item.apply();
+      if (powerupFinalChoice) {
+        const finalBonus = item.tier === "gold" ? 50 : item.tier === "silver" ? 25 : 10;
+        addPowerupBonus(finalBonus);
+      }
+      powerupFinalChoice = false;
+      powerupChoosing = false;
+      powerupOverlay.classList.add("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "true");
+      showFlash(`${item.name}`);
+      const continuation = pendingPowerupContinuation;
+      pendingPowerupContinuation = null;
+      scheduleGameTimer(() => {
+        if (typeof continuation === "function") continuation();
+      }, 260);
+    }
+
+    function classifyPowerupTier(frameIndex, throws) {
+      const t = throws || [];
+      if (!t.length) return "bronze";
+      const last = t[t.length - 1];
+      if (last === 10) return "gold";
+      if (frameIndex < 9) {
+        if (t.length >= 2 && t[0] !== 10 && t[0] + t[1] === 10) return "silver";
+      } else {
+        if (t.length === 2 && t[0] !== 10 && t[0] + t[1] === 10) return "silver";
+        if (t.length >= 3 && t[0] === 10 && t[t.length - 2] < 10 && t[t.length - 2] + last === 10) return "silver";
+      }
+      return "bronze";
+    }
+
+    function isStrikeRoll(frameIndex, throws) {
+      const t = throws || [];
+      return t.length > 0 && t[t.length - 1] === 10;
+    }
+
+    function isSpareRoll(frameIndex, throws) {
+      return classifyPowerupTier(frameIndex, throws) === "silver";
+    }
+
+    function extraKnockImpact(pin, delay = 90) {
+      const direction = pin.x >= .5 ? 1 : -1;
+      return {
+        fallX: direction * randomBetween(25, 52),
+        fallY: randomBetween(12, 38),
+        rotation: direction * randomBetween(64, 118),
+        delay
+      };
+    }
+
+    function enhanceSimulationWithPowerups(simulation) {
+      const standing = getStandingPinsArray();
+      if (!standing.length) return simulation;
+      const knocked = new Set(simulation.knockedIds || []);
+      const impactMap = { ...(simulation.impactMap || {}) };
+      let gutter = Boolean(simulation.gutter);
+
+      const forceAll = powerupState.guaranteedClearThrows > 0;
+      const shielded = (powerupState.gutterShieldThrows > 0 || powerupState.assistThrows > 0) && gutter;
+      if (shielded) gutter = false;
+
+      let targetMinimum = 0;
+      if (powerupState.nextMinPins > 0) targetMinimum = Math.max(targetMinimum, Math.min(powerupState.nextMinPins, standing.length));
+      if (shielded) targetMinimum = Math.max(targetMinimum, Math.min(4, standing.length));
+      if (forceAll) targetMinimum = standing.length;
+
+      const naturalCount = knocked.size;
+      const wantedWithExtras = Math.min(standing.length, naturalCount + Math.max(0, powerupState.nextAutoPins));
+      targetMinimum = Math.max(targetMinimum, wantedWithExtras);
+
+      if (knocked.size < targetMinimum) {
+        const remaining = standing
+          .filter(pin => !knocked.has(pin.id))
+          .sort((a,b) => Math.abs(a.x - .5) - Math.abs(b.x - .5));
+        remaining.slice(0, targetMinimum - knocked.size).forEach((pin, index) => {
+          knocked.add(pin.id);
+          impactMap[pin.id] = extraKnockImpact(pin, 80 + index * 34);
+        });
+      }
+
+      return { ...simulation, knockedIds:[...knocked], impactMap, gutter };
+    }
+
+    function applyScoringPowerups(pinsDown, frameIndex, throws) {
+      let earned = 0;
+      const strike = isStrikeRoll(frameIndex, throws);
+      const spare = isSpareRoll(frameIndex, throws);
+
+      earned += pinsDown * powerupState.permanentPinBonus;
+      earned += pinsDown * powerupState.nextPinBonus;
+      if (pinsDown >= 8) earned += powerupState.nextHighRollBonus;
+      if (pinsDown <= 4) earned += powerupState.nextLowRollBonus;
+      if (strike) {
+        earned += powerupState.nextStrikeBonus;
+        earned += powerupState.permanentStrikeBonus;
+      }
+      if (spare) earned += powerupState.nextSpareBonus;
+      if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
+
+      if (earned > 0) {
+        powerupBonusScore += earned;
+        showFlash(`+${earned} BONUS`);
+      }
+
+      powerupState.nextPinBonus = 0;
+      powerupState.nextHighRollBonus = 0;
+      powerupState.nextLowRollBonus = 0;
+      powerupState.nextAutoPins = 0;
+      powerupState.nextMinPins = 0;
+      if (powerupState.collisionBoostThrows > 0) {
+        powerupState.collisionBoostThrows -= 1;
+        if (powerupState.collisionBoostThrows <= 0) powerupState.collisionBoost = 0;
+      }
+      if (powerupState.stabilityThrows > 0) {
+        powerupState.stabilityThrows -= 1;
+        if (powerupState.stabilityThrows <= 0) powerupState.stability = 0;
+      }
+      if (powerupState.gutterShieldThrows > 0) powerupState.gutterShieldThrows -= 1;
+      if (powerupState.guaranteedClearThrows > 0) powerupState.guaranteedClearThrows -= 1;
+      if (powerupState.jackpotThrows > 0) powerupState.jackpotThrows -= 1;
+      if (powerupState.assistThrows > 0) powerupState.assistThrows -= 1;
+      if (strike && powerupState.nextStrikeBonus > 0) powerupState.nextStrikeBonus = 0;
+      if (spare && powerupState.nextSpareBonus > 0) powerupState.nextSpareBonus = 0;
+
+      updatePowerupHud();
+      return earned;
+    }
 
     function ensureAudio() {
       if (!audioCtx) {
@@ -2560,12 +2990,14 @@
         `;
       }).join("");
 
-      const total = getLatestResolvedTotal(totals);
+      const bowlingTotal = getLatestResolvedTotal(totals);
+      const total = bowlingTotal + powerupBonusScore;
       summaryTotal.textContent = String(total);
       summaryStrikes.textContent = String(countStrikes());
       summarySpares.textContent = String(countSpares());
       summaryState.textContent = totals[9] !== null ? "Final" : "Offen";
       scoreTotalHud.textContent = `${total} Punkte`;
+      updatePowerupHud();
     }
 
     function updateStatus() {
@@ -2679,7 +3111,8 @@
 
     function getFinalScore() {
       const totals = calculateCumulativeScores();
-      return totals[9] ?? getLatestResolvedTotal(totals);
+      const bowlingScore = totals[9] ?? getLatestResolvedTotal(totals);
+      return bowlingScore + powerupBonusScore;
     }
 
     function openEndGameModal() {
@@ -2768,7 +3201,8 @@
       const powerQuality = 1 - Math.min(1, Math.abs(release.power - 0.78) / 0.52);
       const overPowerNoise = Math.max(0, release.power - 0.98) * randomBetween(-0.050, 0.050);
       const weakNoise = Math.max(0, 0.52 - release.power) * randomBetween(-0.052, 0.052);
-      const laneNoise = randomBetween(-0.008, 0.008) + overPowerNoise + weakNoise;
+      const stabilityFactor = clamp(1 - Math.max(powerupState?.stability || 0, powerupState?.assistThrows > 0 ? .86 : 0), .08, 1);
+      const laneNoise = (randomBetween(-0.008, 0.008) + overPowerNoise + weakNoise) * stabilityFactor;
       const angle = release.angle;
       const curve = release.curve;
 
@@ -2830,7 +3264,8 @@
         const t = path.tForY(pin.y);
         const ballX = path.xAtT(t);
         const dx = Math.abs(ballX - pin.x);
-        const contactRadius = getBallCollisionRadiusNormAt(t) + getPinCollisionRadiusNorm(pin);
+        const collisionAssist = Math.max(powerupState?.collisionBoost || 0, powerupState?.assistThrows > 0 ? .36 : 0);
+        const contactRadius = (getBallCollisionRadiusNormAt(t) + getPinCollisionRadiusNorm(pin)) * (1 + collisionAssist);
         if (dx <= contactRadius) {
           const overlap = clamp(1 - dx / Math.max(contactRadius, 0.001), 0, 1);
           directContacts.push({ pin, t, ballX, dx, contactRadius, overlap });
@@ -2986,7 +3421,8 @@
 
     function animateThrow(release) {
       const runId = gameRunId;
-      const simulation = simulateThrow(release);
+      let simulation = simulateThrow(release);
+      simulation = enhanceSimulationWithPowerups(simulation);
       const { path, knockedIds, impactMap } = simulation;
       const duration = clamp(1380 - release.power * 330, 950, 1420);
       const start = performance.now();
@@ -3057,7 +3493,7 @@
       requestAnimationFrame(frame);
     }
 
-    function canThrow() { return gameStarted && !gameOver && !isAnimating; }
+    function canThrow() { return gameStarted && !gameOver && !isAnimating && !powerupChoosing; }
 
     function advanceToNextFrame() {
       currentFrame += 1;
@@ -3078,88 +3514,113 @@
     }
 
     function handlePostThrowState(pinsDown, simulation) {
+      const frameIndex = currentFrame;
       const frame = currentFrameData();
       frame.throws.push(pinsDown);
+      applyScoringPowerups(pinsDown, frameIndex, frame.throws);
       renderScoreboard();
+
       if (simulation.gutter) { showFlash("RINNE"); playGutterSound(); }
       else if (pinsDown === 0) { showFlash("VORBEI"); playMissSound(); }
       else if (pinsDown < 10) { showFlash(`${pinsDown} ${pinsDown === 1 ? "PIN" : "PINS"}`); }
+
+      const rewardTier = classifyPowerupTier(frameIndex, frame.throws);
+      let continuation = null;
 
       if (currentFrame < 9) {
         if (frame.throws.length === 1) {
           if (pinsDown === 10) {
             showFlash("STRIKE");
             playStrikeSound();
+            continuation = () => {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+              advanceToNextFrame();
+            };
+          } else {
+            continuation = () => {
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
+          }
+        } else {
+          if (frame.throws[0] + frame.throws[1] === 10) { showFlash("SPARE"); playSpareSound(); }
+          continuation = () => {
             standingPins = fullRackSet();
             lastImpactMap = {};
             renderPins([]);
-            scheduleGameTimer(() => advanceToNextFrame(), 860);
-            return;
-          }
-          positionBallAtRest();
-          showThrowHelp();
-          updateStatus();
-          return;
+            advanceToNextFrame();
+          };
         }
-        if (frame.throws[0] + frame.throws[1] === 10) { showFlash("SPARE"); playSpareSound(); }
-        standingPins = fullRackSet();
-        lastImpactMap = {};
-        renderPins([]);
-        scheduleGameTimer(() => advanceToNextFrame(), 820);
-        return;
-      }
-
-      const t = frame.throws;
-      if (t.length === 1) {
-        if (t[0] === 10) {
-          showFlash("STRIKE");
-          playStrikeSound();
-          standingPins = fullRackSet();
-          lastImpactMap = {};
-          renderPins([]);
-        }
-        positionBallAtRest();
-        showThrowHelp();
-        updateStatus();
-        return;
-      }
-      if (t.length === 2) {
-        if (t[0] === 10) {
-          if (t[1] === 10) {
+      } else {
+        const t = frame.throws;
+        if (t.length === 1) {
+          if (t[0] === 10) {
             showFlash("STRIKE");
             playStrikeSound();
-            standingPins = fullRackSet();
-            lastImpactMap = {};
-            renderPins([]);
           }
-          positionBallAtRest();
-          showThrowHelp();
-          updateStatus();
-          return;
+          continuation = () => {
+            if (t[0] === 10) {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+            }
+            positionBallAtRest();
+            showThrowHelp();
+            updateStatus();
+          };
+        } else if (t.length === 2) {
+          if (t[0] === 10) {
+            if (t[1] === 10) {
+              showFlash("STRIKE");
+              playStrikeSound();
+            }
+            continuation = () => {
+              if (t[1] === 10) {
+                standingPins = fullRackSet();
+                lastImpactMap = {};
+                renderPins([]);
+              }
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
+          } else if (t[0] + t[1] === 10) {
+            showFlash("SPARE");
+            playSpareSound();
+            continuation = () => {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
+          } else {
+            continuation = () => {
+              gameOver = true;
+              renderScoreboard();
+              updateStatus();
+              openEndGameModal();
+            };
+          }
+        } else if (t.length === 3) {
+          if (t[2] === 10) { showFlash("STRIKE"); playStrikeSound(); }
+          else if (t[1] < 10 && t[1] + t[2] === 10) { showFlash("SPARE"); playSpareSound(); }
+          continuation = () => {
+            gameOver = true;
+            renderScoreboard();
+            updateStatus();
+            openEndGameModal();
+          };
         }
-        if (t[0] + t[1] === 10) {
-          showFlash("SPARE");
-          playSpareSound();
-          standingPins = fullRackSet();
-          lastImpactMap = {};
-          renderPins([]);
-          positionBallAtRest();
-          showThrowHelp();
-          updateStatus();
-          return;
-        }
-        gameOver = true;
-        renderScoreboard();
-        updateStatus();
-        scheduleGameTimer(() => openEndGameModal(), 620);
-        return;
       }
-      if (t.length === 3) {
-        gameOver = true;
-        renderScoreboard();
-        updateStatus();
-        scheduleGameTimer(() => openEndGameModal(), 620);
-      }
+
+      const finalThrow = currentFrame === 9 && (frame.throws.length >= 3 || (frame.throws.length === 2 && frame.throws[0] !== 10 && frame.throws[0] + frame.throws[1] < 10));
+      // Genau nach jedem Wurf: erst Powerup wählen, dann geht das Spiel weiter.
+      scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 520);
     }
 
     function startNewGame() {
@@ -3170,6 +3631,14 @@
       startOverlay.classList.add("hidden");
       frames = createEmptyFrames();
       currentFrame = 0;
+      powerupChoosing = false;
+      powerupBonusScore = 0;
+      powerupState = freshPowerupState();
+      pendingPowerupContinuation = null;
+      powerupFinalChoice = false;
+      powerupOverlay.classList.add("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "true");
+      updatePowerupHud();
       standingPins = fullRackSet();
       gameOver = false;
       isAnimating = false;
@@ -3334,6 +3803,12 @@
 
     ball.addEventListener("pointerdown", handlePointerDown);
     ball.addEventListener("pointermove", handlePointerMove);
+    powerupOptions.addEventListener("click", event => {
+      const card = event.target.closest("[data-powerup-id]");
+      if (!card) return;
+      choosePowerup(card.dataset.powerupId);
+    });
+
     ball.addEventListener("pointerup", event => finishDrag(event, true));
     ball.addEventListener("pointercancel", event => finishDrag(event, false));
 
@@ -3354,6 +3829,8 @@
 
     window.addEventListener("resize", () => layoutScene());
 
+    powerupState = freshPowerupState();
+    updatePowerupHud();
     setupPins();
     startLeaderboardListener();
     startNewGame();
