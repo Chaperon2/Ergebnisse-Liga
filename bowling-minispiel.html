@@ -1819,120 +1819,165 @@
       }
     }
 
-    /* ==============================================================
-       POWERUP DRAFT · Blind-Slots + rarity FX
-       ============================================================== */
+
+    /* Phase 16 · Powerup Draft after every throw */
     .powerup-overlay {
-      --tier-main:#c77b43; --tier-soft:rgba(199,123,67,.28); --tier-bright:#ffd0a6;
-      position:absolute; inset:0; z-index:1280; display:grid; place-items:center;
-      padding:18px; overflow:hidden;
-      background:radial-gradient(circle at 50% 34%,var(--tier-soft),transparent 38%),rgba(2,5,9,.78);
-      backdrop-filter:blur(14px);
+      position: absolute;
+      inset: 0;
+      z-index: 1280;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(114,183,255,0.20), transparent 34%),
+        rgba(2,5,9,0.74);
+      backdrop-filter: blur(14px);
     }
-    .powerup-overlay.hidden{display:none}
-    .powerup-overlay.tier-bronze{--tier-main:#c77b43;--tier-soft:rgba(199,123,67,.28);--tier-bright:#ffd0a6}
-    .powerup-overlay.tier-silver{--tier-main:#9fd1ff;--tier-soft:rgba(145,202,255,.30);--tier-bright:#f7fbff}
-    .powerup-overlay.tier-gold{--tier-main:#ffd34e;--tier-soft:rgba(255,201,48,.38);--tier-bright:#fff4a7}
-    .powerup-overlay::before,.powerup-overlay::after{content:"";position:absolute;pointer-events:none}
-    .powerup-overlay::before{
-      inset:-35%;opacity:.18;
-      background:conic-gradient(from 0deg,transparent 0 8deg,var(--tier-soft) 9deg 13deg,transparent 14deg 42deg);
-      animation:rarityRays 14s linear infinite
-    }
-    .powerup-overlay::after{
-      inset:0;opacity:0;
-      background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.95),transparent 17%)
-    }
-    .tier-silver.powerup-overlay::before{opacity:.32;animation-duration:9s}
-    .tier-gold.powerup-overlay::before{opacity:.56;animation-duration:5.5s}
-    .tier-silver.powerup-overlay::after{animation:silverFlash 1.1s ease-out both}
-    .tier-gold.powerup-overlay::after{animation:goldFlash 1.35s ease-out both}
 
-    .powerup-fx-layer{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-    .rarity-particle{
-      position:absolute;left:50%;top:44%;width:5px;height:5px;border-radius:50%;opacity:0;
-      background:var(--tier-bright);box-shadow:0 0 12px var(--tier-main),0 0 22px var(--tier-soft);
-      animation:rarityBurst .9s cubic-bezier(.12,.72,.18,1) var(--delay,0s) both
-    }
-    .tier-silver .rarity-particle{width:4px;height:12px;border-radius:999px;animation-duration:1.05s}
-    .tier-gold .rarity-particle{width:7px;height:7px;animation-duration:1.35s;box-shadow:0 0 14px #fff,0 0 30px var(--tier-main)}
+    .powerup-overlay.hidden { display: none; }
 
-    .powerup-panel{
-      position:relative;z-index:2;width:min(820px,100%);max-height:calc(100% - 18px);overflow:auto;
-      padding:20px;border-radius:24px;border:2px solid var(--tier-main);
-      background:linear-gradient(180deg,var(--tier-soft),transparent 26%),rgba(6,10,17,.95);
-      box-shadow:0 28px 90px rgba(0,0,0,.54),0 0 34px var(--tier-soft);
-      animation:powerupPanelIn .34s cubic-bezier(.16,.84,.22,1) both
+    .powerup-panel {
+      width: min(880px, 100%);
+      max-height: calc(100% - 18px);
+      overflow: auto;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(6,10,17,0.94);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.52);
     }
-    .tier-gold .powerup-panel{box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 42px rgba(255,205,62,.34),inset 0 0 36px rgba(255,210,70,.05)}
-    .powerup-kicker{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--tier-bright);font-size:.72rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;text-shadow:0 0 16px var(--tier-soft)}
-    .powerup-panel h3{margin:8px 0 5px;text-align:center;font-size:clamp(1.55rem,4vw,2.45rem);line-height:1;letter-spacing:-.055em}
-    .powerup-subtitle{margin:0 auto 18px;max-width:62ch;color:rgba(247,251,255,.72);text-align:center;font-size:.84rem;line-height:1.5;font-weight:700}
 
-    .powerup-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-    .powerup-card{
-      position:relative;min-height:220px;display:grid;place-items:center;align-content:center;gap:12px;padding:16px;
-      border:2px solid var(--tier-main);border-radius:20px;color:#fff;text-align:center;cursor:pointer;overflow:hidden;
-      background:radial-gradient(circle at 50% 36%,var(--tier-soft),transparent 42%),linear-gradient(160deg,rgba(255,255,255,.07),rgba(0,0,0,.18)),rgba(8,12,19,.92);
-      box-shadow:0 16px 32px rgba(0,0,0,.30);
-      transform:translateY(16px) scale(.96);opacity:0;
-      animation:mysterySlotIn .42s cubic-bezier(.16,.84,.22,1) forwards;animation-delay:var(--slot-delay,0ms);
-      transition:transform .16s ease,filter .16s ease
+    .powerup-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(247,251,255,0.72);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
-    .powerup-card:nth-child(2){--slot-delay:90ms}.powerup-card:nth-child(3){--slot-delay:180ms}
-    .powerup-card:hover{transform:translateY(-4px) scale(1.015);filter:brightness(1.10)}
-    .powerup-card:active{transform:translateY(0) scale(.985)}
-    .powerup-card::after{
-      content:"";position:absolute;inset:-20% -65%;pointer-events:none;
-      background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.20) 48%,transparent 58%);
-      transform:translateX(-45%);animation:mysteryShine 2.2s ease-in-out infinite;
-      animation-delay:calc(var(--slot-delay,0ms) + 350ms)
-    }
-    .tier-gold .powerup-card::after{animation-duration:1.35s}
-    .powerup-mystery-symbol{
-      position:relative;z-index:1;width:112px;height:112px;display:grid;place-items:center;border-radius:22px;
-      border:2px solid var(--tier-main);background:radial-gradient(circle,var(--tier-soft),transparent 66%),rgba(255,255,255,.06);
-      color:var(--tier-bright);font-size:3.4rem;text-shadow:0 0 18px var(--tier-main);
-      box-shadow:inset 0 0 24px var(--tier-soft),0 0 24px var(--tier-soft);
-      animation:mysteryPulse 1.55s ease-in-out infinite
-    }
-    .tier-gold .powerup-mystery-symbol{border-color:#ffe477;box-shadow:inset 0 0 30px rgba(255,215,70,.18),0 0 34px rgba(255,202,48,.42);animation-duration:1.1s}
-    .powerup-mystery-label{position:relative;z-index:1;color:rgba(255,255,255,.82);font-size:.73rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 
-    .powerup-card.revealed{min-height:220px;place-items:stretch;align-content:center;text-align:left;animation:revealCard .40s cubic-bezier(.16,.84,.22,1) both;cursor:default}
-    .powerup-card.revealed:hover{transform:none;filter:none}.powerup-card.revealed::after{animation:none;opacity:.22;transform:none}
-    .powerup-reveal-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:16px;color:var(--tier-bright);font-size:2rem;background:var(--tier-soft);border:1px solid var(--tier-main);box-shadow:0 0 26px var(--tier-soft)}
-    .powerup-tier{display:inline-flex;width:max-content;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;background:var(--tier-soft);color:var(--tier-bright);font-size:.64rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
-    .powerup-name{font-size:1.18rem;font-weight:900;letter-spacing:-.03em}
-    .powerup-desc{color:rgba(255,255,255,.82);font-size:.86rem;line-height:1.48;font-weight:700}
-    .powerup-pick{color:var(--tier-bright);font-size:.74rem;font-weight:900}
-
-    .powerup-bonus-hud{
-      position:absolute;top:82px;right:12px;z-index:735;display:inline-flex;align-items:center;gap:7px;padding:7px 10px;
-      border-radius:999px;border:1px solid rgba(255,214,92,.28);background:rgba(43,29,5,.48);backdrop-filter:blur(10px);
-      color:#ffe59a;font-size:.72rem;font-weight:900;pointer-events:none
+    .powerup-panel h3 {
+      margin: 7px 0 4px;
+      text-align: center;
+      font-size: clamp(1.55rem, 4vw, 2.4rem);
+      line-height: 1;
+      letter-spacing: -.055em;
     }
-    .powerup-bonus-hud strong{color:#fff2c5}.powerup-multi{color:#9fdcff;margin-left:5px}
 
-    @keyframes rarityRays{to{transform:rotate(360deg)}}
-    @keyframes silverFlash{0%{opacity:0}16%{opacity:.58}38%{opacity:.06}58%{opacity:.30}100%{opacity:0}}
-    @keyframes goldFlash{0%{opacity:0}10%{opacity:.92}20%{opacity:.08}33%{opacity:.62}48%{opacity:.06}62%{opacity:.34}100%{opacity:0}}
-    @keyframes rarityBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0)}18%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(.25) rotate(var(--rot))}}
-    @keyframes powerupPanelIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-    @keyframes mysterySlotIn{to{opacity:1;transform:translateY(0) scale(1)}}
-    @keyframes mysteryPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.055);filter:brightness(1.22)}}
-    @keyframes mysteryShine{0%,35%{transform:translateX(-45%);opacity:0}48%{opacity:.75}65%,100%{transform:translateX(45%);opacity:0}}
-    @keyframes revealCard{0%{opacity:.2;transform:scale(.92);filter:brightness(2)}60%{opacity:1;transform:scale(1.025)}100%{opacity:1;transform:scale(1);filter:none}}
-
-    @media(max-width:700px){
-      .powerup-overlay{padding:10px;align-items:center}.powerup-panel{padding:14px;max-height:calc(100% - 8px);border-radius:19px}
-      .powerup-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.powerup-card{min-height:170px;padding:9px;border-radius:15px}
-      .powerup-mystery-symbol{width:72px;height:92px;border-radius:15px;font-size:2.35rem}.powerup-mystery-label{font-size:.58rem;letter-spacing:.04em}
-      .powerup-card.revealed{grid-column:1 / -1;min-height:0;padding:14px}.powerup-options.has-reveal .powerup-card:not(.revealed){display:none}
-      .powerup-bonus-hud{top:108px;right:6px;font-size:.64rem;padding:6px 8px}
+    .powerup-subtitle {
+      margin: 0 auto 15px;
+      max-width: 60ch;
+      color: rgba(247,251,255,0.70);
+      text-align: center;
+      font-size: .84rem;
+      line-height: 1.45;
+      font-weight: 700;
     }
-    @media(prefers-reduced-motion:reduce){
-      .powerup-overlay::before,.powerup-overlay::after,.rarity-particle,.powerup-panel,.powerup-card,.powerup-card::after,.powerup-mystery-symbol{animation:none!important}
+
+    .powerup-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .powerup-card {
+      position: relative;
+      min-height: 184px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 14px 28px rgba(0,0,0,.24);
+      transition: transform .14s ease, border-color .14s ease, filter .14s ease;
+    }
+
+    .powerup-card:hover { transform: translateY(-3px); filter: brightness(1.08); }
+    .powerup-card:active { transform: translateY(0) scale(.985); }
+
+    .powerup-card.bronze {
+      background: linear-gradient(145deg, rgba(108,68,43,.96), rgba(40,27,22,.96));
+      border-color: rgba(235,169,116,.48);
+    }
+    .powerup-card.silver {
+      background: linear-gradient(145deg, rgba(73,91,111,.98), rgba(28,38,50,.98));
+      border-color: rgba(191,222,255,.55);
+    }
+    .powerup-card.gold {
+      background: linear-gradient(145deg, rgba(137,96,20,.98), rgba(52,35,5,.98));
+      border-color: rgba(255,214,92,.72);
+      box-shadow: 0 14px 34px rgba(255,190,42,.12), 0 14px 28px rgba(0,0,0,.28);
+    }
+
+    .powerup-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.09) 48%, transparent 74%);
+      transform: translateX(-80%);
+      transition: transform .35s ease;
+    }
+    .powerup-card:hover::after { transform: translateX(80%); }
+
+    .powerup-tier {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.88);
+      font-size: .64rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .powerup-name { font-size: 1.02rem; font-weight: 900; letter-spacing: -.03em; }
+    .powerup-desc { color: rgba(255,255,255,.78); font-size: .78rem; line-height: 1.4; font-weight: 700; }
+    .powerup-pick { display: inline-flex; align-items: center; gap: 6px; font-size: .72rem; font-weight: 900; }
+
+    .powerup-bonus-hud {
+      position: absolute;
+      top: 82px;
+      right: 12px;
+      z-index: 735;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,214,92,.28);
+      background: rgba(43,29,5,.48);
+      backdrop-filter: blur(10px);
+      color: #ffe59a;
+      font-size: .72rem;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .powerup-bonus-hud strong { color: #fff2c5; }
+
+    @media (max-width: 700px) {
+      .powerup-overlay { padding: 10px; align-items: center; }
+      .powerup-panel { padding: 13px; max-height: calc(100% - 8px); border-radius: 19px; }
+      .powerup-options { grid-template-columns: 1fr; gap: 8px; }
+      .powerup-card { min-height: 0; grid-template-columns: auto 1fr; grid-template-rows: auto auto auto; column-gap: 10px; padding: 11px; }
+      .powerup-tier { grid-column: 1; grid-row: 1 / span 2; align-self: start; }
+      .powerup-name { grid-column: 2; grid-row: 1; }
+      .powerup-desc { grid-column: 2; grid-row: 2; }
+      .powerup-pick { grid-column: 2; grid-row: 3; }
+      .powerup-bonus-hud { top: 108px; right: 6px; font-size: .64rem; padding: 6px 8px; }
     }
 
 </style>
@@ -1950,7 +1995,7 @@
       </div>
       <div class="skill-pill">
         <i class="fa-solid fa-hand-point-up"></i>
-        <span>Flick-Wurf · Hook · 30 Build-Powerups</span>
+        <span>Flick-Wurf · Hook · 30 Powerups</span>
       </div>
     </div>
 
@@ -1972,19 +2017,18 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Spiel starten</h2>
-                <p>Tippe auf Start und spiele zehn Frames. Nach jedem abgeschlossenen Frame wählst du blind 1 von 3 Powerups. Offener Frame bringt Bronze, Spare Silber und Strike Gold – Multiplikatoren und Passives können den Score weit über 300 treiben.</p>
+                <p>Tippe auf Start und spiele zehn Frames. Nach jedem Wurf wählst du 1 von 3 Powerups. Spare bringt Silber, Strike bringt Gold – und Bonuspunkte können deinen Score weit über 300 treiben.</p>
                 <button class="btn primary start-btn" id="startGameBtn" type="button"><i class="fa-solid fa-play"></i><span>Spiel starten</span></button>
               </div>
             </div>
 
 
 
-            <div class="powerup-overlay hidden tier-bronze" id="powerupOverlay" aria-hidden="true">
-              <div class="powerup-fx-layer" id="powerupFxLayer" aria-hidden="true"></div>
+            <div class="powerup-overlay hidden" id="powerupOverlay" aria-hidden="true">
               <div class="powerup-panel" role="dialog" aria-modal="true" aria-labelledby="powerupTitle">
                 <div class="powerup-kicker"><i class="fa-solid fa-bolt"></i><span id="powerupTierLabel">Powerup</span></div>
                 <h3 id="powerupTitle">Wähle 1 von 3</h3>
-                <p class="powerup-subtitle" id="powerupSubtitle">Nach jedem Frame erscheinen drei verdeckte Slots. Erst nach deiner Wahl siehst du, welches Powerup darunter steckt.</p>
+                <p class="powerup-subtitle" id="powerupSubtitle">Nach jedem Wurf bekommst du drei zufällige Verbesserungen. Gute Würfe schalten stärkere Stufen frei.</p>
                 <div class="powerup-options" id="powerupOptions"></div>
               </div>
             </div>
@@ -2005,7 +2049,7 @@
             </div>
 
             <div class="score-total-hud" id="scoreTotalHud">0 Punkte</div>
-            <div class="powerup-bonus-hud" id="powerupBonusHud"><i class="fa-solid fa-bolt"></i><span>Powerup-Bonus <strong id="powerupBonusValue">+0</strong><span class="powerup-multi" id="powerupMultiplierValue">· x1.00</span></span></div>
+            <div class="powerup-bonus-hud" id="powerupBonusHud"><i class="fa-solid fa-bolt"></i><span>Powerup-Bonus <strong id="powerupBonusValue">+0</strong></span></div>
 
             <div class="throw-stats-hud hidden" id="throwStatsHud">
               <span id="throwPowerText">Power 0%</span>
@@ -2179,9 +2223,6 @@
     const powerupSubtitle = document.getElementById("powerupSubtitle");
     const powerupOptions = document.getElementById("powerupOptions");
     const powerupBonusValue = document.getElementById("powerupBonusValue");
-    const powerupMultiplierValue = document.getElementById("powerupMultiplierValue");
-    const powerupFxLayer = document.getElementById("powerupFxLayer");
-    const powerupBonusHud = document.getElementById("powerupBonusHud");
 
     let frames = [];
     let currentFrame = 0;
@@ -2209,159 +2250,250 @@
     let pendingPowerupContinuation = null;
     let powerupFinalChoice = false;
 
-
     function freshPowerupState() {
       return {
-        multiplierEffects:[], permanentMultiplier:1, activePassives:[],
-        luckySevenFrames:0, combo8Passive:false, combo8Streak:0, secondWindFrames:0, rollercoasterFrames:0,
-        nextSpareCharge:0, nextStrikeCharge:0, cleanChainCharge:0,
-        collisionBoost:0, collisionBoostThrows:0, stability:0, stabilityThrows:0,
-        spareEngine:false, comboReactor:false, copyNextPicks:0, riskTripleFrames:0,
-        timeBombFrames:0, timeBombPins:0, timeBombReward:0, upgradeNextReward:0,
-        strikeChainCharges:0, strikeChainLevel:0, midasPickBonus:0,
-        strikeMadness:false, strikeMadnessStreak:0, ascension:false,
-        jackpotFrames:0, finalBoss:0, infinityCoreGrowth:0, meteorPassive:false, endBonusApplied:false
+        nextPinBonus: 0,
+        nextHighRollBonus: 0,
+        nextLowRollBonus: 0,
+        nextAutoPins: 0,
+        nextMinPins: 0,
+        collisionBoost: 0,
+        collisionBoostThrows: 0,
+        stability: 0,
+        stabilityThrows: 0,
+        gutterShieldThrows: 0,
+        nextStrikeBonus: 0,
+        nextSpareBonus: 0,
+        guaranteedClearThrows: 0,
+        jackpotThrows: 0,
+        assistThrows: 0,
+        permanentPinBonus: 0,
+        permanentStrikeBonus: 0
       };
     }
-    function addPassive(label){if(!powerupState.activePassives.includes(label))powerupState.activePassives.push(label);updatePowerupHud()}
-    function addMultiplierEffect(factor,throws){powerupState.multiplierEffects.push({factor:Math.max(1,Number(factor)||1),throws:Math.max(1,Math.floor(Number(throws)||1))});updatePowerupHud()}
-    function getActiveThrowMultiplier(){return powerupState.multiplierEffects.reduce((v,e)=>v*e.factor,powerupState.permanentMultiplier||1)}
 
     const POWERUPS = [
-      {id:"b1",tier:"bronze",name:"Doppelzünder",icon:"fa-forward-fast",desc:"Der nächste Wurf läuft im Powerup-Bonus mit x1,5. Multiplikatoren sind stapelbar.",apply(){addMultiplierEffect(1.5,1)}},
-      {id:"b2",tier:"bronze",name:"Lucky Seven",icon:"fa-7",desc:"Im nächsten Frame bringt ein Wurf mit exakt 7 Pins zusätzlich +60 Punkte.",apply(){powerupState.luckySevenFrames+=1}},
-      {id:"b3",tier:"bronze",name:"8er-Kombo",icon:"fa-link",desc:"PASSIV: Jeder Wurf mit 8+ Pins baut eine Serie auf: +10, +20, +30 … Unter 8 Pins setzt die Serie zurück.",apply(){powerupState.combo8Passive=true;addPassive("8er-Kombo")}},
-      {id:"b4",tier:"bronze",name:"Second Wind",icon:"fa-wind",desc:"Triffst du im nächsten Frame mit einem Wurf höchstens 4 Pins, bekommt der darauffolgende Wurf x3.",apply(){powerupState.secondWindFrames+=1}},
-      {id:"b5",tier:"bronze",name:"Pocket Boost",icon:"fa-crosshairs",desc:"Die nächsten 2 Würfe bekommen eine größere Pocket und deutlich weniger Streuung.",apply(){powerupState.collisionBoost=Math.max(powerupState.collisionBoost,.25);powerupState.collisionBoostThrows=Math.max(powerupState.collisionBoostThrows,2);powerupState.stability=Math.max(powerupState.stability,.78);powerupState.stabilityThrows=Math.max(powerupState.stabilityThrows,2)}},
-      {id:"b6",tier:"bronze",name:"Achterbahn",icon:"fa-chart-line",desc:"Im nächsten Frame: 8 Pins in einem Wurf = +40, 9 = +70, Strike = +120.",apply(){powerupState.rollercoasterFrames+=1}},
-      {id:"b7",tier:"bronze",name:"Spare-Ladegerät",icon:"fa-battery-half",desc:"Dein nächster Spare gibt +60 und erhöht deinen permanenten Multiplikator um +0,10x.",apply(){powerupState.nextSpareCharge+=1}},
-      {id:"b8",tier:"bronze",name:"Strike-Ladegerät",icon:"fa-battery-full",desc:"Dein nächster Strike gibt +90 und erhöht deinen permanenten Multiplikator um +0,10x.",apply(){powerupState.nextStrikeCharge+=1}},
-      {id:"b9",tier:"bronze",name:"Kettenreaktion",icon:"fa-burst",desc:"Der nächste Spare oder Strike zündet für den folgenden Wurf einen x2-Multiplikator.",apply(){powerupState.cleanChainCharge+=1}},
-      {id:"b10",tier:"bronze",name:"Mini-Overdrive",icon:"fa-gauge-high",desc:"Die nächsten 3 Würfe laufen mit x1,25. Stapelbar mit allen anderen Multiplikatoren.",apply(){addMultiplierEffect(1.25,3)}},
+      // Bronze · normale Würfe
+      { id:"b1", tier:"bronze", name:"Kleines Polster", icon:"fa-coins", desc:"Sofort +5 Bonuspunkte.", apply(){ addPowerupBonus(5); } },
+      { id:"b2", tier:"bronze", name:"Bonus-Chip", icon:"fa-ticket", desc:"Sofort +8 Bonuspunkte.", apply(){ addPowerupBonus(8); } },
+      { id:"b3", tier:"bronze", name:"Pin-Prämie", icon:"fa-thumbtack", desc:"Beim nächsten Wurf +1 Punkt pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 1; } },
+      { id:"b4", tier:"bronze", name:"Achter-Alarm", icon:"fa-8", desc:"Fallen beim nächsten Wurf mindestens 8 Pins, gibt es +12 Punkte.", apply(){ powerupState.nextHighRollBonus += 12; } },
+      { id:"b5", tier:"bronze", name:"Mini-Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 1 zusätzlichen stehenden Pin mit.", apply(){ powerupState.nextAutoPins += 1; } },
+      { id:"b6", tier:"bronze", name:"Breite Tasche", icon:"fa-arrows-left-right", desc:"Die Trefferzone ist beim nächsten Wurf deutlich breiter.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .20); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); } },
+      { id:"b7", tier:"bronze", name:"Ruhige Hand", icon:"fa-hand", desc:"Der nächste Wurf verzeiht unruhige Power und läuft stabiler.", apply(){ powerupState.stability = Math.max(powerupState.stability, .70); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
+      { id:"b8", tier:"bronze", name:"Rinnenschutz", icon:"fa-shield", desc:"Der nächste Rinnenwurf wird gerettet und trifft mindestens 4 Pins.", apply(){ powerupState.gutterShieldThrows += 1; } },
+      { id:"b9", tier:"bronze", name:"Ersatzkugel", icon:"fa-bowling-ball", desc:"Der nächste Wurf fällt auf mindestens 5 Pins an.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 5); } },
+      { id:"b10", tier:"bronze", name:"Spare-Samen", icon:"fa-seedling", desc:"Dein nächster Spare bringt zusätzlich +15 Punkte.", apply(){ powerupState.nextSpareBonus += 15; } },
 
-      {id:"s1",tier:"silver",name:"Overdrive",icon:"fa-rocket",desc:"Die nächsten 2 Würfe laufen mit x2. Zusammen mit anderen Multis sind x4, x6 oder mehr möglich.",apply(){addMultiplierEffect(2,2)}},
-      {id:"s2",tier:"silver",name:"Multiplikator-Schmiede",icon:"fa-hammer",desc:"PASSIV: Dein permanenter Multiplikator steigt sofort um +0,25x und bleibt bis Spielende.",apply(){powerupState.permanentMultiplier+=.25;addPassive("Schmiede")}},
-      {id:"s3",tier:"silver",name:"Spare-Motor",icon:"fa-gears",desc:"PASSIV: Jeder weitere Spare gibt +50 und macht den nächsten Wurf x1,5.",apply(){powerupState.spareEngine=true;addPassive("Spare-Motor")}},
-      {id:"s4",tier:"silver",name:"Combo-Reaktor",icon:"fa-atom",desc:"PASSIV: Jeder weitere Spare oder Strike erhöht deinen permanenten Multiplikator um +0,10x.",apply(){powerupState.comboReactor=true;addPassive("Combo-Reaktor")}},
-      {id:"s5",tier:"silver",name:"Kopiermaschine",icon:"fa-copy",desc:"Das nächste Powerup, das du auswählst, wird zweimal ausgelöst.",apply(){powerupState.copyNextPicks+=1}},
-      {id:"s6",tier:"silver",name:"Dreifach-Risiko",icon:"fa-triangle-exclamation",desc:"Nächster Frame: Jeder Wurf mit 8+ Pins läuft x3. Ein Wurf unter 8 kostet 30 Bonuspunkte.",apply(){powerupState.riskTripleFrames+=1}},
-      {id:"s7",tier:"silver",name:"Zeitbombe",icon:"fa-bomb",desc:"Die nächsten 3 Frames laden Pins. 45+ Pins insgesamt = +260. Sonst gibt es 4 Bonuspunkte pro geladenem Pin.",apply(){powerupState.timeBombFrames=3;powerupState.timeBombPins=0;powerupState.timeBombReward=260}},
-      {id:"s8",tier:"silver",name:"Tier-Hack",icon:"fa-arrow-up-right-dots",desc:"Die nächste Powerup-Belohnung wird eine Stufe besser: Bronze→Silber oder Silber→Gold.",apply(){powerupState.upgradeNextReward+=1}},
-      {id:"s9",tier:"silver",name:"Pocket-Laser",icon:"fa-wand-magic-sparkles",desc:"Die nächsten 3 Würfe bekommen massive Präzisionshilfe: breite Pocket und fast keine Streuung.",apply(){powerupState.collisionBoost=Math.max(powerupState.collisionBoost,.42);powerupState.collisionBoostThrows=Math.max(powerupState.collisionBoostThrows,3);powerupState.stability=Math.max(powerupState.stability,.91);powerupState.stabilityThrows=Math.max(powerupState.stabilityThrows,3)}},
-      {id:"s10",tier:"silver",name:"Strike-Kette",icon:"fa-link",desc:"Deine nächsten 3 Strikes zahlen eskalierend: +70, dann +140, dann +210.",apply(){powerupState.strikeChainCharges+=3;powerupState.strikeChainLevel=0}},
+      // Silber · Spare
+      { id:"s1", tier:"silver", name:"Spare-Kasse", icon:"fa-sack-dollar", desc:"Sofort +18 Bonuspunkte.", apply(){ addPowerupBonus(18); } },
+      { id:"s2", tier:"silver", name:"Silberregen", icon:"fa-cloud-rain", desc:"Sofort +25 Bonuspunkte.", apply(){ addPowerupBonus(25); } },
+      { id:"s3", tier:"silver", name:"Doppel-Prämie", icon:"fa-2", desc:"Beim nächsten Wurf +2 Punkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 2; } },
+      { id:"s4", tier:"silver", name:"Starker Magnet", icon:"fa-magnet", desc:"Der nächste Wurf nimmt bis zu 2 zusätzliche Pins mit.", apply(){ powerupState.nextAutoPins += 2; } },
+      { id:"s5", tier:"silver", name:"Achter-Garantie", icon:"fa-shield-halved", desc:"Beim nächsten Wurf fallen mindestens 8 Pins, sofern so viele stehen.", apply(){ powerupState.nextMinPins = Math.max(powerupState.nextMinPins, 8); } },
+      { id:"s6", tier:"silver", name:"Präzisionslaser", icon:"fa-crosshairs", desc:"Nächster Wurf: viel breitere Trefferzone und stark reduzierte Streuung.", apply(){ powerupState.collisionBoost = Math.max(powerupState.collisionBoost, .34); powerupState.collisionBoostThrows = Math.max(powerupState.collisionBoostThrows, 1); powerupState.stability = Math.max(powerupState.stability, .82); powerupState.stabilityThrows = Math.max(powerupState.stabilityThrows, 1); } },
+      { id:"s7", tier:"silver", name:"Spare-Jäger", icon:"fa-bullseye", desc:"Der nächste Spare ist +35 Bonuspunkte wert.", apply(){ powerupState.nextSpareBonus += 35; } },
+      { id:"s8", tier:"silver", name:"Strike-Jäger", icon:"fa-bolt", desc:"Der nächste Strike ist +45 Bonuspunkte wert.", apply(){ powerupState.nextStrikeBonus += 45; } },
+      { id:"s9", tier:"silver", name:"Comeback", icon:"fa-arrow-trend-up", desc:"Fallen beim nächsten Wurf höchstens 4 Pins, erhältst du trotzdem +20 Punkte.", apply(){ powerupState.nextLowRollBonus += 20; } },
+      { id:"s10", tier:"silver", name:"Frame-Booster", icon:"fa-gauge-high", desc:"Beim nächsten Wurf +3 Bonuspunkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 3; } },
 
-      {id:"g1",tier:"gold",name:"HYPERDRIVE",icon:"fa-bolt-lightning",desc:"Die nächsten 3 Würfe laufen mit x3. Stapelst du weitere Multis, kann daraus x6, x9 oder noch mehr werden.",apply(){addMultiplierEffect(3,3)}},
-      {id:"g2",tier:"gold",name:"Goldener Multiplikator",icon:"fa-crown",desc:"PASSIV: Dein kompletter permanente Multiplikator wird sofort mit x1,5 multipliziert.",apply(){powerupState.permanentMultiplier*=1.5;addPassive("Gold-Multi")}},
-      {id:"g3",tier:"gold",name:"Midas-Hand",icon:"fa-hand",desc:"PASSIV: Jede zukünftige Powerup-Auswahl schenkt zusätzlich +40 Punkte.",apply(){powerupState.midasPickBonus+=40;addPassive("Midas-Hand")}},
-      {id:"g4",tier:"gold",name:"Quantenkopie",icon:"fa-clone",desc:"Die nächsten 2 ausgewählten Powerups werden jeweils doppelt ausgelöst.",apply(){powerupState.copyNextPicks+=2}},
-      {id:"g5",tier:"gold",name:"Strike-Wahnsinn",icon:"fa-fire-flame-curved",desc:"PASSIV: Eine Strike-Serie zahlt +80, +160, +240 … Ein Nicht-Strike setzt die Serie zurück.",apply(){powerupState.strikeMadness=true;addPassive("Strike-Wahnsinn")}},
-      {id:"g6",tier:"gold",name:"ASCENSION",icon:"fa-angles-up",desc:"PASSIV: Jeder weitere Strike erhöht deinen permanenten Multiplikator dauerhaft um +0,25x.",apply(){powerupState.ascension=true;addPassive("Ascension")}},
-      {id:"g7",tier:"gold",name:"Jackpot-Modus",icon:"fa-dice",desc:"Im nächsten Frame: Strike +300, Spare +160, offener Frame +60.",apply(){powerupState.jackpotFrames+=1}},
-      {id:"g8",tier:"gold",name:"FINAL BOSS",icon:"fa-skull",desc:"PASSIV: Am Spielende je Exemplar +200 ab 300 Gesamtpunkten oder +400 ab 450. Darunter +80.",apply(){powerupState.finalBoss+=1;addPassive("Final Boss")}},
-      {id:"g9",tier:"gold",name:"Unendlichkeitskern",icon:"fa-infinity",desc:"PASSIV: Jede spätere Powerup-Auswahl erhöht deinen permanenten Multiplikator zusätzlich um +0,10x.",apply(){powerupState.infinityCoreGrowth+=.10;addPassive("∞-Kern")}},
-      {id:"g10",tier:"gold",name:"Meteorregen",icon:"fa-meteor",desc:"PASSIV: Jeder weitere Strike = +140. Jeder Spare = +70. Läuft bis Spielende.",apply(){powerupState.meteorPassive=true;addPassive("Meteorregen")}}
+      // Gold · Strike
+      { id:"g1", tier:"gold", name:"Strike-Krone", icon:"fa-crown", desc:"Sofort +35 Bonuspunkte.", apply(){ addPowerupBonus(35); } },
+      { id:"g2", tier:"gold", name:"Goldregen", icon:"fa-sun", desc:"Sofort +50 Bonuspunkte.", apply(){ addPowerupBonus(50); } },
+      { id:"g3", tier:"gold", name:"Strike-Magnet", icon:"fa-wand-magic-sparkles", desc:"Der nächste Wurf räumt garantiert alle noch stehenden Pins ab.", apply(){ powerupState.guaranteedClearThrows += 1; } },
+      { id:"g4", tier:"gold", name:"Pin-Jackpot", icon:"fa-gem", desc:"Beim nächsten Wurf +5 Bonuspunkte pro gefälltem Pin.", apply(){ powerupState.nextPinBonus += 5; } },
+      { id:"g5", tier:"gold", name:"Königstreffer", icon:"fa-chess-king", desc:"Der nächste Strike bringt zusätzlich +75 Punkte.", apply(){ powerupState.nextStrikeBonus += 75; } },
+      { id:"g6", tier:"gold", name:"Perfekte Linie", icon:"fa-route", desc:"Für die nächsten 2 Würfe: kein Gutter, große Trefferzone und stabile Linie.", apply(){ powerupState.assistThrows += 2; } },
+      { id:"g7", tier:"gold", name:"Pin-Rasierer", icon:"fa-scissors", desc:"Der nächste Wurf nimmt bis zu 3 zusätzliche stehende Pins mit.", apply(){ powerupState.nextAutoPins += 3; } },
+      { id:"g8", tier:"gold", name:"Jackpot", icon:"fa-dice", desc:"Nächster Wurf: Strike = +100, sonst immerhin +20 Punkte.", apply(){ powerupState.jackpotThrows += 1; } },
+      { id:"g9", tier:"gold", name:"Dauerfeuer", icon:"fa-fire", desc:"Für den Rest des Spiels: +2 Punkte für jeden gefällten Pin.", apply(){ powerupState.permanentPinBonus += 2; } },
+      { id:"g10", tier:"gold", name:"Strike-Serie", icon:"fa-trophy", desc:"Für den Rest des Spiels bringt jeder weitere Strike +30 Punkte.", apply(){ powerupState.permanentStrikeBonus += 30; } }
     ];
 
-    function changePowerupBonus(points){const d=Math.round(Number(points)||0);powerupBonusScore=Math.max(0,powerupBonusScore+d);updatePowerupHud();renderScoreboard();return d}
-    function addPowerupBonus(points){return changePowerupBonus(Math.max(0,Number(points)||0))}
-    function updatePowerupHud(){
-      powerupBonusValue.textContent=`+${powerupBonusScore}`;
-      if(powerupMultiplierValue)powerupMultiplierValue.textContent=`· x${getActiveThrowMultiplier().toFixed(2)}`;
-      if(powerupBonusHud&&powerupState)powerupBonusHud.title=`${powerupState.activePassives.length} aktive Passives`;
+
+
+    function addPowerupBonus(points) {
+      const value = Math.max(0, Number(points) || 0);
+      powerupBonusScore += value;
+      updatePowerupHud();
+      renderScoreboard();
     }
-    function randomPowerups(tier,count=3){const copy=POWERUPS.filter(i=>i.tier===tier);const picks=[];while(copy.length&&picks.length<count){picks.push(copy.splice(Math.floor(Math.random()*copy.length),1)[0])}return picks}
-    function tierMeta(tier){
-      if(tier==="gold")return{label:"GOLD · STRIKE DROP",title:"JACKPOT!",subtitle:"Drei verdeckte Gold-Slots. Gold-Powerups können deinen ganzen Run verändern."};
-      if(tier==="silver")return{label:"SILBER · SPARE DROP",title:"SILBER-SLOT",subtitle:"Drei verdeckte Silber-Slots. Hier stecken starke Synergien, Kopien und Multiplikatoren."};
-      return{label:"BRONZE · FRAME DROP",title:"POWERUP-SLOT",subtitle:"Drei verdeckte Bronze-Slots. Wähle einen – erst danach siehst du, was du bekommen hast."}
+
+    function updatePowerupHud() {
+      powerupBonusValue.textContent = `+${powerupBonusScore}`;
     }
-    function upgradeRewardTier(tier){if(powerupState.upgradeNextReward<=0||tier==="gold")return{tier,upgraded:false};powerupState.upgradeNextReward-=1;return{tier:tier==="bronze"?"silver":"gold",upgraded:true}}
-    function setOverlayTier(tier){powerupOverlay.classList.remove("tier-bronze","tier-silver","tier-gold");powerupOverlay.classList.add(`tier-${tier}`)}
-    function triggerRarityFx(tier,extra=false){
-      if(!powerupFxLayer)return;powerupFxLayer.innerHTML="";
-      const base=tier==="gold"?28:tier==="silver"?14:6,count=extra?Math.round(base*1.35):base;
-      const sx=tier==="gold"?370:tier==="silver"?285:190,sy=tier==="gold"?300:tier==="silver"?220:150,frag=document.createDocumentFragment();
-      for(let i=0;i<count;i++){const p=document.createElement("span");p.className="rarity-particle";p.style.setProperty("--x",`${randomBetween(-sx,sx)}px`);p.style.setProperty("--y",`${randomBetween(-sy,sy)}px`);p.style.setProperty("--rot",`${randomBetween(-180,180)}deg`);p.style.setProperty("--delay",`${randomBetween(0,tier==="gold"?.32:.20)}s`);frag.appendChild(p)}powerupFxLayer.appendChild(frag)
+
+    function randomPowerups(tier, count = 3) {
+      const pool = POWERUPS.filter(item => item.tier === tier);
+      const copy = [...pool];
+      const picks = [];
+      while (copy.length && picks.length < count) {
+        const index = Math.floor(Math.random() * copy.length);
+        picks.push(copy.splice(index, 1)[0]);
+      }
+      return picks;
     }
-    function playPowerupRaritySound(tier,reveal=false){
-      if(!audioCtx)return;
-      if(tier==="gold"){playTone(523.25,.16,"triangle",.045,0);playTone(659.25,.18,"triangle",.045,.07);playTone(783.99,.22,"triangle",.05,.14);playTone(1046.5,.28,"sine",.035,.22);if(reveal)playNoise({duration:.18,volume:.018,frequency:1800,q:.8,delay:.04})}
-      else if(tier==="silver"){playTone(587.33,.14,"sine",.03,0);playTone(783.99,.19,"triangle",.034,.09);if(reveal)playTone(987.77,.16,"sine",.022,.18)}
-      else{playTone(392,.10,"triangle",.022,0);if(reveal)playTone(523.25,.11,"triangle",.02,.08)}
+
+    function tierMeta(tier) {
+      if (tier === "gold") return { label:"Gold · Strike-Belohnung", title:"STRIKE! Wähle ein Gold-Powerup", subtitle:"Strike geschafft – jetzt kommen die stärksten Effekte. Diese Powerups können dein Spiel komplett eskalieren." };
+      if (tier === "silver") return { label:"Silber · Spare-Belohnung", title:"SPARE! Wähle ein Silber-Powerup", subtitle:"Sauber geräumt. Silber-Powerups sind deutlich stärker und geben große Hilfen oder Bonuspunkte." };
+      return { label:"Bronze · Wurf-Belohnung", title:"Wähle ein Bronze-Powerup", subtitle:"Nach jedem normalen Wurf stehen drei zufällige Powerups zur Wahl. Spare und Strike schalten bessere Stufen frei." };
     }
-    function mysterySymbolsForTier(tier){
-      const pool=tier==="gold"?["fa-star","fa-crown","fa-gem","fa-bolt-lightning","fa-sun"]:tier==="silver"?["fa-star","fa-diamond","fa-wand-magic-sparkles","fa-atom","fa-gem"]:["fa-bolt","fa-circle-question","fa-dice","fa-star","fa-bowling-ball"];
-      return[0,1,2].map(()=>pool[Math.floor(Math.random()*pool.length)])
+
+    function showPowerupChoice(tier, continuation, isFinalThrow = false) {
+      const meta = tierMeta(tier);
+      const options = randomPowerups(tier, 3);
+      powerupChoosing = true;
+      pendingPowerupContinuation = continuation;
+      powerupFinalChoice = isFinalThrow;
+      hideThrowHelp();
+      powerupTierLabel.textContent = meta.label;
+      document.getElementById("powerupTitle").textContent = meta.title;
+      const finalBonus = tier === "gold" ? 50 : tier === "silver" ? 25 : 10;
+      powerupSubtitle.textContent = isFinalThrow ? `${meta.subtitle} Letzter Wurf: Deine Wahl erhält zusätzlich +${finalBonus} Abschlussbonus.` : meta.subtitle;
+      powerupOptions.innerHTML = options.map(item => `
+        <button class="powerup-card ${item.tier}" type="button" data-powerup-id="${item.id}">
+          <span class="powerup-tier"><i class="fa-solid ${item.icon}"></i>${item.tier === "gold" ? "Gold" : item.tier === "silver" ? "Silber" : "Bronze"}</span>
+          <span class="powerup-name">${item.name}</span>
+          <span class="powerup-desc">${item.desc}</span>
+          <span class="powerup-pick"><i class="fa-solid fa-hand-pointer"></i> Auswählen</span>
+        </button>
+      `).join("");
+      powerupOverlay.classList.remove("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "false");
     }
-    function showPowerupChoice(baseTier,continuation,isFinalFrame=false){
-      const reward=upgradeRewardTier(baseTier),tier=reward.tier,meta=tierMeta(tier),options=randomPowerups(tier,3),symbols=mysterySymbolsForTier(tier);
-      powerupChoosing=true;pendingPowerupContinuation=continuation;powerupFinalChoice=isFinalFrame;hideThrowHelp();setOverlayTier(tier);
-      powerupTierLabel.textContent=reward.upgraded?`${meta.label} · TIER-HACK!`:meta.label;document.getElementById("powerupTitle").textContent=meta.title;
-      powerupSubtitle.textContent=isFinalFrame?`${meta.subtitle} Letzter Frame: Die Wahl bekommt zusätzlich einen ${tier==="gold"?"+120":tier==="silver"?"+70":"+35"} Abschlussbonus.`:meta.subtitle;
-      powerupOptions.classList.remove("has-reveal");
-      powerupOptions.innerHTML=options.map((item,index)=>`<button class="powerup-card ${tier}" type="button" data-powerup-id="${item.id}" aria-label="Verdecktes ${tier}-Powerup ${index+1}"><span class="powerup-mystery-symbol"><i class="fa-solid ${symbols[index]}"></i></span><span class="powerup-mystery-label">Slot ${index+1} · wählen</span></button>`).join("");
-      powerupOverlay.classList.remove("hidden");powerupOverlay.setAttribute("aria-hidden","false");triggerRarityFx(tier,false);playPowerupRaritySound(tier,false)
+
+    function choosePowerup(powerupId) {
+      if (!powerupChoosing) return;
+      const item = POWERUPS.find(entry => entry.id === powerupId);
+      if (!item) return;
+      playButtonSound();
+      item.apply();
+      if (powerupFinalChoice) {
+        const finalBonus = item.tier === "gold" ? 50 : item.tier === "silver" ? 25 : 10;
+        addPowerupBonus(finalBonus);
+      }
+      powerupFinalChoice = false;
+      powerupChoosing = false;
+      powerupOverlay.classList.add("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "true");
+      showFlash(`${item.name}`);
+      const continuation = pendingPowerupContinuation;
+      pendingPowerupContinuation = null;
+      scheduleGameTimer(() => {
+        if (typeof continuation === "function") continuation();
+      }, 260);
     }
-    function choosePowerup(powerupId){
-      if(!powerupChoosing)return;const item=POWERUPS.find(e=>e.id===powerupId);if(!item)return;powerupChoosing=false;
-      const midas=powerupState.midasPickBonus,infinity=powerupState.infinityCoreGrowth;let activations=1;
-      if(powerupState.copyNextPicks>0){powerupState.copyNextPicks-=1;activations=2}
-      for(let i=0;i<activations;i++)item.apply();
-      if(midas>0)addPowerupBonus(midas);if(infinity>0)powerupState.permanentMultiplier+=infinity;
-      if(powerupFinalChoice)addPowerupBonus(item.tier==="gold"?120:item.tier==="silver"?70:35);powerupFinalChoice=false;
-      powerupOptions.classList.add("has-reveal");
-      powerupOptions.innerHTML=`<div class="powerup-card revealed ${item.tier}" aria-live="polite"><span class="powerup-reveal-icon"><i class="fa-solid ${item.icon}"></i></span><span class="powerup-tier">${item.tier==="gold"?"Gold":item.tier==="silver"?"Silber":"Bronze"}${activations>1?" · ×2":""}</span><span class="powerup-name">${item.name}</span><span class="powerup-desc">${item.desc}</span><span class="powerup-pick"><i class="fa-solid fa-circle-check"></i> Aktiviert</span></div>`;
-      document.getElementById("powerupTitle").textContent=item.name;powerupSubtitle.textContent=item.desc;triggerRarityFx(item.tier,true);playPowerupRaritySound(item.tier,true);updatePowerupHud();
-      const continuation=pendingPowerupContinuation;pendingPowerupContinuation=null;
-      scheduleGameTimer(()=>{powerupOverlay.classList.add("hidden");powerupOverlay.setAttribute("aria-hidden","true");if(powerupFxLayer)powerupFxLayer.innerHTML="";if(typeof continuation==="function")continuation()},item.tier==="gold"?1450:item.tier==="silver"?1200:980)
+
+    function classifyPowerupTier(frameIndex, throws) {
+      const t = throws || [];
+      if (!t.length) return "bronze";
+      const last = t[t.length - 1];
+      if (last === 10) return "gold";
+      if (frameIndex < 9) {
+        if (t.length >= 2 && t[0] !== 10 && t[0] + t[1] === 10) return "silver";
+      } else {
+        if (t.length === 2 && t[0] !== 10 && t[0] + t[1] === 10) return "silver";
+        if (t.length >= 3 && t[0] === 10 && t[t.length - 2] < 10 && t[t.length - 2] + last === 10) return "silver";
+      }
+      return "bronze";
     }
-    function classifyPowerupTier(frameIndex,t){
-      t=t||[];if(!t.length)return"bronze";
-      if(frameIndex<9){if(t[0]===10)return"gold";if(t.length>=2&&t[0]+t[1]===10)return"silver";return"bronze"}
-      if(t.some(v=>v===10))return"gold";
-      if(t.length>=2&&t[0]!==10&&t[0]+t[1]===10)return"silver";
-      if(t.length>=3&&t[0]===10&&t[1]<10&&t[1]+t[2]===10)return"silver";
-      return"bronze"
+
+    function isStrikeRoll(frameIndex, throws) {
+      const t = throws || [];
+      return t.length > 0 && t[t.length - 1] === 10;
     }
-    function isStrikeRoll(frameIndex,t){t=t||[];return t.length>0&&t[t.length-1]===10}
-    function isSpareRoll(frameIndex,t){t=t||[];if(frameIndex<9)return t.length>=2&&t[0]!==10&&t[0]+t[1]===10;if(t.length===2&&t[0]!==10&&t[0]+t[1]===10)return true;return t.length>=3&&t[0]===10&&t[1]<10&&t[1]+t[2]===10}
-    function enhanceSimulationWithPowerups(simulation){return simulation}
-    function applyScoringPowerups(pinsDown,frameIndex,t){
-      let earned=0;const strike=isStrikeRoll(frameIndex,t),spare=isSpareRoll(frameIndex,t),clean=strike||spare,base=pinsDown*10;
-      let multi=getActiveThrowMultiplier();if(powerupState.riskTripleFrames>0&&pinsDown>=8)multi*=3;if(multi>1)earned+=Math.round(base*(multi-1));
-      powerupState.multiplierEffects.forEach(e=>e.throws-=1);powerupState.multiplierEffects=powerupState.multiplierEffects.filter(e=>e.throws>0);
-      if(powerupState.luckySevenFrames>0&&pinsDown===7)earned+=60;
-      if(powerupState.combo8Passive){if(pinsDown>=8){powerupState.combo8Streak+=1;earned+=powerupState.combo8Streak*10}else powerupState.combo8Streak=0}
-      if(powerupState.secondWindFrames>0&&pinsDown<=4)addMultiplierEffect(3,1);
-      if(powerupState.rollercoasterFrames>0)earned+=strike?120:pinsDown===9?70:pinsDown===8?40:0;
-      if(spare&&powerupState.nextSpareCharge>0){earned+=60;powerupState.permanentMultiplier+=.10;powerupState.nextSpareCharge-=1}
-      if(strike&&powerupState.nextStrikeCharge>0){earned+=90;powerupState.permanentMultiplier+=.10;powerupState.nextStrikeCharge-=1}
-      if(clean&&powerupState.cleanChainCharge>0){addMultiplierEffect(2,1);powerupState.cleanChainCharge-=1}
-      if(spare&&powerupState.spareEngine){earned+=50;addMultiplierEffect(1.5,1)}
-      if(clean&&powerupState.comboReactor)powerupState.permanentMultiplier+=.10;
-      if(powerupState.riskTripleFrames>0&&pinsDown<8)changePowerupBonus(-30);
-      if(strike&&powerupState.strikeChainCharges>0){powerupState.strikeChainLevel+=1;earned+=70*powerupState.strikeChainLevel;powerupState.strikeChainCharges-=1}
-      if(powerupState.strikeMadness){if(strike){powerupState.strikeMadnessStreak+=1;earned+=80*powerupState.strikeMadnessStreak}else powerupState.strikeMadnessStreak=0}
-      if(strike&&powerupState.ascension)powerupState.permanentMultiplier+=.25;
-      if(powerupState.meteorPassive)earned+=strike?140:spare?70:0;
-      if(earned>0){powerupBonusScore+=earned;showFlash(`+${earned} ARCADE`)}
-      if(powerupState.collisionBoostThrows>0){powerupState.collisionBoostThrows-=1;if(powerupState.collisionBoostThrows<=0)powerupState.collisionBoost=0}
-      if(powerupState.stabilityThrows>0){powerupState.stabilityThrows-=1;if(powerupState.stabilityThrows<=0)powerupState.stability=0}
-      updatePowerupHud();return earned
+
+    function isSpareRoll(frameIndex, throws) {
+      return classifyPowerupTier(frameIndex, throws) === "silver";
     }
-    function applyCompletedFramePowerups(frameIndex,t){
-      t=t||[];const tier=classifyPowerupTier(frameIndex,t);
-      if(powerupState.luckySevenFrames>0)powerupState.luckySevenFrames-=1;
-      if(powerupState.secondWindFrames>0)powerupState.secondWindFrames-=1;
-      if(powerupState.rollercoasterFrames>0)powerupState.rollercoasterFrames-=1;
-      if(powerupState.riskTripleFrames>0)powerupState.riskTripleFrames-=1;
-      if(powerupState.timeBombFrames>0){powerupState.timeBombPins+=t.reduce((s,v)=>s+v,0);powerupState.timeBombFrames-=1;if(powerupState.timeBombFrames===0){const payout=powerupState.timeBombPins>=45?powerupState.timeBombReward:powerupState.timeBombPins*4;addPowerupBonus(payout);showFlash(`ZEITBOMBE +${payout}`);powerupState.timeBombPins=0}}
-      if(powerupState.jackpotFrames>0){addPowerupBonus(tier==="gold"?300:tier==="silver"?160:60);powerupState.jackpotFrames-=1}
-      updatePowerupHud()
+
+    function extraKnockImpact(pin, delay = 90) {
+      const direction = pin.x >= .5 ? 1 : -1;
+      return {
+        fallX: direction * randomBetween(25, 52),
+        fallY: randomBetween(12, 38),
+        rotation: direction * randomBetween(64, 118),
+        delay
+      };
     }
-    function applyEndGamePowerups(){
-      if(!powerupState||powerupState.endBonusApplied)return;powerupState.endBonusApplied=true;
-      if(powerupState.finalBoss>0){const before=getFinalScore(),perBoss=before>=450?400:before>=300?200:80,payout=perBoss*powerupState.finalBoss;if(payout>0){powerupBonusScore+=payout;updatePowerupHud();renderScoreboard();showFlash(`FINAL BOSS +${payout}`)}}
+
+    function enhanceSimulationWithPowerups(simulation) {
+      const standing = getStandingPinsArray();
+      if (!standing.length) return simulation;
+      const knocked = new Set(simulation.knockedIds || []);
+      const impactMap = { ...(simulation.impactMap || {}) };
+      let gutter = Boolean(simulation.gutter);
+
+      const forceAll = powerupState.guaranteedClearThrows > 0;
+      const shielded = (powerupState.gutterShieldThrows > 0 || powerupState.assistThrows > 0) && gutter;
+      if (shielded) gutter = false;
+
+      let targetMinimum = 0;
+      if (powerupState.nextMinPins > 0) targetMinimum = Math.max(targetMinimum, Math.min(powerupState.nextMinPins, standing.length));
+      if (shielded) targetMinimum = Math.max(targetMinimum, Math.min(4, standing.length));
+      if (forceAll) targetMinimum = standing.length;
+
+      const naturalCount = knocked.size;
+      const wantedWithExtras = Math.min(standing.length, naturalCount + Math.max(0, powerupState.nextAutoPins));
+      targetMinimum = Math.max(targetMinimum, wantedWithExtras);
+
+      if (knocked.size < targetMinimum) {
+        const remaining = standing
+          .filter(pin => !knocked.has(pin.id))
+          .sort((a,b) => Math.abs(a.x - .5) - Math.abs(b.x - .5));
+        remaining.slice(0, targetMinimum - knocked.size).forEach((pin, index) => {
+          knocked.add(pin.id);
+          impactMap[pin.id] = extraKnockImpact(pin, 80 + index * 34);
+        });
+      }
+
+      return { ...simulation, knockedIds:[...knocked], impactMap, gutter };
+    }
+
+    function applyScoringPowerups(pinsDown, frameIndex, throws) {
+      let earned = 0;
+      const strike = isStrikeRoll(frameIndex, throws);
+      const spare = isSpareRoll(frameIndex, throws);
+
+      earned += pinsDown * powerupState.permanentPinBonus;
+      earned += pinsDown * powerupState.nextPinBonus;
+      if (pinsDown >= 8) earned += powerupState.nextHighRollBonus;
+      if (pinsDown <= 4) earned += powerupState.nextLowRollBonus;
+      if (strike) {
+        earned += powerupState.nextStrikeBonus;
+        earned += powerupState.permanentStrikeBonus;
+      }
+      if (spare) earned += powerupState.nextSpareBonus;
+      if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
+
+      if (earned > 0) {
+        powerupBonusScore += earned;
+        showFlash(`+${earned} BONUS`);
+      }
+
+      powerupState.nextPinBonus = 0;
+      powerupState.nextHighRollBonus = 0;
+      powerupState.nextLowRollBonus = 0;
+      powerupState.nextAutoPins = 0;
+      powerupState.nextMinPins = 0;
+      if (powerupState.collisionBoostThrows > 0) {
+        powerupState.collisionBoostThrows -= 1;
+        if (powerupState.collisionBoostThrows <= 0) powerupState.collisionBoost = 0;
+      }
+      if (powerupState.stabilityThrows > 0) {
+        powerupState.stabilityThrows -= 1;
+        if (powerupState.stabilityThrows <= 0) powerupState.stability = 0;
+      }
+      if (powerupState.gutterShieldThrows > 0) powerupState.gutterShieldThrows -= 1;
+      if (powerupState.guaranteedClearThrows > 0) powerupState.guaranteedClearThrows -= 1;
+      if (powerupState.jackpotThrows > 0) powerupState.jackpotThrows -= 1;
+      if (powerupState.assistThrows > 0) powerupState.assistThrows -= 1;
+      if (strike && powerupState.nextStrikeBonus > 0) powerupState.nextStrikeBonus = 0;
+      if (spare && powerupState.nextSpareBonus > 0) powerupState.nextSpareBonus = 0;
+
+      updatePowerupHud();
+      return earned;
     }
 
     function ensureAudio() {
@@ -2984,7 +3116,6 @@
     }
 
     function openEndGameModal() {
-      applyEndGamePowerups();
       const score = getFinalScore();
       if (qualifiesForLeaderboard(score)) {
         showModal("Spiel beendet", `${score} Punkte. Der Score reicht aktuell für das Top-10-Leaderboard. Trag deinen Namen ein.`, true);
@@ -3383,55 +3514,113 @@
     }
 
     function handlePostThrowState(pinsDown, simulation) {
-      const frameIndex=currentFrame,frame=currentFrameData();
-      frame.throws.push(pinsDown);applyScoringPowerups(pinsDown,frameIndex,frame.throws);renderScoreboard();
-      if(simulation.gutter){showFlash("RINNE");playGutterSound()}else if(pinsDown===0){showFlash("VORBEI");playMissSound()}else if(pinsDown<10){showFlash(`${pinsDown} ${pinsDown===1?"PIN":"PINS"}`)}
+      const frameIndex = currentFrame;
+      const frame = currentFrameData();
+      frame.throws.push(pinsDown);
+      applyScoringPowerups(pinsDown, frameIndex, frame.throws);
+      renderScoreboard();
 
-      let continuation=null,frameComplete=false;
+      if (simulation.gutter) { showFlash("RINNE"); playGutterSound(); }
+      else if (pinsDown === 0) { showFlash("VORBEI"); playMissSound(); }
+      else if (pinsDown < 10) { showFlash(`${pinsDown} ${pinsDown === 1 ? "PIN" : "PINS"}`); }
 
-      if(currentFrame<9){
-        if(frame.throws.length===1){
-          if(pinsDown===10){
-            showFlash("STRIKE");playStrikeSound();frameComplete=true;
-            continuation=()=>{standingPins=fullRackSet();lastImpactMap={};renderPins([]);advanceToNextFrame()}
-          }else{
-            continuation=()=>{positionBallAtRest();showThrowHelp();updateStatus()}
+      const rewardTier = classifyPowerupTier(frameIndex, frame.throws);
+      let continuation = null;
+
+      if (currentFrame < 9) {
+        if (frame.throws.length === 1) {
+          if (pinsDown === 10) {
+            showFlash("STRIKE");
+            playStrikeSound();
+            continuation = () => {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+              advanceToNextFrame();
+            };
+          } else {
+            continuation = () => {
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
           }
-        }else{
-          if(frame.throws[0]+frame.throws[1]===10){showFlash("SPARE");playSpareSound()}
-          frameComplete=true;
-          continuation=()=>{standingPins=fullRackSet();lastImpactMap={};renderPins([]);advanceToNextFrame()}
+        } else {
+          if (frame.throws[0] + frame.throws[1] === 10) { showFlash("SPARE"); playSpareSound(); }
+          continuation = () => {
+            standingPins = fullRackSet();
+            lastImpactMap = {};
+            renderPins([]);
+            advanceToNextFrame();
+          };
         }
-      }else{
-        const t=frame.throws;
-        if(t.length===1){
-          if(t[0]===10){showFlash("STRIKE");playStrikeSound()}
-          continuation=()=>{if(t[0]===10){standingPins=fullRackSet();lastImpactMap={};renderPins([])}positionBallAtRest();showThrowHelp();updateStatus()}
-        }else if(t.length===2){
-          if(t[0]===10){
-            if(t[1]===10){showFlash("STRIKE");playStrikeSound()}
-            continuation=()=>{if(t[1]===10){standingPins=fullRackSet();lastImpactMap={};renderPins([])}positionBallAtRest();showThrowHelp();updateStatus()}
-          }else if(t[0]+t[1]===10){
-            showFlash("SPARE");playSpareSound();
-            continuation=()=>{standingPins=fullRackSet();lastImpactMap={};renderPins([]);positionBallAtRest();showThrowHelp();updateStatus()}
-          }else{
-            frameComplete=true;
-            continuation=()=>{gameOver=true;renderScoreboard();updateStatus();openEndGameModal()}
+      } else {
+        const t = frame.throws;
+        if (t.length === 1) {
+          if (t[0] === 10) {
+            showFlash("STRIKE");
+            playStrikeSound();
           }
-        }else if(t.length===3){
-          if(t[2]===10){showFlash("STRIKE");playStrikeSound()}else if(t[1]<10&&t[1]+t[2]===10){showFlash("SPARE");playSpareSound()}
-          frameComplete=true;
-          continuation=()=>{gameOver=true;renderScoreboard();updateStatus();openEndGameModal()}
+          continuation = () => {
+            if (t[0] === 10) {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+            }
+            positionBallAtRest();
+            showThrowHelp();
+            updateStatus();
+          };
+        } else if (t.length === 2) {
+          if (t[0] === 10) {
+            if (t[1] === 10) {
+              showFlash("STRIKE");
+              playStrikeSound();
+            }
+            continuation = () => {
+              if (t[1] === 10) {
+                standingPins = fullRackSet();
+                lastImpactMap = {};
+                renderPins([]);
+              }
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
+          } else if (t[0] + t[1] === 10) {
+            showFlash("SPARE");
+            playSpareSound();
+            continuation = () => {
+              standingPins = fullRackSet();
+              lastImpactMap = {};
+              renderPins([]);
+              positionBallAtRest();
+              showThrowHelp();
+              updateStatus();
+            };
+          } else {
+            continuation = () => {
+              gameOver = true;
+              renderScoreboard();
+              updateStatus();
+              openEndGameModal();
+            };
+          }
+        } else if (t.length === 3) {
+          if (t[2] === 10) { showFlash("STRIKE"); playStrikeSound(); }
+          else if (t[1] < 10 && t[1] + t[2] === 10) { showFlash("SPARE"); playSpareSound(); }
+          continuation = () => {
+            gameOver = true;
+            renderScoreboard();
+            updateStatus();
+            openEndGameModal();
+          };
         }
       }
 
-      if(frameComplete){
-        applyCompletedFramePowerups(frameIndex,frame.throws);
-        const rewardTier=classifyPowerupTier(frameIndex,frame.throws),finalFrame=frameIndex===9;
-        scheduleGameTimer(()=>showPowerupChoice(rewardTier,continuation,finalFrame),520)
-      }else{
-        scheduleGameTimer(()=>{if(typeof continuation==="function")continuation()},260)
-      }
+      const finalThrow = currentFrame === 9 && (frame.throws.length >= 3 || (frame.throws.length === 2 && frame.throws[0] !== 10 && frame.throws[0] + frame.throws[1] < 10));
+      // Genau nach jedem Wurf: erst Powerup wählen, dann geht das Spiel weiter.
+      scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 520);
     }
 
     function startNewGame() {
