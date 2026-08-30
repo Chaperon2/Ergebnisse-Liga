@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Strikeclub Velten · Minispiel Phase 21 · Frame-Powerups + Slot-Sounds -->
+<!-- Strikeclub Velten · Minispiel Phase 25 · Stats + Powerup-Auswertung + Mobile Performance -->
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -2477,6 +2477,77 @@
     .powerup-overlay.rarity-gold .slot-machine::after,.powerup-overlay.rarity-silver .slot-machine::after,.rarity-particles span { animation:none !important; }
   }
 </style>
+
+<style id="phase25-score-report-menu-performance">
+  /* Phase 25 · score HUD, end-of-run powerup report and mobile GPU relief. */
+  .score-total-hud {
+    display:flex !important;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    max-width:min(62vw, 430px);
+  }
+  .score-total-main { color:#3ff2ed; font-weight:900; white-space:nowrap; }
+  .score-multiplier-chip {
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:3px 7px;
+    border-radius:999px;
+    border:1px solid rgba(255,208,113,.42);
+    background:rgba(255,208,113,.09);
+    color:#ffd071;
+    font-family:"Oswald",sans-serif;
+    font-weight:900;
+    letter-spacing:.03em;
+    white-space:nowrap;
+  }
+  .powerup-report {
+    margin-top:14px;
+    padding:12px;
+    border:1px solid rgba(255,208,113,.28);
+    border-radius:12px;
+    background:linear-gradient(180deg,rgba(255,208,113,.055),rgba(63,242,237,.025)),#090806;
+  }
+  .powerup-report.hidden { display:none !important; }
+  .powerup-report-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+  .powerup-report-head strong { color:#ffd071; font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.05em; }
+  .powerup-report-total { color:#52f5ee; font-weight:900; white-space:nowrap; }
+  .powerup-report-list { display:grid; gap:6px; max-height:min(34vh,260px); overflow:auto; overscroll-behavior:contain; }
+  .powerup-report-row { display:grid; grid-template-columns:30px minmax(0,1fr) auto; align-items:center; gap:8px; padding:8px 9px; border:1px solid rgba(255,255,255,.08); border-radius:9px; background:rgba(255,255,255,.025); }
+  .powerup-report-icon { width:30px; height:30px; display:grid; place-items:center; border-radius:8px; border:1px solid currentColor; }
+  .powerup-report-icon.bronze { color:#e7a36a; }
+  .powerup-report-icon.silver { color:#d9e4ef; }
+  .powerup-report-icon.gold { color:#ffd35d; }
+  .powerup-report-name { min-width:0; }
+  .powerup-report-name strong { display:block; color:#f6e8c8; font-size:.78rem; line-height:1.15; }
+  .powerup-report-name small { display:block; margin-top:2px; color:#8f826a; font-size:.62rem; }
+  .powerup-report-points { color:#52f5ee; font-family:"Press Start 2P",monospace; font-size:.58rem; white-space:nowrap; }
+  .powerup-report-empty { color:#8f826a; font-size:.75rem; font-weight:700; line-height:1.4; }
+  .modal-actions .btn { flex:1 1 150px; }
+
+  /* Expensive ambient decoration is invisible behind fullscreen gameplay anyway. */
+  body.game-focus .ambient { display:none !important; }
+  /* Slot lamps only blink while reels are actually moving. */
+  .slot-choice.ready .slot-lights span { animation-play-state:paused !important; opacity:.88; }
+  .powerup-overlay.rarity-gold .slot-machine::after { animation-iteration-count:2 !important; }
+  .powerup-overlay.rarity-silver .slot-machine::after { animation-iteration-count:3 !important; }
+
+  @media (pointer:coarse) {
+    body.game-focus .scoreboard-overlay,
+    body.game-focus .game-top-hud,
+    body.game-focus .score-total-hud,
+    body.game-focus .throw-stats-hud,
+    body.game-focus .passive-rack,
+    body.game-focus .help-popover { backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+    body.game-focus .pocket-target { animation:none !important; }
+    body.game-focus .ghost-orbit { animation-duration:4.2s !important; }
+    body.game-focus .ghost-launch { animation-duration:6.4s !important; }
+    body.game-focus .ball-trail { filter:blur(.7px) drop-shadow(0 0 12px rgba(114,183,255,.34)) !important; }
+    body.game-focus .pin { filter:drop-shadow(0 6px 6px rgba(0,0,0,.20)) !important; }
+  }
+</style>
+
 </head>
 
 <body>
@@ -2683,13 +2754,17 @@
       <div class="modal-badge"><i class="fa-solid fa-trophy"></i><span>Spiel beendet</span></div>
       <h3 class="modal-title" id="modalTitle">Fertig</h3>
       <p class="modal-text" id="modalText"></p>
+      <div class="powerup-report hidden" id="powerupReport" aria-live="polite">
+        <div class="powerup-report-head"><strong>Powerup-Auswertung</strong><span class="powerup-report-total" id="powerupReportTotal">+0</span></div>
+        <div class="powerup-report-list" id="powerupReportList"></div>
+      </div>
       <form class="leaderboard-form" id="leaderboardForm">
         <input class="leaderboard-input" id="leaderboardNameInput" type="text" maxlength="24" placeholder="Dein Name" autocomplete="nickname" />
         <button class="btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i><span>Im Leaderboard eintragen</span></button>
       </form>
       <div class="modal-actions">
         <button class="btn secondary" id="playAgainBtn" type="button"><i class="fa-solid fa-rotate-left"></i><span>Nochmal spielen</span></button>
-        <button class="btn secondary" id="closeModalBtn" type="button"><i class="fa-solid fa-arrow-left"></i><span>Zurück</span></button>
+        <button class="btn secondary" id="closeModalBtn" type="button"><i class="fa-solid fa-house"></i><span>Zum Menü</span></button>
       </div>
     </div>
   </div>
@@ -2762,6 +2837,9 @@
     const leaderboardModal = document.getElementById("leaderboardModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalText = document.getElementById("modalText");
+    const powerupReport = document.getElementById("powerupReport");
+    const powerupReportTotal = document.getElementById("powerupReportTotal");
+    const powerupReportList = document.getElementById("powerupReportList");
     const leaderboardForm = document.getElementById("leaderboardForm");
     const leaderboardNameInput = document.getElementById("leaderboardNameInput");
     const playAgainBtn = document.getElementById("playAgainBtn");
@@ -2818,6 +2896,8 @@
     let pendingGameTimers = [];
     let powerupChoosing = false;
     let powerupBonusScore = 0;
+    let powerupStats = {};
+    let activePowerupSourceId = null;
     let powerupState = null;
     let pendingPowerupContinuation = null;
     let powerupFinalChoice = false;
@@ -2882,63 +2962,203 @@
         meteorStrikeBonus: 0,
         meteorSpareBonus: 0,
         finalBossLevel: 0,
-        finalBossApplied: false
+        finalBossApplied: false,
+
+        // Phase 25 · attribution metadata. These fields do not change pin physics.
+        globalMultiplierSources: {},
+        nextFrameMultiplierSources: [],
+        nextThrowMultiplierSources: [],
+        timeBombEffects: [],
+        secondWindSourceQueue: [],
+        cleanComboSources: {},
+        comboMultiplierSources: {},
+        spareMotorBonusSources: {},
+        spareMotorMultiplierSources: {},
+        ascensionSources: {},
+        midasSources: {},
+        infinitySources: {},
+        strikeMadnessSources: {},
+        meteorStrikeSources: {},
+        meteorSpareSources: {},
+        finalBossSources: {},
+        jackpotSourceQueue: [],
+        conditionalFrameEffects: []
       };
+    }
+
+
+    function currentPowerupSourceId() { return activePowerupSourceId || null; }
+
+    function addSourceValue(map, sourceId, value) {
+      if (!sourceId || !map) return;
+      map[sourceId] = (Number(map[sourceId]) || 0) + (Number(value) || 0);
+    }
+
+    function registerPowerupSelection(item, applicationCount = 1) {
+      if (!item) return;
+      const entry = powerupStats[item.id] || { id:item.id, name:item.name, icon:item.icon, tier:item.tier, selections:0, activations:0, points:0 };
+      entry.name = item.name; entry.icon = item.icon; entry.tier = item.tier;
+      entry.selections += 1;
+      entry.activations += Math.max(1, Number(applicationCount) || 1);
+      powerupStats[item.id] = entry;
+    }
+
+    function creditPowerupPoints(sourceId, points) {
+      const amount = Number(points) || 0;
+      if (!sourceId || amount <= 0) return;
+      const item = POWERUPS.find(entry => entry.id === sourceId);
+      const entry = powerupStats[sourceId] || { id:sourceId, name:item?.name || sourceId, icon:item?.icon || "fa-bolt", tier:item?.tier || "bronze", selections:0, activations:0, points:0 };
+      entry.points += amount;
+      powerupStats[sourceId] = entry;
+    }
+
+    function distributePowerupCredit(sourceMap, points) {
+      const amount = Number(points) || 0;
+      const entries = Object.entries(sourceMap || {}).filter(([,weight]) => Number(weight) > 0);
+      const totalWeight = entries.reduce((sum,[,weight]) => sum + Number(weight), 0);
+      if (amount <= 0 || totalWeight <= 0) return 0;
+      entries.forEach(([sourceId, weight]) => creditPowerupPoints(sourceId, amount * Number(weight) / totalWeight));
+      return amount;
+    }
+
+    function addGlobalMultiplier(delta, sourceId = currentPowerupSourceId()) {
+      const value = Math.max(0, Number(delta) || 0);
+      if (!value) return;
+      powerupState.bonusMultiplier += value;
+      addSourceValue(powerupState.globalMultiplierSources, sourceId, value);
+    }
+
+    function addNextFrameMultiplier(factor, sourceId = currentPowerupSourceId()) {
+      const value = Math.max(1, Number(factor) || 1);
+      powerupState.nextFrameScoreMultiplier *= value;
+      if (sourceId && value > 1) powerupState.nextFrameMultiplierSources.push({ sourceId, factor:value });
+    }
+
+    function addTimeBomb(factor, sourceId = currentPowerupSourceId()) {
+      powerupState.timeBombEffects.push({ sourceId, throws:3, pins:0, factor:Math.max(0, Number(factor) || 0) });
+    }
+
+    function effectivePowerupMultiplier() {
+      if (gameMode !== "powerup" || !powerupState) return 1;
+      return Math.max(1, Number(powerupState.bonusMultiplier) || 1)
+        * Math.max(1, Number(powerupState.nextFrameScoreMultiplier) || 1)
+        * Math.max(1, Number(powerupState.nextThrowMultiplier) || 1);
+    }
+
+    function formatMultiplier(value) {
+      const rounded = Math.round((Number(value) || 1) * 100) / 100;
+      return rounded.toFixed(rounded % 1 ? 2 : 0).replace(".", ",");
+    }
+
+    function creditAwardBreakdown({ baseParts = {}, baseTotal = 0, frameMultiplier = 1, frameSources = [], throwMultiplier = 1, throwSources = [], globalMultiplier = 1, globalSources = {}, awarded = 0 }) {
+      const baseKnown = Object.values(baseParts).reduce((sum,value) => sum + Math.max(0, Number(value) || 0), 0);
+      Object.entries(baseParts).forEach(([sourceId, points]) => creditPowerupPoints(sourceId, Math.max(0, Number(points) || 0)));
+
+      const safeBase = Math.max(baseKnown, Math.max(0, Number(baseTotal) || 0));
+      const fm = Math.max(1, Number(frameMultiplier) || 1);
+      const tm = Math.max(1, Number(throwMultiplier) || 1);
+      const gm = Math.max(1, Number(globalMultiplier) || 1);
+      const afterFrame = safeBase * fm;
+      const frameExtra = Math.max(0, afterFrame - safeBase);
+      const frameMap = {};
+      (frameSources || []).forEach(entry => addSourceValue(frameMap, entry.sourceId, Math.max(0, Number(entry.factor) - 1)));
+      distributePowerupCredit(frameMap, frameExtra);
+
+      const afterThrow = afterFrame * tm;
+      const throwExtra = Math.max(0, afterThrow - afterFrame);
+      const throwMap = {};
+      (throwSources || []).forEach(entry => addSourceValue(throwMap, entry.sourceId, Math.max(0, Number(entry.factor) - 1)));
+      distributePowerupCredit(throwMap, throwExtra);
+
+      const beforeGlobal = afterThrow;
+      const expectedGlobal = beforeGlobal * gm;
+      const actual = Math.max(0, Number(awarded) || 0);
+      const globalExtra = Math.max(0, actual - beforeGlobal);
+      distributePowerupCredit(globalSources, globalExtra);
+    }
+
+    function renderPowerupReport() {
+      if (gameMode !== "powerup") {
+        powerupReport.classList.add("hidden");
+        powerupReportList.innerHTML = "";
+        return;
+      }
+      const entries = Object.values(powerupStats).sort((a,b) => (b.points || 0) - (a.points || 0) || (b.selections || 0) - (a.selections || 0));
+      powerupReport.classList.remove("hidden");
+      powerupReportTotal.textContent = `+${Math.round(powerupBonusScore)} Bonus`;
+      if (!entries.length) {
+        powerupReportList.innerHTML = '<div class="powerup-report-empty">In dieser Runde wurde noch kein Powerup aktiviert.</div>';
+        return;
+      }
+      const tracked = entries.reduce((sum,entry) => sum + Math.max(0, Number(entry.points) || 0), 0);
+      const rows = entries.map(entry => {
+        const points = Math.round(Math.max(0, Number(entry.points) || 0));
+        const uses = entry.activations > entry.selections ? `${entry.selections}× gewählt · ${entry.activations}× ausgelöst` : `${entry.selections}× gewählt`;
+        return `<div class="powerup-report-row"><span class="powerup-report-icon ${entry.tier}"><i class="fa-solid ${entry.icon}"></i></span><span class="powerup-report-name"><strong>${escapeHtml(entry.name)}</strong><small>${uses}</small></span><span class="powerup-report-points">+${points}</span></div>`;
+      });
+      const remainder = Math.round(powerupBonusScore - tracked);
+      if (Math.abs(remainder) >= 2) rows.push(`<div class="powerup-report-row"><span class="powerup-report-icon bronze"><i class="fa-solid fa-shuffle"></i></span><span class="powerup-report-name"><strong>Kombination / Rundung</strong><small>Nicht eindeutig einem einzelnen Effekt zuordenbar</small></span><span class="powerup-report-points">${remainder >= 0 ? "+" : ""}${remainder}</span></div>`);
+      powerupReportList.innerHTML = rows.join("");
     }
 
     // Phase 21: Powerups sind auf den Rhythmus "vor Frame 1 / nach abgeschlossenem Frame" zugeschnitten.
     // kind: score = sofortige Punkte, active = einmaliger/temporärer Vorteil, passive = maximal 3 Dauerboni.
     const POWERUPS = [
       // BRONZE · Build starten / offener Frame
-      { id:"b1", tier:"bronze", kind:"active", name:"Turbo x1,5", icon:"fa-gauge-high", desc:"Der komplette nächste Frame erhält x1,5 Powerup-Multiplikator. Stapelt sich mit anderen Multiplikatoren.", apply(){ powerupState.nextFrameScoreMultiplier *= 1.5; } },
-      { id:"b2", tier:"bronze", kind:"active", name:"Doppelpack x2", icon:"fa-clone", desc:"Der komplette nächste Frame erhält x2 Powerup-Multiplikator. Mehrere Multiplikatoren werden miteinander multipliziert.", apply(){ powerupState.nextFrameScoreMultiplier *= 2; } },
+      { id:"b1", tier:"bronze", kind:"active", name:"Turbo x1,5", icon:"fa-gauge-high", desc:"Der komplette nächste Frame erhält x1,5 Powerup-Multiplikator. Stapelt sich mit anderen Multiplikatoren.", apply(){ addNextFrameMultiplier(1.5); } },
+      { id:"b2", tier:"bronze", kind:"active", name:"Doppelpack x2", icon:"fa-clone", desc:"Der komplette nächste Frame erhält x2 Powerup-Multiplikator. Mehrere Multiplikatoren werden miteinander multipliziert.", apply(){ addNextFrameMultiplier(2); } },
       { id:"b3", tier:"bronze", kind:"active", name:"Kopiermaschine", icon:"fa-copy", desc:"Das nächste gewählte Powerup wird ein zweites Mal ausgelöst – ohne einen zusätzlichen Passiv-Slot zu verbrauchen.", apply(){ powerupState.copyNextPowerupExtra += 1; } },
       { id:"b4", tier:"bronze", kind:"active", name:"Tier-Hack", icon:"fa-arrow-up-right-dots", desc:"Die nächste Bronze-Auswahl wird Silber; die nächste Silber-Auswahl wird Gold.", apply(){ powerupState.tierHackCharges += 1; } },
-      { id:"b5", tier:"bronze", kind:"active", name:"Zeitbombe", icon:"fa-bomb", desc:"Die nächsten 3 Würfe sammeln alle gefällten Pins. Danach explodiert die Bombe: gesammelte Pins ×8 als Bonuspunkte.", apply(){ powerupState.timeBombThrows = Math.max(powerupState.timeBombThrows, 3); powerupState.timeBombFactor += 8; } },
-      { id:"b6", tier:"bronze", kind:"active", name:"Second Wind", icon:"fa-wind", desc:"Der nächste Wurf mit höchstens 4 Pins lädt x3 für den darauffolgenden Wurf auf.", apply(){ powerupState.secondWindCharges += 1; } },
-      { id:"b7", tier:"bronze", kind:"passive", name:"Combo-Zünder", icon:"fa-fire-flame-curved", desc:"DAUERHAFT: Jede Serie aus Spare/Strike-Frames zahlt immer mehr: +20, +40, +60 … bis die Serie reißt.", apply(){ powerupState.cleanComboStep += 20; } },
+      { id:"b5", tier:"bronze", kind:"active", name:"Zeitbombe", icon:"fa-bomb", desc:"Die nächsten 3 Würfe sammeln alle gefällten Pins. Danach explodiert die Bombe: gesammelte Pins ×8 als Bonuspunkte.", apply(){ addTimeBomb(8); } },
+      { id:"b6", tier:"bronze", kind:"active", name:"Second Wind", icon:"fa-wind", desc:"Der nächste Wurf mit höchstens 4 Pins lädt x3 für den darauffolgenden Wurf auf.", apply(){ powerupState.secondWindCharges += 1; powerupState.secondWindSourceQueue.push(currentPowerupSourceId()); } },
+      { id:"b7", tier:"bronze", kind:"passive", name:"Combo-Zünder", icon:"fa-fire-flame-curved", desc:"DAUERHAFT: Jede Serie aus Spare/Strike-Frames zahlt immer mehr: +20, +40, +60 … bis die Serie reißt.", apply(){ powerupState.cleanComboStep += 20; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 20); } },
       { id:"b8", tier:"bronze", kind:"score", name:"Bronze-Cashout", icon:"fa-coins", desc:"Sofort +30 Punkte. Dein permanenter Multiplikator wirkt auch auf diesen Cashout.", apply(){ addPowerupBonus(30); } },
       { id:"b9", tier:"bronze", kind:"score", name:"Doppel-Cashout", icon:"fa-sack-dollar", desc:"Sofort +45 Punkte. Sicherer Abschlussbonus ohne spätere Bedingung.", apply(){ addPowerupBonus(45); } },
-      { id:"b10", tier:"bronze", kind:"passive", name:"Multiplikator-Samen", icon:"fa-seedling", desc:"DAUERHAFT: Dein globaler Powerup-Multiplikator steigt sofort um +0,10x.", apply(){ powerupState.bonusMultiplier += .10; } },
+      { id:"b10", tier:"bronze", kind:"passive", name:"Multiplikator-Samen", icon:"fa-seedling", desc:"DAUERHAFT: Dein globaler Powerup-Multiplikator steigt sofort um +0,10x.", apply(){ addGlobalMultiplier(.10); } },
 
       // SILBER · Synergien / Spare
       { id:"s1", tier:"silver", kind:"active", name:"Quantenkopie", icon:"fa-atom", desc:"Die nächsten 2 gewählten Powerups werden jeweils doppelt ausgelöst.", apply(){ powerupState.quantumCopyCharges += 2; } },
-      { id:"s2", tier:"silver", kind:"active", name:"Overclock x3", icon:"fa-bolt-lightning", desc:"Der komplette nächste Frame erhält x3 Powerup-Multiplikator. Stapelt sich mit Turbo, Doppelpack und permanenten Multiplikatoren.", apply(){ powerupState.nextFrameScoreMultiplier *= 3; } },
-      { id:"s3", tier:"silver", kind:"passive", name:"Combo-Reaktor", icon:"fa-radiation", desc:"DAUERHAFT: Jeder künftig abgeschlossene Spare- oder Strike-Frame erhöht deinen globalen Multiplikator permanent um +0,10x.", apply(){ powerupState.comboMultiplierStep += .10; } },
-      { id:"s4", tier:"silver", kind:"passive", name:"Spare-Motor", icon:"fa-gears", desc:"DAUERHAFT: Jeder Spare gibt +40 Punkte und erhöht zusätzlich deinen globalen Multiplikator um +0,05x.", apply(){ powerupState.spareMotorBonus += 40; powerupState.spareMotorMultiplierStep += .05; } },
+      { id:"s2", tier:"silver", kind:"active", name:"Overclock x3", icon:"fa-bolt-lightning", desc:"Der komplette nächste Frame erhält x3 Powerup-Multiplikator. Stapelt sich mit Turbo, Doppelpack und permanenten Multiplikatoren.", apply(){ addNextFrameMultiplier(3); } },
+      { id:"s3", tier:"silver", kind:"passive", name:"Combo-Reaktor", icon:"fa-radiation", desc:"DAUERHAFT: Jeder künftig abgeschlossene Spare- oder Strike-Frame erhöht deinen globalen Multiplikator permanent um +0,10x.", apply(){ powerupState.comboMultiplierStep += .10; addSourceValue(powerupState.comboMultiplierSources, currentPowerupSourceId(), .10); } },
+      { id:"s4", tier:"silver", kind:"passive", name:"Spare-Motor", icon:"fa-gears", desc:"DAUERHAFT: Jeder Spare gibt +40 Punkte und erhöht zusätzlich deinen globalen Multiplikator um +0,05x.", apply(){ powerupState.spareMotorBonus += 40; powerupState.spareMotorMultiplierStep += .05; addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), 40); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), .05); } },
       { id:"s5", tier:"silver", kind:"active", name:"Tier-Hack XL", icon:"fa-code-branch", desc:"Die nächsten 2 geeigneten Drafts werden jeweils um eine Stufe hochgestuft: Bronze→Silber oder Silber→Gold.", apply(){ powerupState.tierHackCharges += 2; } },
-      { id:"s6", tier:"silver", kind:"active", name:"Zeitbombe XL", icon:"fa-explosion", desc:"Die nächsten 3 Würfe sammeln Pins. Danach: gesammelte Pins ×15. Stapelt sich mit einer laufenden Zeitbombe.", apply(){ powerupState.timeBombThrows = Math.max(powerupState.timeBombThrows, 3); powerupState.timeBombFactor += 15; } },
-      { id:"s7", tier:"silver", kind:"passive", name:"Multiplikator-Fusion", icon:"fa-link", desc:"DAUERHAFT: Dein globaler Powerup-Multiplikator steigt sofort um +0,25x.", apply(){ powerupState.bonusMultiplier += .25; } },
-      { id:"s8", tier:"silver", kind:"active", name:"Doppelter Einsatz", icon:"fa-dice-two", desc:"Nächster Frame x2. Zusätzlich zahlt derselbe Frame bei Strike +150 oder bei Spare +75.", apply(){ powerupState.nextFrameScoreMultiplier *= 2; powerupState.nextStrikeBonus += 150; powerupState.nextSpareBonus += 75; } },
+      { id:"s6", tier:"silver", kind:"active", name:"Zeitbombe XL", icon:"fa-explosion", desc:"Die nächsten 3 Würfe sammeln Pins. Danach: gesammelte Pins ×15. Stapelt sich mit einer laufenden Zeitbombe.", apply(){ addTimeBomb(15); } },
+      { id:"s7", tier:"silver", kind:"passive", name:"Multiplikator-Fusion", icon:"fa-link", desc:"DAUERHAFT: Dein globaler Powerup-Multiplikator steigt sofort um +0,25x.", apply(){ addGlobalMultiplier(.25); } },
+      { id:"s8", tier:"silver", kind:"active", name:"Doppelter Einsatz", icon:"fa-dice-two", desc:"Nächster Frame x2. Zusätzlich zahlt derselbe Frame bei Strike +150 oder bei Spare +75.", apply(){ addNextFrameMultiplier(2); powerupState.nextStrikeBonus += 150; powerupState.nextSpareBonus += 75; powerupState.conditionalFrameEffects.push({ sourceId:currentPowerupSourceId(), strike:150, spare:75 }); } },
       { id:"s9", tier:"silver", kind:"score", name:"Silber-Tresor", icon:"fa-vault", desc:"Sofort +90 Punkte. Der globale Multiplikator wird darauf angewendet.", apply(){ addPowerupBonus(90); } },
       { id:"s10", tier:"silver", kind:"score", name:"Spare-Cashout", icon:"fa-gem", desc:"Sofort +130 Punkte. Keine Bedingung, kein Ablaufdatum.", apply(){ addPowerupBonus(130); } },
 
       // GOLD · Run-definierende Effekte / Strike
-      { id:"g1", tier:"gold", kind:"passive", name:"Ascension", icon:"fa-arrow-trend-up", desc:"DAUERHAFT: Jeder künftig abgeschlossene Strike-Frame erhöht deinen globalen Multiplikator permanent um +0,25x.", apply(){ powerupState.ascensionStep += .25; } },
-      { id:"g2", tier:"gold", kind:"passive", name:"Midas-Hand", icon:"fa-hand-sparkles", desc:"DAUERHAFT: Jede spätere Powerup-Auswahl schenkt zusätzlich +50 Punkte – noch bevor das gewählte Powerup ausgelöst wird.", apply(){ powerupState.midasPerChoice += 50; } },
-      { id:"g3", tier:"gold", kind:"passive", name:"Unendlichkeitskern", icon:"fa-infinity", desc:"DAUERHAFT: Jede spätere Powerup-Auswahl erhöht deinen globalen Multiplikator permanent um +0,10x.", apply(){ powerupState.infinityPerChoice += .10; } },
-      { id:"g4", tier:"gold", kind:"active", name:"Jackpot-Modus", icon:"fa-dice", desc:"Der nächste abgeschlossene Strike zahlt +300 Punkte, der nächste Spare +150. Offene Frames verbrauchen den Jackpot nicht.", apply(){ powerupState.jackpotModeCharges += 1; } },
-      { id:"g5", tier:"gold", kind:"passive", name:"Strike-Wahnsinn", icon:"fa-trophy", desc:"DAUERHAFT: Eine Strike-Frame-Serie eskaliert: +75, +150, +225 … Ein Nicht-Strike-Frame setzt die Serie zurück.", apply(){ powerupState.strikeMadnessStep += 75; } },
-      { id:"g6", tier:"gold", kind:"passive", name:"Meteorregen", icon:"fa-meteor", desc:"DAUERHAFT: Jeder weitere Strike-Frame gibt +120 Punkte, jeder Spare +60.", apply(){ powerupState.meteorStrikeBonus += 120; powerupState.meteorSpareBonus += 60; } },
-      { id:"g7", tier:"gold", kind:"passive", name:"Final Boss", icon:"fa-skull", desc:"DAUERHAFT: Am Spielende wartet ein Boss-Cashout: ab 300 Punkten +200, ab 400 +400, ab 500 +700 – vor globalem Multiplikator.", apply(){ powerupState.finalBossLevel += 1; } },
+      { id:"g1", tier:"gold", kind:"passive", name:"Ascension", icon:"fa-arrow-trend-up", desc:"DAUERHAFT: Jeder künftig abgeschlossene Strike-Frame erhöht deinen globalen Multiplikator permanent um +0,25x.", apply(){ powerupState.ascensionStep += .25; addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), .25); } },
+      { id:"g2", tier:"gold", kind:"passive", name:"Midas-Hand", icon:"fa-hand-sparkles", desc:"DAUERHAFT: Jede spätere Powerup-Auswahl schenkt zusätzlich +50 Punkte – noch bevor das gewählte Powerup ausgelöst wird.", apply(){ powerupState.midasPerChoice += 50; addSourceValue(powerupState.midasSources, currentPowerupSourceId(), 50); } },
+      { id:"g3", tier:"gold", kind:"passive", name:"Unendlichkeitskern", icon:"fa-infinity", desc:"DAUERHAFT: Jede spätere Powerup-Auswahl erhöht deinen globalen Multiplikator permanent um +0,10x.", apply(){ powerupState.infinityPerChoice += .10; addSourceValue(powerupState.infinitySources, currentPowerupSourceId(), .10); } },
+      { id:"g4", tier:"gold", kind:"active", name:"Jackpot-Modus", icon:"fa-dice", desc:"Der nächste abgeschlossene Strike zahlt +300 Punkte, der nächste Spare +150. Offene Frames verbrauchen den Jackpot nicht.", apply(){ powerupState.jackpotModeCharges += 1; powerupState.jackpotSourceQueue.push(currentPowerupSourceId()); } },
+      { id:"g5", tier:"gold", kind:"passive", name:"Strike-Wahnsinn", icon:"fa-trophy", desc:"DAUERHAFT: Eine Strike-Frame-Serie eskaliert: +75, +150, +225 … Ein Nicht-Strike-Frame setzt die Serie zurück.", apply(){ powerupState.strikeMadnessStep += 75; addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), 75); } },
+      { id:"g6", tier:"gold", kind:"passive", name:"Meteorregen", icon:"fa-meteor", desc:"DAUERHAFT: Jeder weitere Strike-Frame gibt +120 Punkte, jeder Spare +60.", apply(){ powerupState.meteorStrikeBonus += 120; powerupState.meteorSpareBonus += 60; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 120); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), 60); } },
+      { id:"g7", tier:"gold", kind:"passive", name:"Final Boss", icon:"fa-skull", desc:"DAUERHAFT: Am Spielende wartet ein Boss-Cashout: ab 300 Punkten +200, ab 400 +400, ab 500 +700 – vor globalem Multiplikator.", apply(){ powerupState.finalBossLevel += 1; addSourceValue(powerupState.finalBossSources, currentPowerupSourceId(), 1); } },
       { id:"g8", tier:"gold", kind:"active", name:"Goldene Kopie", icon:"fa-wand-magic-sparkles", desc:"Das nächste gewählte Powerup wird insgesamt dreimal ausgelöst. Bei Passives belegt es trotzdem nur einen Slot.", apply(){ powerupState.copyNextPowerupExtra += 2; } },
       { id:"g9", tier:"gold", kind:"score", name:"Kronen-Cashout", icon:"fa-crown", desc:"Sofort +220 Punkte. Der globale Multiplikator wirkt zusätzlich.", apply(){ addPowerupBonus(220); } },
       { id:"g10", tier:"gold", kind:"score", name:"Gold-Jackpot", icon:"fa-star", desc:"Sofort +300 Punkte. Für Runs, die endgültig jede 300er-Grenze sprengen sollen.", apply(){ addPowerupBonus(300); } }
     ];
 
-    function addFrameBonus(points, frameIndex = currentFrame) {
+    function addFrameBonus(points, frameIndex = currentFrame, sourceId = currentPowerupSourceId(), trackAttribution = true) {
       if (gameMode !== "powerup") return 0;
       const base = Math.max(0, Number(points) || 0);
-      const adjusted = Math.max(0, Math.round(base * Math.max(1, powerupState?.bonusMultiplier || 1)));
+      const globalMultiplier = Math.max(1, powerupState?.bonusMultiplier || 1);
+      const adjusted = Math.max(0, Math.round(base * globalMultiplier));
       if (!adjusted) return 0;
       powerupBonusScore += adjusted;
       if (frames[frameIndex]) frames[frameIndex].bonus = (Number(frames[frameIndex].bonus) || 0) + adjusted;
+      if (trackAttribution && sourceId) {
+        creditPowerupPoints(sourceId, base);
+        distributePowerupCredit(powerupState?.globalMultiplierSources || {}, Math.max(0, adjusted - base));
+      }
       renderScoreboard();
       return adjusted;
     }
 
-    function addPowerupBonus(points) {
-      return addFrameBonus(points, currentFrame);
+    function addPowerupBonus(points, sourceId = currentPowerupSourceId()) {
+      return addFrameBonus(points, currentFrame, sourceId, true);
     }
 
     function shuffled(items) {
@@ -2978,8 +3198,8 @@
 
     function applyPowerupSelectionSynergies() {
       if (!powerupState) return;
-      if (powerupState.midasPerChoice > 0) addPowerupBonus(powerupState.midasPerChoice);
-      if (powerupState.infinityPerChoice > 0) powerupState.bonusMultiplier += powerupState.infinityPerChoice;
+      Object.entries(powerupState.midasSources || {}).forEach(([sourceId, points]) => addPowerupBonus(points, sourceId));
+      Object.entries(powerupState.infinitySources || {}).forEach(([sourceId, delta]) => addGlobalMultiplier(delta, sourceId));
     }
 
     function getPowerupApplicationCount() {
@@ -3045,13 +3265,16 @@
       powerupState.finalBossApplied = true;
       const totals = calculateCumulativeScores();
       const beforeBoss = totals[9] ?? getLatestResolvedTotal(totals);
-      let payout = 0;
-      if (beforeBoss >= 500) payout = 700;
-      else if (beforeBoss >= 400) payout = 400;
-      else if (beforeBoss >= 300) payout = 200;
-      if (!payout) return 0;
-      payout *= Math.max(1, powerupState.finalBossLevel);
-      const awarded = addFrameBonus(payout, 9);
+      let basePayout = 0;
+      if (beforeBoss >= 500) basePayout = 700;
+      else if (beforeBoss >= 400) basePayout = 400;
+      else if (beforeBoss >= 300) basePayout = 200;
+      if (!basePayout) return 0;
+      const payout = basePayout * Math.max(1, powerupState.finalBossLevel);
+      const awarded = addFrameBonus(payout, 9, null, false);
+      const parts = {};
+      Object.entries(powerupState.finalBossSources || {}).forEach(([sourceId, levels]) => { parts[sourceId] = basePayout * Number(levels); });
+      creditAwardBreakdown({ baseParts:parts, baseTotal:payout, globalMultiplier:powerupState.bonusMultiplier, globalSources:powerupState.globalMultiplierSources, awarded });
       if (awarded > 0) {
         showFlash(`FINAL BOSS +${awarded}`);
         playRarityRevealSound("gold");
@@ -3200,8 +3423,9 @@
           choice.classList.add("ready");
           choice.setAttribute("aria-label", `Slot ${index + 1}: Powerup auswählen`);
         });
-        // Absichtlich KEINE automatische Vorschau: Wirkung erst nach bewusstem Antippen eines Symbols.
-        powerupSelectionPlaceholder.textContent = "3 Symbole bereit. Tippe eines an, um erst dann Name und Wirkung aufzudecken.";
+        // Phase 25: der linke Slot ist nach dem Ausrollen sofort vorgewählt.
+        // Der Spieler kann weiterhin Mitte/Rechts antippen, bevor er bestätigt.
+        selectPowerupPreview(choices[0].id, 0);
         playRarityRevealFx(effectiveTier);
       }, 2450);
     }
@@ -3215,10 +3439,17 @@
       // Midas/Infinity reagieren auf eine spätere Auswahl, nicht auf ihre eigene Aktivierung.
       applyPowerupSelectionSynergies();
       const applicationCount = getPowerupApplicationCount();
+      registerPowerupSelection(item, applicationCount);
       if (isPassivePowerup(item)) passivePowerups.push(item);
-      for (let i = 0; i < applicationCount; i += 1) item.apply();
+      activePowerupSourceId = item.id;
+      try {
+        for (let i = 0; i < applicationCount; i += 1) item.apply();
+      } finally {
+        activePowerupSourceId = null;
+      }
 
       renderPassiveRack();
+      renderScoreboard();
       playPowerupAcquireSound(item);
       powerupFinalChoice = false;
       powerupChoosing = false;
@@ -3323,6 +3554,12 @@
     function applyScoringPowerups(pinsDown, frameIndex, throws) {
       if (gameMode !== "powerup") return 0;
       let earned = 0;
+      const attributionParts = {};
+      const addPart = (sourceId, points) => {
+        const value = Math.max(0, Number(points) || 0);
+        if (!sourceId || !value) return;
+        attributionParts[sourceId] = (Number(attributionParts[sourceId]) || 0) + value;
+      };
       const strike = isStrikeRoll(frameIndex, throws);
       const spare = isSpareRoll(frameIndex, throws);
       const frameComplete = isFrameCompleteAfterThrow(frameIndex, throws);
@@ -3333,7 +3570,7 @@
       const strikeFrame = frameComplete && frameTier === "gold";
       const spareFrame = frameComplete && frameTier === "silver";
 
-      // Legacy scoring hooks remain supported for compatibility with any stored/duplicated state.
+      // Legacy scoring hooks remain supported for compatibility.
       earned += pinsDown * powerupState.permanentPinBonus;
       earned += pinsDown * powerupState.nextPinBonus;
       if (firstThrowOfFrame) earned += pinsDown * powerupState.permanentFirstBallPinBonus;
@@ -3345,10 +3582,12 @@
       if (strike) {
         earned += powerupState.nextStrikeBonus;
         earned += powerupState.permanentStrikeBonus;
+        (powerupState.conditionalFrameEffects || []).forEach(effect => { if (effect.strike) addPart(effect.sourceId, effect.strike); });
       }
       if (spare) {
         earned += powerupState.nextSpareBonus;
         earned += powerupState.permanentSpareBonus;
+        (powerupState.conditionalFrameEffects || []).forEach(effect => { if (effect.spare) addPart(effect.sourceId, effect.spare); });
       }
       if (frameComplete) {
         earned += powerupState.permanentFrameBonus;
@@ -3357,23 +3596,29 @@
         if (openFrame) earned += powerupState.nextOpenFrameBonus;
       }
 
-      // Zeitbombe: Pins werden über exakt drei reale Würfe gesammelt.
-      if (powerupState.timeBombThrows > 0) {
-        powerupState.timeBombPins += Math.max(0, Number(pinsDown) || 0);
-        powerupState.timeBombThrows -= 1;
-        if (powerupState.timeBombThrows <= 0) {
-          earned += powerupState.timeBombPins * Math.max(0, powerupState.timeBombFactor);
-          powerupState.timeBombPins = 0;
-          powerupState.timeBombFactor = 0;
+      // Zeitbomben laufen getrennt, damit jede Bombe exakt ihrem Powerup zugerechnet werden kann.
+      (powerupState.timeBombEffects || []).forEach(effect => {
+        if (effect.throws <= 0) return;
+        effect.pins += Math.max(0, Number(pinsDown) || 0);
+        effect.throws -= 1;
+        if (effect.throws <= 0) {
+          const payout = effect.pins * Math.max(0, Number(effect.factor) || 0);
+          earned += payout;
+          addPart(effect.sourceId, payout);
         }
-      }
+      });
+      powerupState.timeBombEffects = (powerupState.timeBombEffects || []).filter(effect => effect.throws > 0);
 
-      // Second Wind bufft den darauffolgenden Wurf, nicht den schlechten Auslöser selbst.
+      // Second Wind bufft den darauffolgenden Wurf.
       const throwMultiplier = Math.max(1, Number(powerupState.nextThrowMultiplier) || 1);
+      const throwMultiplierSources = [...(powerupState.nextThrowMultiplierSources || [])];
       powerupState.nextThrowMultiplier = 1;
+      powerupState.nextThrowMultiplierSources = [];
       if (pinsDown <= 4 && powerupState.secondWindCharges > 0) {
         powerupState.secondWindCharges -= 1;
+        const sourceId = powerupState.secondWindSourceQueue.shift() || null;
         powerupState.nextThrowMultiplier *= 3;
+        if (sourceId) powerupState.nextThrowMultiplierSources.push({ sourceId, factor:3 });
         showFlash("SECOND WIND x3");
       }
 
@@ -3381,8 +3626,14 @@
       if (frameComplete) {
         if (cleanFrame) {
           powerupState.cleanFrameStreak += 1;
-          if (powerupState.cleanComboStep > 0) earned += powerupState.cleanComboStep * powerupState.cleanFrameStreak;
-          if (powerupState.comboMultiplierStep > 0) powerupState.bonusMultiplier += powerupState.comboMultiplierStep;
+          if (powerupState.cleanComboStep > 0) {
+            const payout = powerupState.cleanComboStep * powerupState.cleanFrameStreak;
+            earned += payout;
+            Object.entries(powerupState.cleanComboSources || {}).forEach(([sourceId, step]) => addPart(sourceId, Number(step) * powerupState.cleanFrameStreak));
+          }
+          if (powerupState.comboMultiplierStep > 0) {
+            Object.entries(powerupState.comboMultiplierSources || {}).forEach(([sourceId, delta]) => addGlobalMultiplier(delta, sourceId));
+          }
         } else {
           powerupState.cleanFrameStreak = 0;
         }
@@ -3390,30 +3641,49 @@
         if (spareFrame) {
           earned += powerupState.spareMotorBonus;
           earned += powerupState.meteorSpareBonus;
-          if (powerupState.spareMotorMultiplierStep > 0) powerupState.bonusMultiplier += powerupState.spareMotorMultiplierStep;
+          Object.entries(powerupState.spareMotorBonusSources || {}).forEach(([sourceId, points]) => addPart(sourceId, points));
+          Object.entries(powerupState.meteorSpareSources || {}).forEach(([sourceId, points]) => addPart(sourceId, points));
+          if (powerupState.spareMotorMultiplierStep > 0) {
+            Object.entries(powerupState.spareMotorMultiplierSources || {}).forEach(([sourceId, delta]) => addGlobalMultiplier(delta, sourceId));
+          }
         }
 
         if (strikeFrame) {
-          if (powerupState.ascensionStep > 0) powerupState.bonusMultiplier += powerupState.ascensionStep;
+          if (powerupState.ascensionStep > 0) {
+            Object.entries(powerupState.ascensionSources || {}).forEach(([sourceId, delta]) => addGlobalMultiplier(delta, sourceId));
+          }
           earned += powerupState.meteorStrikeBonus;
+          Object.entries(powerupState.meteorStrikeSources || {}).forEach(([sourceId, points]) => addPart(sourceId, points));
           powerupState.strikeFrameStreak += 1;
-          if (powerupState.strikeMadnessStep > 0) earned += powerupState.strikeMadnessStep * powerupState.strikeFrameStreak;
+          if (powerupState.strikeMadnessStep > 0) {
+            const payout = powerupState.strikeMadnessStep * powerupState.strikeFrameStreak;
+            earned += payout;
+            Object.entries(powerupState.strikeMadnessSources || {}).forEach(([sourceId, step]) => addPart(sourceId, Number(step) * powerupState.strikeFrameStreak));
+          }
         } else {
           powerupState.strikeFrameStreak = 0;
         }
 
         if (powerupState.jackpotModeCharges > 0 && (strikeFrame || spareFrame)) {
-          earned += strikeFrame ? 300 : 150;
+          const payout = strikeFrame ? 300 : 150;
+          earned += payout;
           powerupState.jackpotModeCharges -= 1;
+          const sourceId = powerupState.jackpotSourceQueue.shift() || null;
+          addPart(sourceId, payout);
         }
       }
 
       if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
 
-      earned *= Math.max(1, Number(powerupState.nextFrameScoreMultiplier) || 1);
+      const baseEarned = earned;
+      const frameMultiplier = Math.max(1, Number(powerupState.nextFrameScoreMultiplier) || 1);
+      const frameMultiplierSources = [...(powerupState.nextFrameMultiplierSources || [])];
+      earned *= frameMultiplier;
       earned *= throwMultiplier;
-      const awarded = earned > 0 ? addFrameBonus(earned, frameIndex) : 0;
+      const globalMultiplier = Math.max(1, Number(powerupState.bonusMultiplier) || 1);
+      const awarded = earned > 0 ? addFrameBonus(earned, frameIndex, null, false) : 0;
       if (awarded > 0) {
+        creditAwardBreakdown({ baseParts:attributionParts, baseTotal:baseEarned, frameMultiplier, frameSources:frameMultiplierSources, throwMultiplier, throwSources:throwMultiplierSources, globalMultiplier, globalSources:powerupState.globalMultiplierSources, awarded });
         showFlash(`+${awarded} POWERUP`);
         playPowerupPointsSound(awarded);
       }
@@ -3442,6 +3712,10 @@
         powerupState.nextCleanFrameBonus = 0;
         powerupState.nextOpenFrameBonus = 0;
         powerupState.nextFrameScoreMultiplier = 1;
+        powerupState.nextFrameMultiplierSources = [];
+        powerupState.conditionalFrameEffects = [];
+        powerupState.nextStrikeBonus = 0;
+        powerupState.nextSpareBonus = 0;
         powerupState.collisionBoost = 0;
         powerupState.collisionBoostThrows = 0;
         powerupState.stability = 0;
@@ -4078,7 +4352,11 @@
       summaryStrikes.textContent = String(countStrikes());
       summarySpares.textContent = String(countSpares());
       summaryState.textContent = totals[9] !== null ? "Final" : (gameMode === "powerup" ? "Powerup" : "Classic");
-      scoreTotalHud.textContent = `${total} Punkte`;
+      if (gameMode === "powerup") {
+        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${total}</span><span class="score-multiplier-chip"><i class="fa-solid fa-xmark"></i>${formatMultiplier(effectivePowerupMultiplier())}</span>`;
+      } else {
+        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${total}</span>`;
+      }
     }
 
     function updateStatus() {
@@ -4278,6 +4556,7 @@
 
     function openEndGameModal() {
       if (gameMode === "powerup") applyFinalBossBonusIfNeeded();
+      renderPowerupReport();
       const score = getFinalScore();
       const modeLabel = gameMode === "powerup" ? "Strike Rush" : "Classic";
       if (qualifiesForLeaderboard(score, gameMode)) {
@@ -4793,6 +5072,8 @@
       currentFrame = 0;
       powerupChoosing = false;
       powerupBonusScore = 0;
+      powerupStats = {};
+      activePowerupSourceId = null;
       powerupState = freshPowerupState();
       pendingPowerupContinuation = null;
       powerupFinalChoice = false;
@@ -4906,6 +5187,30 @@
       else enterGameFocus();
     }
 
+    function returnToModeMenu() {
+      clearGameTimers();
+      gameRunId += 1;
+      gameStarted = false;
+      gameOver = true;
+      isAnimating = false;
+      isDragging = false;
+      dragPointerId = null;
+      hideThrowStats();
+      hideModal();
+      powerupChoosing = false;
+      slotSpinning = false;
+      pendingPowerupChoices = [];
+      selectedPowerupId = null;
+      passivePowerups = [];
+      renderPassiveRack();
+      powerupOverlay.classList.add("hidden");
+      powerupOverlay.setAttribute("aria-hidden", "true");
+      powerupReport.classList.add("hidden");
+      startOverlay.classList.remove("hidden");
+      laneStage.classList.add("pre-start");
+      exitGameFocus();
+    }
+
     leaderboardForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const name = leaderboardNameInput.value.trim();
@@ -4920,18 +5225,16 @@
       }
       try {
         const saved = await submitLeaderboardEntry(name, score, gameMode);
-        hideModal();
         if (!saved) {
           showFlash("ZU WENIG PUNKTE");
           playMissSound();
+          showModal("Nicht eingetragen", `${score} Punkte. Der Wert reicht inzwischen nicht mehr für die Top 10. Du kannst direkt neu spielen oder zurück zur Modusauswahl.`, false);
         } else {
           showFlash("EINGETRAGEN");
           playScoreSavedSound();
+          showModal("Score gespeichert", `${name}: ${score} Punkte wurden eingetragen. Wie möchtest du weitermachen?`, false);
         }
-        setTimeout(() => {
-          startNewGame(gameMode);
-          enterGameFocus();
-        }, 650);
+        renderPowerupReport();
       } catch (error) {
         const message = String(error?.message || error || "Unbekannter Fehler");
         modalText.textContent = `Speichern fehlgeschlagen: ${message}`;
@@ -4945,8 +5248,8 @@
       }
     });
 
-    playAgainBtn.addEventListener("click", () => { hideModal(); startNewGame(gameMode); });
-    closeModalBtn.addEventListener("click", () => { location.href = "index.html"; });
+    playAgainBtn.addEventListener("click", () => { hideModal(); startNewGame(gameMode); enterGameFocus(); });
+    closeModalBtn.addEventListener("click", returnToModeMenu);
     resetGameBtn.addEventListener("click", () => startNewGame(gameMode));
     fullscreenBtn.addEventListener("click", toggleGameFocus);
 
@@ -4967,27 +5270,7 @@
         playButtonSound();
       });
     });
-    endGameBtn.addEventListener("click", () => {
-      clearGameTimers();
-      gameRunId += 1;
-      gameStarted = false;
-      gameOver = true;
-      isAnimating = false;
-      isDragging = false;
-      dragPointerId = null;
-      hideThrowStats();
-      hideModal();
-      powerupChoosing = false;
-      slotSpinning = false;
-      pendingPowerupChoices = [];
-      passivePowerups = [];
-      renderPassiveRack();
-      powerupOverlay.classList.add("hidden");
-      powerupOverlay.setAttribute("aria-hidden", "true");
-      startOverlay.classList.remove("hidden");
-      laneStage.classList.add("pre-start");
-      exitGameFocus();
-    });
+    endGameBtn.addEventListener("click", returnToModeMenu);
 
     quickRestartBtn.addEventListener("click", () => {
       startNewGame(gameMode);
