@@ -2548,6 +2548,42 @@
   }
 </style>
 
+
+<style id="phase26-weekly-best-overall">
+  .leaderboard-best {
+    margin:10px 10px 0;
+    padding:10px 12px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:10px;
+    border:1px solid rgba(255,208,113,.30);
+    border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,208,113,.10),rgba(10,8,6,.72));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  .leaderboard-board[data-board-mode="powerup"] .leaderboard-best {
+    border-color:rgba(82,245,238,.28);
+    background:linear-gradient(135deg,rgba(82,245,238,.08),rgba(10,8,6,.78));
+  }
+  .leaderboard-best-icon {
+    width:32px;height:32px;display:grid;place-items:center;border-radius:8px;
+    background:#120d07;color:#ffd071;border:1px solid rgba(255,208,113,.34);
+  }
+  .leaderboard-board[data-board-mode="powerup"] .leaderboard-best-icon { color:#52f5ee;border-color:rgba(82,245,238,.34);background:rgba(82,245,238,.05); }
+  .leaderboard-best-copy { min-width:0; }
+  .leaderboard-best-copy small { display:block;color:#978a72;font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em; }
+  .leaderboard-best-copy strong { display:block;margin-top:2px;color:#f5e6c2;font-family:"Oswald",sans-serif;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .leaderboard-best-score { color:#ffd071;font-family:"Oswald",sans-serif;font-size:1.2rem;font-weight:900;white-space:nowrap; }
+  .leaderboard-board[data-board-mode="powerup"] .leaderboard-best-score { color:#52f5ee; }
+  .leaderboard-reset-note { margin:0 10px 10px;padding:7px 9px;border-radius:8px;background:rgba(255,255,255,.035);color:#9f9279;font-size:.64rem;font-weight:800;text-align:center; }
+  @media (max-width:700px) {
+    .leaderboard-best { margin:8px 8px 0;padding:9px 10px;grid-template-columns:28px 1fr auto;gap:8px; }
+    .leaderboard-best-icon { width:28px;height:28px; }
+    .leaderboard-best-copy strong { font-size:.84rem; }
+    .leaderboard-best-score { font-size:1.05rem; }
+  }
+</style>
 </head>
 
 <body>
@@ -2723,6 +2759,12 @@
                 <span class="leaderboard-board-icon classic"><i class="fa-solid fa-bowling-ball"></i></span>
                 <div><strong>Classic Bowling</strong><small>Top 10 · maximal 300</small></div>
               </div>
+              <div class="leaderboard-best" aria-label="Classic Best Overall">
+                <span class="leaderboard-best-icon"><i class="fa-solid fa-crown"></i></span>
+                <div class="leaderboard-best-copy"><small>Best Overall</small><strong id="leaderboardClassicBestName">Noch kein Rekord</strong></div>
+                <span class="leaderboard-best-score" id="leaderboardClassicBestScore">–</span>
+              </div>
+              <div class="leaderboard-reset-note">Wochenrangliste · Reset jeden Mittwoch um 18:30 Uhr</div>
               <div class="leaderboard-wrap">
                 <div class="leaderboard-list" id="leaderboardClassicList"></div>
                 <div class="leaderboard-note" id="leaderboardClassicNote">Scores werden live geladen.</div>
@@ -2733,6 +2775,12 @@
                 <span class="leaderboard-board-icon rush"><i class="fa-solid fa-bolt"></i></span>
                 <div><strong>Strike Rush</strong><small>Top 10 · Scores über 300 möglich</small></div>
               </div>
+              <div class="leaderboard-best" aria-label="Strike Rush Best Overall">
+                <span class="leaderboard-best-icon"><i class="fa-solid fa-crown"></i></span>
+                <div class="leaderboard-best-copy"><small>Best Overall</small><strong id="leaderboardRushBestName">Noch kein Rekord</strong></div>
+                <span class="leaderboard-best-score" id="leaderboardRushBestScore">–</span>
+              </div>
+              <div class="leaderboard-reset-note">Wochenrangliste · Reset jeden Mittwoch um 18:30 Uhr</div>
               <div class="leaderboard-wrap">
                 <div class="leaderboard-list" id="leaderboardRushList"></div>
                 <div class="leaderboard-note" id="leaderboardRushNote">Scores werden live geladen.</div>
@@ -2833,6 +2881,10 @@
     const leaderboardRushNote = document.getElementById("leaderboardRushNote");
     const leaderboardClassicBoard = document.getElementById("leaderboardClassicBoard");
     const leaderboardRushBoard = document.getElementById("leaderboardRushBoard");
+    const leaderboardClassicBestName = document.getElementById("leaderboardClassicBestName");
+    const leaderboardClassicBestScore = document.getElementById("leaderboardClassicBestScore");
+    const leaderboardRushBestName = document.getElementById("leaderboardRushBestName");
+    const leaderboardRushBestScore = document.getElementById("leaderboardRushBestScore");
     const leaderboardBadge = document.getElementById("leaderboardBadge");
     const leaderboardModal = document.getElementById("leaderboardModal");
     const modalTitle = document.getElementById("modalTitle");
@@ -2885,6 +2937,7 @@
     let stageHeight = 900;
     let ballRestX = 0.50;
     let leaderboardEntries = { classic: [], powerup: [] };
+    let leaderboardBestOverall = { classic: null, powerup: null };
     let leaderboardViewMode = "classic";
     let gameMode = "classic";
     let audioCtx = null;
@@ -4396,11 +4449,31 @@
       const storedName = String(value?.name || "Unbekannt").trim().slice(0, 24);
       const storedScore = Number(value?.score || 0);
       const createdAt = Number(value?.createdAt || 0);
+      const key = String(id || "");
 
-      // Neue Powerup-Einträge bleiben exakt im alten Classic-Datenschema
-      // (name, score, createdAt). Modus + echter >300-Score stecken nur im Key.
+      // Best-Overall-Einträge verwenden weiterhin exakt das alte, erlaubte
+      // Schema (name, score, createdAt). Der echte Score steckt im Key.
+      // bo_c_<score-base36>_overall / bo_p_<score-base36>_overall
+      const bestMatch = key.match(/^bo_([cp])_([0-9a-z]+)_/i);
+      if (bestMatch) {
+        const decodedScore = parseInt(bestMatch[2], 36);
+        return {
+          id,
+          name: storedName,
+          score: Number.isFinite(decodedScore) ? decodedScore : storedScore,
+          createdAt,
+          storedMode: bestMatch[1].toLowerCase() === "p" ? "powerup" : "classic",
+          isBestOverall: true
+        };
+      }
+
+      if (key.startsWith("_")) {
+        return { id, name: "", score: 0, createdAt: 0, storedMode: null, isReserved: true };
+      }
+
+      // Powerup-Einträge bleiben exakt im alten Classic-Datenschema.
       // Format: p_<score-in-base36>_<firebase-push-key>
-      const keyMatch = String(id || "").match(/^p_([0-9a-z]+)_/i);
+      const keyMatch = key.match(/^p_([0-9a-z]+)_/i);
       if (keyMatch) {
         const decodedScore = parseInt(keyMatch[1], 36);
         return {
@@ -4408,17 +4481,18 @@
           name: storedName,
           score: Number.isFinite(decodedScore) ? decodedScore : storedScore,
           createdAt,
-          storedMode: "powerup"
+          storedMode: "powerup",
+          isBestOverall: false
         };
       }
 
-      // Kompatibilität zu einem eventuell bereits geschriebenen mode-Feld.
-      return { id, name: storedName, score: storedScore, createdAt, storedMode: value?.mode || null };
+      return { id, name: storedName, score: storedScore, createdAt, storedMode: value?.mode || null, isBestOverall: false };
     }
 
     function normalizeLeaderboardEntries(raw, mode = null) {
       return Object.entries(raw || {})
         .map(([id, value]) => decodeLeaderboardEntry(id, value))
+        .filter(entry => !entry.isBestOverall && !entry.isReserved)
         .filter(entry => entry.name && Number.isFinite(entry.score))
         .filter(entry => {
           if (!mode) return true;
@@ -4427,6 +4501,43 @@
         })
         .filter(entry => mode !== "classic" || entry.score <= 300)
         .sort((a, b) => b.score - a.score || a.createdAt - b.createdAt);
+    }
+
+    function bestOverallFromRaw(raw, mode) {
+      return Object.entries(raw || {})
+        .map(([id, value]) => decodeLeaderboardEntry(id, value))
+        .filter(entry => entry.isBestOverall && entry.name && Number.isFinite(entry.score))
+        .filter(entry => entry.storedMode === mode)
+        .sort((a, b) => b.score - a.score || a.createdAt - b.createdAt)[0] || null;
+    }
+
+    function bestOverallKey(mode, score) {
+      const prefix = mode === "powerup" ? "p" : "c";
+      return `bo_${prefix}_${Math.max(0, Math.round(score)).toString(36)}_overall`;
+    }
+
+    async function updateBestOverallEntry(name, score, mode = gameMode) {
+      const finalScore = Math.max(0, Math.round(Number(score) || 0));
+      const snapshot = await leaderboardRef.once("value");
+      const raw = snapshot.val() || {};
+      const currentBest = bestOverallFromRaw(raw, mode);
+      if (currentBest && finalScore <= currentBest.score) return false;
+
+      const updates = {};
+      for (const id of Object.keys(raw)) {
+        const match = String(id).match(/^bo_([cp])_/i);
+        if (!match) continue;
+        const entryMode = match[1].toLowerCase() === "p" ? "powerup" : "classic";
+        if (entryMode === mode) updates[id] = null;
+      }
+
+      updates[bestOverallKey(mode, finalScore)] = {
+        name: String(name || "").trim().slice(0, 24),
+        score: Math.min(finalScore, 300),
+        createdAt: firebase.database.ServerValue.TIMESTAMP
+      };
+      await leaderboardRef.update(updates);
+      return true;
     }
 
     function currentLeaderboardEntries(mode = leaderboardViewMode) {
@@ -4456,12 +4567,22 @@
           </div>
         `).join("");
       }
-      note.textContent = `Top 10 · live synchronisiert`;
+      note.textContent = `Wochen-Top 10 · Reset Mittwoch 18:30 · live synchronisiert`;
+    }
+
+    function renderBestOverall() {
+      const classic = leaderboardBestOverall.classic;
+      const rush = leaderboardBestOverall.powerup;
+      leaderboardClassicBestName.textContent = classic?.name || "Noch kein Rekord";
+      leaderboardClassicBestScore.textContent = classic ? String(classic.score) : "–";
+      leaderboardRushBestName.textContent = rush?.name || "Noch kein Rekord";
+      leaderboardRushBestScore.textContent = rush ? String(rush.score) : "–";
     }
 
     function renderLeaderboard() {
       renderLeaderboardList("classic", leaderboardClassicList, leaderboardClassicNote, "Classic Bowling");
       renderLeaderboardList("powerup", leaderboardRushList, leaderboardRushNote, "Strike Rush");
+      renderBestOverall();
       renderLeaderboardTabs();
     }
 
@@ -4511,6 +4632,12 @@
         });
       }
 
+      // Best Overall wird unabhängig von der Wochenrangliste gepflegt.
+      // Falls alte Database-Regeln diesen Zusatz-Eintrag blockieren, bleibt der
+      // normale Wochen-Score trotzdem erfolgreich gespeichert; der Scheduler
+      // zieht den Rekord spätestens vor dem nächsten Reset serverseitig nach.
+      try { await updateBestOverallEntry(cleanName, finalScore, mode); } catch (bestError) { console.warn("Best Overall update skipped:", bestError); }
+
       // Ein erfolgreicher Eintrag soll nicht als Fehler erscheinen, nur weil
       // eine spätere Top-10-Bereinigung durch strengere Delete-Regeln scheitert.
       try { await pruneLeaderboard(mode); } catch (cleanupError) { console.warn("Leaderboard cleanup skipped:", cleanupError); }
@@ -4522,6 +4649,8 @@
         const raw = snapshot.val();
         leaderboardEntries.classic = normalizeLeaderboardEntries(raw, "classic");
         leaderboardEntries.powerup = normalizeLeaderboardEntries(raw, "powerup");
+        leaderboardBestOverall.classic = bestOverallFromRaw(raw, "classic") || leaderboardEntries.classic[0] || null;
+        leaderboardBestOverall.powerup = bestOverallFromRaw(raw, "powerup") || leaderboardEntries.powerup[0] || null;
         renderLeaderboard();
         leaderboardBadge.innerHTML = `<i class="fa-solid fa-signal"></i><span>live</span>`;
       }, error => {
