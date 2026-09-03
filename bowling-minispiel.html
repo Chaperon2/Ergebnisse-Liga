@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Strikeclub Velten · Minispiel Phase 28 · Build-Boni + epische Doppelstrike-Auswahl -->
+<!-- Strikeclub Velten · Minispiel Phase 26 · Wegbereiter + Bonus-Slots + Abschlussdetails -->
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -2376,6 +2376,41 @@
   .leaderboard-board .leaderboard-row { padding:9px 10px; }
   .leaderboard-board .leaderboard-rank { width:32px; height:32px; }
   .leaderboard-board .leaderboard-note { margin-top:8px; text-align:center; font-size:.68rem; }
+  .overall-record {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin:10px 10px 0;
+    padding:9px 10px;
+    border:1px solid rgba(255,208,113,.24);
+    border-radius:8px;
+    background:linear-gradient(90deg,rgba(255,208,113,.08),rgba(255,255,255,.025));
+  }
+  .leaderboard-board[data-board-mode="powerup"] .overall-record {
+    border-color:rgba(63,242,237,.24);
+    background:linear-gradient(90deg,rgba(63,242,237,.08),rgba(255,255,255,.025));
+  }
+  .overall-record-label {
+    display:flex; align-items:center; gap:7px; min-width:0;
+    color:#a99a7c; font-size:.66rem; font-weight:900;
+    letter-spacing:.08em; text-transform:uppercase;
+  }
+  .overall-record-label i { color:#ffd071; }
+  .leaderboard-board[data-board-mode="powerup"] .overall-record-label i { color:#52f5ee; }
+  .overall-record-value {
+    min-width:0; display:flex; align-items:baseline; justify-content:flex-end;
+    gap:7px; text-align:right; white-space:nowrap;
+  }
+  .overall-record-name {
+    max-width:150px; overflow:hidden; text-overflow:ellipsis;
+    color:#ead6aa; font-size:.74rem; font-weight:900;
+  }
+  .overall-record-score {
+    color:#ffd071; font-family:"Press Start 2P",monospace;
+    font-size:.67rem; font-weight:900;
+  }
+  .leaderboard-board[data-board-mode="powerup"] .overall-record-score { color:#52f5ee; }
 
   /* Desktop: beide Ranglisten direkt vergleichen. */
   @media (min-width:761px) {
@@ -2668,7 +2703,7 @@
               <div class="start-card">
                 <div class="start-badge"><i class="fa-solid fa-bowling-ball"></i><span>Strikeclub Velten</span></div>
                 <h2>Wähle deinen Modus</h2>
-                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. In Strike Rush wählst du vor Frame 1 einmal deinen Wegbereiter. Danach gibt es nach komplett abgeschlossenen Frames drei Bonus-Slots: offener Frame = Bronze, Spare = Silber, Strike = Gold. Zwei Strikes in Folge haben zusätzlich 35 % Chance auf eine epische Extra-Auswahl. Bis zu 3 Dauerboni bleiben für den Rest der Runde aktiv.</p>
+                <p class="mode-intro">Classic bleibt pures Bowling ohne Hilfen. In Strike Rush wählst du vor Frame 1 einmal deinen Wegbereiter. Danach gibt es nur nach komplett abgeschlossenen Frames drei Bonus-Slots: offener Frame = Bronze, Spare = Silber, Strike = Gold. Bis zu 3 Dauerboni bleiben für den Rest der Runde aktiv.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2677,7 +2712,7 @@
                   </button>
                   <button class="mode-card powerup" id="powerupModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bolt"></i></span>
-                    <span class="mode-copy"><strong>Strike Rush</strong><small>1 Wegbereiter · 45 Boni + 8 epische · 3 Dauerboni</small></span>
+                    <span class="mode-copy"><strong>Strike Rush</strong><small>1 Wegbereiter · 45 Boni · 3 Dauerboni</small></span>
                     <span class="mode-go"><i class="fa-solid fa-arrow-right"></i></span>
                   </button>
                 </div>
@@ -2808,6 +2843,10 @@
                 <span class="leaderboard-board-icon classic"><i class="fa-solid fa-bowling-ball"></i></span>
                 <div><strong>Classic Bowling</strong><small>Top 10 · maximal 300</small></div>
               </div>
+              <div class="overall-record" aria-label="Allzeit-Rekord Classic Bowling">
+                <span class="overall-record-label"><i class="fa-solid fa-crown"></i>Allzeit-Rekord</span>
+                <span class="overall-record-value"><span class="overall-record-name" id="overallClassicName">—</span><span class="overall-record-score" id="overallClassicScore">—</span></span>
+              </div>
               <div class="leaderboard-wrap">
                 <div class="leaderboard-list" id="leaderboardClassicList"></div>
                 <div class="leaderboard-note" id="leaderboardClassicNote">Scores werden live geladen.</div>
@@ -2817,6 +2856,10 @@
               <div class="leaderboard-board-head">
                 <span class="leaderboard-board-icon rush"><i class="fa-solid fa-bolt"></i></span>
                 <div><strong>Strike Rush</strong><small>Top 10 · Scores über 300 möglich</small></div>
+              </div>
+              <div class="overall-record" aria-label="Allzeit-Rekord Strike Rush">
+                <span class="overall-record-label"><i class="fa-solid fa-crown"></i>Allzeit-Rekord</span>
+                <span class="overall-record-value"><span class="overall-record-name" id="overallRushName">—</span><span class="overall-record-score" id="overallRushScore">—</span></span>
               </div>
               <div class="leaderboard-wrap">
                 <div class="leaderboard-list" id="leaderboardRushList"></div>
@@ -2855,36 +2898,6 @@
     </div>
   </div>
 
-<style id="phase28-epic-build-bonuses">
-  .powerup-overlay.rarity-epic {
-    background:radial-gradient(circle at 50% 30%,rgba(196,123,255,.32),transparent 34%),radial-gradient(circle at 18% 34%,rgba(70,226,255,.18),transparent 28%),radial-gradient(circle at 84% 28%,rgba(255,91,208,.18),transparent 27%),rgba(2,5,9,.82) !important;
-  }
-  .powerup-overlay.rarity-epic .slot-panel {
-    position:relative; overflow:hidden; border-color:rgba(219,168,255,.94) !important;
-    background:linear-gradient(145deg,rgba(120,62,190,.13),rgba(35,202,237,.08) 52%,rgba(255,79,199,.10)),rgba(7,8,18,.97) !important;
-    box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 46px rgba(172,91,255,.32),0 0 86px rgba(65,218,255,.18) !important;
-  }
-  .powerup-overlay.rarity-epic .slot-panel::before {
-    content:""; position:absolute; inset:-55%; pointer-events:none; opacity:.34;
-    background:conic-gradient(from 0deg,transparent 0 13%,rgba(205,132,255,.32) 17%,transparent 25%,rgba(65,224,255,.25) 39%,transparent 49%,rgba(255,96,211,.27) 63%,transparent 75%);
-    animation:epicAuraSpin 5.8s linear 2;
-  }
-  .powerup-overlay.rarity-epic .slot-panel > * { position:relative; z-index:1; }
-  .powerup-overlay.rarity-epic .slot-panel h3,.powerup-overlay.rarity-epic .slot-choice-label { color:#f2dcff !important; text-shadow:0 0 18px rgba(209,136,255,.88),0 0 36px rgba(70,220,255,.38); }
-  .powerup-overlay.rarity-epic .slot-machine { border-color:#dca8ff !important; background:linear-gradient(180deg,#56316d 0%,#1d1227 14%,#050609 86%,#253b4d 100%) !important; box-shadow:inset 0 0 0 3px #070508,inset 0 0 42px rgba(203,126,255,.20),0 0 38px rgba(184,97,255,.34),0 12px 30px rgba(0,0,0,.38) !important; }
-  .powerup-overlay.rarity-epic .slot-window { border-color:#e6c6ff !important; box-shadow:inset 0 12px 18px rgba(0,0,0,.58),inset 0 -12px 18px rgba(0,0,0,.58),0 0 28px rgba(175,101,255,.32) !important; }
-  .slot-item.epic .slot-icon,.powerup-selection-icon.epic,.powerup-report-icon.epic { color:#efd7ff !important; border-color:#e2b7ff !important; background:linear-gradient(145deg,rgba(189,102,255,.18),rgba(65,225,255,.12),rgba(255,90,207,.13)) !important; box-shadow:0 0 24px rgba(186,102,255,.42),0 0 38px rgba(62,221,255,.18); }
-  .powerup-overlay.rarity-pop-epic .slot-panel { animation:epicPop 1.18s cubic-bezier(.16,.8,.22,1) both; }
-  .rarity-particles.epic span:nth-child(3n+1) { background:#dfb5ff; box-shadow:0 0 17px #bc74ff; }
-  .rarity-particles.epic span:nth-child(3n+2) { background:#8feeff; box-shadow:0 0 17px #4ddfff; }
-  .rarity-particles.epic span:nth-child(3n) { background:#ff9edf; box-shadow:0 0 17px #ff63c9; }
-  @keyframes epicAuraSpin { to { transform:rotate(360deg); } }
-  @keyframes epicPop { 0%{transform:scale(.98);filter:brightness(1)} 20%{transform:scale(1.014);filter:brightness(2)} 44%{filter:brightness(1.18)} 68%{filter:brightness(1.55)} 100%{transform:scale(1);filter:brightness(1)} }
-  @media (pointer:coarse) { .powerup-overlay.rarity-epic .slot-panel::before { opacity:.24; animation-duration:8s; } }
-  @media (prefers-reduced-motion:reduce) { .powerup-overlay.rarity-epic .slot-panel::before { animation:none !important; } }
-</style>
-
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCBBf8PR_vGp5BUga50BT0LhZ7dZBt63j0",
@@ -2901,6 +2914,7 @@
     // Beide Modi nutzen denselben, bereits bewährten Firebase-Knoten wie Classic.
     // Neue Einträge tragen ein mode-Feld; alte Einträge ohne mode gelten als Classic.
     const leaderboardRef = database.ref("leaderboards/bowlingMinigame");
+    const leaderboardOverallRef = database.ref("leaderboards/bowlingMinigameOverall");
     const leaderboardRefs = {
       classic: leaderboardRef,
       powerup: leaderboardRef
@@ -2947,6 +2961,10 @@
     const leaderboardRushList = document.getElementById("leaderboardRushList");
     const leaderboardClassicNote = document.getElementById("leaderboardClassicNote");
     const leaderboardRushNote = document.getElementById("leaderboardRushNote");
+    const overallClassicName = document.getElementById("overallClassicName");
+    const overallClassicScore = document.getElementById("overallClassicScore");
+    const overallRushName = document.getElementById("overallRushName");
+    const overallRushScore = document.getElementById("overallRushScore");
     const leaderboardClassicBoard = document.getElementById("leaderboardClassicBoard");
     const leaderboardRushBoard = document.getElementById("leaderboardRushBoard");
     const leaderboardBadge = document.getElementById("leaderboardBadge");
@@ -3002,6 +3020,7 @@
     let stageHeight = 900;
     let ballRestX = 0.50;
     let leaderboardEntries = { classic: [], powerup: [] };
+    let leaderboardOverall = { classic: null, powerup: null };
     let leaderboardViewMode = "classic";
     let gameMode = "classic";
     let audioCtx = null;
@@ -3058,9 +3077,6 @@
         copyNextPowerupExtra: 0,
         quantumCopyCharges: 0,
         tierHackCharges: 0,
-        spareGoldCharges: 0,
-        forceGoldCharges: 0,
-        epicDraftPending: false,
         timeBombThrows: 0,
         timeBombPins: 0,
         timeBombFactor: 0,
@@ -3241,8 +3257,8 @@
       { id:"p12", tier:"pearl", kind:"strategy", name:"Doppelspur", icon:"fa-code-branch", desc:"Du startest mit +0,25 Multiplikator. Jede Spare- oder Strike-Serie gibt zusätzlich +25, +50, +75 …", apply(){ addGlobalMultiplier(.25); powerupState.cleanComboStep += 25; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 25); } },
 
       // BRONZE · offene Frames / kleine bis mittlere Builds
-      { id:"b1", tier:"bronze", kind:"active", name:"Bonus-Echo", icon:"fa-clone", desc:"Der nächste Bonus, den du auswählst, wird zweimal ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 1; } },
-      { id:"b2", tier:"bronze", kind:"active", name:"Goldticket", icon:"fa-ticket", desc:"Dein nächster Spare öffnet eine Gold-Auswahl statt Silber.", apply(){ powerupState.spareGoldCharges += 1; } },
+      { id:"b1", tier:"bronze", kind:"active", name:"Frame x1,5", icon:"fa-gauge-high", desc:"Extra-Punkte aus dem nächsten Frame zählen x1,5. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(1.5); } },
+      { id:"b2", tier:"bronze", kind:"active", name:"Frame x2", icon:"fa-clone", desc:"Extra-Punkte aus dem nächsten Frame zählen x2. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(2); } },
       { id:"b3", tier:"bronze", kind:"active", name:"Kopiermaschine", icon:"fa-copy", desc:"Dein nächster gewählter Bonus wird zweimal ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 1; } },
       { id:"b4", tier:"bronze", kind:"active", name:"Stufen-Sprung", icon:"fa-arrow-up-right-dots", desc:"Die nächste Bronze-Auswahl wird Silber. Silber wird Gold.", apply(){ powerupState.tierHackCharges += 1; } },
       { id:"b5", tier:"bronze", kind:"active", name:"Zeitbombe", icon:"fa-bomb", desc:"Die nächsten 3 Würfe sammeln Pins. Danach gibt jeder gesammelte Pin +8.", apply(){ addTimeBomb(8); } },
@@ -3251,7 +3267,7 @@
       { id:"b8", tier:"bronze", kind:"score", name:"Sofort +30", icon:"fa-coins", desc:"Du bekommst sofort +30 Bonuspunkte.", apply(){ addPowerupBonus(30); } },
       { id:"b9", tier:"bronze", kind:"score", name:"Sofort +45", icon:"fa-sack-dollar", desc:"Du bekommst sofort +45 Bonuspunkte.", apply(){ addPowerupBonus(45); } },
       { id:"b10", tier:"bronze", kind:"passive", name:"Dauerschub +0,10", icon:"fa-seedling", desc:"Dein Multiplikator steigt dauerhaft um +0,10.", apply(){ addGlobalMultiplier(.10); } },
-      { id:"b11", tier:"bronze", kind:"active", name:"Saubere Sache", icon:"fa-broom-ball", desc:"Im nächsten Frame: Strike +110, Spare +70. Ein offener Frame gibt nichts.", apply(){ powerupState.nextStrikeBonus += 110; powerupState.nextSpareBonus += 70; powerupState.conditionalFrameEffects.push({ sourceId:currentPowerupSourceId(), strike:110, spare:70 }); } },
+      { id:"b11", tier:"bronze", kind:"active", name:"Frame x1,75", icon:"fa-forward-fast", desc:"Extra-Punkte aus dem nächsten Frame zählen x1,75. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(1.75); } },
       { id:"b12", tier:"bronze", kind:"passive", name:"Dauerschub +0,15", icon:"fa-arrow-up", desc:"Dein Multiplikator steigt dauerhaft um +0,15.", apply(){ addGlobalMultiplier(.15); } },
       { id:"b13", tier:"bronze", kind:"active", name:"Zeitbombe +", icon:"fa-stopwatch", desc:"Die nächsten 3 Würfe sammeln Pins. Danach gibt jeder gesammelte Pin +10.", apply(){ addTimeBomb(10); } },
       { id:"b14", tier:"bronze", kind:"active", name:"Doppelwahl", icon:"fa-code-compare", desc:"Der nächste gewählte Bonus wird zusätzlich einmal ausgelöst.", apply(){ powerupState.quantumCopyCharges += 1; } },
@@ -3259,16 +3275,16 @@
 
       // SILBER · Spare / starke Synergien
       { id:"s1", tier:"silver", kind:"active", name:"Quantenkopie", icon:"fa-atom", desc:"Die nächsten 2 gewählten Boni werden doppelt ausgelöst.", apply(){ powerupState.quantumCopyCharges += 2; } },
-      { id:"s2", tier:"silver", kind:"active", name:"Goldticket x2", icon:"fa-ticket-simple", desc:"Deine nächsten 2 Spares öffnen jeweils eine Gold-Auswahl.", apply(){ powerupState.spareGoldCharges += 2; } },
+      { id:"s2", tier:"silver", kind:"active", name:"Frame x3", icon:"fa-bolt-lightning", desc:"Extra-Punkte aus dem nächsten Frame zählen x3. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(3); } },
       { id:"s3", tier:"silver", kind:"passive", name:"Combo-Reaktor", icon:"fa-radiation", desc:"Jeder spätere Spare oder Strike erhöht deinen Multiplikator dauerhaft um +0,10.", apply(){ powerupState.comboMultiplierStep += .10; addSourceValue(powerupState.comboMultiplierSources, currentPowerupSourceId(), .10); } },
       { id:"s4", tier:"silver", kind:"passive", name:"Spare-Motor", icon:"fa-gears", desc:"Jeder Spare gibt +40 und erhöht deinen Multiplikator um +0,05.", apply(){ powerupState.spareMotorBonus += 40; powerupState.spareMotorMultiplierStep += .05; addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), 40); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), .05); } },
       { id:"s5", tier:"silver", kind:"active", name:"Stufen-Sprung x2", icon:"fa-code-branch", desc:"Die nächsten 2 Auswahlen steigen jeweils eine Stufe auf.", apply(){ powerupState.tierHackCharges += 2; } },
       { id:"s6", tier:"silver", kind:"active", name:"Zeitbombe XL", icon:"fa-explosion", desc:"Die nächsten 3 Würfe sammeln Pins. Danach gibt jeder gesammelte Pin +15.", apply(){ addTimeBomb(15); } },
       { id:"s7", tier:"silver", kind:"passive", name:"Dauerschub +0,25", icon:"fa-link", desc:"Dein Multiplikator steigt dauerhaft um +0,25.", apply(){ addGlobalMultiplier(.25); } },
-      { id:"s8", tier:"silver", kind:"active", name:"Doppelter Einsatz", icon:"fa-dice-two", desc:"Im nächsten Frame: Strike +180, Spare +90. Ein offener Frame gibt nichts.", apply(){ powerupState.nextStrikeBonus += 180; powerupState.nextSpareBonus += 90; powerupState.conditionalFrameEffects.push({ sourceId:currentPowerupSourceId(), strike:180, spare:90 }); } },
+      { id:"s8", tier:"silver", kind:"active", name:"Doppelter Einsatz", icon:"fa-dice-two", desc:"Extra-Punkte aus dem nächsten Frame zählen x2. Strike gibt zusätzlich +150, Spare +75. Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(2); powerupState.nextStrikeBonus += 150; powerupState.nextSpareBonus += 75; powerupState.conditionalFrameEffects.push({ sourceId:currentPowerupSourceId(), strike:150, spare:75 }); } },
       { id:"s9", tier:"silver", kind:"score", name:"Sofort +90", icon:"fa-vault", desc:"Du bekommst sofort +90 Bonuspunkte.", apply(){ addPowerupBonus(90); } },
       { id:"s10", tier:"silver", kind:"score", name:"Sofort +130", icon:"fa-gem", desc:"Du bekommst sofort +130 Bonuspunkte.", apply(){ addPowerupBonus(130); } },
-      { id:"s11", tier:"silver", kind:"active", name:"Dreifach-Echo", icon:"fa-rocket", desc:"Der nächste Bonus, den du auswählst, wird dreimal ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 2; } },
+      { id:"s11", tier:"silver", kind:"active", name:"Frame x4", icon:"fa-rocket", desc:"Extra-Punkte aus dem nächsten Frame zählen x4. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(4); } },
       { id:"s12", tier:"silver", kind:"passive", name:"Dauerschub +0,40", icon:"fa-chart-line", desc:"Dein Multiplikator steigt dauerhaft um +0,40.", apply(){ addGlobalMultiplier(.40); } },
       { id:"s13", tier:"silver", kind:"passive", name:"Serienfeuer", icon:"fa-fire", desc:"Spare oder Strike in Folge geben +35, dann +70, +105 …", apply(){ powerupState.cleanComboStep += 35; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 35); } },
       { id:"s14", tier:"silver", kind:"active", name:"Zeitbombe XXL", icon:"fa-burst", desc:"Die nächsten 3 Würfe sammeln Pins. Danach gibt jeder gesammelte Pin +20.", apply(){ addTimeBomb(20); } },
@@ -3285,21 +3301,11 @@
       { id:"g8", tier:"gold", kind:"active", name:"Goldene Kopie", icon:"fa-wand-magic-sparkles", desc:"Dein nächster gewählter Bonus wird dreimal ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 2; } },
       { id:"g9", tier:"gold", kind:"score", name:"Sofort +220", icon:"fa-crown", desc:"Du bekommst sofort +220 Bonuspunkte.", apply(){ addPowerupBonus(220); } },
       { id:"g10", tier:"gold", kind:"score", name:"Sofort +300", icon:"fa-star", desc:"Du bekommst sofort +300 Bonuspunkte.", apply(){ addPowerupBonus(300); } },
-      { id:"g11", tier:"gold", kind:"active", name:"Goldrausch", icon:"fa-key", desc:"Deine nächsten 3 Bronze- oder Silber-Auswahlen werden Gold.", apply(){ powerupState.forceGoldCharges += 3; } },
+      { id:"g11", tier:"gold", kind:"active", name:"Frame x5", icon:"fa-bolt", desc:"Extra-Punkte aus dem nächsten Frame zählen x5. Deine Bowlingpunkte bleiben normal.", apply(){ addNextFrameMultiplier(5); } },
       { id:"g12", tier:"gold", kind:"passive", name:"Dauerschub +0,60", icon:"fa-angles-up", desc:"Dein Multiplikator steigt dauerhaft um +0,60.", apply(){ addGlobalMultiplier(.60); } },
       { id:"g13", tier:"gold", kind:"passive", name:"Supernova", icon:"fa-sun", desc:"Jeder spätere Strike gibt +200. Jeder Spare gibt +100.", apply(){ powerupState.meteorStrikeBonus += 200; powerupState.meteorSpareBonus += 100; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 200); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), 100); } },
       { id:"g14", tier:"gold", kind:"passive", name:"Königskette", icon:"fa-crown", desc:"Strike-Serien geben +125, dann +250, +375 …", apply(){ powerupState.strikeMadnessStep += 125; addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), 125); } },
-      { id:"g15", tier:"gold", kind:"active", name:"Quantensturm", icon:"fa-cloud-bolt", desc:"Der nächste Bonus wird dreifach ausgelöst. Die beiden danach doppelt.", apply(){ powerupState.copyNextPowerupExtra += 1; powerupState.quantumCopyCharges += 3; } },
-
-      // EPISCH · seltene Extra-Auswahl nach einem Doppelstrike
-      { id:"e1", tier:"epic", kind:"active", name:"Realitätsriss", icon:"fa-wand-sparkles", desc:"Der nächste Bonus wird dreimal ausgelöst. Zusätzlich steigt dein Multiplikator dauerhaft um +0,25.", apply(){ powerupState.copyNextPowerupExtra += 2; addGlobalMultiplier(.25); } },
-      { id:"e2", tier:"epic", kind:"active", name:"Goldregen", icon:"fa-crown", desc:"Deine nächsten 3 Bronze- oder Silber-Auswahlen werden Gold.", apply(){ powerupState.forceGoldCharges += 3; } },
-      { id:"e3", tier:"epic", kind:"active", name:"Omega-Bombe", icon:"fa-bomb", desc:"Die nächsten 5 Würfe sammeln Pins. Danach gibt jeder gesammelte Pin +20.", apply(){ powerupState.timeBombEffects.push({ sourceId:currentPowerupSourceId(), throws:5, pins:0, factor:20 }); } },
-      { id:"e4", tier:"epic", kind:"passive", name:"Königliche Serie", icon:"fa-fire-flame-curved", desc:"Jeder spätere Strike gibt +180 und erhöht deinen Multiplikator dauerhaft um +0,10.", apply(){ powerupState.meteorStrikeBonus += 180; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 180); powerupState.ascensionStep += .10; addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), .10); } },
-      { id:"e5", tier:"epic", kind:"active", name:"Quantenkaskade", icon:"fa-atom", desc:"Der nächste Bonus wird dreimal ausgelöst. Die zwei danach werden doppelt ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 1; powerupState.quantumCopyCharges += 3; } },
-      { id:"e6", tier:"epic", kind:"active", name:"Doppel-Jackpot", icon:"fa-dice", desc:"Die nächsten 2 Spares oder Strikes zahlen Jackpot: Strike +300, Spare +150.", apply(){ powerupState.jackpotModeCharges += 2; powerupState.jackpotSourceQueue.push(currentPowerupSourceId(), currentPowerupSourceId()); } },
-      { id:"e7", tier:"epic", kind:"passive", name:"Überladung", icon:"fa-bolt", desc:"Dein Multiplikator steigt dauerhaft um +0,75.", apply(){ addGlobalMultiplier(.75); } },
-      { id:"e8", tier:"epic", kind:"passive", name:"Endspiel-Krone", icon:"fa-chess-king", desc:"Dein Multiplikator steigt dauerhaft um +0,30. Der Endspiel-Bonus wird dreimal stärker.", apply(){ addGlobalMultiplier(.30); powerupState.finalBossLevel += 3; addSourceValue(powerupState.finalBossSources, currentPowerupSourceId(), 3); } }
+      { id:"g15", tier:"gold", kind:"active", name:"Quantensturm", icon:"fa-cloud-bolt", desc:"Der nächste Bonus wird dreifach ausgelöst. Die beiden danach doppelt.", apply(){ powerupState.copyNextPowerupExtra += 1; powerupState.quantumCopyCharges += 3; } }
     ];
 
     function addFrameBonus(points, frameIndex = currentFrame, sourceId = currentPowerupSourceId(), trackAttribution = true) {
@@ -3333,8 +3339,7 @@
 
     function tierMeta(tier) {
       if (tier === "pearl") return { label:"Wegbereiter · einmalig", title:"WÄHLE DEINEN WEGBEREITER", subtitle:"Die Slotmaschine zieht 3 zufällige Strategien aus 12 Möglichkeiten. Diese Wahl kommt nur einmal vor Frame 1." };
-      if (tier === "epic") return { label:"Episch · Doppelstrike", title:"EPISCHE EXTRA-AUSWAHL", subtitle:"Zwei Strikes in Folge haben dir eine seltene Extra-Auswahl geöffnet." };
-      if (tier === "gold") return { label:"Gold · Strike", title:"GOLD · SELTENER BONUS", subtitle:"Gold enthält die stärksten normalen Boni und Dauerboni." };
+      if (tier === "gold") return { label:"Gold · Strike", title:"GOLD · SELTENER BONUS", subtitle:"Gold enthält die stärksten Boni und Dauerboni." };
       if (tier === "silver") return { label:"Silber · Spare", title:"SILBER · STARKER BONUS", subtitle:"Silber enthält stärkere Kombinationen und Dauerboni." };
       return { label:"Bronze · offener Frame", title:"BRONZE · BONUS", subtitle:"Bronze folgt auf einen offenen Frame. Spare bringt Silber, Strike Gold." };
     }
@@ -3345,31 +3350,16 @@
 
 
     function resolveDraftTier(tier) {
-      if (!powerupState || tier === "pearl" || tier === "epic") return tier;
-
-      if (powerupState.forceGoldCharges > 0 && (tier === "bronze" || tier === "silver")) {
-        powerupState.forceGoldCharges -= 1;
-        showFlash("GOLDRAUSCH → GOLD");
-        return "gold";
+      if (!powerupState || powerupState.tierHackCharges <= 0) return tier;
+      if (tier === "bronze") {
+        powerupState.tierHackCharges -= 1;
+        showFlash("TIER-HACK → SILBER");
+        return "silver";
       }
-
-      if (tier === "silver" && powerupState.spareGoldCharges > 0) {
-        powerupState.spareGoldCharges -= 1;
-        showFlash("GOLDTICKET → GOLD");
+      if (tier === "silver") {
+        powerupState.tierHackCharges -= 1;
+        showFlash("TIER-HACK → GOLD");
         return "gold";
-      }
-
-      if (powerupState.tierHackCharges > 0) {
-        if (tier === "bronze") {
-          powerupState.tierHackCharges -= 1;
-          showFlash("STUFEN-SPRUNG → SILBER");
-          return "silver";
-        }
-        if (tier === "silver") {
-          powerupState.tierHackCharges -= 1;
-          showFlash("STUFEN-SPRUNG → GOLD");
-          return "gold";
-        }
       }
       return tier;
     }
@@ -3402,12 +3392,6 @@
         playTone(base * .375, .48, "sine", .022, .03);
         return;
       }
-      if (tier === "epic") {
-        [0.5,0.75,1,1.25,1.5,2,2.5].forEach((ratio,index) => playTone(base * ratio, .15 + index * .018, index % 3 ? "sine" : "triangle", .026, index * .055));
-        playNoise({ duration:.48, volume:.018, delay:.02, filterType:"highpass", frequency:1750, q:.8 });
-        playTone(base * .375, .42, "sine", .024, .03);
-        return;
-      }
       if (tier === "bronze") {
         playTone(base, .045, "triangle", .018, 0);
         playTone(base * 1.28, .07, "sine", .014, .045);
@@ -3424,17 +3408,17 @@
     }
 
     function launchRarityParticles(tier) {
-      const amount = tier === "pearl" ? 44 : tier === "epic" ? 40 : tier === "gold" ? 34 : tier === "silver" ? 18 : 8;
+      const amount = tier === "pearl" ? 44 : tier === "gold" ? 34 : tier === "silver" ? 18 : 8;
       const layer = document.createElement("div");
       layer.className = `rarity-particles ${tier}`;
       for (let i = 0; i < amount; i += 1) {
         const particle = document.createElement("span");
         const angle = (Math.PI * 2 * i / amount) + randomBetween(-.14,.14);
-        const distance = tier === "pearl" ? randomBetween(120,320) : tier === "epic" ? randomBetween(120,300) : tier === "gold" ? randomBetween(110,290) : tier === "silver" ? randomBetween(80,200) : randomBetween(55,120);
+        const distance = tier === "pearl" ? randomBetween(120,320) : tier === "gold" ? randomBetween(110,290) : tier === "silver" ? randomBetween(80,200) : randomBetween(55,120);
         particle.style.setProperty("--fx-x", `${Math.cos(angle) * distance}px`);
         particle.style.setProperty("--fx-y", `${Math.sin(angle) * distance}px`);
         particle.style.setProperty("--fx-delay", `${randomBetween(0,.18)}s`);
-        particle.style.setProperty("--fx-size", `${tier === "pearl" ? randomBetween(4,10) : tier === "epic" ? randomBetween(4,10) : tier === "gold" ? randomBetween(4,9) : randomBetween(3,7)}px`);
+        particle.style.setProperty("--fx-size", `${tier === "pearl" ? randomBetween(4,10) : tier === "gold" ? randomBetween(4,9) : randomBetween(3,7)}px`);
         layer.appendChild(particle);
       }
       powerupOverlay.appendChild(layer);
@@ -3442,12 +3426,12 @@
     }
 
     function playRarityRevealFx(tier) {
-      powerupOverlay.classList.remove("rarity-pop-pearl", "rarity-pop-epic", "rarity-pop-bronze", "rarity-pop-silver", "rarity-pop-gold");
+      powerupOverlay.classList.remove("rarity-pop-pearl", "rarity-pop-bronze", "rarity-pop-silver", "rarity-pop-gold");
       void powerupOverlay.offsetWidth;
       powerupOverlay.classList.add(`rarity-pop-${tier}`);
       launchRarityParticles(tier);
       playRarityRevealSound(tier);
-      scheduleGameTimer(() => powerupOverlay.classList.remove(`rarity-pop-${tier}`), tier === "pearl" ? 1600 : tier === "epic" ? 1450 : tier === "gold" ? 1300 : 900);
+      scheduleGameTimer(() => powerupOverlay.classList.remove(`rarity-pop-${tier}`), tier === "pearl" ? 1600 : tier === "gold" ? 1300 : 900);
     }
 
     function applyFinalBossBonusIfNeeded() {
@@ -3526,7 +3510,7 @@
       powerupSlotChoices.querySelectorAll(".slot-choice").forEach(choice => {
         choice.classList.toggle("chosen", Number(choice.dataset.slotIndex) === Number(slotIndex));
       });
-      const tierLabel = item.tier === "pearl" ? "Wegbereiter" : item.tier === "epic" ? "Episch" : item.tier === "gold" ? "Gold" : item.tier === "silver" ? "Silber" : "Bronze";
+      const tierLabel = item.tier === "pearl" ? "Wegbereiter" : item.tier === "gold" ? "Gold" : item.tier === "silver" ? "Silber" : "Bronze";
       powerupSelectionIcon.className = `powerup-selection-icon ${item.tier}`;
       powerupSelectionIcon.innerHTML = `<i class="fa-solid ${item.icon}"></i>`;
       powerupSelectionName.textContent = item.name;
@@ -3571,15 +3555,11 @@
         ? "Letzte Auswahl: Hier erscheinen nur noch sofortige Bonuspunkte."
         : `${meta.subtitle} Nach dem Stopp ist links automatisch markiert; du kannst noch wechseln.`;
 
-      powerupOverlay.classList.remove("rarity-pearl", "rarity-epic", "rarity-bronze", "rarity-silver", "rarity-gold");
+      powerupOverlay.classList.remove("rarity-pearl", "rarity-bronze", "rarity-silver", "rarity-gold");
       powerupOverlay.classList.add(`rarity-${effectiveTier}`);
       powerupSlotChoices.innerHTML = choices.map((_, index) => slotChoiceMarkup(index)).join("");
       resetPowerupPreview();
-      powerupSelectionPlaceholder.textContent = effectiveTier === "pearl"
-        ? "Die Slotmaschine zieht 3 von 12 Wegbereitern …"
-        : effectiveTier === "epic"
-          ? "Seltene Extra-Auswahl: Die drei epischen Walzen laufen …"
-          : "Die drei Walzen laufen …";
+      powerupSelectionPlaceholder.textContent = effectiveTier === "pearl" ? "Die Slotmaschine zieht 3 von 12 Wegbereitern …" : "Die drei Walzen laufen …";
       powerupOverlay.classList.remove("hidden");
       powerupOverlay.setAttribute("aria-hidden", "false");
       playSlotSpinSound(effectiveTier);
@@ -3865,9 +3845,6 @@
           earned += powerupState.meteorStrikeBonus;
           Object.entries(powerupState.meteorStrikeSources || {}).forEach(([sourceId, points]) => addPart(sourceId, points));
           powerupState.strikeFrameStreak += 1;
-          if (powerupState.strikeFrameStreak === 2 && Math.random() < 0.35) {
-            powerupState.epicDraftPending = true;
-          }
           if (powerupState.strikeMadnessStep > 0) {
             const payout = powerupState.strikeMadnessStep * powerupState.strikeFrameStreak;
             earned += payout;
@@ -4013,7 +3990,7 @@
     }
 
     function tierSoundBase(tier) {
-      return tier === "pearl" ? 920 : tier === "epic" ? 850 : tier === "gold" ? 760 : tier === "silver" ? 610 : 470;
+      return tier === "pearl" ? 920 : tier === "gold" ? 760 : tier === "silver" ? 610 : 470;
     }
 
     function playSlotSpinSound(tier) {
@@ -4036,8 +4013,7 @@
       const base = tierSoundBase(tier) + index * 55;
       playTone(base, 0.045, "square", 0.025, 0);
       playTone(base * 1.5, 0.075, "triangle", 0.022, 0.035);
-      if (tier === "gold" || tier === "epic") playTone(base * 2, 0.10, "sine", 0.014, 0.08);
-      if (tier === "epic") playTone(base * 2.55, 0.16, "sine", 0.013, 0.12);
+      if (tier === "gold") playTone(base * 2, 0.10, "sine", 0.014, 0.08);
       if (tier === "pearl") {
         playTone(base * 1.8, 0.12, "sine", 0.016, 0.07);
         playTone(base * 2.35, 0.18, "sine", 0.012, 0.12);
@@ -4677,9 +4653,38 @@
       note.textContent = `Top 10 · live synchronisiert`;
     }
 
+    function normalizeOverallRecord(value) {
+      if (!value || typeof value !== "object") return null;
+      const score = Number(value.score);
+      const name = String(value.name || "Unbekannt").trim().slice(0, 24);
+      const achievedAt = Number(value.achievedAt || 0);
+      if (!Number.isFinite(score) || score < 0 || !name) return null;
+      return { name, score, achievedAt };
+    }
+
+    function effectiveOverallRecord(mode) {
+      const stored = normalizeOverallRecord(leaderboardOverall[mode]);
+      const weekly = (leaderboardEntries[mode] || [])[0] || null;
+      if (!weekly) return stored;
+      if (!stored || Number(weekly.score) > Number(stored.score)) {
+        return { name: weekly.name, score: weekly.score, achievedAt: weekly.createdAt || 0 };
+      }
+      return stored;
+    }
+
+    function renderOverallRecords() {
+      const classic = effectiveOverallRecord("classic");
+      const powerup = effectiveOverallRecord("powerup");
+      if (overallClassicName) overallClassicName.textContent = classic?.name || "Noch keiner";
+      if (overallClassicScore) overallClassicScore.textContent = classic ? String(Math.round(classic.score)) : "—";
+      if (overallRushName) overallRushName.textContent = powerup?.name || "Noch keiner";
+      if (overallRushScore) overallRushScore.textContent = powerup ? String(Math.round(powerup.score)) : "—";
+    }
+
     function renderLeaderboard() {
       renderLeaderboardList("classic", leaderboardClassicList, leaderboardClassicNote, "Classic Bowling");
       renderLeaderboardList("powerup", leaderboardRushList, leaderboardRushNote, "Strike Rush");
+      renderOverallRecords();
       renderLeaderboardTabs();
     }
 
@@ -4747,6 +4752,16 @@
         const message = `Firebase-Zugriff fehlgeschlagen: ${error.message}`;
         leaderboardClassicNote.textContent = message;
         leaderboardRushNote.textContent = message;
+      });
+
+      leaderboardOverallRef.on("value", snapshot => {
+        const raw = snapshot.val() || {};
+        leaderboardOverall.classic = normalizeOverallRecord(raw.classic);
+        leaderboardOverall.powerup = normalizeOverallRecord(raw.powerup);
+        renderOverallRecords();
+      }, error => {
+        console.warn("Allzeit-Rekord konnte nicht geladen werden:", error);
+        renderOverallRecords();
       });
     }
 
@@ -5268,18 +5283,9 @@
       const framePins = frame.throws.reduce((sum, value) => sum + (Number(value) || 0), 0);
       const finalThrow = frameIndex === 9 && frameComplete;
       if (gameMode === "powerup" && frameComplete && framePins > 0) {
-        // Boni gibt es nur nach einem komplett abgeschlossenen Frame.
+        // Powerups gibt es nur nach einem komplett abgeschlossenen Frame.
         const rewardTier = classifyFramePowerupTier(frameIndex, frame.throws);
-        const continueAfterNormalReward = () => {
-          if (powerupState?.epicDraftPending && !finalThrow) {
-            powerupState.epicDraftPending = false;
-            showFlash("EPISCHE EXTRA-AUSWAHL!");
-            scheduleGameTimer(() => showPowerupChoice("epic", continuation, false), 320);
-            return;
-          }
-          if (typeof continuation === "function") continuation();
-        };
-        scheduleGameTimer(() => showPowerupChoice(rewardTier, continueAfterNormalReward, finalThrow), 420);
+        scheduleGameTimer(() => showPowerupChoice(rewardTier, continuation, finalThrow), 420);
       } else {
         // Innerhalb eines Frames gibt es keine Slot-Unterbrechung. Ein kompletter 0-Pin-Frame erhält ebenfalls kein Powerup.
         scheduleGameTimer(() => { if (typeof continuation === "function") continuation(); }, 150);
