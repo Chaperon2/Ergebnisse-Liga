@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#16243a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Liga-Verwaltung">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/strikeclub-steampunk-icon-32.png?v=5">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/strikeclub-steampunk-icon-192.png?v=5">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/strikeclub-steampunk-icon-180.png?v=5">
+  <link rel="manifest" href="site.webmanifest?v=5">
+  <title>Strikeclub Liga · Administration</title>
+  <link rel="stylesheet" href="/css/admin.css?v=15.9">
+</head>
+<body>
+  <main class="shell">
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Strikeclub Velten</div>
+        <div class="brand">Liga-Verwaltung</div>
+      </div>
+      <nav class="public-links" aria-label="Öffentliche Seiten">
+        <a href="/ergebnisse.html">Ergebnisse</a>
+        <a href="/spielplan.html">Spielplan</a>
+        <a href="/archiv.html">Archiv</a>
+      </nav>
+    </header>
+
+    <section id="loginPanel" class="panel login-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="section-kicker">Geschützter Bereich</span>
+          <h1>Anmelden</h1>
+          <p class="muted">Nur freigeschaltete Firebase-Benutzer dürfen Rohdaten lesen oder ändern.</p>
+        </div>
+      </div>
+      <form id="loginForm" class="grid two">
+        <label>E-Mail
+          <input id="email" type="email" autocomplete="username" required>
+        </label>
+        <label>Passwort
+          <input id="password" type="password" autocomplete="current-password" required>
+        </label>
+        <div class="actions">
+          <button type="submit">Anmelden</button>
+        </div>
+      </form>
+      <div id="loginStatus" class="status hidden"></div>
+    </section>
+
+    <div id="adminArea" class="hidden">
+      <section class="panel context-panel">
+        <div class="context-account">
+          <div>
+            <span class="section-kicker">Angemeldet</span>
+            <h2>Verwaltung</h2>
+            <div id="accountInfo" class="muted account-info"></div>
+          </div>
+          <button id="logoutButton" class="secondary compact-button">Abmelden</button>
+        </div>
+        <div class="context-season">
+          <label>Aktive Saison
+            <select id="seasonSelect" aria-label="Saison auswählen"></select>
+          </label>
+          <button id="refreshButton" class="secondary compact-button">Neu laden</button>
+        </div>
+        <div id="seasonSummary" class="season-summary">Noch keine Saison geladen.</div>
+        <div id="adminStatus" class="status"></div>
+        <div id="seasonStatus" class="status hidden"></div>
+      </section>
+
+      <section id="bootstrapPanel" class="panel hidden">
+        <h2>Ersteinrichtung</h2>
+        <p>Dieses Konto ist angemeldet, aber noch nicht als Administrator freigeschaltet.</p>
+        <div class="notice">
+          Erstelle in Firestore manuell das Dokument <code>admins/<span id="uidText"></span></code>
+          mit den Feldern <code>active = true</code> und <code>role = "admin"</code>. Danach die Seite neu laden.
+        </div>
+      </section>
+
+      <div id="securedArea" class="hidden">
+        <nav class="workspace-nav" aria-label="Verwaltungsbereiche">
+          <button type="button" class="workspace-button active" data-workspace-target="results" aria-pressed="true">
+            <span class="workspace-icon">✓</span><span><strong>Ergebnisse</strong><small>Wöchentliche Eingabe</small></span>
+          </button>
+          <button type="button" class="workspace-button" data-workspace-target="correction" aria-pressed="false">
+            <span class="workspace-icon">↕</span><span><strong>Positionen</strong><small>Spieler 1 · 2 · 3</small></span>
+          </button>
+          <button type="button" class="workspace-button" data-workspace-target="season" aria-pressed="false">
+            <span class="workspace-icon">＋</span><span><strong>Neue Saison</strong><small>Teams und Kader</small></span>
+          </button>
+          <button type="button" class="workspace-button" data-workspace-target="schedule" aria-pressed="false">
+            <span class="workspace-icon">▦</span><span><strong>Spielplan</strong><small>Termine und Gegner</small></span>
+          </button>
+          <button type="button" class="workspace-button" data-workspace-target="system" aria-pressed="false">
+            <span class="workspace-icon">⚙</span><span><strong>System</strong><small>Prüfung und Verlauf</small></span>
+          </button>
+        </nav>
+
+        <div class="workspace-panel" data-workspace-panel="results">
+          <section class="panel daily-panel">
+            <div class="panel-heading daily-heading">
+              <div>
+                <span class="section-kicker">Alltag</span>
+                <h2>Wöchentliche Ergebnisse</h2>
+                <p class="muted">Diese Ansicht öffnet automatisch den nächsten noch nicht veröffentlichten Spieltag.</p>
+              </div>
+              <div class="matchday-stepper" aria-label="Zwischen Spieltagen wechseln">
+                <button id="previousMatchdayButton" type="button" class="secondary step-button" aria-label="Vorheriger Spieltag">←</button>
+                <button id="nextMatchdayButton" type="button" class="secondary step-button" aria-label="Nächster Spieltag">→</button>
+              </div>
+            </div>
+
+            <div class="editor-meta">
+              <label class="matchday-select-field">Spieltag laden
+                <select id="matchdaySelect"></select>
+              </label>
+              <label>Nummer
+                <input id="matchdayNumber" type="number" min="1" max="18" readonly>
+              </label>
+              <label>Datum
+                <input id="matchdayDate" type="date" required>
+              </label>
+              <label>Status
+                <input id="matchdayStatus" value="draft" readonly>
+              </label>
+            </div>
+
+            <section class="editor-block pairings-block">
+              <div class="block-heading">
+                <div><span class="block-number">1</span><h3>Paarungen und Bahnen</h3></div>
+                <span class="muted">Aus dem Saisonspielplan übernommen</span>
+              </div>
+              <div id="pairings" class="pairing-list"></div>
+            </section>
+
+            <section class="editor-block scores-block">
+              <div class="block-heading">
+                <div><span class="block-number">2</span><h3>Spielergebnisse</h3></div>
+                <div id="scoreEntryProgress" class="entry-progress">0 Werte eingetragen</div>
+              </div>
+              <p class="muted score-help">Leeres Feld bedeutet: Spieler fehlt in dieser Runde; der hinterlegte Ersatzwert wird verwendet. Zulässig sind 1 bis 300.</p>
+              <div id="scoreGrid" class="score-grid"></div>
+            </section>
+
+            <section class="editor-block publish-block">
+              <div class="block-heading">
+                <div><span class="block-number">3</span><h3>Prüfen und veröffentlichen</h3></div>
+              </div>
+              <div id="publicationGuidance" class="notice"></div>
+              <label class="publication-note">Veröffentlichungs- oder Korrekturhinweis
+                <textarea id="publicationNote" rows="3" maxlength="500" placeholder="Bei normalen Veröffentlichungen optional; bei Korrekturen zwingend angeben."></textarea>
+              </label>
+              <div id="previewStatus" class="status hidden"></div>
+              <div id="editorStatus" class="status hidden"></div>
+            </section>
+
+            <div class="actions editor-actions">
+              <button id="saveButton" class="secondary">Entwurf speichern</button>
+              <button id="previewButton" class="secondary">Vorschau</button>
+              <button id="publishButton">Veröffentlichen</button>
+            </div>
+          </section>
+        </div>
+
+        <div class="workspace-panel hidden" data-workspace-panel="correction">
+          <section id="seasonCorrectionPanel" class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Aktuelle Saison</span>
+                <h2>Spielerpositionen ändern</h2>
+                <p class="muted">Hier änderst du ausschließlich die Positionen 1, 2 und 3 innerhalb eines Teams, zum Beispiel Spieler von Position 3 auf 2 und gleichzeitig den bisherigen Spieler von 2 auf 3. Namen und Teamzugehörigkeiten bleiben unverändert. Bereits veröffentlichte Ergebnisse werden danach rückwirkend neu berechnet.</p>
+              </div>
+            </div>
+            <div class="notice mode-correction"><strong>Regel:</strong> Jedes echte Team muss nach der Änderung weiterhin genau einmal Position 1, einmal Position 2 und einmal Position 3 besitzen. Tausche Positionen deshalb immer vollständig, z. B. 2 ↔ 3.</div>
+            <div id="correctionTeamSetup" class="hidden" aria-hidden="true"></div>
+            <h3 class="subsection-title correction-first-title">Positionen im aktuellen Saisonkader</h3>
+            <div id="correctionPlayerSetup" class="table-wrap setup-wrap"></div>
+            <label class="correction-note">Begründung der Positionsänderung
+              <textarea id="correctionNote" rows="3" maxlength="500" placeholder="z. B. Position 2 und 3 im Team getauscht"></textarea>
+            </label>
+            <div class="actions section-actions">
+              <button id="correctSeasonButton" class="danger-button">Positionen speichern und neu berechnen</button>
+            </div>
+            <div id="correctionStatus" class="status hidden"></div>
+          </section>
+        </div>
+
+        <div class="workspace-panel hidden" data-workspace-panel="season">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Saisonwechsel</span>
+                <h2>Nächste Saison anlegen</h2>
+                <p class="muted">Die neue Saison erhält 10 Teams und 18 Spieltage. Nach Teams und Kader legst du im Bereich Spielplan nur die Begegnungen und Bahnpaare von Spieltag 1 fest; die restlichen Spieltage werden automatisch erzeugt. Übernommen wird ausschließlich der finale Spielerschnitt.</p>
+              </div>
+            </div>
+            <div class="notice template-note"><strong>Neue Teamvorlage:</strong> Die festen Team-IDs lauten <code>Team 1</code> bis <code>Team 10</code>. <code>Team 10</code> ist das DummyTeam; dessen Anzeigename und feste Werte bleiben geschützt.</div>
+            <div class="grid four season-create-grid">
+              <label>Abgeschlossene Quellsaison
+                <input id="sourceSeasonName" readonly>
+              </label>
+              <label>Neue Saison-ID
+                <input id="newSeasonId" placeholder="2027-s1" autocomplete="off">
+              </label>
+              <label>Anzeigename
+                <input id="newSeasonName" placeholder="Liga 2027 S1" autocomplete="off">
+              </label>
+              <label>Datum Spieltag 1
+                <input id="firstMatchdayDate" type="date">
+              </label>
+            </div>
+            <div class="actions section-actions">
+              <button id="createSeasonButton">Neue Saison vorbereiten</button>
+            </div>
+            <div id="createSeasonStatus" class="status hidden"></div>
+          </section>
+
+          <section id="seasonSetupPanel" class="panel hidden">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Vorlage bearbeiten</span>
+                <h2>Teams und Kader</h2>
+                <p class="muted">Teamwechsel sind erlaubt. Beim Ändern eines Spielernamens wird der finale Vorsaisonsschnitt automatisch anhand des Namens neu zugeordnet. Die Team-Auswahl zeigt die oben eingetragenen Teamnamen. Neue Spieler erhalten keinen Vorsaisonsschnitt. Ersatzwerte: Position 1/2/3 = 160/150/140.</p>
+              </div>
+            </div>
+            <h3>Teams</h3>
+            <div id="teamSetup" class="table-wrap setup-wrap"></div>
+            <h3 class="subsection-title">Kaderplätze</h3>
+            <div id="playerSetup" class="table-wrap setup-wrap"></div>
+            <div class="actions section-actions">
+              <button id="saveSetupButton">Teams und Kader speichern</button>
+            </div>
+            <div id="setupStatus" class="status hidden"></div>
+          </section>
+
+          <details class="panel secondary-panel">
+            <summary>Historische Ausgangsdaten</summary>
+            <p class="muted">Nur für die Ersteinrichtung: importiert die geprüfte Saison 2026 S2. Ein erneuter Import erzeugt keine Duplikate.</p>
+            <div class="actions"><button id="importButton" class="secondary">Saison 2026 S2 importieren</button></div>
+            <div id="importStatus" class="status hidden"></div>
+          </details>
+        </div>
+
+        <div class="workspace-panel hidden" data-workspace-panel="schedule">
+          <section id="schedulePanel" class="panel hidden">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Saisonplanung</span>
+                <h2>Spielplan der Saison</h2>
+                <p class="muted">In der 10-Team-Liga gibt es 18 Spieltage. Die Spiele laufen immer auf festen Bahnpaaren 1+2, 3+4, 5+6, 7+8 und 9+10; das DummyTeam spielt immer in der Begegnung auf 9+10 mit der festen Vorgabe 160 · 150 · 140.</p>
+              </div>
+              <a class="button secondary" href="/spielplan.html" target="_blank" rel="noopener">Öffentliche Ansicht</a>
+            </div>
+            <div class="notice"><strong>Automatischer Bahnplan:</strong> Lege bei <strong>Spieltag 1</strong> die fünf Begegnungen auf den Bahnpaaren 1+2, 3+4, 5+6, 7+8 und 9+10 fest. DummyTeam ist fest in der Begegnung auf 9+10. Danach erzeugt das System Spieltag 2 bis 18 automatisch. In Spieltag 1 bis 9 spielt jedes echte Team auf den vier normalen Bahnpaaren jeweils zweimal und einmal auf 9+10; direkte Wiederholungen desselben Bahnpaares werden vermieden. Spieltag 10 bis 18 wiederholt Spieltag 1 bis 9.</div>
+            <div class="schedule-generator-box">
+              <div>
+                <span class="section-kicker">Automatik</span>
+                <strong>Spieltag 1 festlegen → kompletten Spielplan erzeugen</strong>
+                <small>Damit sind auch zwei aufeinanderfolgende Spieltage auf derselben Bahn ausgeschlossen.</small>
+              </div>
+              <button id="generateScheduleButton" type="button" class="secondary">Aus Spieltag 1 automatisch erstellen</button>
+            </div>
+            <div id="scheduleGeneratorStatus" class="status hidden"></div>
+            <div id="scheduleEditor" class="schedule-editor"></div>
+            <div class="actions section-actions"><button id="saveScheduleButton">Spielplan prüfen und veröffentlichen</button></div>
+            <div id="scheduleStatus" class="status hidden"></div>
+          </section>
+        </div>
+
+        <div class="workspace-panel hidden" data-workspace-panel="system">
+          <section class="panel">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Technik</span>
+                <h2>Systemprüfung</h2>
+                <p class="muted">Prüft Teams, Kader, alle Spieltage, Ergebnisdatensätze und öffentliche Dokumente.</p>
+              </div>
+              <div class="actions">
+                <button id="auditSeasonButton" class="secondary">System prüfen</button>
+                <button id="rebuildPublicButton" class="secondary">Statistiken neu berechnen</button>
+              </div>
+            </div>
+            <div class="notice"><strong>Deployment-Diagnose:</strong> Admin <span id="frontendVersion">15.9</span> · Functions <span id="backendVersion">wird geprüft …</span></div>
+            <div class="actions section-actions"><button id="checkDeploymentButton" class="secondary">Deployment prüfen</button></div>
+            <div id="deployStatus" class="status hidden"></div>
+            <div id="auditSummary" class="integrity-summary hidden"></div>
+            <div id="auditStatus" class="status hidden"></div>
+            <div id="auditIssues" class="integrity-list"></div>
+          </section>
+
+          <section class="panel" id="rosterTransferPanel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Laufende Saison</span>
+                <h2>Spieler zwischen Teams wechseln</h2>
+                <p class="muted">Der Wechsel gilt erst ab dem gewählten, noch nicht veröffentlichten Spieltag. Bereits veröffentlichte Spieltage bleiben unverändert. Damit jedes Team weiterhin genau drei Kaderpositionen hat, wird automatisch mit dem Spieler derselben Position im Zielteam getauscht.</p>
+              </div>
+            </div>
+            <div class="grid four roster-transfer-grid">
+              <label>Ab Spieltag
+                <select id="transferMatchday"></select>
+              </label>
+              <label>Spieler
+                <select id="transferPlayer"></select>
+              </label>
+              <label>Neues Team
+                <select id="transferTargetTeam"></select>
+              </label>
+              <label>Automatischer Tausch
+                <input id="transferSwapInfo" readonly value="–">
+              </label>
+            </div>
+            <div class="notice" id="transferPreview">Wähle einen Spieler und ein Zielteam.</div>
+            <div class="actions section-actions">
+              <button id="transferPlayerButton" class="secondary">Teamwechsel speichern</button>
+            </div>
+            <div id="transferStatus" class="status hidden"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Live-Saison</span>
+                <h2>Aktive Ergebnissaison wechseln</h2>
+                <p class="muted">Setzt die aktuell oben ausgewählte Saison als öffentliche Ergebnissaison. Das ist nötig, bevor eine bisher aktive Testsaison gelöscht werden kann. Die gewählte Saison muss bereits mindestens einen veröffentlichten Ergebnisstand besitzen.</p>
+              </div>
+              <button id="activateSeasonButton" class="secondary">Ausgewählte Saison live setzen</button>
+            </div>
+            <div id="activateSeasonStatus" class="status hidden"></div>
+          </section>
+
+
+          <section class="panel danger-panel">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Minispiel</span>
+                <h2>Leaderboard leeren</h2>
+                <p class="muted">Löscht die Ranglisten von Classic Bowling und Strike Rush serverseitig. Dadurch funktioniert das Löschen unabhängig von den Realtime-Database-Regeln im Browser.</p>
+              </div>
+              <button id="clearLeaderboardButton" class="danger-button">Beide Ranglisten leeren</button>
+            </div>
+            <div id="clearLeaderboardStatus" class="status hidden"></div>
+          </section>
+
+          <section class="panel danger-panel">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Saisonverwaltung</span>
+                <h2>Testsaison löschen</h2>
+                <p class="muted">Löscht die aktuell ausgewählte Saison vollständig inklusive Spieltagen, Ergebnissen und zugehörigen öffentlichen Testdaten. Die aktive öffentliche Saison ist geschützt und kann hier nicht gelöscht werden.</p>
+              </div>
+              <button id="deleteSeasonButton" class="danger-button">Ausgewählte Saison löschen</button>
+            </div>
+            <div class="notice danger-notice"><strong>Wichtig:</strong> Bereits früher angelegte 14-Spieltage-Testsaisons werden durch ein Deployment nicht automatisch auf 18 Spieltage umgebaut. Lösche die Testsaison und lege sie anschließend neu an.</div>
+            <div id="deleteSeasonStatus" class="status hidden"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading split-heading">
+              <div>
+                <span class="section-kicker">Sicherung</span>
+                <h2>Veröffentlichungsverlauf</h2>
+                <p class="muted">Jede Veröffentlichung, Korrektur und Wiederherstellung bleibt als unveränderlicher Stand gespeichert.</p>
+              </div>
+              <button id="reloadHistoryButton" class="secondary">Verlauf neu laden</button>
+            </div>
+            <div id="publicationHistory" class="table-wrap"></div>
+            <div id="historyStatus" class="status hidden"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/js/admin.js?v=15.12"></script>
+</body>
+</html>
