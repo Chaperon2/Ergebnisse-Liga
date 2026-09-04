@@ -5327,7 +5327,10 @@
         const isTenth = index === 9;
         const frameBonus = gameMode === "powerup" ? Math.max(0, Number(frame.bonus) || 0) : 0;
         const frameMultiplier = gameMode === "powerup" ? Math.max(1, Number(frame.scoreMultiplier) || 1) : 1;
-        const framePenalty = gameMode === "powerup" ? Math.max(0, Number(frame.openPenalty) || 0) : 0;
+        const penaltyApplies = gameMode === "powerup"
+          && isFrameCompleteAfterThrow(index, frame.throws)
+          && classifyFramePowerupTier(index, frame.throws) === "bronze";
+        const framePenalty = penaltyApplies ? Math.max(0, Number(frame.openPenalty) || 0) : 0;
         return `
           <div class="frame-card ${isCurrent ? "current" : ""} ${isTenth ? "tenth" : ""} ${gameMode === "powerup" ? "powerup-frame" : ""}">
             <div class="frame-head">F${index + 1}${frameMultiplier > 1 ? `<span class="frame-score-mult-mark">×${formatMultiplier(frameMultiplier)}</span>` : ""}</div>
