@@ -2715,6 +2715,7 @@
     .effect-legend .legend-frame { color:var(--effect-frame); }
     .effect-legend .legend-copy { color:var(--effect-copy); }
 
+    .effect-chain-hint { margin:0 0 10px; color:#b8ad98; font-size:.72rem; line-height:1.4; font-weight:700; text-align:center; }
     .frame-score-mult-mark {
       display:inline-flex; margin-left:3px; padding:1px 3px; border-radius:4px;
       color:var(--effect-frame); border:1px solid rgba(169,139,255,.42);
@@ -2722,6 +2723,45 @@
     }
     .frame-penalty-mark { color:#ff8585; font-size:.55rem; font-weight:900; margin-left:3px; }
     .score-multiplier-chip { border-color:rgba(57,230,239,.36) !important; color:var(--effect-multi) !important; }
+  </style>
+
+
+
+  <style id="phase29-strikerush-clarity-fixes">
+    #throwStatsHud { display:none !important; }
+
+    body.game-focus .game-top-hud,
+    body.game-focus .score-total-hud {
+      top: calc(max(6px, var(--safe-top)) + 60px) !important;
+      padding: 5px 8px !important;
+      font-size: .68rem !important;
+    }
+    body.game-focus .game-top-hud { left: 7px !important; }
+    body.game-focus .score-total-hud { right: 7px !important; }
+
+    @media (max-width:700px) {
+      body.game-focus .game-top-hud { display:none !important; }
+      body.game-focus .score-total-hud {
+        top: calc(max(5px, var(--safe-top)) + 57px) !important;
+        right: 6px !important;
+        max-width:54vw;
+      }
+    }
+
+    .powerup-report-section-title {
+      margin:5px 2px 1px;
+      color:#a99d87;
+      font-family:"Oswald",sans-serif;
+      font-size:.66rem;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .powerup-report-row.score-component {
+      border-color:rgba(255,255,255,.13);
+      background:rgba(255,255,255,.04);
+    }
+    .powerup-report-row.score-component .powerup-report-points { font-size:.62rem; }
   </style>
 
 </head>
@@ -2765,6 +2805,7 @@
                   <span class="legend-frame"><i class="fa-solid fa-xmark"></i> PUNKTE ×</span>
                   <span class="legend-copy"><i class="fa-solid fa-copy"></i> EFFEKT ×</span>
                 </div>
+                <p class="effect-chain-hint">EFFEKT × verkettet sich: ×3 auf einen ×2-Effekt macht den nächsten Effekt ×6.</p>
                 <div class="mode-picker">
                   <button class="mode-card classic" id="classicModeBtn" type="button">
                     <span class="mode-icon"><i class="fa-solid fa-bowling-ball"></i></span>
@@ -2809,7 +2850,7 @@
               <div class="scoreboard-grid" id="scoreboard"></div>
               <div class="passive-rack hidden" id="passiveRack" aria-live="polite">
                 <div class="passive-rack-head">
-                  <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Dauerboni</span>
+                  <span class="passive-rack-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Dauereffekte</span>
                   <span class="passive-rack-count" id="passiveRackCount">0/3</span>
                 </div>
                 <div class="passive-slots" id="passiveSlots"></div>
@@ -3103,6 +3144,7 @@
     let selectedPowerupId = null;
     let currentDraftTier = "bronze";
     let passivePowerups = [];
+    let pendingRandomResultFlashes = [];
     const MAX_PASSIVES = 3;
 
     function freshPowerupState() {
@@ -3138,6 +3180,7 @@
         bonusMultiplier: 1,
         copyNextPowerupExtra: 0,
         quantumCopyCharges: 0,
+        effectMultiplierQueue: [],
         tierHackCharges: 0,
         timeBombThrows: 0,
         timeBombPins: 0,
@@ -3196,6 +3239,7 @@
         hyperInterestFrames: 0,
         bronzeToGoldCharges: 0,
         rerollCurrentDraft: false,
+        rerollCurrentDrafts: 0,
         seriesAccountEnabled: false,
         seriesAccountSources: [],
         resonanceEnabled: false,
@@ -3290,6 +3334,28 @@
       return items[Math.floor(Math.random() * items.length)];
     }
 
+    function announceRandomResult(label, result) {
+      const cleanLabel = String(label || "ZUFALL").trim().toUpperCase();
+      const cleanResult = String(result ?? "").trim();
+      if (!cleanResult) return;
+      pendingRandomResultFlashes.push(`${cleanLabel}: ${cleanResult}`);
+    }
+
+    function scheduleEffectMultiplier(offset, factor, applicationCount = 1) {
+      if (!powerupState) return;
+      const index = Math.max(0, Math.floor(Number(offset) || 0));
+      const baseFactor = Math.max(1, Number(factor) || 1);
+      const applications = Math.max(1, Math.floor(Number(applicationCount) || 1));
+      const scaledFactor = baseFactor * applications;
+      while (powerupState.effectMultiplierQueue.length <= index) powerupState.effectMultiplierQueue.push(1);
+      const existing = Math.max(1, Number(powerupState.effectMultiplierQueue[index]) || 1);
+      powerupState.effectMultiplierQueue[index] = existing * scaledFactor;
+    }
+
+    function scheduleEffectMultiplierPattern(factors, applicationCount = 1) {
+      (factors || []).forEach((factor, index) => scheduleEffectMultiplier(index, factor, applicationCount));
+    }
+
     function isInstantPointEffect(item) {
       return Boolean(item && ["b8","b9","s9","s10","g9","g10","nb12","ns19"].includes(item.id));
     }
@@ -3348,7 +3414,23 @@
     }
 
     function addTimeBomb(factor, sourceId = currentPowerupSourceId()) {
-      powerupState.timeBombEffects.push({ sourceId, throws:3, pins:0, factor:Math.max(0, Number(factor) || 0) });
+      powerupState.timeBombEffects.push({
+        sourceId,
+        startFrame: currentFrame + 1,
+        remainingFrames: 3,
+        pins: 0,
+        factor: Math.max(0, Number(factor) || 0)
+      });
+    }
+
+    function applyEffectItem(item, applicationCount = 1) {
+      if (!item) return;
+      const count = Math.max(1, Math.floor(Number(applicationCount) || 1));
+      if (typeof item.scaledApply === "function") {
+        item.scaledApply(count);
+        return;
+      }
+      for (let i = 0; i < count; i += 1) item.apply();
     }
 
     function repeatEffectById(effectId) {
@@ -3358,7 +3440,7 @@
       const previousSource = activePowerupSourceId;
       try {
         // Die Wiederholung gehört punktetechnisch zum auslösenden Effekt.
-        target.apply();
+        applyEffectItem(target, 1);
       } finally {
         activePowerupSourceId = previousSource;
       }
@@ -3434,29 +3516,92 @@
       distributePowerupCredit(globalSources, globalExtra);
     }
 
+    function getRawNextThrows(fromFrameIndex, count) {
+      const next = [];
+      for (let i = fromFrameIndex + 1; i < frames.length; i += 1) {
+        for (let j = 0; j < frames[i].throws.length; j += 1) {
+          next.push(Math.max(0, Number(frames[i].throws[j]) || 0));
+          if (next.length === count) return next;
+        }
+      }
+      return next;
+    }
+
+    function calculateRawBowlingScore() {
+      let running = 0;
+      for (let i = 0; i < 10; i += 1) {
+        const t = frames[i]?.throws || [];
+        let value = null;
+        if (i < 9) {
+          if (!t.length) continue;
+          if (t[0] === 10) {
+            const bonus = getRawNextThrows(i, 2);
+            if (bonus.length < 2) continue;
+            value = 10 + bonus[0] + bonus[1];
+          } else {
+            if (t.length < 2) continue;
+            if (t[0] + t[1] === 10) {
+              const bonus = getRawNextThrows(i, 1);
+              if (bonus.length < 1) continue;
+              value = 10 + bonus[0];
+            } else {
+              value = Math.max(0, Number(t[0]) || 0) + Math.max(0, Number(t[1]) || 0);
+            }
+          }
+        } else {
+          if (!isTenthResolved(frames[i])) continue;
+          value = t.reduce((sum, roll) => sum + Math.max(0, Number(roll) || 0), 0);
+        }
+        running += Math.max(0, Number(value) || 0);
+      }
+      return Math.round(running);
+    }
+
     function renderPowerupReport() {
       if (gameMode !== "powerup") {
         powerupReport.classList.add("hidden");
         powerupReportList.innerHTML = "";
         return;
       }
-      const entries = Object.values(powerupStats).sort((a,b) => (b.points || 0) - (a.points || 0) || (b.selections || 0) - (a.selections || 0));
+
+      const finalScore = Math.round(getFinalScore());
+      const rawBowling = Math.round(calculateRawBowlingScore());
+      const directRush = Math.round(Math.max(0, Number(powerupBonusScore) || 0));
+      const endAdjustment = Math.round(Number(frames[9]?.endAdjustment) || 0);
+      const multiplierAndRules = Math.round(finalScore - rawBowling - directRush - endAdjustment);
+
+      const entries = Object.values(powerupStats)
+        .sort((a,b) => (b.points || 0) - (a.points || 0) || (b.selections || 0) - (a.selections || 0));
+
       powerupReport.classList.remove("hidden");
-      powerupReportTotal.textContent = `+${Math.round(powerupBonusScore)} Rush`;
-      if (!entries.length) {
-        powerupReportList.innerHTML = '<div class="powerup-report-empty">In dieser Runde wurde noch kein Effekt aktiviert.</div>';
-        return;
+      powerupReportTotal.textContent = `Endstand ${finalScore.toLocaleString("de-DE")}`;
+
+      const rows = [
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bowling-ball"></i></span><span class="powerup-report-name"><strong>Bowling-Grundwert</strong><small>Normale Bowlingwertung ohne Strike-Rush-Vervielfachungen</small></span><span class="powerup-report-points">+${rawBowling.toLocaleString("de-DE")}</span></div>`,
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bolt"></i></span><span class="powerup-report-name"><strong>Direkte Rush-Punkte</strong><small>Alle tatsächlich gutgeschriebenen Rush-Punkte vor Frame-/Wurf-Vervielfachungen</small></span><span class="powerup-report-points">+${directRush.toLocaleString("de-DE")}</span></div>`,
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-frame"><i class="fa-solid fa-xmark"></i></span><span class="powerup-report-name"><strong>Multiplikatoren & Frame-Regeln</strong><small>PUNKTE ×, Wurf ×, Kombinationen und mögliche Frame-Abzüge</small></span><span class="powerup-report-points">${multiplierAndRules >= 0 ? "+" : "−"}${Math.abs(multiplierAndRules).toLocaleString("de-DE")}</span></div>`
+      ];
+
+      if (endAdjustment) {
+        rows.push(`<div class="powerup-report-row static score-component"><span class="powerup-report-icon gold"><i class="fa-solid fa-skull"></i></span><span class="powerup-report-name"><strong>Endeffekt</strong><small>Änderung des vollständigen Endstands</small></span><span class="powerup-report-points">${endAdjustment >= 0 ? "+" : "−"}${Math.abs(endAdjustment).toLocaleString("de-DE")}</span></div>`);
       }
-      const tracked = entries.reduce((sum,entry) => sum + Math.max(0, Number(entry.points) || 0), 0);
-      const rows = entries.map(entry => {
-        const points = Math.round(Math.max(0, Number(entry.points) || 0));
-        const uses = entry.activations > entry.selections ? `${entry.selections}× gewählt · ${entry.activations}× ausgelöst` : `${entry.selections}× gewählt`;
-        const item = POWERUPS.find(candidate => candidate.id === entry.id);
-        const desc = item ? String(item.desc || "").replace(/^DAUERHAFT:\s*/i, "") : "";
-        return `<button type="button" class="powerup-report-row" data-report-effect="${escapeHtml(entry.id)}" aria-expanded="false"><span class="powerup-report-icon ${entry.tier} effect-${effectFamilyMeta(item?.family).className}"><i class="fa-solid ${entry.icon}"></i></span><span class="powerup-report-name"><strong>${escapeHtml(entry.name)}</strong><small>${uses} · antippen für Erklärung</small></span><span class="powerup-report-points">+${points}</span><span class="powerup-report-desc hidden">${escapeHtml(desc)}</span></button>`;
-      });
-      const remainder = Math.round(powerupBonusScore - tracked);
-      if (Math.abs(remainder) >= 2) rows.push(`<div class="powerup-report-row static"><span class="powerup-report-icon bronze"><i class="fa-solid fa-shuffle"></i></span><span class="powerup-report-name"><strong>Kombination / Rundung</strong><small>Gemeinsam erzeugte Rush-Punkte</small></span><span class="powerup-report-points">${remainder >= 0 ? "+" : ""}${remainder}</span></div>`);
+
+      if (entries.length) {
+        rows.push(`<div class="powerup-report-section-title">Effekt-Anteile</div>`);
+        const tracked = entries.reduce((sum,entry) => sum + Math.max(0, Number(entry.points) || 0), 0);
+        entries.forEach(entry => {
+          const points = Math.round(Math.max(0, Number(entry.points) || 0));
+          const uses = entry.activations > entry.selections ? `${entry.selections}× gewählt · ${entry.activations}× ausgelöst` : `${entry.selections}× gewählt`;
+          const item = POWERUPS.find(candidate => candidate.id === entry.id);
+          const desc = item ? String(item.desc || "").replace(/^DAUERHAFT:\s*/i, "") : "";
+          rows.push(`<button type="button" class="powerup-report-row" data-report-effect="${escapeHtml(entry.id)}" aria-expanded="false"><span class="powerup-report-icon ${entry.tier} effect-${effectFamilyMeta(item?.family).className}"><i class="fa-solid ${entry.icon}"></i></span><span class="powerup-report-name"><strong>${escapeHtml(entry.name)}</strong><small>${uses} · direkter Anteil · antippen für Erklärung</small></span><span class="powerup-report-points">+${points.toLocaleString("de-DE")}</span><span class="powerup-report-desc hidden">${escapeHtml(desc)}</span></button>`);
+        });
+        const untrackedRush = Math.round(directRush - tracked);
+        if (Math.abs(untrackedRush) >= 2) {
+          rows.push(`<div class="powerup-report-row static"><span class="powerup-report-icon bronze"><i class="fa-solid fa-shuffle"></i></span><span class="powerup-report-name"><strong>Nicht einzeln zuordenbar</strong><small>Gemeinsame Rush-Kombinationen / Rundung</small></span><span class="powerup-report-points">${untrackedRush >= 0 ? "+" : "−"}${Math.abs(untrackedRush).toLocaleString("de-DE")}</span></div>`);
+        }
+      }
+
       powerupReportList.innerHTML = rows.join("");
     }
 
@@ -3469,34 +3614,34 @@
       { id:"p4", tier:"pearl", kind:"strategy", family:"multiplier", name:"Spare-Kompass", icon:"fa-compass", desc:"Jeder Spare gibt +70 und erhöht deinen Multiplikator um +0,06.", apply(){ powerupState.spareMotorBonus += 70; powerupState.spareMotorMultiplierStep += .06; addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), 70); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), .06); } },
       { id:"p5", tier:"pearl", kind:"strategy", family:"multiplier", name:"Ascension", icon:"fa-stairs", desc:"Jeder Strike erhöht deinen Multiplikator dauerhaft um +0,20.", apply(){ powerupState.ascensionStep += .20; addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), .20); } },
       { id:"p6", tier:"pearl", kind:"strategy", family:"rush", name:"Meteor-Kern", icon:"fa-meteor", desc:"Jeder Strike gibt +120. Jeder Spare gibt +60.", apply(){ powerupState.meteorStrikeBonus += 120; powerupState.meteorSpareBonus += 60; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 120); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), 60); } },
-      { id:"p10", tier:"pearl", kind:"strategy", family:"copy", name:"Quantenwerk", icon:"fa-atom", desc:"Dein nächster Effekt wird dreifach ausgelöst. Der Effekt danach wird doppelt ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 1; powerupState.quantumCopyCharges += 2; } },
+      { id:"p10", tier:"pearl", kind:"strategy", family:"copy", name:"Quantenwerk", icon:"fa-atom", desc:"Nächster Effekt ×3, der darauffolgende ×2. Effekt-Multiplikatoren verketten sich und werden miteinander multipliziert.", scaledApply(count){ scheduleEffectMultiplierPattern([3, 2], count); } },
       { id:"p11", tier:"pearl", kind:"strategy", family:"rush", name:"Stufenjäger", icon:"fa-arrow-up-right-dots", desc:"Deine nächsten 4 Effekt-Auswahlen steigen jeweils eine Stufe auf.", apply(){ powerupState.tierHackCharges += 4; } },
       { id:"p12", tier:"pearl", kind:"strategy", family:"multiplier", name:"Doppelspur", icon:"fa-code-branch", desc:"Du startest mit +0,25 Multiplikator. Jede Spare- oder Strike-Serie gibt zusätzlich +25, +50, +75 …", apply(){ addGlobalMultiplier(.25); powerupState.cleanComboStep += 25; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 25); } },
-      { id:"b1", tier:"bronze", kind:"active", family:"frame", name:"Frame x1,5", icon:"fa-gauge-high", desc:"Alle Punkte im nächsten Frame zählen x1,5. (Bowling + Rush)", apply(){ addNextFrameMultiplier(1.5); } },
-      { id:"b2", tier:"bronze", kind:"active", family:"frame", name:"Frame x2", icon:"fa-clone", desc:"Alle Punkte im nächsten Frame zählen x2. (Bowling + Rush)", apply(){ addNextFrameMultiplier(2); } },
+      { id:"b1", tier:"bronze", kind:"active", family:"frame", name:"Frame x1,5", icon:"fa-gauge-high", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×1,5.", apply(){ addNextFrameMultiplier(1.5); } },
+      { id:"b2", tier:"bronze", kind:"active", family:"frame", name:"Frame x2", icon:"fa-clone", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×2.", apply(){ addNextFrameMultiplier(2); } },
       { id:"b4", tier:"bronze", kind:"active", family:"rush", name:"Stufen-Sprung", icon:"fa-arrow-up-right-dots", desc:"Die nächste Effektauswahl wird um eine Stufe erhöht. Bei einem Strike bleibt der Effekt bestehen, bis er eingelöst wird.", apply(){ powerupState.tierHackCharges += 1; } },
-      { id:"b5", tier:"bronze", kind:"active", family:"frame", name:"Zeitbombe", icon:"fa-bomb", desc:"Die nächsten 3 Würfe sammeln Pins. Danach wird jeder gesammelte Pin + alle Rush-Punkte in letzten (3.) ausgelösten Frame x8 gerechnet.", apply(){ addTimeBomb(8); } },
+      { id:"b5", tier:"bronze", kind:"active", family:"frame", requiresFutureFrames:3, name:"Zeitbombe", icon:"fa-bomb", desc:"Zeitbombe über die nächsten 3 Frames: Die gefällten Pins aller 3 Frames werden gesammelt. Am Ende von Frame 3 gilt: (gesammelte Pins + Rush-Punkte aus Frame 3) ×8 als zusätzliche Rush-Punkte.", apply(){ addTimeBomb(8); } },
       { id:"b6", tier:"bronze", kind:"active", family:"frame", name:"Rückwind", icon:"fa-wind", desc:"Wirfst du höchstens 4 Pins, zählen alle Punkte des folgenden Wurfs x3.", apply(){ powerupState.secondWindCharges += 1; powerupState.secondWindSourceQueue.push(currentPowerupSourceId()); } },
       { id:"b7", tier:"bronze", kind:"passive", family:"rush", name:"Serienfunke", icon:"fa-fire-flame-curved", desc:"Spare oder Strike in Folge geben +20, dann +40, +60 …", apply(){ powerupState.cleanComboStep += 20; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 20); } },
-      { id:"b8", tier:"bronze", kind:"score", family:"rush", name:"Sofort +30", icon:"fa-coins", desc:"Du bekommst sofort +30 Rush-Punkte.", final:true, apply(){ addPowerupBonus(30); } },
-      { id:"b9", tier:"bronze", kind:"score", family:"rush", name:"Sofort +45", icon:"fa-sack-dollar", desc:"Du bekommst sofort +45 Rush-Punkte.", final:true, apply(){ addPowerupBonus(45); } },
-      { id:"b10", tier:"bronze", kind:"passive", family:"multiplier", name:"Dauerschub +0,10", icon:"fa-seedling", desc:"Dein Multiplikator steigt dauerhaft um +0,10.", apply(){ addGlobalMultiplier(.10); } },
-      { id:"b11", tier:"bronze", kind:"active", family:"frame", name:"Frame x1,75", icon:"fa-forward-fast", desc:"Alle Punkte aus dem nächsten Frame zählen x1,75. ", apply(){ addNextFrameMultiplier(1.75); } },
-      { id:"b12", tier:"bronze", kind:"passive", family:"multiplier", name:"Dauerschub +0,15", icon:"fa-arrow-up", desc:"Dein Multiplikator steigt dauerhaft um +0,15.", apply(){ addGlobalMultiplier(.15); } },
-      { id:"b13", tier:"bronze", kind:"active", family:"frame", name:"Zeitbombe +", icon:"fa-stopwatch", desc:"Die nächsten 3 Würfe sammeln Pins. Danach wird jeder gesammelte Pin + alle Rush-Punkte in letzten (3.) ausgelösten Frame x10 gerechnet.", apply(){ addTimeBomb(10); } },
-      { id:"s1", tier:"silver", kind:"active", family:"copy", name:"Quantenkopie", icon:"fa-atom", desc:"Der nächste gewählte Effekt wird doppelt ausgelöst.", apply(){ powerupState.quantumCopyCharges += 1; } },
-      { id:"s2", tier:"silver", kind:"active", family:"frame", name:"Frame x3", icon:"fa-bolt-lightning", desc:"Alle Punkte aus dem nächsten Frame zählen x3. ", apply(){ addNextFrameMultiplier(3); } },
+      { id:"b8", tier:"bronze", kind:"score", family:"rush", name:"Sofort +30", icon:"fa-coins", desc:"Sofort: +30 Rush-Punkte.", final:true, apply(){ addPowerupBonus(30); } },
+      { id:"b9", tier:"bronze", kind:"score", family:"rush", name:"Sofort +45", icon:"fa-sack-dollar", desc:"Sofort: +45 Rush-Punkte.", final:true, apply(){ addPowerupBonus(45); } },
+      { id:"b10", tier:"bronze", kind:"passive", family:"multiplier", name:"Dauerschub +0,10", icon:"fa-seedling", desc:"Dauerhaft: Rush-Multiplikator +0,10.", apply(){ addGlobalMultiplier(.10); } },
+      { id:"b11", tier:"bronze", kind:"active", family:"frame", name:"Frame x1,75", icon:"fa-forward-fast", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×1,75.", apply(){ addNextFrameMultiplier(1.75); } },
+      { id:"b12", tier:"bronze", kind:"passive", family:"multiplier", name:"Dauerschub +0,15", icon:"fa-arrow-up", desc:"Dauerhaft: Rush-Multiplikator +0,15.", apply(){ addGlobalMultiplier(.15); } },
+      { id:"b13", tier:"bronze", kind:"active", family:"frame", requiresFutureFrames:3, name:"Zeitbombe +", icon:"fa-stopwatch", desc:"Zeitbombe über die nächsten 3 Frames: Die gefällten Pins aller 3 Frames werden gesammelt. Am Ende von Frame 3 gilt: (gesammelte Pins + Rush-Punkte aus Frame 3) ×10 als zusätzliche Rush-Punkte.", apply(){ addTimeBomb(10); } },
+      { id:"s1", tier:"silver", kind:"active", family:"copy", name:"Quantenkopie", icon:"fa-atom", desc:"Nächster Effekt ×2. Trifft dieser auf einen weiteren EFFEKT ×, werden die Faktoren miteinander multipliziert.", scaledApply(count){ scheduleEffectMultiplierPattern([2], count); } },
+      { id:"s2", tier:"silver", kind:"active", family:"frame", name:"Frame x3", icon:"fa-bolt-lightning", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×3.", apply(){ addNextFrameMultiplier(3); } },
       { id:"s3", tier:"silver", kind:"passive", family:"multiplier", name:"Combo-Reaktor", icon:"fa-radiation", desc:"Jeder spätere Spare oder Strike erhöht deinen Multiplikator dauerhaft um +0,10.", apply(){ powerupState.comboMultiplierStep += .10; addSourceValue(powerupState.comboMultiplierSources, currentPowerupSourceId(), .10); } },
       { id:"s4", tier:"silver", kind:"passive", family:"multiplier", name:"Spare-Motor", icon:"fa-gears", desc:"Jeder Spare gibt +40 und erhöht deinen Multiplikator um +0,05.", apply(){ powerupState.spareMotorBonus += 40; powerupState.spareMotorMultiplierStep += .05; addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), 40); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), .05); } },
       { id:"s5", tier:"silver", kind:"active", family:"rush", name:"Stufen-Sprung x2", icon:"fa-code-branch", desc:"Die nächsten 2 Auswahlen steigen jeweils eine Stufe auf.", apply(){ powerupState.tierHackCharges += 2; } },
-      { id:"s6", tier:"silver", kind:"active", family:"frame", name:"Zeitbombe XL", icon:"fa-explosion", desc:"Die nächsten 3 Würfe sammeln Pins. Danach wird jeder gesammelte Pin + alle Rush-Punkte in letzten (3.) ausgelösten Frame x15 gerechnet.", apply(){ addTimeBomb(15); } },
-      { id:"s7", tier:"silver", kind:"passive", family:"multiplier", name:"Dauerschub +0,25", icon:"fa-link", desc:"Dein Multiplikator steigt dauerhaft um +0,25.", apply(){ addGlobalMultiplier(.25); } },
-      { id:"s9", tier:"silver", kind:"score", family:"rush", name:"Sofort +90", icon:"fa-vault", desc:"Du bekommst sofort +90 Rush-Punkte.", final:true, apply(){ addPowerupBonus(90); } },
-      { id:"s10", tier:"silver", kind:"score", family:"rush", name:"Sofort +130", icon:"fa-gem", desc:"Du bekommst sofort +130 Rush-Punkte.", final:true, apply(){ addPowerupBonus(130); } },
-      { id:"s11", tier:"silver", kind:"active", family:"frame", name:"Frame x4", icon:"fa-rocket", desc:"Alle Punkte aus dem nächsten Frame zählen x4. ", apply(){ addNextFrameMultiplier(4); } },
-      { id:"s12", tier:"silver", kind:"passive", family:"multiplier", name:"Dauerschub +0,40", icon:"fa-chart-line", desc:"Dein Multiplikator steigt dauerhaft um +0,40.", apply(){ addGlobalMultiplier(.40); } },
+      { id:"s6", tier:"silver", kind:"active", family:"frame", requiresFutureFrames:3, name:"Zeitbombe XL", icon:"fa-explosion", desc:"Zeitbombe über die nächsten 3 Frames: Die gefällten Pins aller 3 Frames werden gesammelt. Am Ende von Frame 3 gilt: (gesammelte Pins + Rush-Punkte aus Frame 3) ×15 als zusätzliche Rush-Punkte.", apply(){ addTimeBomb(15); } },
+      { id:"s7", tier:"silver", kind:"passive", family:"multiplier", name:"Dauerschub +0,25", icon:"fa-link", desc:"Dauerhaft: Rush-Multiplikator +0,25.", apply(){ addGlobalMultiplier(.25); } },
+      { id:"s9", tier:"silver", kind:"score", family:"rush", name:"Sofort +90", icon:"fa-vault", desc:"Sofort: +90 Rush-Punkte.", final:true, apply(){ addPowerupBonus(90); } },
+      { id:"s10", tier:"silver", kind:"score", family:"rush", name:"Sofort +130", icon:"fa-gem", desc:"Sofort: +130 Rush-Punkte.", final:true, apply(){ addPowerupBonus(130); } },
+      { id:"s11", tier:"silver", kind:"active", family:"frame", name:"Frame x4", icon:"fa-rocket", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×4.", apply(){ addNextFrameMultiplier(4); } },
+      { id:"s12", tier:"silver", kind:"passive", family:"multiplier", name:"Dauerschub +0,40", icon:"fa-chart-line", desc:"Dauerhaft: Rush-Multiplikator +0,40.", apply(){ addGlobalMultiplier(.40); } },
       { id:"s13", tier:"silver", kind:"passive", family:"rush", name:"Serienfeuer", icon:"fa-fire", desc:"Spare oder Strike in Folge geben +35, dann +70, +105 …", apply(){ powerupState.cleanComboStep += 35; addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), 35); } },
-      { id:"s14", tier:"silver", kind:"active", family:"frame", name:"Zeitbombe XXL", icon:"fa-burst", desc:"Die nächsten 3 Würfe sammeln Pins. Danach wird jeder gesammelte Pin + alle Rush-Punkte in letzten (3.) ausgelösten Frame x20 gerechnet.", apply(){ addTimeBomb(20); } },
+      { id:"s14", tier:"silver", kind:"active", family:"frame", requiresFutureFrames:3, name:"Zeitbombe XXL", icon:"fa-burst", desc:"Zeitbombe über die nächsten 3 Frames: Die gefällten Pins aller 3 Frames werden gesammelt. Am Ende von Frame 3 gilt: (gesammelte Pins + Rush-Punkte aus Frame 3) ×20 als zusätzliche Rush-Punkte.", apply(){ addTimeBomb(20); } },
       { id:"g1", tier:"gold", kind:"passive", family:"multiplier", name:"Ascension", icon:"fa-arrow-trend-up", desc:"Jeder spätere Strike oder Spare erhöht deinen Multiplikator dauerhaft um +0,25.", apply(){ powerupState.ascensionStep += .25; addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), .25); addSourceValue(powerupState.ascensionSpareSources, currentPowerupSourceId(), .25); } },
       { id:"g2", tier:"gold", kind:"passive", family:"rush", name:"Midas-Hand", icon:"fa-hand-sparkles", desc:"Jede spätere Auswahl gibt zusätzlich +75 Punkte.", apply(){ powerupState.midasPerChoice += 75; addSourceValue(powerupState.midasSources, currentPowerupSourceId(), 75); } },
       { id:"g3", tier:"gold", kind:"passive", family:"multiplier", name:"Unendlichkeitskern", icon:"fa-infinity", desc:"Jede spätere Auswahl erhöht deinen Multiplikator dauerhaft um +0,25.", apply(){ powerupState.infinityPerChoice += .25; addSourceValue(powerupState.infinitySources, currentPowerupSourceId(), .25); } },
@@ -3504,39 +3649,39 @@
       { id:"g5", tier:"gold", kind:"passive", family:"rush", name:"Strike-Wahnsinn", icon:"fa-trophy", desc:"Strike-Serien geben +75, dann +150, +225 …", apply(){ powerupState.strikeMadnessStep += 75; addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), 75); } },
       { id:"g6", tier:"gold", kind:"passive", family:"rush", name:"Meteorregen", icon:"fa-meteor", desc:"Jeder spätere Strike gibt +120. Jeder Spare gibt +60.", apply(){ powerupState.meteorStrikeBonus += 120; powerupState.meteorSpareBonus += 60; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 120); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), 60); } },
       { id:"g7", tier:"gold", kind:"passive", family:"rush", name:"Final Boss", icon:"fa-skull", desc:"Am Ende: ab 300 +200, ab 400 +400, ab 500 +700 Rush-Punkte.", apply(){ powerupState.finalBossLevel += 1; addSourceValue(powerupState.finalBossSources, currentPowerupSourceId(), 1); } },
-      { id:"g8", tier:"gold", kind:"active", family:"copy", name:"Goldene Kopie", icon:"fa-wand-magic-sparkles", desc:"Dein nächster gewählter Effekt wird dreimal ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 2; } },
-      { id:"g9", tier:"gold", kind:"score", family:"rush", name:"Sofort +220", icon:"fa-crown", desc:"Du bekommst sofort +220 Rush-Punkte.", final:true, apply(){ addPowerupBonus(220); } },
-      { id:"g10", tier:"gold", kind:"score", family:"rush", name:"Sofort +300", icon:"fa-star", desc:"Du bekommst sofort +300 Rush-Punkte.", final:true, apply(){ addPowerupBonus(300); } },
-      { id:"g11", tier:"gold", kind:"active", family:"rush", name:"Frame x5", icon:"fa-bolt", desc:"Alle Punkte aus dem nächsten Frame zählen x5. ", apply(){ addNextFrameMultiplier(5); } },
-      { id:"g12", tier:"gold", kind:"passive", family:"multiplier", name:"Dauerschub +0,60", icon:"fa-angles-up", desc:"Dein Multiplikator steigt dauerhaft um +0,60.", apply(){ addGlobalMultiplier(.60); } },
+      { id:"g8", tier:"gold", kind:"active", family:"copy", name:"Goldene Kopie", icon:"fa-wand-magic-sparkles", desc:"Nächster Effekt ×3. Effekt-Multiplikatoren verketten sich und werden miteinander multipliziert.", scaledApply(count){ scheduleEffectMultiplierPattern([3], count); } },
+      { id:"g9", tier:"gold", kind:"score", family:"rush", name:"Sofort +220", icon:"fa-crown", desc:"Sofort: +220 Rush-Punkte.", final:true, apply(){ addPowerupBonus(220); } },
+      { id:"g10", tier:"gold", kind:"score", family:"rush", name:"Sofort +300", icon:"fa-star", desc:"Sofort: +300 Rush-Punkte.", final:true, apply(){ addPowerupBonus(300); } },
+      { id:"g11", tier:"gold", kind:"active", family:"rush", name:"Frame x5", icon:"fa-bolt", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×5.", apply(){ addNextFrameMultiplier(5); } },
+      { id:"g12", tier:"gold", kind:"passive", family:"multiplier", name:"Dauerschub +0,60", icon:"fa-angles-up", desc:"Dauerhaft: Rush-Multiplikator +0,60.", apply(){ addGlobalMultiplier(.60); } },
       { id:"g13", tier:"gold", kind:"passive", family:"rush", name:"Supernova", icon:"fa-sun", desc:"Jeder spätere Strike gibt +200. Jeder Spare gibt +100.", apply(){ powerupState.meteorStrikeBonus += 200; powerupState.meteorSpareBonus += 100; addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), 200); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), 100); } },
       { id:"g14", tier:"gold", kind:"passive", family:"rush", name:"Königskette", icon:"fa-crown", desc:"Strike-Serien geben +125, dann +250, +375 …", apply(){ powerupState.strikeMadnessStep += 125; addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), 125); } },
-      { id:"g15", tier:"gold", kind:"active", family:"copy", name:"Quantensturm", icon:"fa-cloud-bolt", desc:"Der nächste Effekt wird dreifach ausgelöst. Der Effekt danach wird doppelt ausgelöst.", apply(){ powerupState.copyNextPowerupExtra += 1; powerupState.quantumCopyCharges += 2; } },
+      { id:"g15", tier:"gold", kind:"active", family:"copy", name:"Quantensturm", icon:"fa-cloud-bolt", desc:"Nächster Effekt ×3, der darauffolgende ×2. Effekt-Multiplikatoren verketten sich und werden miteinander multipliziert.", scaledApply(count){ scheduleEffectMultiplierPattern([3, 2], count); } },
       { id:"np2", tier:"pearl", kind:"strategy", family:"multiplier", name:"Glaskanone", icon:"fa-glass-water-droplet", desc:"Start x2,0; jeder offene Frame kostet -0,15 Multiplikator.", apply(){ addGlobalMultiplier(1.0); powerupState.glassCannonOpenPenalty += .15; } },
       { id:"np4", tier:"pearl", kind:"strategy", family:"rush", name:"Tresor", icon:"fa-vault", desc:"20 % aller Rush-Punkte wandern in einen Tresor und werden am Ende x3 ausgezahlt.", apply(){ powerupState.treasureVaultRate = Math.min(.80, powerupState.treasureVaultRate + .20); powerupState.treasureVaultSourceId = currentPowerupSourceId(); } },
       { id:"np9", tier:"pearl", kind:"strategy", family:"multiplier", name:"Perfektionsdrang", icon:"fa-medal", desc:"Clean Frames bauen permanent einen steigenden Multiplikator auf.", apply(){ powerupState.perfectionStep += .05; powerupState.perfectionSources[currentPowerupSourceId()] = (powerupState.perfectionSources[currentPowerupSourceId()] || 0) + .05; } },
-      { id:"np10", tier:"pearl", kind:"strategy", family:"copy", name:"Chaos-Theorie", icon:"fa-dice", desc:"Jeder Effekt bekommt zufällig x1, x2 oder x4.", apply(){ powerupState.chaosTheoryEnabled = true; } },
+      { id:"np10", tier:"pearl", kind:"strategy", family:"copy", name:"Chaos-Theorie", icon:"fa-dice", desc:"Jeder gewählte Effekt erhält zufällig ×1, ×2 oder ×4. Das gezogene Ergebnis wird direkt angezeigt und multipliziert sich mit vorhandenen EFFEKT ×-Faktoren.", apply(){ powerupState.chaosTheoryEnabled = true; } },
       { id:"np17", tier:"pearl", kind:"strategy", family:"multiplier", name:"Millionär", icon:"fa-sack-dollar", desc:"Sofort +100; jede weitere Sofort-Punkte-Karte wird dauerhaft 25 % stärker.", apply(){ addPowerupBonus(100); powerupState.scoreCardMultiplier = Math.max(powerupState.scoreCardMultiplier, 1.25); powerupState.scoreCardGrowthEnabled = true; } },
-      { id:"nb4", tier:"bronze", kind:"active", family:"copy", name:"Doppelpack", icon:"fa-clone", desc:"Wähle jetzt zwei Bronze-Effekte statt einem.", apply(){ powerupState.extraBronzeChoices += 1; } },
+      { id:"nb4", tier:"bronze", kind:"active", family:"copy", name:"Doppelpack", icon:"fa-clone", desc:"Du erhältst sofort 2 zusätzliche Bronze-Auswahlen. Wird Doppelpack vervielfacht, vervielfacht sich auch die Zahl der zusätzlichen Auswahlen.", scaledApply(count){ powerupState.extraBronzeChoices += 2 * count; } },
       { id:"nb9", tier:"bronze", kind:"passive", family:"multiplier", name:"Multi-Samen", icon:"fa-seedling", desc:"Jetzt +0,05 Multiplikator, nach jedem Clean Frame weitere +0,05.", apply(){ addGlobalMultiplier(.05); powerupState.cleanMultiStep += .05; addSourceValue(powerupState.cleanMultiSources, currentPowerupSourceId(), .05); } },
       { id:"nb10", tier:"bronze", kind:"active", family:"copy", name:"Echo", icon:"fa-rotate", desc:"Wiederholt den zuletzt ausgelösten Bronze-Effekt.", apply(){ repeatLastBronzeEffect(); } },
-      { id:"nb12", tier:"bronze", kind:"score", family:"rush", name:"Bonus-Lotto", icon:"fa-dice", desc:"Zufällig +1 / +10 / +25 / +50 / +100 / +250.", final:true, apply(){ addPowerupBonus(randomChoice([1,10,25,50,100,250])); } },
+      { id:"nb12", tier:"bronze", kind:"score", family:"rush", name:"Rush-Lotto", icon:"fa-dice", desc:"Zufällig erhältst du sofort +1 / +10 / +25 / +50 / +100 / +250 Rush-Punkte. Das gezogene Ergebnis wird direkt angezeigt.", final:true, apply(){ const won = randomChoice([1,10,25,50,100,250]); addPowerupBonus(won); announceRandomResult("Rush-Lotto", `+${won}`); } },
       { id:"nb18", tier:"bronze", kind:"passive", family:"multiplier", name:"Rebound", icon:"fa-arrow-rotate-left", desc:"Nach einem offenen Frame sofort +50 und +0,05 Multiplikator.", apply(){ powerupState.reboundPoints += 50; powerupState.reboundMultiStep += .05; addSourceValue(powerupState.reboundSources, currentPowerupSourceId(), 1); } },
       { id:"nb20", tier:"bronze", kind:"passive", family:"rush", name:"Glückscent", icon:"fa-coins", desc:"Jeder folgende Effekt hat 20 % Chance auf zusätzliche +100.", apply(){ powerupState.luckCoinChance = Math.min(1, powerupState.luckCoinChance + .20); powerupState.luckCoinSources.push(currentPowerupSourceId()); } },
       { id:"ns2", tier:"silver", kind:"active", family:"multiplier", name:"Multi-Turbo", icon:"fa-gauge-high", desc:"+0,20 Multiplikator jetzt; nächster Spare weitere +0,20.", apply(){ addGlobalMultiplier(.20); powerupState.nextSpareMultiBoost += .20; addSourceValue(powerupState.nextSpareMultiSources, currentPowerupSourceId(), .20); } },
       { id:"ns3", tier:"silver", kind:"active", family:"rush", name:"Dreifach-Jackpot", icon:"fa-dice-three", desc:"Nächster Clean Frame +100, Strike zusätzlich +200.", apply(){ powerupState.nextCleanJackpot += 100; powerupState.nextCleanStrikeExtra += 200; powerupState.nextCleanJackpotSources.push(currentPowerupSourceId()); } },
-      { id:"ns5", tier:"silver", kind:"active", family:"frame", name:"Overclock", icon:"fa-microchip", desc:"Für 2 Frames alle Punkte x2.", apply(){ addFutureFrameMultiplier(2, 2); } },
+      { id:"ns5", tier:"silver", kind:"active", family:"frame", name:"Overclock", icon:"fa-microchip", desc:"Nächste 2 Frames: Alle Punkte (Bowling + Rush) jeweils ×2.", apply(){ addFutureFrameMultiplier(2, 2); } },
       { id:"ns8", tier:"silver", kind:"passive", family:"rush", name:"Combo-Versicherung", icon:"fa-shield-halved", desc:"Eine Clean-Serie darf einmal durch einen offenen Frame unterbrochen werden.", apply(){ powerupState.comboInsuranceCharges += 1; } },
       { id:"ns10", tier:"silver", kind:"passive", family:"rush", name:"Silber-Tresor", icon:"fa-vault", desc:"Die nächsten 25 % aller Rush-Punkte werden am Ende verdoppelt.", apply(){ powerupState.silverVaultRate = Math.min(1, powerupState.silverVaultRate + .25); powerupState.silverVaultSourceId = currentPowerupSourceId(); } },
       { id:"ns11", tier:"silver", kind:"active", family:"multiplier", name:"Hyperzins", icon:"fa-chart-line", desc:"Jeder Multiplikator-Zuwachs in den nächsten 3 Frames wird verdoppelt.", apply(){ powerupState.hyperInterestFrames += 3; } },
-      { id:"ns12", tier:"silver", kind:"active", family:"copy", name:"Bonushändler", icon:"fa-arrows-rotate", desc:"Verwerfe die 3 Slot-Symbole und ziehe einmal komplett neu.", apply(){ powerupState.rerollCurrentDraft = true; } },
+      { id:"ns12", tier:"silver", kind:"active", family:"copy", name:"Effekthändler", icon:"fa-arrows-rotate", desc:"Verwirf die aktuelle 3er-Auswahl und ziehe einmal komplett neu. Bei Vervielfachung erhältst du entsprechend mehrere Neuziehungen.", apply(){ powerupState.rerollCurrentDrafts += 1; } },
       { id:"ns13", tier:"silver", kind:"active", family:"copy", name:"Upgrade-Maschine", icon:"fa-arrow-up-right-dots", desc:"Die nächste Bronze-Auswahl zählt als Gold.", apply(){ powerupState.bronzeToGoldCharges += 1; } },
-      { id:"ns15", tier:"silver", kind:"active", family:"frame", name:"Vierfach-Wette", icon:"fa-dice", desc:"Nächster Frame alle Punkte x6, bei offenem Frame -300", apply(){ addNextFrameMultiplier(6); addNextFrameOpenPenalty(300); } },
+      { id:"ns15", tier:"silver", kind:"active", family:"frame", name:"Vierfach-Wette", icon:"fa-dice", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×6. Ist der Frame offen, werden danach 300 Punkte abgezogen.", apply(){ addNextFrameMultiplier(6); addNextFrameOpenPenalty(300); } },
       { id:"ns17", tier:"silver", kind:"passive", family:"rush", name:"Serienkonto", icon:"fa-link", desc:"Clean-Serie zahlt +50 / +100 / +200 / +400.", apply(){ powerupState.seriesAccountEnabled = true; powerupState.seriesAccountSources.push(currentPowerupSourceId()); } },
-      { id:"ns19", tier:"silver", kind:"score", family:"rush", name:"Silberregen Deluxe", icon:"fa-cloud-showers-heavy", desc:"Zufällig +10 / +75 / +250 /  400", final:true, apply(){ addPowerupBonus(randomChoice([10,75,250,400])); } },
+      { id:"ns19", tier:"silver", kind:"score", family:"rush", name:"Silberregen Deluxe", icon:"fa-cloud-showers-heavy", desc:"Zufällig erhältst du sofort +10 / +75 / +250 / +400 Rush-Punkte. Das gezogene Ergebnis wird direkt angezeigt.", final:true, apply(){ const won = randomChoice([10,75,250,400]); addPowerupBonus(won); announceRandomResult("Silberregen", `+${won}`); } },
       { id:"ns20", tier:"silver", kind:"passive", family:"copy", name:"Resonanz", icon:"fa-wave-square", desc:"Wenn zwei gleiche Effekttypen hintereinander gewählt werden, zählt der zweite x3.", apply(){ powerupState.resonanceEnabled = true; } },
       { id:"ng1", tier:"gold", kind:"active", family:"rush", name:"Black Hole", icon:"fa-circle", desc:"Die nächsten drei Rush-Punkte-Pakete werden gesammelt und gemeinsam x4 ausgezahlt.", apply(){ powerupState.blackHoleRemaining += 3; powerupState.blackHoleSourceId = currentPowerupSourceId(); } },
-      { id:"ng2", tier:"gold", kind:"active", family:"frame", name:"God Mode", icon:"fa-bolt", desc:"Für den nächsten Frame alle Punkte x6.", apply(){ addNextFrameMultiplier(6); } },
+      { id:"ng2", tier:"gold", kind:"active", family:"frame", name:"God Mode", icon:"fa-bolt", desc:"Nächster Frame: Alle Punkte (Bowling + Rush) ×6.", apply(){ addNextFrameMultiplier(6); } },
       { id:"ng3", tier:"gold", kind:"active", family:"copy", name:"Golden Ticket", icon:"fa-ticket", desc:"Die nächste Auswahl zeigt ausschließlich Gold-Effekte + eine neue Auswahl aus 3 Gold-Effekten für diesen Frame.", apply(){ powerupState.forceGoldDrafts += 1; powerupState.goldenTicketExtraPending += 1; } },
       { id:"ng5", tier:"gold", kind:"passive", family:"rush", name:"Nuklearreaktor", icon:"fa-radiation", desc:"Jeder Strike verdoppelt den Effekt des vorherigen Strikes.", apply(){ powerupState.nuclearEnabled = true; } },
       { id:"ng6", tier:"gold", kind:"passive", family:"rush", name:"Krösus", icon:"fa-coins", desc:"Jede spätere Effektwahl gibt +100.", apply(){ powerupState.midasPerChoice += 100; addSourceValue(powerupState.midasSources, currentPowerupSourceId(), 100); } },
@@ -3566,7 +3711,9 @@
         base *= Math.max(1, Number(powerupState.instantScoreMultiplier) || 1);
       }
 
-      const globalMultiplier = Math.max(1, powerupState?.bonusMultiplier || 1);
+      const globalMultiplier = options.ignoreGlobalMultiplier
+        ? 1
+        : Math.max(1, powerupState?.bonusMultiplier || 1);
       let adjusted = Math.max(0, Math.round(base * globalMultiplier));
       if (!adjusted) return 0;
 
@@ -3688,16 +3835,25 @@
     
     function getPowerupApplicationCount(item) {
       let count = 1;
+
+      if (powerupState.effectMultiplierQueue.length) {
+        count *= Math.max(1, Number(powerupState.effectMultiplierQueue.shift()) || 1);
+      }
+
+      // Alte Einzel-Ladungen bleiben kompatibel, werden aber jetzt multiplikativ behandelt.
       if (powerupState.copyNextPowerupExtra > 0) {
-        count += powerupState.copyNextPowerupExtra;
+        count *= Math.max(1, 1 + Number(powerupState.copyNextPowerupExtra));
         powerupState.copyNextPowerupExtra = 0;
       }
       if (powerupState.quantumCopyCharges > 0) {
-        count += 1;
+        count *= 2;
         powerupState.quantumCopyCharges -= 1;
       }
+
       if (powerupState.chaosTheoryEnabled) {
-        count *= randomChoice([1, 2, 4]);
+        const chaosFactor = randomChoice([1, 2, 4]);
+        count *= chaosFactor;
+        announceRandomResult("Chaos-Theorie", `×${chaosFactor}`);
       }
       if (powerupState.resonanceEnabled && item && powerupState.lastEffectFamily && powerupState.lastEffectFamily === item.family) {
         count *= 3;
@@ -3858,9 +4014,11 @@
     }
 
     
-    function availablePowerupPool(tier, isFinalThrow = false) {
+    function availablePowerupPool(tier, isFinalThrow = false, options = {}) {
       const passiveFull = passivePowerups.length >= MAX_PASSIVES;
-      let pool = POWERUPS.filter(item => item.tier === tier);
+      const excluded = new Set(options.excludeIds || []);
+      let pool = POWERUPS.filter(item => item.tier === tier && !excluded.has(item.id));
+      pool = pool.filter(item => !item.requiresFutureFrames || currentFrame + Number(item.requiresFutureFrames) < frames.length);
       if (isFinalThrow) pool = pool.filter(item => item.kind === "score" || item.final === true);
       if (passiveFull) pool = pool.filter(item => !isPassivePowerup(item));
       return pool;
@@ -3901,7 +4059,9 @@
       powerupSelectionIcon.innerHTML = `<i class="fa-solid ${item.icon}"></i>`;
       powerupSelectionName.textContent = item.name;
       const kindLabel = item.kind === "strategy" ? "Strategie" : item.kind === "score" ? "Sofort · Rush" : "Für später";
-      powerupSelectionMeta.innerHTML = `<span class="powerup-selection-tag">${tierLabel}</span><span class="powerup-selection-tag family-${family.className}">${family.label}</span>${isPassivePowerup(item) ? '<span class="powerup-selection-tag passive">Dauereffekt</span>' : `<span class="powerup-selection-tag">${kindLabel}</span>`}`;
+      const queuedEffectMultiplier = Math.max(1, Number(powerupState?.effectMultiplierQueue?.[0]) || 1);
+      const queuedTag = queuedEffectMultiplier > 1 ? `<span class="powerup-selection-tag family-copy">AKTIV ×${formatMultiplier(queuedEffectMultiplier)}</span>` : "";
+      powerupSelectionMeta.innerHTML = `<span class="powerup-selection-tag">${tierLabel}</span><span class="powerup-selection-tag family-${family.className}">${family.label}</span>${queuedTag}${isPassivePowerup(item) ? '<span class="powerup-selection-tag passive">Dauereffekt</span>' : `<span class="powerup-selection-tag">${kindLabel}</span>`}`;
       powerupSelectionDesc.textContent = item.desc.replace(/^DAUERHAFT:\s*/i, "");
       powerupSelectionPlaceholder.classList.add("hidden");
       powerupSelectionCopy.classList.remove("hidden");
@@ -3931,7 +4091,7 @@
       }
       currentDraftTier = effectiveTier;
       const meta = tierMeta(effectiveTier);
-      const pool = availablePowerupPool(effectiveTier, isFinalThrow);
+      const pool = availablePowerupPool(effectiveTier, isFinalThrow, options);
       if (!pool.length) {
         if (typeof continuation === "function") continuation();
         return;
@@ -4027,6 +4187,9 @@
       if (!item) return;
       if (isPassivePowerup(item) && passivePowerups.length >= MAX_PASSIVES) return;
 
+      // Zufallsergebnisse dieser Auswahl werden gesammelt und nach der Aktivierung sichtbar ausgegeben.
+      pendingRandomResultFlashes = [];
+
       // Auswahl-Synergien reagieren nur auf spätere Effekte, nicht auf ihre eigene Aktivierung.
       applyPowerupSelectionSynergies();
       const applicationCount = getPowerupApplicationCount(item);
@@ -4035,7 +4198,7 @@
 
       activePowerupSourceId = item.id;
       try {
-        for (let i = 0; i < applicationCount; i += 1) item.apply();
+        applyEffectItem(item, applicationCount);
       } finally {
         activePowerupSourceId = null;
       }
@@ -4064,20 +4227,22 @@
       selectedPowerupId = null;
       powerupOverlay.classList.add("hidden");
       powerupOverlay.setAttribute("aria-hidden", "true");
-      showFlash(applicationCount > 1 ? `${item.name} x${applicationCount}` : `${item.name}`);
+      const randomResultText = pendingRandomResultFlashes.join(" · ");
+      pendingRandomResultFlashes = [];
+      showFlash(randomResultText || (applicationCount > 1 ? `${item.name} x${applicationCount}` : `${item.name}`));
 
       const continuation = pendingPowerupContinuation;
       pendingPowerupContinuation = null;
 
       // Effekte, die eine zusätzliche/erneute Auswahl auslösen.
-      if (powerupState.rerollCurrentDraft) {
-        powerupState.rerollCurrentDraft = false;
-        scheduleGameTimer(() => showPowerupChoice(currentDraftTier, continuation, false, { exactTier:true }), 260);
+      if (powerupState.rerollCurrentDrafts > 0) {
+        powerupState.rerollCurrentDrafts -= 1;
+        scheduleGameTimer(() => showPowerupChoice(currentDraftTier, continuation, false, { exactTier:true, excludeIds:["ns12"] }), 260);
         return;
       }
       if (powerupState.extraBronzeChoices > 0) {
         powerupState.extraBronzeChoices -= 1;
-        scheduleGameTimer(() => showPowerupChoice("bronze", continuation, false, { exactTier:true }), 260);
+        scheduleGameTimer(() => showPowerupChoice("bronze", continuation, false, { exactTier:true, excludeIds:["nb4"] }), 260);
         return;
       }
       if (powerupState.extraGoldChoices > 0) {
@@ -4219,17 +4384,6 @@
         if (cleanFrame) earned += powerupState.nextCleanFrameBonus;
         if (openFrame) earned += powerupState.nextOpenFrameBonus;
       }
-
-      // Bomben zählen exakt drei Würfe. Auszahlung erfolgt erst nach allen anderen
-      // Rush-Punkten dieses dritten Wurfs/Frames.
-      const maturedBombs = [];
-      (powerupState.timeBombEffects || []).forEach(effect => {
-        if (effect.throws <= 0) return;
-        effect.pins += Math.max(0, Number(pinsDown) || 0);
-        effect.throws -= 1;
-        if (effect.throws <= 0) maturedBombs.push(effect);
-      });
-      powerupState.timeBombEffects = (powerupState.timeBombEffects || []).filter(effect => effect.throws > 0);
 
       // Rückwind: der DARAUFFOLGENDE Wurf zählt komplett x3.
       const throwMultiplier = Math.max(1, Number(powerupState.nextThrowMultiplier) || 1);
@@ -4419,20 +4573,6 @@
 
       if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
 
-      // Zeitbombe: Pin-Summe + alle Rush-Punkte im dritten ausgelösten Frame werden
-      // gemeinsam mit dem Bombenfaktor verrechnet.
-      if (maturedBombs.length) {
-        const frame = frames[frameIndex];
-        const existingInFrameRush = Math.max(0, (Number(frame?.bonus) || 0) - (Number(frame?.postBonus) || 0));
-        const preBombRush = Math.max(0, earned);
-        maturedBombs.forEach(effect => {
-          const payout = (Math.max(0, Number(effect.pins) || 0) + existingInFrameRush + preBombRush)
-            * Math.max(0, Number(effect.factor) || 0);
-          earned += payout;
-          addPart(effect.sourceId, payout);
-        });
-      }
-
       const baseEarned = earned;
       earned *= throwMultiplier;
       const globalMultiplier = Math.max(1, Number(powerupState.bonusMultiplier) || 1);
@@ -4456,6 +4596,41 @@
 
       if (frameComplete && strikeFrame && powerupState.nuclearEnabled) {
         powerupState.lastStrikeRushAward = Math.max(100, awarded);
+      }
+
+      let timeBombAwarded = 0;
+      if (frameComplete && powerupState.timeBombEffects.length) {
+        const framePins = (throws || []).reduce((sum, value) => sum + Math.max(0, Number(value) || 0), 0);
+        const maturedBombs = [];
+        const stillRunningBombs = [];
+
+        powerupState.timeBombEffects.forEach(effect => {
+          if (frameIndex < Number(effect.startFrame)) {
+            stillRunningBombs.push(effect);
+            return;
+          }
+          if (effect.remainingFrames <= 0) return;
+          effect.pins += framePins;
+          effect.remainingFrames -= 1;
+          if (effect.remainingFrames <= 0) maturedBombs.push(effect);
+          else stillRunningBombs.push(effect);
+        });
+        powerupState.timeBombEffects = stillRunningBombs;
+
+        if (maturedBombs.length) {
+          const frame = frames[frameIndex];
+          const thirdFrameRush = Math.max(0, (Number(frame?.bonus) || 0) - (Number(frame?.postBonus) || 0));
+          maturedBombs.forEach(effect => {
+            const formulaBase = Math.max(0, Number(effect.pins) || 0) + thirdFrameRush;
+            const payout = Math.round(formulaBase * Math.max(0, Number(effect.factor) || 0));
+            const added = addFrameBonus(payout, frameIndex, effect.sourceId, true, {
+              ignoreGlobalMultiplier:true,
+              postFrame:false
+            });
+            timeBombAwarded += added;
+            showFlash(`ZEITBOMBE ×${effect.factor}: +${Math.round(added)}`);
+          });
+        }
       }
 
       powerupState.nextPinBonus = 0;
@@ -4496,7 +4671,7 @@
         powerupState.jackpotThrows = 0;
         powerupState.assistThrows = 0;
       }
-      return awarded;
+      return awarded + timeBombAwarded;
     }
 
 
