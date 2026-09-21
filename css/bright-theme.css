@@ -927,57 +927,120 @@ body.page-records .live-data-state.error i { color:#b4233c !important; }
 }
 
 
-/* Phase 15.13: Tendenzsymbol und Zahl sind getrennt, damit sie sich nie überlagern. */
+/* Phase 15.14: Tendenz kompakt, zentriert und strikt von der Namensspalte getrennt. */
+.results-view th.col-trend,
+.results-view td.col-trend {
+  text-align:center !important;
+  overflow:hidden !important;
+  padding-left:4px !important;
+  padding-right:4px !important;
+}
 .results-view .col-trend {
-  min-width:72px !important;
+  min-width:76px !important;
 }
 .results-view .section-einzel .col-trend {
-  width:7% !important;
+  width:8% !important;
+  min-width:82px !important;
+}
+.results-view .section-einzel .col-name {
+  width:13% !important;
+  padding-left:9px !important;
 }
 .results-view .tendency {
   display:inline-grid !important;
-  grid-template-columns:18px minmax(22px,auto) !important;
+  grid-template-columns:18px 22px !important;
   align-items:center !important;
   justify-content:center !important;
-  column-gap:6px !important;
-  min-width:58px !important;
-  padding:4px 7px !important;
+  justify-items:center !important;
+  column-gap:5px !important;
+  width:auto !important;
+  min-width:56px !important;
+  max-width:68px !important;
+  box-sizing:border-box !important;
+  margin:0 auto !important;
+  padding:5px 6px !important;
+  border:1px solid transparent !important;
+  border-radius:999px !important;
   font-variant-numeric:tabular-nums !important;
   white-space:nowrap !important;
+  overflow:hidden !important;
+  line-height:1 !important;
+  vertical-align:middle !important;
+  text-shadow:none !important;
 }
 .results-view .tendency-icon {
   width:18px !important;
   height:18px !important;
   display:grid !important;
   place-items:center !important;
-  flex:none !important;
-  border-radius:50% !important;
   font-family:Arial,sans-serif !important;
-  font-size:14px !important;
+  font-size:13px !important;
   font-weight:900 !important;
   line-height:1 !important;
 }
 .results-view .tendency-value {
+  width:22px !important;
   min-width:22px !important;
   display:block !important;
-  text-align:right !important;
+  text-align:center !important;
   font-size:12px !important;
   font-weight:900 !important;
   line-height:1 !important;
   letter-spacing:0 !important;
 }
-.results-view .tendency.up .tendency-icon { background:rgba(40,93,57,.10) !important; }
-.results-view .tendency.down .tendency-icon { background:rgba(122,52,52,.10) !important; }
-.results-view .tendency.flat .tendency-icon { background:rgba(112,92,34,.10) !important; }
+.results-view .tendency.flat {
+  grid-template-columns:24px !important;
+  min-width:48px !important;
+  max-width:56px !important;
+}
+.results-view .tendency.up {
+  color:#285d39 !important;
+  background:#e3f2e5 !important;
+  border-color:#b9d9bf !important;
+}
+.results-view .tendency.down {
+  color:#7a3434 !important;
+  background:#f7e5e3 !important;
+  border-color:#e2bbb6 !important;
+}
+.results-view .tendency.flat {
+  color:#705c22 !important;
+  background:#fff2c9 !important;
+  border-color:#e5d28c !important;
+}
 
 @media(max-width:700px) {
-  .results-view .col-trend { min-width:66px !important; }
+  .results-view .col-trend {
+    min-width:72px !important;
+  }
+  .results-view .section-einzel .col-trend {
+    width:8% !important;
+    min-width:78px !important;
+  }
+  .results-view .section-einzel .col-name {
+    width:14% !important;
+    padding-left:8px !important;
+  }
   .results-view .tendency {
-    grid-template-columns:16px minmax(20px,auto) !important;
+    grid-template-columns:16px 20px !important;
     column-gap:4px !important;
     min-width:52px !important;
+    max-width:62px !important;
     padding:4px 5px !important;
   }
-  .results-view .tendency-icon { width:16px !important; height:16px !important; font-size:12px !important; }
-  .results-view .tendency-value { min-width:20px !important; font-size:11px !important; }
+  .results-view .tendency-icon {
+    width:16px !important;
+    height:16px !important;
+    font-size:12px !important;
+  }
+  .results-view .tendency-value {
+    width:20px !important;
+    min-width:20px !important;
+    font-size:11px !important;
+  }
+  .results-view .tendency.flat {
+    grid-template-columns:22px !important;
+    min-width:44px !important;
+    max-width:50px !important;
+  }
 }
