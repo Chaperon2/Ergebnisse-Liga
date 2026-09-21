@@ -31,12 +31,12 @@ renderPlayerOfWeek(playerWeekResults, null, playerWeekOptions());
 function tendency(value) {
   const number = Number(value ?? 0);
   if (number > 0) {
-    return `<span class="tendency up" aria-label="${number} Plätze gestiegen"><span class="tendency-icon" aria-hidden="true">↑</span><span class="tendency-value">+${number}</span></span>`;
+    return `<span class="tendency up" aria-label="${number} Plätze gestiegen"><span class="tendency-icon" aria-hidden="true">▲</span><span class="tendency-value">${number}</span></span>`;
   }
   if (number < 0) {
-    return `<span class="tendency down" aria-label="${Math.abs(number)} Plätze gefallen"><span class="tendency-icon" aria-hidden="true">↓</span><span class="tendency-value">−${Math.abs(number)}</span></span>`;
+    return `<span class="tendency down" aria-label="${Math.abs(number)} Plätze gefallen"><span class="tendency-icon" aria-hidden="true">▼</span><span class="tendency-value">${Math.abs(number)}</span></span>`;
   }
-  return '<span class="tendency flat" aria-label="Platz unverändert"><span class="tendency-icon" aria-hidden="true">•</span><span class="tendency-value">0</span></span>';
+  return '<span class="tendency flat" aria-label="Platz unverändert"><span class="tendency-icon" aria-hidden="true">–</span></span>';
 }
 
 function headerText(header) {
