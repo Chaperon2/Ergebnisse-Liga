@@ -3147,6 +3147,46 @@
     let pendingRandomResultFlashes = [];
     const MAX_PASSIVES = 3;
 
+    // Technische Schutzgrenzen: Strike Rush darf extrem hohe Werte erzeugen,
+    // aber niemals Infinity oder eine praktisch endlose synchrone Schleife.
+    const MAX_EFFECT_APPLICATIONS = Number.MAX_VALUE; // native finite range only
+    const MAX_GAME_MULTIPLIER = Number.MAX_VALUE;
+    const MAX_GAME_SCORE = Number.MAX_VALUE;
+
+    function finiteClamped(value, min = 0, max = MAX_GAME_SCORE, fallback = min) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return number === Infinity ? max : number === -Infinity ? min : fallback;
+      return Math.min(max, Math.max(min, number));
+    }
+
+    function safeApplicationCount(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return number === Infinity ? MAX_EFFECT_APPLICATIONS : 1;
+      return Math.min(MAX_EFFECT_APPLICATIONS, Math.max(1, Math.floor(number)));
+    }
+
+    function safeGameScore(value) {
+      return Math.round(finiteClamped(value, 0, MAX_GAME_SCORE, 0));
+    }
+
+    function safeGameMultiplier(value) {
+      return finiteClamped(value, 1, MAX_GAME_MULTIPLIER, 1);
+    }
+
+    function safeMultiply(a, b, max = MAX_GAME_SCORE) {
+      const left = finiteClamped(a, 0, max, 0);
+      const right = finiteClamped(b, 0, max, 0);
+      if (!left || !right) return 0;
+      if (left > max / right) return max;
+      return finiteClamped(left * right, 0, max, max);
+    }
+
+    function safeAdd(a, b, max = MAX_GAME_SCORE) {
+      const left = finiteClamped(a, -max, max, 0);
+      const right = finiteClamped(b, -max, max, 0);
+      return finiteClamped(left + right, -max, max, left >= 0 ? max : -max);
+    }
+
     function freshPowerupState() {
       return {
         // Legacy/physics-safe fields: retained so the existing pin simulation stays untouched.
@@ -3299,7 +3339,7 @@
 
     function addSourceValue(map, sourceId, value) {
       if (!sourceId || !map) return;
-      map[sourceId] = (Number(map[sourceId]) || 0) + (Number(value) || 0);
+      map[sourceId] = safeAdd(Number(map[sourceId]) || 0, Number(value) || 0, MAX_GAME_SCORE);
     }
 
     function registerPowerupSelection(item, applicationCount = 1) {
@@ -3307,7 +3347,7 @@
       const entry = powerupStats[item.id] || { id:item.id, name:item.name, icon:item.icon, tier:item.tier, selections:0, activations:0, points:0 };
       entry.name = item.name; entry.icon = item.icon; entry.tier = item.tier;
       entry.selections += 1;
-      entry.activations += Math.max(1, Number(applicationCount) || 1);
+      entry.activations = safeAdd(entry.activations, safeApplicationCount(applicationCount));
       powerupStats[item.id] = entry;
     }
 
@@ -3316,16 +3356,17 @@
       if (!sourceId || amount <= 0) return;
       const item = POWERUPS.find(entry => entry.id === sourceId);
       const entry = powerupStats[sourceId] || { id:sourceId, name:item?.name || sourceId, icon:item?.icon || "fa-bolt", tier:item?.tier || "bronze", selections:0, activations:0, points:0 };
-      entry.points += amount;
+      entry.points = safeAdd(entry.points, amount);
       powerupStats[sourceId] = entry;
     }
 
     function distributePowerupCredit(sourceMap, points) {
-      const amount = Number(points) || 0;
+      const amount = safeGameScore(points);
       const entries = Object.entries(sourceMap || {}).filter(([,weight]) => Number(weight) > 0);
-      const totalWeight = entries.reduce((sum,[,weight]) => sum + Number(weight), 0);
-      if (amount <= 0 || totalWeight <= 0) return 0;
-      entries.forEach(([sourceId, weight]) => creditPowerupPoints(sourceId, amount * Number(weight) / totalWeight));
+      const scale = entries.reduce((max, [,weight]) => Math.max(max, finiteClamped(weight)), 0);
+      if (!amount || !scale) return 0;
+      const total = entries.reduce((sum, [,weight]) => sum + finiteClamped(weight) / scale, 0);
+      entries.forEach(([sourceId, weight]) => creditPowerupPoints(sourceId, amount * ((finiteClamped(weight) / scale) / total)));
       return amount;
     }
 
@@ -3344,12 +3385,12 @@
     function scheduleEffectMultiplier(offset, factor, applicationCount = 1) {
       if (!powerupState) return;
       const index = Math.max(0, Math.floor(Number(offset) || 0));
-      const baseFactor = Math.max(1, Number(factor) || 1);
-      const applications = Math.max(1, Math.floor(Number(applicationCount) || 1));
-      const scaledFactor = baseFactor * applications;
+      const baseFactor = safeApplicationCount(factor);
+      const applications = safeApplicationCount(applicationCount);
+      const scaledFactor = safeApplicationCount(baseFactor * applications);
       while (powerupState.effectMultiplierQueue.length <= index) powerupState.effectMultiplierQueue.push(1);
-      const existing = Math.max(1, Number(powerupState.effectMultiplierQueue[index]) || 1);
-      powerupState.effectMultiplierQueue[index] = existing * scaledFactor;
+      const existing = safeApplicationCount(powerupState.effectMultiplierQueue[index]);
+      powerupState.effectMultiplierQueue[index] = safeApplicationCount(existing * scaledFactor);
     }
 
     function scheduleEffectMultiplierPattern(factors, applicationCount = 1) {
@@ -3368,14 +3409,14 @@
     }
 
     function changeGlobalMultiplier(delta, sourceId = currentPowerupSourceId(), amplify = true) {
-      let value = Number(delta) || 0;
+      let value = finiteClamped(delta, -MAX_GAME_MULTIPLIER, MAX_GAME_MULTIPLIER, 0);
       if (!value) return 0;
       if (value > 0 && amplify && powerupState) {
-        value *= Math.max(1, Number(powerupState.omegaFactor) || 1);
-        if (powerupState.hyperInterestFrames > 0) value *= 2;
+        value = safeMultiply(value, safeGameMultiplier(powerupState.omegaFactor), MAX_GAME_MULTIPLIER);
+        if (powerupState.hyperInterestFrames > 0) value = safeMultiply(value, 2, MAX_GAME_MULTIPLIER);
       }
-      const before = Math.max(1, Number(powerupState.bonusMultiplier) || 1);
-      powerupState.bonusMultiplier = Math.max(1, before + value);
+      const before = safeGameMultiplier(powerupState.bonusMultiplier);
+      powerupState.bonusMultiplier = safeGameMultiplier(before + value);
       const actual = powerupState.bonusMultiplier - before;
       if (actual > 0) addSourceValue(powerupState.globalMultiplierSources, sourceId, actual);
       return actual;
@@ -3392,8 +3433,9 @@
     function addFrameMultiplierAt(frameIndex, factor, sourceId = currentPowerupSourceId()) {
       const index = Number(frameIndex);
       if (!Number.isInteger(index) || index < 0 || index >= frames.length) return;
-      const value = Math.max(1, Number(factor) || 1);
-      frames[index].scoreMultiplier = Math.max(1, Number(frames[index].scoreMultiplier) || 1) * value;
+      const value = safeGameMultiplier(factor);
+      const before = safeGameMultiplier(frames[index].scoreMultiplier);
+      frames[index].scoreMultiplier = safeGameMultiplier(safeMultiply(before, value, MAX_GAME_MULTIPLIER));
       if (sourceId && value > 1) frames[index].scoreMultiplierSources.push({ sourceId, factor:value });
     }
 
@@ -3402,14 +3444,14 @@
     }
 
     function addFutureFrameMultiplier(factor, count, sourceId = currentPowerupSourceId()) {
-      const total = Math.max(0, Math.floor(Number(count) || 0));
+      const total = Math.min(frames.length, Math.max(0, Math.floor(Number(count) || 0)));
       for (let offset = 1; offset <= total; offset += 1) addFrameMultiplierAt(targetFutureFrameIndex(offset), factor, sourceId);
     }
 
     function addNextFrameOpenPenalty(points, sourceId = currentPowerupSourceId()) {
       const index = targetFutureFrameIndex(1);
       if (index < 0 || index >= frames.length) return;
-      frames[index].openPenalty = (Number(frames[index].openPenalty) || 0) + Math.max(0, Number(points) || 0);
+      frames[index].openPenalty = safeAdd(frames[index].openPenalty, Math.max(0, Number(points) || 0));
       if (sourceId) frames[index].openPenaltySources.push(sourceId);
     }
 
@@ -3423,41 +3465,229 @@
       });
     }
 
-    function applyEffectItem(item, applicationCount = 1) {
-      if (!item) return;
-      const count = Math.max(1, Math.floor(Number(applicationCount) || 1));
-      if (typeof item.scaledApply === "function") {
-        item.scaledApply(count);
-        return;
-      }
-      for (let i = 0; i < count; i += 1) item.apply();
+    // Numbers retain their native precision. Only IEEE-754 overflow saturates.
+    function safePower(base, exponent) {
+      const b = safeGameMultiplier(base);
+      const n = Math.max(0, Number(exponent) || 0);
+      if (!n || b === 1) return 1;
+      if (n > Math.log(Number.MAX_VALUE) / Math.log(b)) return Number.MAX_VALUE;
+      return safeGameMultiplier(Math.pow(b, n));
     }
 
-    function repeatEffectById(effectId) {
+    function safeScalePower(value, base, exponent) {
+      if (!(value > 0)) return 0;
+      const logResult = Math.log(value) + exponent * Math.log(base);
+      if (logResult >= Math.log(Number.MAX_VALUE)) return Number.MAX_VALUE;
+      const power = Math.pow(base, exponent);
+      return Number.isFinite(power) ? safeMultiply(value, power) : finiteClamped(Math.exp(logResult));
+    }
+
+    function addFrameMultiplierBatch(factor, count, futureFrames = 1) {
+      const combined = safePower(factor, count);
+      for (let offset = 1; offset <= Math.min(frames.length, futureFrames); offset += 1) {
+        const index = targetFutureFrameIndex(offset);
+        if (!frames[index]) continue;
+        addFrameMultiplierAt(index, combined);
+        const sources = frames[index].scoreMultiplierSources;
+        if (currentPowerupSourceId() && sources.length) {
+          sources[sources.length - 1].creditWeight = safeMultiply(factor - 1, count);
+        }
+      }
+    }
+
+    function pushSourceBatch(queue, sourceId, count) {
+      const last = queue[queue.length - 1];
+      if (last && typeof last === "object" && last.sourceId === sourceId) {
+        last.count = safeAdd(last.count, count);
+      } else queue.push({ sourceId, count });
+    }
+
+    function shiftSourceBatch(queue) {
+      const first = queue[0];
+      if (!first || typeof first !== "object") return queue.shift() || null;
+      if (first.count <= 1) queue.shift();
+      else first.count -= 1;
+      return first.sourceId;
+    }
+
+    function addTimeBombBatch(factor, count) {
+      addTimeBomb(factor);
+      powerupState.timeBombEffects[powerupState.timeBombEffects.length - 1].count = count;
+    }
+
+    function addPointBatch(points, count) {
+      return addFrameBonus(points, currentFrame, currentPowerupSourceId(), true,
+        { postFrame:powerupChoosing, repetitions:count });
+    }
+
+    // Marsaglia-Tsang gamma sampler; all beta shapes used below are >= 1.
+    // Bounded rejection guards a broken random source, not the score or count.
+    function sampleGamma(shape) {
+      const d = shape - 1 / 3;
+      const c = 1 / (3 * Math.sqrt(d));
+      for (let attempt = 0; attempt < 256; attempt += 1) {
+        const u1 = Math.max(Number.MIN_VALUE, Math.random());
+        const x = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * Math.random());
+        const root = 1 + c * x;
+        if (root <= 0) continue;
+        const v = root * root * root;
+        const u = Math.max(Number.MIN_VALUE, Math.random());
+        if (u < 1 - .0331 * x ** 4 || Math.log(u) < .5 * x * x + d * (1 - v + Math.log(v))) {
+          return safeMultiply(d, v);
+        }
+      }
+      throw new Error("Zufallsquelle liefert keine gültige Stichprobe. Bitte erneut versuchen.");
+    }
+
+    // Beta splitting samples the binomial distribution in O(log n), without
+    // replacing random awards by their mean or using a normal approximation.
+    function sampleBinomial(count, probability) {
+      let n = Math.max(0, Math.floor(count));
+      let p = probability;
+      let result = 0;
+      for (let depth = 0; depth < 2048; depth += 1) {
+        if (n <= 0 || p <= 0) return result;
+        if (p >= 1) return safeAdd(result, n);
+        if (n <= 64) {
+          for (let i = 0; i < n; i += 1) if (Math.random() < p) result += 1;
+          return result;
+        }
+        const a = 1 + Math.floor(n / 2);
+        const b = n - a + 1;
+        const ga = sampleGamma(a);
+        const gb = sampleGamma(b);
+        const scale = Math.max(ga, gb);
+        const x = (ga / scale) / (ga / scale + gb / scale);
+        if (x >= p) {
+          n = a - 1;
+          p = x ? p / x : 0;
+        } else {
+          result = safeAdd(result, a);
+          n = b - 1;
+          p = x < 1 ? (p - x) / (1 - x) : 0;
+        }
+      }
+      throw new Error("Zufallsberechnung konnte nicht abgeschlossen werden.");
+    }
+
+    function applyRandomPointBatch(values, count, label) {
+      // Keep the original individual draws and messages for ordinary counts.
+      if (count <= 64) {
+        for (let i = 0; i < count; i += 1) {
+          const won = randomChoice(values);
+          addPointBatch(won, 1);
+          announceRandomResult(label, `+${won}`);
+        }
+        return;
+      }
+      // Black Hole consumes a prefix of the awards. Sample that prefix
+      // independently, then the remaining suffix; never reorder across payout.
+      const hole = Math.max(0, powerupState.blackHoleRemaining);
+      if (hole > 0 && hole < count) {
+        applyRandomPointBatch(values, hole, label);
+        applyRandomPointBatch(values, count - hole, label);
+        return;
+      }
+      let remaining = count;
+      const results = [];
+      values.forEach((value, index) => {
+        const hits = index === values.length - 1 ? remaining
+          : Math.min(remaining, sampleBinomial(remaining, 1 / (values.length - index)));
+        remaining = Math.max(0, remaining - hits);
+        if (hits > 0) {
+          addPointBatch(value, hits);
+          results.push(`${formatMultiplier(hits)}× +${value}`);
+        }
+      });
+      announceRandomResult(label, results.join(", "));
+    }
+
+    function devilStep(score, win) {
+      return win ? safeGameScore(safeMultiply(score, 10)) : safeGameScore(score / 2);
+    }
+
+    function resolveDevilGamble(before, count) {
+      const n = BigInt(safeApplicationCount(count));
+      let target = before;
+      let lastWin = false;
+      if (n <= 4096n || before === 0) {
+        // Zero is absorbing; only the last result matters for its message.
+        const steps = before === 0 ? 1 : Number(n);
+        for (let i = 0; i < steps; i += 1) {
+          lastWin = Math.random() < .5;
+          target = devilStep(target, lastWin);
+        }
+        return { target, lastWin };
+      }
+      // Exact monotone coupling: sample a suffix backwards. If both possible
+      // positive endpoints (1 and MAX_VALUE) converge under that suffix, its
+      // result no longer depends on ANY earlier draws. Rounding, order and
+      // 50/50 odds remain intact. No binomial/mean shortcut for this effect.
+      const suffix = [];
+      let size = 2048;
+      for (let pass = 0; pass < 6; pass += 1) {
+        const wanted = Number(n < BigInt(size) ? n : BigInt(size));
+        while (suffix.length < wanted) suffix.push(Math.random() < .5);
+        let low = 1;
+        let high = Number.MAX_VALUE;
+        target = before;
+        const complete = BigInt(suffix.length) === n;
+        for (let i = suffix.length - 1; i >= 0; i -= 1) {
+          low = devilStep(low, suffix[i]);
+          high = devilStep(high, suffix[i]);
+          if (complete) target = devilStep(target, suffix[i]);
+        }
+        if (complete || low === high) return { target:complete ? target : low, lastWin:suffix[0] };
+        size *= 2;
+      }
+      // Exceptional non-convergence is reported; never silently discard rolls.
+      throw new Error("Teufel-Berechnung ohne Konvergenz. Bitte erneut versuchen.");
+    }
+
+    const effectCallStack = new Set();
+
+
+    function applyEffectItem(item, applicationCount = 1) {
+      if (!item) return;
+      if (effectCallStack.has(item.id)) {
+        announceRandomResult("Echo", "Zyklische Wiederholung übersprungen");
+        return;
+      }
+      const count = safeApplicationCount(applicationCount);
+      effectCallStack.add(item.id);
+      try {
+        if (BATCH_EFFECTS[item.id]) BATCH_EFFECTS[item.id](count);
+        else if (typeof item.scaledApply === "function") item.scaledApply(count);
+        else if (count === 1 && typeof item.apply === "function") item.apply();
+        else throw new Error("Für diesen Effekt fehlt eine skalierte Berechnung.");
+      } finally { effectCallStack.delete(item.id); }
+    }
+
+    function repeatEffectById(effectId, count = 1) {
       if (!effectId) return false;
       const target = POWERUPS.find(item => item.id === effectId);
       if (!target) return false;
       const previousSource = activePowerupSourceId;
       try {
         // Die Wiederholung gehört punktetechnisch zum auslösenden Effekt.
-        applyEffectItem(target, 1);
+        applyEffectItem(target, count);
       } finally {
         activePowerupSourceId = previousSource;
       }
       return true;
     }
 
-    function repeatLastBronzeEffect() {
-      repeatEffectById(powerupState.lastBronzePowerupId);
+    function repeatLastBronzeEffect(count = 1) {
+      repeatEffectById(powerupState.lastBronzePowerupId, count);
     }
 
-    function repeatLastGoldEffect() {
+    function repeatLastGoldEffect(count = 1) {
       const history = [...(powerupState.chosenGoldHistory || [])].reverse();
       const targetId = history.find(id => id !== "ng12");
-      repeatEffectById(targetId);
+      repeatEffectById(targetId, count);
     }
 
-    function repeatStrongestChosenEffect() {
+    function repeatStrongestChosenEffect(count = 1) {
       const ids = [...new Set(powerupState.chosenEffectHistory || [])].filter(id => id !== "ng9");
       if (!ids.length) return;
       ids.sort((a,b) => {
@@ -3469,7 +3699,7 @@
         const rank = { pearl:4, gold:3, silver:2, bronze:1 };
         return (rank[rb?.tier] || 0) - (rank[ra?.tier] || 0);
       });
-      repeatEffectById(ids[0]);
+      repeatEffectById(ids[0], count);
     }
 
     function doublePermanentMultiplierGrowth() {
@@ -3480,12 +3710,25 @@
 
     function effectivePowerupMultiplier() {
       if (gameMode !== "powerup" || !powerupState) return 1;
-      return Math.max(1, Number(powerupState.bonusMultiplier) || 1)
-        * Math.max(1, Number(powerupState.nextThrowMultiplier) || 1);
+      return safeGameMultiplier(safeMultiply(
+        safeGameMultiplier(powerupState.bonusMultiplier),
+        safeGameMultiplier(powerupState.nextThrowMultiplier),
+        MAX_GAME_MULTIPLIER
+      ));
+    }
+
+    // Display label only: calculations and stored scores remain finite numbers.
+    function formatScore(value, localized = false) {
+      if (value === null || value === undefined) return "";
+      const number = Number(value);
+      if (number >= MAX_GAME_SCORE) return "Infinity";
+      return localized ? number.toLocaleString("de-DE") : String(number);
     }
 
     function formatMultiplier(value) {
-      const rounded = Math.round((Number(value) || 1) * 100) / 100;
+      const number = finiteClamped(value, 0, Number.MAX_VALUE, 1);
+      if (number >= 1e12) return number.toExponential(3).replace(".", ",");
+      const rounded = Math.round(number * 100) / 100;
       return rounded.toFixed(rounded % 1 ? 2 : 0).replace(".", ",");
     }
 
@@ -3493,24 +3736,24 @@
       const baseKnown = Object.values(baseParts).reduce((sum,value) => sum + Math.max(0, Number(value) || 0), 0);
       Object.entries(baseParts).forEach(([sourceId, points]) => creditPowerupPoints(sourceId, Math.max(0, Number(points) || 0)));
 
-      const safeBase = Math.max(baseKnown, Math.max(0, Number(baseTotal) || 0));
-      const fm = Math.max(1, Number(frameMultiplier) || 1);
-      const tm = Math.max(1, Number(throwMultiplier) || 1);
-      const gm = Math.max(1, Number(globalMultiplier) || 1);
-      const afterFrame = safeBase * fm;
+      const safeBase = finiteClamped(Math.max(baseKnown, Math.max(0, Number(baseTotal) || 0)), 0, MAX_GAME_SCORE, 0);
+      const fm = safeGameMultiplier(frameMultiplier);
+      const tm = safeGameMultiplier(throwMultiplier);
+      const gm = safeGameMultiplier(globalMultiplier);
+      const afterFrame = safeMultiply(safeBase, fm, MAX_GAME_SCORE);
       const frameExtra = Math.max(0, afterFrame - safeBase);
       const frameMap = {};
-      (frameSources || []).forEach(entry => addSourceValue(frameMap, entry.sourceId, Math.max(0, Number(entry.factor) - 1)));
+      (frameSources || []).forEach(entry => addSourceValue(frameMap, entry.sourceId, Math.max(0, entry.creditWeight ?? (Number(entry.factor) - 1))));
       distributePowerupCredit(frameMap, frameExtra);
 
-      const afterThrow = afterFrame * tm;
+      const afterThrow = safeMultiply(afterFrame, tm, MAX_GAME_SCORE);
       const throwExtra = Math.max(0, afterThrow - afterFrame);
       const throwMap = {};
       (throwSources || []).forEach(entry => addSourceValue(throwMap, entry.sourceId, Math.max(0, Number(entry.factor) - 1)));
       distributePowerupCredit(throwMap, throwExtra);
 
       const beforeGlobal = afterThrow;
-      const expectedGlobal = beforeGlobal * gm;
+      const expectedGlobal = safeMultiply(beforeGlobal, gm, MAX_GAME_SCORE);
       const actual = Math.max(0, Number(awarded) || 0);
       const globalExtra = Math.max(0, actual - beforeGlobal);
       distributePowerupCredit(globalSources, globalExtra);
@@ -3568,37 +3811,37 @@
       const rawBowling = Math.round(calculateRawBowlingScore());
       const directRush = Math.round(Math.max(0, Number(powerupBonusScore) || 0));
       const endAdjustment = Math.round(Number(frames[9]?.endAdjustment) || 0);
-      const multiplierAndRules = Math.round(finalScore - rawBowling - directRush - endAdjustment);
+      const multiplierAndRules = Math.round(safeAdd(safeAdd(finalScore - rawBowling, -directRush), -endAdjustment));
 
       const entries = Object.values(powerupStats)
         .sort((a,b) => (b.points || 0) - (a.points || 0) || (b.selections || 0) - (a.selections || 0));
 
       powerupReport.classList.remove("hidden");
-      powerupReportTotal.textContent = `Endstand ${finalScore.toLocaleString("de-DE")}`;
+      powerupReportTotal.textContent = `Endstand ${formatScore(finalScore, true)}`;
 
       const rows = [
-        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bowling-ball"></i></span><span class="powerup-report-name"><strong>Bowling-Grundwert</strong><small>Normale Bowlingwertung ohne Strike-Rush-Vervielfachungen</small></span><span class="powerup-report-points">+${rawBowling.toLocaleString("de-DE")}</span></div>`,
-        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bolt"></i></span><span class="powerup-report-name"><strong>Direkte Rush-Punkte</strong><small>Alle tatsächlich gutgeschriebenen Rush-Punkte vor Frame-/Wurf-Vervielfachungen</small></span><span class="powerup-report-points">+${directRush.toLocaleString("de-DE")}</span></div>`,
-        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-frame"><i class="fa-solid fa-xmark"></i></span><span class="powerup-report-name"><strong>Multiplikatoren & Frame-Regeln</strong><small>PUNKTE ×, Wurf ×, Kombinationen und mögliche Frame-Abzüge</small></span><span class="powerup-report-points">${multiplierAndRules >= 0 ? "+" : "−"}${Math.abs(multiplierAndRules).toLocaleString("de-DE")}</span></div>`
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bowling-ball"></i></span><span class="powerup-report-name"><strong>Bowling-Grundwert</strong><small>Normale Bowlingwertung ohne Strike-Rush-Vervielfachungen</small></span><span class="powerup-report-points">+${formatScore(rawBowling, true)}</span></div>`,
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-rush"><i class="fa-solid fa-bolt"></i></span><span class="powerup-report-name"><strong>Direkte Rush-Punkte</strong><small>Alle tatsächlich gutgeschriebenen Rush-Punkte vor Frame-/Wurf-Vervielfachungen</small></span><span class="powerup-report-points">+${formatScore(directRush, true)}</span></div>`,
+        `<div class="powerup-report-row static score-component"><span class="powerup-report-icon effect-frame"><i class="fa-solid fa-xmark"></i></span><span class="powerup-report-name"><strong>Multiplikatoren & Frame-Regeln</strong><small>PUNKTE ×, Wurf ×, Kombinationen und mögliche Frame-Abzüge</small></span><span class="powerup-report-points">${multiplierAndRules >= 0 ? "+" : "−"}${formatScore(Math.abs(multiplierAndRules), true)}</span></div>`
       ];
 
       if (endAdjustment) {
-        rows.push(`<div class="powerup-report-row static score-component"><span class="powerup-report-icon gold"><i class="fa-solid fa-skull"></i></span><span class="powerup-report-name"><strong>Endeffekt</strong><small>Änderung des vollständigen Endstands</small></span><span class="powerup-report-points">${endAdjustment >= 0 ? "+" : "−"}${Math.abs(endAdjustment).toLocaleString("de-DE")}</span></div>`);
+        rows.push(`<div class="powerup-report-row static score-component"><span class="powerup-report-icon gold"><i class="fa-solid fa-skull"></i></span><span class="powerup-report-name"><strong>Endeffekt</strong><small>Änderung des vollständigen Endstands</small></span><span class="powerup-report-points">${endAdjustment >= 0 ? "+" : "−"}${formatScore(Math.abs(endAdjustment), true)}</span></div>`);
       }
 
       if (entries.length) {
         rows.push(`<div class="powerup-report-section-title">Effekt-Anteile</div>`);
-        const tracked = entries.reduce((sum,entry) => sum + Math.max(0, Number(entry.points) || 0), 0);
+        const tracked = entries.reduce((sum,entry) => safeAdd(sum, Math.max(0, Number(entry.points) || 0)), 0);
         entries.forEach(entry => {
           const points = Math.round(Math.max(0, Number(entry.points) || 0));
           const uses = entry.activations > entry.selections ? `${entry.selections}× gewählt · ${entry.activations}× ausgelöst` : `${entry.selections}× gewählt`;
           const item = POWERUPS.find(candidate => candidate.id === entry.id);
           const desc = item ? String(item.desc || "").replace(/^DAUERHAFT:\s*/i, "") : "";
-          rows.push(`<button type="button" class="powerup-report-row" data-report-effect="${escapeHtml(entry.id)}" aria-expanded="false"><span class="powerup-report-icon ${entry.tier} effect-${effectFamilyMeta(item?.family).className}"><i class="fa-solid ${entry.icon}"></i></span><span class="powerup-report-name"><strong>${escapeHtml(entry.name)}</strong><small>${uses} · direkter Anteil · antippen für Erklärung</small></span><span class="powerup-report-points">+${points.toLocaleString("de-DE")}</span><span class="powerup-report-desc hidden">${escapeHtml(desc)}</span></button>`);
+          rows.push(`<button type="button" class="powerup-report-row" data-report-effect="${escapeHtml(entry.id)}" aria-expanded="false"><span class="powerup-report-icon ${entry.tier} effect-${effectFamilyMeta(item?.family).className}"><i class="fa-solid ${entry.icon}"></i></span><span class="powerup-report-name"><strong>${escapeHtml(entry.name)}</strong><small>${uses} · direkter Anteil · antippen für Erklärung</small></span><span class="powerup-report-points">+${formatScore(points, true)}</span><span class="powerup-report-desc hidden">${escapeHtml(desc)}</span></button>`);
         });
         const untrackedRush = Math.round(directRush - tracked);
         if (Math.abs(untrackedRush) >= 2) {
-          rows.push(`<div class="powerup-report-row static"><span class="powerup-report-icon bronze"><i class="fa-solid fa-shuffle"></i></span><span class="powerup-report-name"><strong>Nicht einzeln zuordenbar</strong><small>Gemeinsame Rush-Kombinationen / Rundung</small></span><span class="powerup-report-points">${untrackedRush >= 0 ? "+" : "−"}${Math.abs(untrackedRush).toLocaleString("de-DE")}</span></div>`);
+          rows.push(`<div class="powerup-report-row static"><span class="powerup-report-icon bronze"><i class="fa-solid fa-shuffle"></i></span><span class="powerup-report-name"><strong>Nicht einzeln zuordenbar</strong><small>Gemeinsame Rush-Kombinationen / Rundung</small></span><span class="powerup-report-points">${untrackedRush >= 0 ? "+" : "−"}${formatScore(Math.abs(untrackedRush), true)}</span></div>`);
         }
       }
 
@@ -3662,7 +3905,7 @@
       { id:"np9", tier:"pearl", kind:"strategy", family:"multiplier", name:"Perfektionsdrang", icon:"fa-medal", desc:"Clean Frames bauen permanent einen steigenden Multiplikator auf.", apply(){ powerupState.perfectionStep += .05; powerupState.perfectionSources[currentPowerupSourceId()] = (powerupState.perfectionSources[currentPowerupSourceId()] || 0) + .05; } },
       { id:"np10", tier:"pearl", kind:"strategy", family:"copy", name:"Chaos-Theorie", icon:"fa-dice", desc:"Jeder gewählte Effekt erhält zufällig ×1, ×2 oder ×4. Das gezogene Ergebnis wird direkt angezeigt und multipliziert sich mit vorhandenen EFFEKT ×-Faktoren.", apply(){ powerupState.chaosTheoryEnabled = true; } },
       { id:"np17", tier:"pearl", kind:"strategy", family:"multiplier", name:"Millionär", icon:"fa-sack-dollar", desc:"Sofort +100; jede weitere Sofort-Punkte-Karte wird dauerhaft 25 % stärker.", apply(){ addPowerupBonus(100); powerupState.scoreCardMultiplier = Math.max(powerupState.scoreCardMultiplier, 1.25); powerupState.scoreCardGrowthEnabled = true; } },
-      { id:"nb4", tier:"bronze", kind:"active", family:"copy", name:"Doppelpack", icon:"fa-clone", desc:"Du erhältst sofort 2 zusätzliche Bronze-Auswahlen. Wird Doppelpack vervielfacht, vervielfacht sich auch die Zahl der zusätzlichen Auswahlen.", scaledApply(count){ powerupState.extraBronzeChoices += 2 * count; } },
+      { id:"nb4", tier:"bronze", kind:"active", family:"copy", name:"Doppelpack", icon:"fa-clone", desc:"Du erhältst sofort 2 zusätzliche Bronze-Auswahlen. Wird Doppelpack vervielfacht, vervielfacht sich auch die Zahl der zusätzlichen Auswahlen.", scaledApply(count){ powerupState.extraBronzeChoices = safeAdd(powerupState.extraBronzeChoices, safeMultiply(2, count)); } },
       { id:"nb9", tier:"bronze", kind:"passive", family:"multiplier", name:"Multi-Samen", icon:"fa-seedling", desc:"Jetzt +0,05 Multiplikator, nach jedem Clean Frame weitere +0,05.", apply(){ addGlobalMultiplier(.05); powerupState.cleanMultiStep += .05; addSourceValue(powerupState.cleanMultiSources, currentPowerupSourceId(), .05); } },
       { id:"nb10", tier:"bronze", kind:"active", family:"copy", name:"Echo", icon:"fa-rotate", desc:"Wiederholt den zuletzt ausgelösten Bronze-Effekt.", apply(){ repeatLastBronzeEffect(); } },
       { id:"nb12", tier:"bronze", kind:"score", family:"rush", name:"Rush-Lotto", icon:"fa-dice", desc:"Zufällig erhältst du sofort +1 / +10 / +25 / +50 / +100 / +250 Rush-Punkte. Das gezogene Ergebnis wird direkt angezeigt.", final:true, apply(){ const won = randomChoice([1,10,25,50,100,250]); addPowerupBonus(won); announceRandomResult("Rush-Lotto", `+${won}`); } },
@@ -3688,7 +3931,7 @@
       { id:"ng7", tier:"gold", kind:"score", family:"multiplier", name:"Singularität", icon:"fa-circle-nodes", desc:"Alle bisherigen permanenten Multiplikator-Steigerungen werden sofort verdoppelt.", final:true, apply(){ doublePermanentMultiplierGrowth(); } },
       { id:"ng8", tier:"gold", kind:"passive", family:"rush", name:"Perfect Storm", icon:"fa-cloud-bolt", desc:"Strike +350, jeder direkt folgende Strike nochmals +300 mehr.", apply(){ powerupState.perfectStormEnabled = true; } },
       { id:"ng9", tier:"gold", kind:"active", family:"copy", name:"Goldenes Echo", icon:"fa-rotate", desc:"Wiederhole den stärksten bisher ausgewählten Effekt.", apply(){ repeatStrongestChosenEffect(); } },
-      { id:"ng10", tier:"gold", kind:"passive", family:"rush", name:"König Midas", icon:"fa-crown", desc:"Alle Sofort-Punkte-Effekte der restlichen Runde zählen x3.", apply(){ powerupState.instantScoreMultiplier *= 3; } },
+      { id:"ng10", tier:"gold", kind:"passive", family:"rush", name:"König Midas", icon:"fa-crown", desc:"Alle Sofort-Punkte-Effekte der restlichen Runde zählen x3.", apply(){ powerupState.instantScoreMultiplier = safeGameMultiplier(safeMultiply(powerupState.instantScoreMultiplier, 3, MAX_GAME_MULTIPLIER)); } },
       { id:"ng12", tier:"gold", kind:"active", family:"copy", name:"Zeitmaschine", icon:"fa-clock-rotate-left", desc:"Einen bereits gewählten Gold-Effekt erneut aktivieren.", apply(){ repeatLastGoldEffect(); } },
       { id:"ng13", tier:"gold", kind:"passive", family:"rush", name:"Doppelter Final Boss", icon:"fa-skull-crossbones", desc:"Die Endabrechnung wird zweimal ausgeführt.", final:true, apply(){ powerupState.finalBossRepeats += 1; } },
       { id:"ng14", tier:"gold", kind:"score", family:"multiplier", name:"Supermassiv", icon:"fa-star", desc:"Sofort +1,0 Multiplikator.", final:true, apply(){ addGlobalMultiplier(1.0); } },
@@ -3696,46 +3939,144 @@
       { id:"ng17", tier:"gold", kind:"passive", family:"rush", name:"Royal Flush", icon:"fa-diamond", desc:"der Nächste Spare  +150; wenn direkt danach ein Strike  +350 wenn direkt danach danach drei Clean Frames in Folge +750.", apply(){ powerupState.royalFlushStage = Math.max(powerupState.royalFlushStage, 1); powerupState.royalFlushSourceId = currentPowerupSourceId(); } },
       { id:"ng18", tier:"gold", kind:"active", family:"frame", name:"Spiel mit dem Teufel", icon:"fa-dice", desc:"Der Endstand wird am Ende x10 gerechnet oder der Endstand wird am Ende halbiert.", final:true, apply(){ powerupState.devilGambleCharges += 1; } },
       { id:"ng19", tier:"gold", kind:"passive", family:"multiplier", name:"Endloser Aufstieg", icon:"fa-arrow-trend-up", desc:"Jeder noch verbleibende Frame gibt automatisch +0,10 Multiplikator.", apply(){ powerupState.endlessAscentStep += .10; addSourceValue(powerupState.endlessAscentSources, currentPowerupSourceId(), .10); } },
-      { id:"ng20", tier:"gold", kind:"passive", family:"multiplier", name:"Omega-Kern", icon:"fa-infinity", desc:"+0,25 Multiplikator; alle späteren Multiplikator-Zuwächse werden verdoppelt.", apply(){ addGlobalMultiplier(.25); powerupState.omegaFactor *= 2; } },
+      { id:"ng20", tier:"gold", kind:"passive", family:"multiplier", name:"Omega-Kern", icon:"fa-infinity", desc:"+0,25 Multiplikator; alle späteren Multiplikator-Zuwächse werden verdoppelt.", apply(){ addGlobalMultiplier(.25); powerupState.omegaFactor = safeGameMultiplier(safeMultiply(powerupState.omegaFactor, 2, MAX_GAME_MULTIPLIER)); } },
     ];
+
+    // Closed-form implementations: additive, exponential and counted sources.
+    const BATCH_EFFECTS = {
+      p1(count) { addGlobalMultiplier(safeMultiply(.50, count)); powerupState.comboMultiplierStep = safeAdd(powerupState.comboMultiplierStep, safeMultiply(.10, count)); addSourceValue(powerupState.comboMultiplierSources, currentPowerupSourceId(), safeMultiply(.10, count)); },
+      p2(count) { powerupState.meteorStrikeBonus = safeAdd(powerupState.meteorStrikeBonus, safeMultiply(80, count)); addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), safeMultiply(80, count)); powerupState.strikeMadnessStep = safeAdd(powerupState.strikeMadnessStep, safeMultiply(50, count)); addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), safeMultiply(50, count)); },
+      p3(count) { powerupState.midasPerChoice = safeAdd(powerupState.midasPerChoice, safeMultiply(35, count)); addSourceValue(powerupState.midasSources, currentPowerupSourceId(), safeMultiply(35, count)); powerupState.infinityPerChoice = safeAdd(powerupState.infinityPerChoice, safeMultiply(.05, count)); addSourceValue(powerupState.infinitySources, currentPowerupSourceId(), safeMultiply(.05, count)); },
+      p4(count) { powerupState.spareMotorBonus = safeAdd(powerupState.spareMotorBonus, safeMultiply(70, count)); powerupState.spareMotorMultiplierStep = safeAdd(powerupState.spareMotorMultiplierStep, safeMultiply(.06, count)); addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), safeMultiply(70, count)); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), safeMultiply(.06, count)); },
+      p5(count) { powerupState.ascensionStep = safeAdd(powerupState.ascensionStep, safeMultiply(.20, count)); addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), safeMultiply(.20, count)); },
+      p6(count) { powerupState.meteorStrikeBonus = safeAdd(powerupState.meteorStrikeBonus, safeMultiply(120, count)); powerupState.meteorSpareBonus = safeAdd(powerupState.meteorSpareBonus, safeMultiply(60, count)); addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), safeMultiply(120, count)); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), safeMultiply(60, count)); },
+      p11(count) { powerupState.tierHackCharges = safeAdd(powerupState.tierHackCharges, safeMultiply(4, count)); },
+      p12(count) { addGlobalMultiplier(safeMultiply(.25, count)); powerupState.cleanComboStep = safeAdd(powerupState.cleanComboStep, safeMultiply(25, count)); addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), safeMultiply(25, count)); },
+      b1(count) { addFrameMultiplierBatch(1.5, count); },
+      b2(count) { addFrameMultiplierBatch(2, count); },
+      b4(count) { powerupState.tierHackCharges = safeAdd(powerupState.tierHackCharges, safeMultiply(1, count)); },
+      b5(count) { addTimeBombBatch(8, count); },
+      b6(count) { powerupState.secondWindCharges = safeAdd(powerupState.secondWindCharges, safeMultiply(1, count)); pushSourceBatch(powerupState.secondWindSourceQueue, currentPowerupSourceId(), count); },
+      b7(count) { powerupState.cleanComboStep = safeAdd(powerupState.cleanComboStep, safeMultiply(20, count)); addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), safeMultiply(20, count)); },
+      b8(count) { addPointBatch(30, count); },
+      b9(count) { addPointBatch(45, count); },
+      b10(count) { addGlobalMultiplier(safeMultiply(.10, count)); },
+      b11(count) { addFrameMultiplierBatch(1.75, count); },
+      b12(count) { addGlobalMultiplier(safeMultiply(.15, count)); },
+      b13(count) { addTimeBombBatch(10, count); },
+      s2(count) { addFrameMultiplierBatch(3, count); },
+      s3(count) { powerupState.comboMultiplierStep = safeAdd(powerupState.comboMultiplierStep, safeMultiply(.10, count)); addSourceValue(powerupState.comboMultiplierSources, currentPowerupSourceId(), safeMultiply(.10, count)); },
+      s4(count) { powerupState.spareMotorBonus = safeAdd(powerupState.spareMotorBonus, safeMultiply(40, count)); powerupState.spareMotorMultiplierStep = safeAdd(powerupState.spareMotorMultiplierStep, safeMultiply(.05, count)); addSourceValue(powerupState.spareMotorBonusSources, currentPowerupSourceId(), safeMultiply(40, count)); addSourceValue(powerupState.spareMotorMultiplierSources, currentPowerupSourceId(), safeMultiply(.05, count)); },
+      s5(count) { powerupState.tierHackCharges = safeAdd(powerupState.tierHackCharges, safeMultiply(2, count)); },
+      s6(count) { addTimeBombBatch(15, count); },
+      s7(count) { addGlobalMultiplier(safeMultiply(.25, count)); },
+      s9(count) { addPointBatch(90, count); },
+      s10(count) { addPointBatch(130, count); },
+      s11(count) { addFrameMultiplierBatch(4, count); },
+      s12(count) { addGlobalMultiplier(safeMultiply(.40, count)); },
+      s13(count) { powerupState.cleanComboStep = safeAdd(powerupState.cleanComboStep, safeMultiply(35, count)); addSourceValue(powerupState.cleanComboSources, currentPowerupSourceId(), safeMultiply(35, count)); },
+      s14(count) { addTimeBombBatch(20, count); },
+      g1(count) { powerupState.ascensionStep = safeAdd(powerupState.ascensionStep, safeMultiply(.25, count)); addSourceValue(powerupState.ascensionSources, currentPowerupSourceId(), safeMultiply(.25, count)); addSourceValue(powerupState.ascensionSpareSources, currentPowerupSourceId(), safeMultiply(.25, count)); },
+      g2(count) { powerupState.midasPerChoice = safeAdd(powerupState.midasPerChoice, safeMultiply(75, count)); addSourceValue(powerupState.midasSources, currentPowerupSourceId(), safeMultiply(75, count)); },
+      g3(count) { powerupState.infinityPerChoice = safeAdd(powerupState.infinityPerChoice, safeMultiply(.25, count)); addSourceValue(powerupState.infinitySources, currentPowerupSourceId(), safeMultiply(.25, count)); },
+      g4(count) { powerupState.jackpotModeCharges = safeAdd(powerupState.jackpotModeCharges, safeMultiply(1, count)); pushSourceBatch(powerupState.jackpotSourceQueue, currentPowerupSourceId(), count); },
+      g5(count) { powerupState.strikeMadnessStep = safeAdd(powerupState.strikeMadnessStep, safeMultiply(75, count)); addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), safeMultiply(75, count)); },
+      g6(count) { powerupState.meteorStrikeBonus = safeAdd(powerupState.meteorStrikeBonus, safeMultiply(120, count)); powerupState.meteorSpareBonus = safeAdd(powerupState.meteorSpareBonus, safeMultiply(60, count)); addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), safeMultiply(120, count)); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), safeMultiply(60, count)); },
+      g7(count) { powerupState.finalBossLevel = safeAdd(powerupState.finalBossLevel, safeMultiply(1, count)); addSourceValue(powerupState.finalBossSources, currentPowerupSourceId(), safeMultiply(1, count)); },
+      g9(count) { addPointBatch(220, count); },
+      g10(count) { addPointBatch(300, count); },
+      g11(count) { addFrameMultiplierBatch(5, count); },
+      g12(count) { addGlobalMultiplier(safeMultiply(.60, count)); },
+      g13(count) { powerupState.meteorStrikeBonus = safeAdd(powerupState.meteorStrikeBonus, safeMultiply(200, count)); powerupState.meteorSpareBonus = safeAdd(powerupState.meteorSpareBonus, safeMultiply(100, count)); addSourceValue(powerupState.meteorStrikeSources, currentPowerupSourceId(), safeMultiply(200, count)); addSourceValue(powerupState.meteorSpareSources, currentPowerupSourceId(), safeMultiply(100, count)); },
+      g14(count) { powerupState.strikeMadnessStep = safeAdd(powerupState.strikeMadnessStep, safeMultiply(125, count)); addSourceValue(powerupState.strikeMadnessSources, currentPowerupSourceId(), safeMultiply(125, count)); },
+      np2(count) { addGlobalMultiplier(safeMultiply(1.0, count)); powerupState.glassCannonOpenPenalty = safeAdd(powerupState.glassCannonOpenPenalty, safeMultiply(.15, count)); },
+      np4(count) { powerupState.treasureVaultRate = Math.min(.80, safeAdd(powerupState.treasureVaultRate, safeMultiply(.20, count))); powerupState.treasureVaultSourceId = currentPowerupSourceId(); },
+      np9(count) { powerupState.perfectionStep = safeAdd(powerupState.perfectionStep, safeMultiply(.05, count)); addSourceValue(powerupState.perfectionSources, currentPowerupSourceId(), safeMultiply(.05, count)); },
+      np10(count) { powerupState.chaosTheoryEnabled = true; },
+      np17(count) { addPointBatch(100, count); powerupState.scoreCardMultiplier = Math.max(powerupState.scoreCardMultiplier, 1.25); powerupState.scoreCardGrowthEnabled = true; },
+      nb9(count) { addGlobalMultiplier(safeMultiply(.05, count)); powerupState.cleanMultiStep = safeAdd(powerupState.cleanMultiStep, safeMultiply(.05, count)); addSourceValue(powerupState.cleanMultiSources, currentPowerupSourceId(), safeMultiply(.05, count)); },
+      nb10(count) { repeatLastBronzeEffect(count); },
+      nb12(count) { applyRandomPointBatch([1,10,25,50,100,250], count, "Rush-Lotto"); },
+      nb18(count) { powerupState.reboundPoints = safeAdd(powerupState.reboundPoints, safeMultiply(50, count)); powerupState.reboundMultiStep = safeAdd(powerupState.reboundMultiStep, safeMultiply(.05, count)); addSourceValue(powerupState.reboundSources, currentPowerupSourceId(), safeMultiply(1, count)); },
+      nb20(count) { powerupState.luckCoinChance = Math.min(1, safeAdd(powerupState.luckCoinChance, safeMultiply(.20, count))); powerupState.luckCoinSources.push(currentPowerupSourceId()); },
+      ns2(count) { addGlobalMultiplier(safeMultiply(.20, count)); powerupState.nextSpareMultiBoost = safeAdd(powerupState.nextSpareMultiBoost, safeMultiply(.20, count)); addSourceValue(powerupState.nextSpareMultiSources, currentPowerupSourceId(), safeMultiply(.20, count)); },
+      ns3(count) { powerupState.nextCleanJackpot = safeAdd(powerupState.nextCleanJackpot, safeMultiply(100, count)); powerupState.nextCleanStrikeExtra = safeAdd(powerupState.nextCleanStrikeExtra, safeMultiply(200, count)); powerupState.nextCleanJackpotSources.push(currentPowerupSourceId()); },
+      ns5(count) { addFrameMultiplierBatch(2, count, 2); },
+      ns8(count) { powerupState.comboInsuranceCharges = safeAdd(powerupState.comboInsuranceCharges, safeMultiply(1, count)); },
+      ns10(count) { powerupState.silverVaultRate = Math.min(1, safeAdd(powerupState.silverVaultRate, safeMultiply(.25, count))); powerupState.silverVaultSourceId = currentPowerupSourceId(); },
+      ns11(count) { powerupState.hyperInterestFrames = safeAdd(powerupState.hyperInterestFrames, safeMultiply(3, count)); },
+      ns12(count) { powerupState.rerollCurrentDrafts = safeAdd(powerupState.rerollCurrentDrafts, safeMultiply(1, count)); },
+      ns13(count) { powerupState.bronzeToGoldCharges = safeAdd(powerupState.bronzeToGoldCharges, safeMultiply(1, count)); },
+      ns15(count) { addFrameMultiplierBatch(6, count); addNextFrameOpenPenalty(safeMultiply(300, count)); },
+      ns17(count) { powerupState.seriesAccountEnabled = true; pushSourceBatch(powerupState.seriesAccountSources, currentPowerupSourceId(), count); },
+      ns19(count) { applyRandomPointBatch([10,75,250,400], count, "Silberregen"); },
+      ns20(count) { powerupState.resonanceEnabled = true; },
+      ng1(count) { powerupState.blackHoleRemaining = safeAdd(powerupState.blackHoleRemaining, safeMultiply(3, count)); powerupState.blackHoleSourceId = currentPowerupSourceId(); },
+      ng2(count) { addFrameMultiplierBatch(6, count); },
+      ng3(count) { powerupState.forceGoldDrafts = safeAdd(powerupState.forceGoldDrafts, safeMultiply(1, count)); powerupState.goldenTicketExtraPending = safeAdd(powerupState.goldenTicketExtraPending, safeMultiply(1, count)); },
+      ng5(count) { powerupState.nuclearEnabled = true; },
+      ng6(count) { powerupState.midasPerChoice = safeAdd(powerupState.midasPerChoice, safeMultiply(100, count)); addSourceValue(powerupState.midasSources, currentPowerupSourceId(), safeMultiply(100, count)); },
+      ng7(count) { const growth = Math.max(0, powerupState.bonusMultiplier - 1); const after = safeScalePower(growth, 2, count); changeGlobalMultiplier(after - growth, currentPowerupSourceId(), false); },
+      ng8(count) { powerupState.perfectStormEnabled = true; },
+      ng9(count) { repeatStrongestChosenEffect(count); },
+      ng10(count) { powerupState.instantScoreMultiplier = safeMultiply(powerupState.instantScoreMultiplier, safePower(3, count)); },
+      ng12(count) { repeatLastGoldEffect(count); },
+      ng13(count) { powerupState.finalBossRepeats = safeAdd(powerupState.finalBossRepeats, safeMultiply(1, count)); },
+      ng14(count) { addGlobalMultiplier(safeMultiply(1.0, count)); },
+      ng16(count) { powerupState.strikeMillionaireBonus = safeAdd(powerupState.strikeMillionaireBonus, safeMultiply(250, count)); powerupState.strikeMillionaireMultiStep = safeAdd(powerupState.strikeMillionaireMultiStep, safeMultiply(.10, count)); addSourceValue(powerupState.strikeMillionaireSources, currentPowerupSourceId(), safeMultiply(1, count)); },
+      ng17(count) { powerupState.royalFlushStage = Math.max(powerupState.royalFlushStage, 1); powerupState.royalFlushSourceId = currentPowerupSourceId(); },
+      ng18(count) { powerupState.devilGambleCharges = safeAdd(powerupState.devilGambleCharges, safeMultiply(1, count)); },
+      ng19(count) { powerupState.endlessAscentStep = safeAdd(powerupState.endlessAscentStep, safeMultiply(.10, count)); addSourceValue(powerupState.endlessAscentSources, currentPowerupSourceId(), safeMultiply(.10, count)); },
+      ng20(count) { addGlobalMultiplier(safeScalePower(.25, 2, count) - .25); powerupState.omegaFactor = safeScalePower(powerupState.omegaFactor, 2, count); }
+    };
 
 
     function addFrameBonus(points, frameIndex = currentFrame, sourceId = currentPowerupSourceId(), trackAttribution = true, options = {}) {
       if (gameMode !== "powerup") return 0;
-      let base = Math.max(0, Number(points) || 0);
+      const repetitions = safeApplicationCount(options.repetitions || 1);
+      if (!options.ignoreBlackHole && powerupState.blackHoleRemaining > 0 && powerupState.blackHoleRemaining < repetitions) {
+        const swallowed = powerupState.blackHoleRemaining;
+        const first = addFrameBonus(points, frameIndex, sourceId, trackAttribution, { ...options, repetitions:swallowed });
+        const rest = addFrameBonus(points, frameIndex, sourceId, trackAttribution, { ...options, repetitions:repetitions - swallowed });
+        return safeAdd(first, rest);
+      }
+      let base = finiteClamped(points);
       if (!base) return 0;
 
       const sourceItem = sourceId ? POWERUPS.find(item => item.id === sourceId) : null;
       if (!options.ignoreInstantScoreBoost && isInstantPointEffect(sourceItem)) {
-        base *= Math.max(1, Number(powerupState.scoreCardMultiplier) || 1);
-        base *= Math.max(1, Number(powerupState.instantScoreMultiplier) || 1);
+        base = safeMultiply(base, safeGameMultiplier(powerupState.scoreCardMultiplier));
+        base = safeMultiply(base, safeGameMultiplier(powerupState.instantScoreMultiplier));
       }
 
       const globalMultiplier = options.ignoreGlobalMultiplier
         ? 1
-        : Math.max(1, powerupState?.bonusMultiplier || 1);
-      let adjusted = Math.max(0, Math.round(base * globalMultiplier));
+        : safeGameMultiplier(powerupState?.bonusMultiplier || 1);
+      let adjusted = safeGameScore(safeMultiply(base, globalMultiplier, MAX_GAME_SCORE));
       if (!adjusted) return 0;
 
       // Pearl-Tresor: 20 % (stackbar) werden nicht sofort gutgeschrieben, sondern am Ende x3 ausgezahlt.
       if (!options.ignoreVaults && powerupState.treasureVaultRate > 0) {
         const diverted = Math.round(adjusted * Math.min(.80, powerupState.treasureVaultRate));
         adjusted -= diverted;
-        powerupState.treasureVaultStored += diverted;
+        powerupState.treasureVaultStored = safeGameScore(safeAdd(powerupState.treasureVaultStored, safeMultiply(diverted, repetitions), MAX_GAME_SCORE));
       }
 
       // Silber-Tresor: der gewählte Anteil bleibt normal erhalten und wird am Ende ein zweites Mal gutgeschrieben.
       if (!options.ignoreVaults && powerupState.silverVaultRate > 0) {
-        powerupState.silverVaultStored += Math.round(adjusted * Math.min(1, powerupState.silverVaultRate));
+        powerupState.silverVaultStored = safeGameScore(safeAdd(powerupState.silverVaultStored, safeMultiply(Math.round(adjusted * Math.min(1, powerupState.silverVaultRate)), repetitions), MAX_GAME_SCORE));
       }
+
+      base = safeMultiply(base, repetitions);
+      adjusted = safeMultiply(adjusted, repetitions);
 
       // Black Hole: die nächsten drei Rush-Punkte-Pakete werden verschluckt und danach gemeinsam x4 ausgezahlt.
       if (!options.ignoreBlackHole && powerupState.blackHoleRemaining > 0) {
-        powerupState.blackHoleStored += adjusted;
-        powerupState.blackHoleRemaining -= 1;
+        powerupState.blackHoleStored = safeGameScore(safeAdd(powerupState.blackHoleStored, adjusted, MAX_GAME_SCORE));
+        powerupState.blackHoleRemaining = Math.max(0, powerupState.blackHoleRemaining - repetitions);
         if (trackAttribution && sourceId) creditPowerupPoints(sourceId, adjusted);
         if (powerupState.blackHoleRemaining <= 0) {
-          const payout = Math.max(0, Math.round(powerupState.blackHoleStored * 4));
+          const payout = safeGameScore(safeMultiply(powerupState.blackHoleStored, 4, MAX_GAME_SCORE));
           powerupState.blackHoleStored = 0;
           const blackHoleSource = powerupState.blackHoleSourceId;
           return addFrameBonus(payout, frameIndex, blackHoleSource, true, { ignoreBlackHole:true, ignoreVaults:true, ignoreInstantScoreBoost:true, postFrame:options.postFrame });
@@ -3751,10 +4092,10 @@
 
       const frame = frames[frameIndex];
       const postFrame = Boolean(options.postFrame || (powerupChoosing && frame && isFrameCompleteAfterThrow(frameIndex, frame.throws)));
-      powerupBonusScore += adjusted;
+      powerupBonusScore = safeGameScore(safeAdd(powerupBonusScore, adjusted, MAX_GAME_SCORE));
       if (frame) {
-        frame.bonus = (Number(frame.bonus) || 0) + adjusted;
-        if (postFrame) frame.postBonus = (Number(frame.postBonus) || 0) + adjusted;
+        frame.bonus = safeGameScore(safeAdd(frame.bonus, adjusted, MAX_GAME_SCORE));
+        if (postFrame) frame.postBonus = safeGameScore(safeAdd(frame.postBonus, adjusted, MAX_GAME_SCORE));
       }
 
       if (trackAttribution && sourceId) {
@@ -3837,28 +4178,28 @@
       let count = 1;
 
       if (powerupState.effectMultiplierQueue.length) {
-        count *= Math.max(1, Number(powerupState.effectMultiplierQueue.shift()) || 1);
+        count = safeApplicationCount(count * safeApplicationCount(powerupState.effectMultiplierQueue.shift()));
       }
 
       // Alte Einzel-Ladungen bleiben kompatibel, werden aber jetzt multiplikativ behandelt.
       if (powerupState.copyNextPowerupExtra > 0) {
-        count *= Math.max(1, 1 + Number(powerupState.copyNextPowerupExtra));
+        count = safeApplicationCount(count * safeApplicationCount(1 + Number(powerupState.copyNextPowerupExtra)));
         powerupState.copyNextPowerupExtra = 0;
       }
       if (powerupState.quantumCopyCharges > 0) {
-        count *= 2;
+        count = safeApplicationCount(count * 2);
         powerupState.quantumCopyCharges -= 1;
       }
 
       if (powerupState.chaosTheoryEnabled) {
         const chaosFactor = randomChoice([1, 2, 4]);
-        count *= chaosFactor;
+        count = safeApplicationCount(count * chaosFactor);
         announceRandomResult("Chaos-Theorie", `×${chaosFactor}`);
       }
       if (powerupState.resonanceEnabled && item && powerupState.lastEffectFamily && powerupState.lastEffectFamily === item.family) {
-        count *= 3;
+        count = safeApplicationCount(count * 3);
       }
-      return Math.max(1, Math.floor(count));
+      return safeApplicationCount(count);
     }
 
 
@@ -3978,15 +4319,13 @@
 
       if (powerupState.devilGambleCharges > 0 && !powerupState.devilApplied) {
         powerupState.devilApplied = true;
-        let charges = Math.max(1, Math.floor(powerupState.devilGambleCharges));
-        while (charges-- > 0) {
-          const totals = calculateCumulativeScores();
-          const before = totals[9] ?? getLatestResolvedTotal(totals);
-          const win = Math.random() < .5;
-          const target = win ? Math.round(before * 10) : Math.round(before / 2);
-          frames[9].endAdjustment += target - before;
-          showFlash(win ? "TEUFEL: x10" : "TEUFEL: HALBIERT");
-        }
+        const charges = safeApplicationCount(powerupState.devilGambleCharges);
+        const totals = calculateCumulativeScores();
+        const before = safeGameScore(totals[9] ?? getLatestResolvedTotal(totals));
+        const { target, lastWin } = resolveDevilGamble(before, charges);
+        powerupState.devilFinalScore = target;
+        frames[9].endAdjustment = target - before;
+        showFlash(lastWin ? "TEUFEL: x10" : "TEUFEL: HALBIERT");
       }
       renderScoreboard();
     }
@@ -4187,6 +4526,7 @@
       if (!item) return;
       if (isPassivePowerup(item) && passivePowerups.length >= MAX_PASSIVES) return;
 
+      const selectionSnapshot = JSON.stringify({ powerupState, frames, powerupBonusScore, powerupStats, passivePowerups:passivePowerups.map(entry => entry.id) });
       // Zufallsergebnisse dieser Auswahl werden gesammelt und nach der Aktivierung sichtbar ausgegeben.
       pendingRandomResultFlashes = [];
 
@@ -4199,12 +4539,18 @@
       activePowerupSourceId = item.id;
       try {
         applyEffectItem(item, applicationCount);
+      } catch (error) {
+        const saved = JSON.parse(selectionSnapshot);
+        powerupState = saved.powerupState; frames = saved.frames; powerupBonusScore = saved.powerupBonusScore;
+        powerupStats = saved.powerupStats;
+        passivePowerups = saved.passivePowerups.map(id => POWERUPS.find(entry => entry.id === id));
+        showFlash(error.message); return;
       } finally {
         activePowerupSourceId = null;
       }
 
       if (isInstantPointEffect(item) && powerupState.scoreCardGrowthEnabled) {
-        powerupState.scoreCardMultiplier *= 1.25;
+        powerupState.scoreCardMultiplier = safeGameMultiplier(safeMultiply(powerupState.scoreCardMultiplier, 1.25, MAX_GAME_MULTIPLIER));
       }
 
       // Historie erst NACH apply(): Echo/Zeitmaschine sehen dadurch tatsächlich den vorherigen Effekt.
@@ -4386,14 +4732,14 @@
       }
 
       // Rückwind: der DARAUFFOLGENDE Wurf zählt komplett x3.
-      const throwMultiplier = Math.max(1, Number(powerupState.nextThrowMultiplier) || 1);
+      const throwMultiplier = safeGameMultiplier(powerupState.nextThrowMultiplier);
       const throwMultiplierSources = [...(powerupState.nextThrowMultiplierSources || [])];
       powerupState.nextThrowMultiplier = 1;
       powerupState.nextThrowMultiplierSources = [];
       if (pinsDown <= 4 && powerupState.secondWindCharges > 0) {
         powerupState.secondWindCharges -= 1;
-        const sourceId = powerupState.secondWindSourceQueue.shift() || null;
-        powerupState.nextThrowMultiplier *= 3;
+        const sourceId = shiftSourceBatch(powerupState.secondWindSourceQueue);
+        powerupState.nextThrowMultiplier = safeGameMultiplier(safeMultiply(powerupState.nextThrowMultiplier, 3, MAX_GAME_MULTIPLIER));
         if (sourceId) powerupState.nextThrowMultiplierSources.push({ sourceId, factor:3 });
         showFlash("RÜCKWIND x3");
       }
@@ -4427,7 +4773,11 @@
           if (powerupState.seriesAccountEnabled) {
             const ladder = [50, 100, 200, 400];
             const payout = ladder[Math.min(ladder.length - 1, Math.max(0, powerupState.cleanFrameStreak - 1))];
-            powerupState.seriesAccountSources.forEach(sourceId => { earned += payout; addPart(sourceId, payout); });
+            powerupState.seriesAccountSources.forEach(entry => {
+              const sourceId = typeof entry === "object" ? entry.sourceId : entry;
+              const amount = safeMultiply(payout, typeof entry === "object" ? entry.count : 1);
+              earned = safeAdd(earned, amount); addPart(sourceId, amount);
+            });
           }
 
           if (powerupState.nextCleanJackpot > 0) {
@@ -4559,7 +4909,7 @@
           const payout = strikeFrame ? 300 : 150;
           earned += payout;
           powerupState.jackpotModeCharges -= 1;
-          const sourceId = powerupState.jackpotSourceQueue.shift() || null;
+          const sourceId = shiftSourceBatch(powerupState.jackpotSourceQueue);
           addPart(sourceId, payout);
         }
 
@@ -4573,9 +4923,9 @@
 
       if (powerupState.jackpotThrows > 0) earned += strike ? 100 : 20;
 
-      const baseEarned = earned;
-      earned *= throwMultiplier;
-      const globalMultiplier = Math.max(1, Number(powerupState.bonusMultiplier) || 1);
+      const baseEarned = finiteClamped(earned, 0, MAX_GAME_SCORE, 0);
+      earned = safeGameScore(safeMultiply(baseEarned, throwMultiplier, MAX_GAME_SCORE));
+      const globalMultiplier = safeGameMultiplier(powerupState.bonusMultiplier);
       const awarded = earned > 0 ? addFrameBonus(earned, frameIndex, null, false) : 0;
 
       if (awarded > 0) {
@@ -4625,6 +4975,7 @@
             const payout = Math.round(formulaBase * Math.max(0, Number(effect.factor) || 0));
             const added = addFrameBonus(payout, frameIndex, effect.sourceId, true, {
               ignoreGlobalMultiplier:true,
+              repetitions:effect.count || 1,
               postFrame:false
             });
             timeBombAwarded += added;
@@ -5270,19 +5621,21 @@
           bowlingValue = t.reduce((sum, _, index) => sum + weightedThrow(frame, index), 0);
         }
 
-        const frameMultiplier = gameMode === "powerup" ? Math.max(1, Number(frame.scoreMultiplier) || 1) : 1;
+        const frameMultiplier = gameMode === "powerup" ? safeGameMultiplier(frame.scoreMultiplier) : 1;
         // Grundregel Strike Rush: Frame-x multipliziert Bowlingpunkte UND Rush-Punkte,
         // die innerhalb dieses Frames entstanden sind. Sofort-Effekte aus der Auswahl
         // nach dem Frame bleiben außerhalb des Frame-Multiplikators.
-        let resolvedFrame = Math.round((Math.max(0, bowlingValue) + inFrameRush) * frameMultiplier) + postBonus;
+        const frameBase = safeAdd(Math.max(0, bowlingValue), inFrameRush, MAX_GAME_SCORE);
+        let resolvedFrame = safeAdd(safeMultiply(frameBase, frameMultiplier, MAX_GAME_SCORE), postBonus, MAX_GAME_SCORE);
 
         if (gameMode === "powerup" && classifyFramePowerupTier(i, t) === "bronze") {
-          resolvedFrame -= Math.max(0, Number(frame.openPenalty) || 0);
+          resolvedFrame = safeAdd(resolvedFrame, -Math.max(0, Number(frame.openPenalty) || 0), MAX_GAME_SCORE);
         }
-        if (i === 9) resolvedFrame += Number(frame.endAdjustment) || 0;
+        if (i === 9) resolvedFrame = safeAdd(resolvedFrame, Number(frame.endAdjustment) || 0, MAX_GAME_SCORE);
 
-        running = Math.max(0, running + resolvedFrame);
-        totals[i] = Math.round(running);
+        running = Math.max(0, safeAdd(running, resolvedFrame, MAX_GAME_SCORE));
+        totals[i] = i === 9 && gameMode === "powerup" && Number.isFinite(powerupState?.devilFinalScore)
+          ? powerupState.devilFinalScore : safeGameScore(running);
       }
       return totals;
     }
@@ -5326,7 +5679,7 @@
         const isCurrent = !gameOver && index === currentFrame;
         const isTenth = index === 9;
         const frameBonus = gameMode === "powerup" ? Math.max(0, Number(frame.bonus) || 0) : 0;
-        const frameMultiplier = gameMode === "powerup" ? Math.max(1, Number(frame.scoreMultiplier) || 1) : 1;
+        const frameMultiplier = gameMode === "powerup" ? safeGameMultiplier(frame.scoreMultiplier) : 1;
         const penaltyApplies = gameMode === "powerup"
           && isFrameCompleteAfterThrow(index, frame.throws)
           && classifyFramePowerupTier(index, frame.throws) === "bronze";
@@ -5335,20 +5688,20 @@
           <div class="frame-card ${isCurrent ? "current" : ""} ${isTenth ? "tenth" : ""} ${gameMode === "powerup" ? "powerup-frame" : ""}">
             <div class="frame-head">F${index + 1}${frameMultiplier > 1 ? `<span class="frame-score-mult-mark">×${formatMultiplier(frameMultiplier)}</span>` : ""}</div>
             <div class="roll-boxes">${rolls.map(symbol => `<div class="roll-cell">${symbol}</div>`).join("")}</div>
-            <div class="frame-total"><span>${totals[index] ?? ""}</span>${frameBonus ? `<span class="frame-bonus-mark">+${frameBonus}</span>` : ""}${framePenalty ? `<span class="frame-penalty-mark">−${framePenalty}</span>` : ""}</div>
+            <div class="frame-total"><span>${formatScore(totals[index])}</span>${frameBonus ? `<span class="frame-bonus-mark">+${formatScore(frameBonus)}</span>` : ""}${framePenalty ? `<span class="frame-penalty-mark">−${formatScore(framePenalty)}</span>` : ""}</div>
           </div>
         `;
       }).join("");
 
       const total = getLatestResolvedTotal(totals);
-      summaryTotal.textContent = String(total);
+      summaryTotal.textContent = formatScore(total);
       summaryStrikes.textContent = String(countStrikes());
       summarySpares.textContent = String(countSpares());
       summaryState.textContent = totals[9] !== null ? "Final" : (gameMode === "powerup" ? "Strike Rush" : "Classic");
       if (gameMode === "powerup") {
-        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${total}</span><span class="score-multiplier-chip" title="Dauerhafter Rush-Multiplikator"><i class="fa-solid fa-arrow-trend-up"></i> Rush ×${formatMultiplier(Math.max(1, Number(powerupState?.bonusMultiplier) || 1))}</span>`;
+        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${formatScore(total)}</span><span class="score-multiplier-chip" title="Dauerhafter Rush-Multiplikator"><i class="fa-solid fa-arrow-trend-up"></i> Rush ×${formatMultiplier(Math.max(1, Number(powerupState?.bonusMultiplier) || 1))}</span>`;
       } else {
-        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${total}</span>`;
+        scoreTotalHud.innerHTML = `<span class="score-total-main">Gesamt ${formatScore(total)}</span>`;
       }
     }
 
@@ -5445,7 +5798,7 @@
           <div class="leaderboard-row">
             <div class="leaderboard-rank">${index + 1}</div>
             <div class="leaderboard-name">${escapeHtml(entry.name)}</div>
-            <div class="leaderboard-score">${entry.score}</div>
+            <div class="leaderboard-score">${formatScore(entry.score)}</div>
           </div>
         `).join("");
       }
@@ -5475,9 +5828,9 @@
       const classic = effectiveOverallRecord("classic");
       const powerup = effectiveOverallRecord("powerup");
       if (overallClassicName) overallClassicName.textContent = classic?.name || "Noch keiner";
-      if (overallClassicScore) overallClassicScore.textContent = classic ? String(Math.round(classic.score)) : "—";
+      if (overallClassicScore) overallClassicScore.textContent = classic ? formatScore(Math.round(classic.score)) : "—";
       if (overallRushName) overallRushName.textContent = powerup?.name || "Noch keiner";
-      if (overallRushScore) overallRushScore.textContent = powerup ? String(Math.round(powerup.score)) : "—";
+      if (overallRushScore) overallRushScore.textContent = powerup ? formatScore(Math.round(powerup.score)) : "—";
     }
 
     function renderLeaderboard() {
@@ -5503,7 +5856,7 @@
 
     async function submitLeaderboardEntry(name, score, mode = gameMode) {
       const cleanName = String(name || "").trim().slice(0, 24);
-      const finalScore = Math.max(0, Math.round(Number(score) || 0));
+      const finalScore = safeGameScore(score);
       if (!cleanName) throw new Error("Bitte einen Namen eingeben.");
 
       const ref = leaderboardRefs[mode];
@@ -5567,7 +5920,7 @@
     function showModal(title, text, allowForm) {
       modalTitle.textContent = title;
       modalText.textContent = text;
-      if (finalScoreValue) finalScoreValue.textContent = String(getFinalScore());
+      if (finalScoreValue) finalScoreValue.textContent = formatScore(getFinalScore());
       leaderboardForm.style.display = allowForm ? "grid" : "none";
       leaderboardModal.classList.remove("hidden");
       leaderboardModal.setAttribute("aria-hidden", "false");
@@ -5591,16 +5944,26 @@
     }
 
     function openEndGameModal() {
-      if (gameMode === "powerup") applyEndgameEffectsIfNeeded();
+      if (gameMode === "powerup") {
+        const saved = JSON.stringify({ powerupState, frames, powerupBonusScore, powerupStats });
+        try { applyEndgameEffectsIfNeeded(); }
+        catch (error) {
+          const state = JSON.parse(saved);
+          powerupState = state.powerupState; frames = state.frames;
+          powerupBonusScore = state.powerupBonusScore; powerupStats = state.powerupStats;
+          showFlash(error.message);
+          return;
+        }
+      }
       renderPowerupReport();
       const score = getFinalScore();
       const modeLabel = gameMode === "powerup" ? "Strike Rush" : "Classic";
       if (qualifiesForLeaderboard(score, gameMode)) {
-        showModal("Spiel beendet", `${score} Punkte im ${modeLabel}-Modus. Der Score reicht aktuell für das ${modeLabel}-Top-10-Leaderboard. Trag deinen Namen ein.`, true);
+        showModal("Spiel beendet", `${formatScore(score)} Punkte im ${modeLabel}-Modus. Der Score reicht aktuell für das ${modeLabel}-Top-10-Leaderboard. Trag deinen Namen ein.`, true);
       } else {
         const top10 = currentLeaderboardEntries(gameMode).slice(0, 10);
         const threshold = top10.length ? top10[top10.length - 1].score : 0;
-        showModal("Knapp vorbei", `${score} Punkte im ${modeLabel}-Modus. Platz 10 liegt aktuell bei ${threshold} Punkten.`, false);
+        showModal("Knapp vorbei", `${formatScore(score)} Punkte im ${modeLabel}-Modus. Platz 10 liegt aktuell bei ${formatScore(threshold)} Punkten.`, false);
       }
     }
 
@@ -6270,11 +6633,11 @@
         if (!saved) {
           showFlash("ZU WENIG PUNKTE");
           playMissSound();
-          showModal("Nicht eingetragen", `${score} Punkte. Der Wert reicht inzwischen nicht mehr für die Top 10. Du kannst direkt neu spielen oder zurück zur Modusauswahl.`, false);
+          showModal("Nicht eingetragen", `${formatScore(score)} Punkte. Der Wert reicht inzwischen nicht mehr für die Top 10. Du kannst direkt neu spielen oder zurück zur Modusauswahl.`, false);
         } else {
           showFlash("EINGETRAGEN");
           playScoreSavedSound();
-          showModal("Score gespeichert", `${name}: ${score} Punkte wurden eingetragen. Wie möchtest du weitermachen?`, false);
+          showModal("Score gespeichert", `${name}: ${formatScore(score)} Punkte wurden eingetragen. Wie möchtest du weitermachen?`, false);
         }
         renderPowerupReport();
       } catch (error) {
