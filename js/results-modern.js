@@ -106,7 +106,7 @@ function renderTable({ headers, rows, sectionClass = "" }) {
       if (isScore200) classes.push("score-200");
       if (cell && typeof cell === "object" && cell.className) classes.push(cell.className);
       const score200Attrs = isScore200
-        ? ` data-score-200="true" data-score-value="${numericValue}" style="background:#a51528 !important;background-image:linear-gradient(180deg,#d9273f 0%,#9d1025 100%) !important;color:#ffffff !important;font-weight:950 !important;font-size:1.14em !important;text-shadow:0 1px 1px rgba(0,0,0,.65) !important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.38),0 0 0 2px #74101d !important;"`
+        ? ` data-score-200="true" data-score-value="${numericValue}" style="background:#075fbd !important;background-image:linear-gradient(180deg,#0b73df 0%,#064b99 100%) !important;color:#ffffff !important;border-color:#043b79 !important;outline:2px solid rgba(4,59,121,.42) !important;outline-offset:-2px !important;font-weight:950 !important;font-size:1.08em !important;text-shadow:0 1px 1px rgba(0,0,0,.55) !important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),0 2px 7px rgba(6,64,128,.26) !important;"`
         : "";
       return `<td class="${classes.join(" ")}"${score200Attrs}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
     }).join("")}</tr>`;
