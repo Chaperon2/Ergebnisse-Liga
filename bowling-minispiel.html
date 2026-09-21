@@ -3721,7 +3721,9 @@
     function formatScore(value, localized = false) {
       if (value === null || value === undefined) return "";
       const number = Number(value);
-      if (number >= MAX_GAME_SCORE) return "Infinity";
+      // Display the rounded upper range consistently, including older saved records.
+      // This threshold changes labels only; scoring and ordering keep their numeric values.
+      if (number >= 1.79e308) return "Infinity";
       return localized ? number.toLocaleString("de-DE") : String(number);
     }
 
@@ -5748,7 +5750,13 @@
       // Format: p_<score-in-base36>_<firebase-push-key>
       const keyMatch = String(id || "").match(/^p_([0-9a-z]+)_/i);
       if (keyMatch) {
-        const decodedScore = parseInt(keyMatch[1], 36);
+        // Base-36 conversion is not lossless at IEEE-754 extremes. Restore
+        // the known maximum key exactly and saturate decoding overflow instead
+        // of falling back to the legacy score field (which contains only 300).
+        const encodedScore = keyMatch[1].toLowerCase();
+        const parsedScore = parseInt(encodedScore, 36);
+        const decodedScore = encodedScore === MAX_GAME_SCORE.toString(36) || parsedScore === Infinity
+          ? MAX_GAME_SCORE : parsedScore;
         return {
           id,
           name: storedName,
@@ -5867,7 +5875,7 @@
       if (mode === "powerup") {
         // Realtime-Database-kompatibel zum alten Classic-Schema:
         // keine zusätzlichen Felder und im score-Feld maximal 300.
-        // Der echte Powerup-Score (auch >300) wird verlustfrei im Key codiert.
+        // Der echte Powerup-Score (auch >300) wird im Key codiert; der Decoder behandelt die Zahlengrenze gesondert.
         const pushKey = ref.push().key;
         const encodedKey = `p_${finalScore.toString(36)}_${pushKey}`;
         const storedScore = Math.min(finalScore, 300);
