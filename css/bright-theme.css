@@ -933,50 +933,69 @@ body.page-records .live-data-state.error i { color:#b4233c !important; }
 .results-view td.col-trend {
   text-align: center !important;
 }
-.results-view .tendency {
+.results-view td.col-trend {
+  vertical-align: middle !important;
+}
+.results-view td.col-trend > .tendency {
   display: inline-flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
-  width: 48px !important;
-  min-width: 48px !important;
+  gap: 3px !important;
+  width: 100% !important;
+  min-width: 0 !important;
   max-width: 48px !important;
   height: 28px !important;
-  padding: 0 6px !important;
+  padding: 0 2px !important;
+  margin: 0 !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
   white-space: nowrap !important;
   vertical-align: middle !important;
   line-height: 1 !important;
+  text-align: center !important;
+  text-indent: 0 !important;
   font-variant-numeric: tabular-nums !important;
 }
-.results-view .tendency-icon {
+.results-view td.col-trend > .tendency > .tendency-icon,
+.results-view td.col-trend > .tendency > .tendency-value {
+  position: static !important;
   display: block !important;
-  flex: 0 0 12px !important;
-  width: 12px !important;
-  min-width: 12px !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
   text-align: center !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 10px !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-}
-.results-view .tendency-value {
-  display: block !important;
-  flex: 0 0 16px !important;
-  width: 16px !important;
-  min-width: 16px !important;
-  text-align: center !important;
-  font-size: 12px !important;
   font-weight: 900 !important;
   line-height: 1 !important;
   letter-spacing: 0 !important;
 }
-.results-view .tendency.flat .tendency-icon {
-  flex-basis: auto !important;
-  width: auto !important;
-  min-width: 0 !important;
+.results-view td.col-trend > .tendency > .tendency-icon {
+  font-family: Arial, sans-serif !important;
+  font-size: 10px !important;
+}
+.results-view td.col-trend > .tendency > .tendency-value {
+  font-size: 12px !important;
+}
+.results-view td.col-trend > .tendency.flat > .tendency-icon {
   font-size: 14px !important;
+}
+/* Schmale Mobilspalten: beide Zeichen bleiben vollständig im selben Oval.
+   Ausschließlich den Badge-Inhalt stapeln; keine Tabellenbreiten verändern. */
+@media (max-width: 700px) {
+  .results-view td.col-trend > .tendency {
+    flex-direction: column !important;
+    gap: 2px !important;
+    padding: 2px 0 !important;
+  }
+  .results-view td.col-trend > .tendency > .tendency-icon {
+    font-size: 7px !important;
+  }
+  .results-view td.col-trend > .tendency > .tendency-value {
+    font-size: 8px !important;
+  }
 }
 
 /* 200+ zurück auf die bisherige blaue Hervorhebung; überschreibt den späteren roten Alt-Block. */
