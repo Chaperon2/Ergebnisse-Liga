@@ -30,9 +30,13 @@ renderPlayerOfWeek(playerWeekResults, null, playerWeekOptions());
 
 function tendency(value) {
   const number = Number(value ?? 0);
-  if (number > 0) return `<span class="tendency up">▲ ${number}</span>`;
-  if (number < 0) return `<span class="tendency down">▼ ${Math.abs(number)}</span>`;
-  return '<span class="tendency flat">–</span>';
+  if (number > 0) {
+    return `<span class="tendency up" aria-label="${number} Plätze gestiegen"><span class="tendency-icon" aria-hidden="true">↑</span><span class="tendency-value">+${number}</span></span>`;
+  }
+  if (number < 0) {
+    return `<span class="tendency down" aria-label="${Math.abs(number)} Plätze gefallen"><span class="tendency-icon" aria-hidden="true">↓</span><span class="tendency-value">−${Math.abs(number)}</span></span>`;
+  }
+  return '<span class="tendency flat" aria-label="Platz unverändert"><span class="tendency-icon" aria-hidden="true">•</span><span class="tendency-value">0</span></span>';
 }
 
 function headerText(header) {
@@ -94,56 +98,19 @@ function renderTable({ headers, rows, sectionClass = "" }) {
       const classes = [headerClass(headers[index])];
       const label = headerText(headers[index]).toLowerCase();
       const rawValue = cell && typeof cell === "object" ? cell.value : cell;
-      const numericValue = Number(rawValue);
+      const numericValue = typeof rawValue === "number"
+        ? rawValue
+        : Number(String(rawValue ?? "").replace(/[^0-9,.-]/g, "").replace(",", "."));
       const isGameScore = label.startsWith("spiel ") || label.includes("bestes spiel");
       const isScore200 = row.score200Indexes?.includes(index) || (isGameScore && Number.isFinite(numericValue) && numericValue >= 200);
-      if (isScore200) classes.push("score-200", "score-200-strong");
+      if (isScore200) classes.push("score-200");
       if (cell && typeof cell === "object" && cell.className) classes.push(cell.className);
-      return `<td class="${classes.join(" ")}"${isScore200 ? ' data-score-200="true"' : ""}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
+      const score200Attrs = isScore200
+        ? ` data-score-200="true" data-score-value="${numericValue}" style="background:#a51528 !important;background-image:linear-gradient(180deg,#d9273f 0%,#9d1025 100%) !important;color:#ffffff !important;font-weight:950 !important;font-size:1.14em !important;text-shadow:0 1px 1px rgba(0,0,0,.65) !important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.38),0 0 0 2px #74101d !important;"`
+        : "";
+      return `<td class="${classes.join(" ")}"${score200Attrs}>${cell?.html === true ? cell.value : escapeHtml(cell?.value ?? cell ?? "")}</td>`;
     }).join("")}</tr>`;
   }).join("")}</tbody></table></div>`;
-}
-
-
-function applyStrong200Style(cell) {
-  if (!cell?.style?.setProperty) return;
-  cell.classList.add("score-200", "score-200-strong");
-  cell.dataset.score200 = "true";
-  cell.style.setProperty("background-color", "#f59e0b", "important");
-  cell.style.setProperty("background-image", "linear-gradient(180deg,#ffbf32 0%,#f28a00 100%)", "important");
-  cell.style.setProperty("color", "#17110a", "important");
-  cell.style.setProperty("font-weight", "900", "important");
-  cell.style.setProperty("font-size", "1.16em", "important");
-  cell.style.setProperty("border-color", "#9a5200", "important");
-  cell.style.setProperty("outline", "2px solid #9a5200", "important");
-  cell.style.setProperty("outline-offset", "-2px", "important");
-  cell.style.setProperty("box-shadow", "inset 0 0 0 2px rgba(255,255,255,.42),0 1px 4px rgba(103,55,0,.24)", "important");
-  cell.style.setProperty("text-shadow", "0 1px 0 rgba(255,255,255,.25)", "important");
-}
-
-function markStrong200Cells(root = sectionsGrid) {
-  if (!root?.querySelectorAll) return;
-  root.querySelectorAll("table").forEach((table) => {
-    const headers = Array.from(table.querySelectorAll("thead th")).map((th) =>
-      String(th.querySelector(".header-full")?.textContent ?? th.textContent ?? "").trim().toLowerCase()
-    );
-    const scoreColumns = headers
-      .map((label, index) => (/^spiel\s+\d+$/i.test(label) || label.includes("bestes spiel") ? index : -1))
-      .filter((index) => index >= 0);
-
-    if (!scoreColumns.length) return;
-    table.querySelectorAll("tbody tr").forEach((row) => {
-      if (row.classList.contains("separator-row") || row.classList.contains("blank-separator")) return;
-      const cells = row.querySelectorAll("td");
-      scoreColumns.forEach((index) => {
-        const cell = cells[index];
-        if (!cell) return;
-        const text = String(cell.textContent ?? "").trim().replace(/\s+/g, "");
-        if (!/^\d{2,3}$/.test(text)) return;
-        if (Number(text) >= 200) applyStrong200Style(cell);
-      });
-    });
-  });
 }
 
 function tableCard({ key, theme, title, subtitle, stats = [], content }) {
@@ -308,7 +275,6 @@ function render(data) {
     }),
   ].join("");
 
-  markStrong200Cells(sectionsGrid);
   warningPill.classList.remove("show");
   warningText.textContent = "";
 }
