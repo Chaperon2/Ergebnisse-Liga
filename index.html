@@ -1566,7 +1566,7 @@
     }
   </style>
 <link rel="stylesheet" href="css/bright-theme.css?v=15.9" />
-</head>
+<link rel="stylesheet" href="css/club-features.css?v=1"></head>
 <body>
 <a class="skip-link" href="#desktopNavigation">Direkt zur Navigation</a>
 <div aria-label="Desktop-Startseite" class="desktop-shell">
@@ -1595,7 +1595,7 @@
 <a class="top-link" href="archiv.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Archiv</span></a>
 </nav>
 </header>
-<section class="dashboard">
+<section class="club-home" data-club-home aria-live="polite">Ligavorschau wird geladen …</section><section class="dashboard">
 <div class="hero-main hero-main-award">
 <div class="hero-content hero-content-award-only">
 <div aria-live="polite" class="player-week-host desktop-player-week" id="playerWeekHomeDesktop"></div>
@@ -1612,7 +1612,7 @@
 <div class="mission-panel">
 <span class="mission-label">Arcade-Modul verfügbar</span>
 <h2>Dein Wurf.<br/>Dein Highscore.</h2>
-<p>Das überarbeitete Minispiel nutzt dieselbe Steampunk-Neon-Oberfläche wie die Liga und besitzt eine nachvollziehbarere Pin-Kollision.</p>
+<p>Jage deinen nächsten Highscore: klassisches Bowling oder Power-up-Modus. Schaffst du den Wochenrekord?</p>
 <a href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i> Spiel starten</a>
 </div>
 </aside>
@@ -1691,7 +1691,7 @@
 </a>
 <span class="mobile-live"><i class="fa-solid fa-signal"></i> Live</span>
 </header>
-<main class="mobile-main">
+<main class="mobile-main"><section class="club-home" data-club-home aria-live="polite">Ligavorschau wird geladen …</section>
 <div aria-live="polite" class="player-week-host mobile-player-week mobile-player-week-top" id="playerWeekHomeMobile"></div>
 <section aria-label="Häufig genutzt" class="mobile-primary">
 <a class="mobile-primary-card" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><strong>Ergebnisse</strong><span>Spieltag und Tabellen</span></a>
@@ -1758,5 +1758,5 @@
       reduced.addEventListener?.("change", manageVideo);
     })();
   </script>
-</body>
+<script type="module" src="js/club-features.js?v=1"></script></body>
 </html>
