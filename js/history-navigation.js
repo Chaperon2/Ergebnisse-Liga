@@ -1,0 +1,20 @@
+import {escapeHtml as esc,formatDate} from './public-data.js';
+const endpoint='https://europe-west3-liga-velten.cloudfunctions.net/publicLigaHistory';
+async function request(season,day){const url=new URL(endpoint);url.searchParams.set('season',season);if(day!==undefined)url.searchParams.set('day',day);const response=await fetch(url,{signal:AbortSignal.timeout(12000),cache:'no-store'});const result=await response.json();if(!response.ok||!result.ok)throw Error(result.error||'Archiv nicht erreichbar');return result.data}
+export function historyNavigation(render){
+  let latest=null,days=[],selected=null,sequence=0,season=null;
+  const host=document.createElement('section');host.className='club-tools history-tools';host.setAttribute('aria-label','Spieltag auswählen');document.getElementById('summaryGrid').before(host);
+  function controls(note=''){
+    const index=days.findIndex(d=>d.number===selected);
+    host.innerHTML=`<label>Spieltag <select aria-label="Spieltag auswählen">${days.map(d=>`<option value="${d.number}" ${d.number===selected?'selected':''}>${d.number} · ${esc(formatDate(d.date))}${d.number===latest.matchday.number?' · aktuell':''}</option>`).join('')}</select></label><button id="previousDay" ${index<=0?'disabled':''}>← Vorheriger</button><button id="nextDay" ${index<0||index>=days.length-1?'disabled':''}>Nächster →</button><button id="latestDay" ${selected===latest.matchday.number?'disabled':''}>Aktueller Stand</button><p role="status">${esc(note|| (selected===latest.matchday.number?'Aktueller veröffentlichter Stand':'Archivansicht: Tagesergebnisse und Tabellenstand bis zu diesem Spieltag. Namen können nachträglich korrigiert worden sein.'))}</p>`;
+    host.querySelector('select').onchange=e=>choose(Number(e.target.value));
+    host.querySelector('#previousDay').onclick=()=>choose(days[index-1].number);host.querySelector('#nextDay').onclick=()=>choose(days[index+1].number);host.querySelector('#latestDay').onclick=()=>choose(latest.matchday.number);
+  }
+  async function choose(number){const token=++sequence;controls('Spieltag wird geladen …');try{const data=number===latest.matchday.number?latest:await request(season,number);if(token!==sequence)return;selected=number;render(data);const url=new URL(location.href);url.searchParams.set('saison',season);url.searchParams.set('spieltag',number);history.replaceState(null,'',url);controls();document.getElementById('liveState').textContent=number===latest.matchday.number?'Aktueller veröffentlichter Stand':'Archiv · gespeicherter Veröffentlichungsstand';}catch(error){if(token===sequence)controls(`Spieltag konnte nicht geladen werden. Die bisherige Ansicht bleibt stehen. ${error.message}`)}}
+  return async data=>{
+    const changed=season!==data.seasonId;const wasLatest=selected===latest?.matchday.number;latest=data;if(!changed&&!wasLatest&&selected!==null&&selected<data.matchday.number)return; if(!changed&&selected>data.matchday.number){days=days.filter(d=>d.number<=data.matchday.number);selected=data.matchday.number;render(data);controls('Der spätere Stand wurde zurückgenommen. Angezeigt wird der aktuelle veröffentlichte Stand.');return;}
+    if(!changed){if(!days.some(d=>d.number===data.matchday.number))days.push(data.matchday);selected=data.matchday.number;render(data);controls();return}season=data.seasonId;selected=data.matchday.number;days=[data.matchday];render(data);controls('Verfügbare Spieltage werden geladen …');
+    try{days=await request(season);if(!days.some(d=>d.number===data.matchday.number))days.push(data.matchday);days.sort((a,b)=>a.number-b.number);controls();const requested=Number(new URLSearchParams(location.search).get('spieltag'));if(requested&&days.some(d=>d.number===requested))await choose(requested);else if(requested)controls('Dieser Spieltag ist nicht verfügbar. Angezeigt wird der aktuelle Stand.');}
+    catch{controls('Ältere Spieltage sind noch nicht erreichbar. Der aktuelle Stand ist verfügbar.');}
+  };
+}

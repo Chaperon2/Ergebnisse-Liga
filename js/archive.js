@@ -29,7 +29,7 @@ function render(seasons, meta) {
     const published = Number(season.currentPublishedMatchday ?? 0);
     const count = Number(season.matchdayCount ?? 14);
     const range = season.firstMatchdayDate || season.lastMatchdayDate ? `${formatDate(season.firstMatchdayDate)} bis ${formatDate(season.lastMatchdayDate)}` : "Termine nicht veröffentlicht";
-    return `<article class="archive-card${isActive ? " is-active" : "}">
+    return `<article class="archive-card${isActive ? " is-active" : ""}">
       <header><div><span class="schedule-state">${escapeHtml(isActive ? "aktuelle Saison" : statusLabel(season))}</span><h2>${escapeHtml(season.seasonName ?? season.seasonId)}</h2></div><strong>${published}/${count} Spieltage</strong></header>
       <p class="muted">${escapeHtml(range)}</p>
       <div class="archive-progress"><span style="width:${Math.max(0, Math.min(100, count ? published / count * 100 : 0))}%"></span></div>

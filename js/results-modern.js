@@ -1,3 +1,5 @@
+import {resultExtras} from './club-features.js';
+import {historyNavigation} from './history-navigation.js';
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
 import { renderPlayerOfWeek } from "./player-of-week.js?v=12.8";
 
@@ -16,7 +18,7 @@ function playerWeekOptions(data = null) {
     compact: true,
     context: "results",
     heading: {
-      eyebrow: "Aktuelle Ergebnisse",
+      eyebrow: "Liga-Ergebnisse",
       title: matchdayNumber ? `${seasonName} · Spieltag ${matchdayNumber}` : "Spieltag wird geladen",
       accent: "Ergebnisse im Überblick",
       description: "Spieler/in der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
@@ -275,6 +277,7 @@ function render(data) {
     }),
   ].join("");
 
+  resultExtras(data);
   warningPill.classList.remove("show");
   warningText.textContent = "";
 }
@@ -285,16 +288,18 @@ function showError(message) {
   sectionsGrid.innerHTML = "";
 }
 
+const showSelected = historyNavigation(render);
 watchPublicResults({
   onData: (data, _seasonId, meta) => {
-    render(data);
-    if (liveState) {
+    showSelected(data);
+    if (liveState && (!new URLSearchParams(location.search).get("spieltag") || Number(new URLSearchParams(location.search).get("spieltag")) === data.matchday.number)) {
       liveState.className = `live-state ${meta?.source === "fallback" ? "fallback" : "live"}`;
       liveState.innerHTML = `<i class="fa-solid ${meta?.source === "fallback" ? "fa-triangle-exclamation" : "fa-signal"}"></i><span>${escapeHtml(meta?.warning ?? "Live aus der Ligadatenbank · automatische Aktualisierung")}</span>`;
     }
   },
   onError: (message) => {
-    showError(message);
+    if (!sectionsGrid.children.length) showError(message);
+    else {warningText.textContent="Aktualisierung nicht möglich. Der zuletzt geladene Stand bleibt sichtbar. "+message;warningPill.classList.add("show");}
     if (liveState) {
       liveState.className = "live-state error";
       liveState.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${escapeHtml(message)}</span>`;
