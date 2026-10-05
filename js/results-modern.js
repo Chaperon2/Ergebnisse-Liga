@@ -1,7 +1,7 @@
-import {resultExtras} from './club-features.js';
-import {historyNavigation} from './history-navigation.js';
+import {resultExtras} from './club-features.js?v=17';
+import {historyNavigation} from './history-navigation.js?v=17';
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=12.8";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=17";
 
 const sectionsGrid = document.getElementById("sectionsGrid");
 const warningPill = document.getElementById("warningPill");
@@ -21,7 +21,7 @@ function playerWeekOptions(data = null) {
       eyebrow: "Liga-Ergebnisse",
       title: matchdayNumber ? `${seasonName} · Spieltag ${matchdayNumber}` : "Spieltag wird geladen",
       accent: "Ergebnisse im Überblick",
-      description: "Spieler/in der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
+      description: "Spieler/in des Tages, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
       dateLabel: "Datum",
       date: matchday?.date ? formatDate(matchday.date) : "–",
     },
