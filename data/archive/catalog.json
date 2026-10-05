@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "seasons": [
+    {
+      "seasonId": "2026-s1",
+      "seasonName": "Liga 2026 S1",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2026-04-15",
+      "archiveFile": "2026-s1.json"
+    },
+    {
+      "seasonId": "2026-s2",
+      "seasonName": "Liga 2026 S2",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2026-06-03",
+      "archiveFile": "2026-s2.json"
+    },
+    {
+      "seasonId": "2025-s2",
+      "seasonName": "Liga 2025 S2",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2025-12-10",
+      "archiveFile": "2025-s2.json"
+    },
+    {
+      "seasonId": "2025-s1",
+      "seasonName": "Liga 2025 S1",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2025-07-23",
+      "archiveFile": "2025-s1.json"
+    },
+    {
+      "seasonId": "2024-s2",
+      "seasonName": "Liga 2024 S2",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2024-12-04",
+      "archiveFile": "2024-s2.json"
+    },
+    {
+      "seasonId": "2024-s1",
+      "seasonName": "Liga 2024 S1",
+      "status": "completed",
+      "matchdayCount": 14,
+      "currentPublishedMatchday": 14,
+      "hasResults": true,
+      "hasSchedule": false,
+      "lastMatchdayDate": "2024-07-24",
+      "archiveFile": "2024-s1.json"
+    }
+  ]
+}
