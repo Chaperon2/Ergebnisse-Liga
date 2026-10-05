@@ -1,0 +1,3395 @@
+{
+  "season": {
+    "id": "2026-s2",
+    "name": "Liga 2026 S2",
+    "status": "migration",
+    "rulesVersion": "excel-compatible-v1",
+    "dateAssumption": "Spieltag 1 = 2026-04-22, danach wöchentlich; Spieltag 14 ist durch die Website als 2026-07-22 bestätigt."
+  },
+  "teams": [
+    {
+      "id": "all-stars",
+      "name": "All Stars",
+      "active": true
+    },
+    {
+      "id": "pincesses",
+      "name": "Pincesses",
+      "active": true
+    },
+    {
+      "id": "tigers",
+      "name": "Tigers",
+      "active": true
+    },
+    {
+      "id": "lady-diana-s",
+      "name": "Lady Diana´s",
+      "active": true
+    },
+    {
+      "id": "die-schraagen",
+      "name": "Die Schräägen",
+      "active": true
+    },
+    {
+      "id": "3-bowler",
+      "name": "3 Bowler",
+      "active": true
+    },
+    {
+      "id": "scooter",
+      "name": "Scooter",
+      "active": true
+    },
+    {
+      "id": "malibu",
+      "name": "Malibu",
+      "active": true
+    }
+  ],
+  "players": [
+    {
+      "id": "toni",
+      "name": "Toni",
+      "teamId": "all-stars",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": null,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "detlef",
+      "name": "Detlef",
+      "teamId": "all-stars",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 147.3,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "dummi",
+      "name": "Dummi",
+      "teamId": "all-stars",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": null,
+      "active": false,
+      "placeholder": true
+    },
+    {
+      "id": "tom",
+      "name": "Tom",
+      "teamId": "pincesses",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 144.1,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "jerry",
+      "name": "Jerry",
+      "teamId": "pincesses",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": null,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "denise",
+      "name": "Denise",
+      "teamId": "pincesses",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 111,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "rene",
+      "name": "Rene",
+      "teamId": "tigers",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 172.8,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "micha",
+      "name": "Micha",
+      "teamId": "tigers",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 161.4,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "gunter",
+      "name": "Günter",
+      "teamId": "tigers",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 149.1,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "diana",
+      "name": "Diana",
+      "teamId": "lady-diana-s",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 162.6,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "maik",
+      "name": "Maik",
+      "teamId": "lady-diana-s",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 162.6,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "simone",
+      "name": "Simone",
+      "teamId": "lady-diana-s",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 119.9,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "skampy",
+      "name": "Skampy",
+      "teamId": "die-schraagen",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 176.4,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "benno",
+      "name": "Benno",
+      "teamId": "die-schraagen",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 150.6,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "dieter",
+      "name": "Dieter",
+      "teamId": "die-schraagen",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 138.9,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "rainsen",
+      "name": "Rainsen",
+      "teamId": "3-bowler",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 173.5,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "thomas",
+      "name": "Thomas",
+      "teamId": "3-bowler",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 159.7,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "ingolf",
+      "name": "Ingolf",
+      "teamId": "3-bowler",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 139.5,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "vegas",
+      "name": "Vegas",
+      "teamId": "scooter",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 168.9,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "karola",
+      "name": "Karola",
+      "teamId": "scooter",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 160.6,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "dirk",
+      "name": "Dirk",
+      "teamId": "scooter",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 144.1,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "tomber",
+      "name": "Tomber",
+      "teamId": "malibu",
+      "rosterSlot": 1,
+      "replacementScore": 160,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 168.4,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "ismene",
+      "name": "Ismene",
+      "teamId": "malibu",
+      "rosterSlot": 2,
+      "replacementScore": 150,
+      "handicapTarget": null,
+      "handicapCap": 0,
+      "previousSeasonAverage": 150,
+      "active": true,
+      "placeholder": false
+    },
+    {
+      "id": "gunni",
+      "name": "Günni",
+      "teamId": "malibu",
+      "rosterSlot": 3,
+      "replacementScore": 140,
+      "handicapTarget": 140,
+      "handicapCap": 20,
+      "previousSeasonAverage": 148.6,
+      "active": true,
+      "placeholder": false
+    }
+  ],
+  "matchdays": [
+    {
+      "id": "spieltag-01",
+      "number": 1,
+      "date": "2026-04-22",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "tigers",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            170,
+            116,
+            151,
+            127
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            189,
+            159,
+            161,
+            144
+          ]
+        },
+        "jerry": {
+          "scores": [
+            97,
+            132,
+            110,
+            85
+          ]
+        },
+        "denise": {
+          "scores": [
+            88,
+            117,
+            87,
+            82
+          ]
+        },
+        "rene": {
+          "scores": [
+            199,
+            190,
+            155,
+            189
+          ]
+        },
+        "micha": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "gunter": {
+          "scores": [
+            135,
+            123,
+            165,
+            167
+          ]
+        },
+        "diana": {
+          "scores": [
+            140,
+            150,
+            189,
+            171
+          ]
+        },
+        "maik": {
+          "scores": [
+            148,
+            127,
+            155,
+            188
+          ]
+        },
+        "simone": {
+          "scores": [
+            97,
+            106,
+            109,
+            97
+          ]
+        },
+        "skampy": {
+          "scores": [
+            156,
+            228,
+            155,
+            169
+          ]
+        },
+        "benno": {
+          "scores": [
+            189,
+            195,
+            145,
+            165
+          ]
+        },
+        "dieter": {
+          "scores": [
+            121,
+            178,
+            134,
+            129
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            145,
+            182,
+            209,
+            188
+          ]
+        },
+        "thomas": {
+          "scores": [
+            161,
+            146,
+            136,
+            167
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            138,
+            134,
+            145,
+            177
+          ]
+        },
+        "vegas": {
+          "scores": [
+            176,
+            148,
+            169,
+            180
+          ]
+        },
+        "karola": {
+          "scores": [
+            133,
+            177,
+            171,
+            140
+          ]
+        },
+        "dirk": {
+          "scores": [
+            146,
+            105,
+            145,
+            153
+          ]
+        },
+        "tomber": {
+          "scores": [
+            154,
+            145,
+            162,
+            192
+          ]
+        },
+        "ismene": {
+          "scores": [
+            159,
+            127,
+            148,
+            167
+          ]
+        },
+        "gunni": {
+          "scores": [
+            166,
+            170,
+            171,
+            121
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-02",
+      "number": 2,
+      "date": "2026-04-29",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "die-schraagen"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "3-bowler"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            152,
+            146,
+            131,
+            160
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            106,
+            102,
+            133,
+            107
+          ]
+        },
+        "jerry": {
+          "scores": [
+            104,
+            146,
+            116,
+            129
+          ]
+        },
+        "denise": {
+          "scores": [
+            88,
+            116,
+            112,
+            93
+          ]
+        },
+        "rene": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "micha": {
+          "scores": [
+            227,
+            165,
+            179,
+            185
+          ]
+        },
+        "gunter": {
+          "scores": [
+            209,
+            190,
+            125,
+            152
+          ]
+        },
+        "diana": {
+          "scores": [
+            159,
+            156,
+            146,
+            180
+          ]
+        },
+        "maik": {
+          "scores": [
+            175,
+            182,
+            146,
+            136
+          ]
+        },
+        "simone": {
+          "scores": [
+            104,
+            122,
+            121,
+            112
+          ]
+        },
+        "skampy": {
+          "scores": [
+            183,
+            165,
+            149,
+            157
+          ]
+        },
+        "benno": {
+          "scores": [
+            155,
+            128,
+            138,
+            151
+          ]
+        },
+        "dieter": {
+          "scores": [
+            134,
+            150,
+            162,
+            134
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            197,
+            147,
+            161,
+            147
+          ]
+        },
+        "thomas": {
+          "scores": [
+            170,
+            147,
+            133,
+            140
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            155,
+            111,
+            171,
+            166
+          ]
+        },
+        "vegas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "karola": {
+          "scores": [
+            137,
+            195,
+            125,
+            144
+          ]
+        },
+        "dirk": {
+          "scores": [
+            132,
+            147,
+            165,
+            130
+          ]
+        },
+        "tomber": {
+          "scores": [
+            163,
+            160,
+            179,
+            164
+          ]
+        },
+        "ismene": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "gunni": {
+          "scores": [
+            136,
+            151,
+            134,
+            148
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-03",
+      "number": 3,
+      "date": "2026-05-06",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            153,
+            133,
+            156,
+            188
+          ]
+        },
+        "detlef": {
+          "scores": [
+            146,
+            149,
+            155,
+            133
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            121,
+            91,
+            133,
+            94
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            151,
+            172,
+            162,
+            203
+          ]
+        },
+        "micha": {
+          "scores": [
+            179,
+            120,
+            123,
+            169
+          ]
+        },
+        "gunter": {
+          "scores": [
+            128,
+            146,
+            148,
+            132
+          ]
+        },
+        "diana": {
+          "scores": [
+            155,
+            160,
+            167,
+            135
+          ]
+        },
+        "maik": {
+          "scores": [
+            149,
+            159,
+            132,
+            127
+          ]
+        },
+        "simone": {
+          "scores": [
+            75,
+            104,
+            93,
+            79
+          ]
+        },
+        "skampy": {
+          "scores": [
+            173,
+            194,
+            179,
+            180
+          ]
+        },
+        "benno": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dieter": {
+          "scores": [
+            134,
+            131,
+            117,
+            122
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            186,
+            176,
+            165,
+            159
+          ]
+        },
+        "thomas": {
+          "scores": [
+            163,
+            198,
+            144,
+            175
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "vegas": {
+          "scores": [
+            170,
+            147,
+            169,
+            136
+          ]
+        },
+        "karola": {
+          "scores": [
+            139,
+            169,
+            155,
+            191
+          ]
+        },
+        "dirk": {
+          "scores": [
+            139,
+            122,
+            98,
+            146
+          ]
+        },
+        "tomber": {
+          "scores": [
+            136,
+            165,
+            169,
+            173
+          ]
+        },
+        "ismene": {
+          "scores": [
+            164,
+            126,
+            110,
+            129
+          ]
+        },
+        "gunni": {
+          "scores": [
+            142,
+            150,
+            164,
+            166
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-04",
+      "number": 4,
+      "date": "2026-05-13",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "3-bowler",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            149,
+            133,
+            114,
+            158
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            123,
+            126,
+            137,
+            118
+          ]
+        },
+        "jerry": {
+          "scores": [
+            178,
+            147,
+            94,
+            124
+          ]
+        },
+        "denise": {
+          "scores": [
+            89,
+            74,
+            81,
+            153
+          ]
+        },
+        "rene": {
+          "scores": [
+            188,
+            210,
+            162,
+            144
+          ]
+        },
+        "micha": {
+          "scores": [
+            147,
+            179,
+            128,
+            170
+          ]
+        },
+        "gunter": {
+          "scores": [
+            181,
+            157,
+            117,
+            105
+          ]
+        },
+        "diana": {
+          "scores": [
+            168,
+            149,
+            148,
+            169
+          ]
+        },
+        "maik": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "simone": {
+          "scores": [
+            101,
+            107,
+            117,
+            107
+          ]
+        },
+        "skampy": {
+          "scores": [
+            178,
+            141,
+            147,
+            160
+          ]
+        },
+        "benno": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dieter": {
+          "scores": [
+            179,
+            125,
+            141,
+            145
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            149,
+            179,
+            143,
+            147
+          ]
+        },
+        "thomas": {
+          "scores": [
+            187,
+            143,
+            178,
+            131
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            141,
+            149,
+            157,
+            112
+          ]
+        },
+        "vegas": {
+          "scores": [
+            154,
+            221,
+            123,
+            188
+          ]
+        },
+        "karola": {
+          "scores": [
+            163,
+            149,
+            174,
+            168
+          ]
+        },
+        "dirk": {
+          "scores": [
+            141,
+            121,
+            121,
+            127
+          ]
+        },
+        "tomber": {
+          "scores": [
+            145,
+            112,
+            134,
+            211
+          ]
+        },
+        "ismene": {
+          "scores": [
+            148,
+            164,
+            112,
+            143
+          ]
+        },
+        "gunni": {
+          "scores": [
+            133,
+            128,
+            134,
+            148
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-05",
+      "number": 5,
+      "date": "2026-05-20",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "malibu"
+        },
+        {
+          "homeTeamId": "lady-diana-s",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "tigers",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            165,
+            129,
+            125,
+            139
+          ]
+        },
+        "detlef": {
+          "scores": [
+            154,
+            122,
+            170,
+            150
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            173,
+            170,
+            174,
+            130
+          ]
+        },
+        "jerry": {
+          "scores": [
+            144,
+            105,
+            107,
+            117
+          ]
+        },
+        "denise": {
+          "scores": [
+            148,
+            129,
+            75,
+            155
+          ]
+        },
+        "rene": {
+          "scores": [
+            171,
+            231,
+            193,
+            167
+          ]
+        },
+        "micha": {
+          "scores": [
+            140,
+            166,
+            203,
+            130
+          ]
+        },
+        "gunter": {
+          "scores": [
+            141,
+            144,
+            143,
+            155
+          ]
+        },
+        "diana": {
+          "scores": [
+            155,
+            158,
+            224,
+            134
+          ]
+        },
+        "maik": {
+          "scores": [
+            198,
+            157,
+            146,
+            146
+          ]
+        },
+        "simone": {
+          "scores": [
+            110,
+            145,
+            135,
+            122
+          ]
+        },
+        "skampy": {
+          "scores": [
+            129,
+            150,
+            181,
+            160
+          ]
+        },
+        "benno": {
+          "scores": [
+            122,
+            176,
+            157,
+            145
+          ]
+        },
+        "dieter": {
+          "scores": [
+            93,
+            144,
+            138,
+            134
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "thomas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            154,
+            133,
+            122,
+            134
+          ]
+        },
+        "vegas": {
+          "scores": [
+            182,
+            156,
+            185,
+            194
+          ]
+        },
+        "karola": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ismene": {
+          "scores": [
+            139,
+            141,
+            142,
+            134
+          ]
+        },
+        "gunni": {
+          "scores": [
+            137,
+            151,
+            144,
+            151
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-06",
+      "number": 6,
+      "date": "2026-05-27",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "die-schraagen"
+        },
+        {
+          "homeTeamId": "3-bowler",
+          "awayTeamId": "malibu"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            199,
+            144,
+            158,
+            140
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            148,
+            161,
+            131,
+            96
+          ]
+        },
+        "jerry": {
+          "scores": [
+            107,
+            136,
+            103,
+            129
+          ]
+        },
+        "denise": {
+          "scores": [
+            105,
+            111,
+            97,
+            88
+          ]
+        },
+        "rene": {
+          "scores": [
+            159,
+            143,
+            157,
+            213
+          ]
+        },
+        "micha": {
+          "scores": [
+            170,
+            183,
+            174,
+            174
+          ]
+        },
+        "gunter": {
+          "scores": [
+            140,
+            177,
+            154,
+            155
+          ]
+        },
+        "diana": {
+          "scores": [
+            176,
+            134,
+            115,
+            143
+          ]
+        },
+        "maik": {
+          "scores": [
+            165,
+            127,
+            154,
+            191
+          ]
+        },
+        "simone": {
+          "scores": [
+            129,
+            124,
+            106,
+            91
+          ]
+        },
+        "skampy": {
+          "scores": [
+            173,
+            191,
+            154,
+            180
+          ]
+        },
+        "benno": {
+          "scores": [
+            150,
+            155,
+            130,
+            155
+          ]
+        },
+        "dieter": {
+          "scores": [
+            117,
+            128,
+            145,
+            115
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            193,
+            154,
+            188,
+            178
+          ]
+        },
+        "thomas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            129,
+            164,
+            132,
+            128
+          ]
+        },
+        "vegas": {
+          "scores": [
+            177,
+            148,
+            181,
+            155
+          ]
+        },
+        "karola": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dirk": {
+          "scores": [
+            88,
+            104,
+            156,
+            135
+          ]
+        },
+        "tomber": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ismene": {
+          "scores": [
+            148,
+            143,
+            137,
+            159
+          ]
+        },
+        "gunni": {
+          "scores": [
+            148,
+            182,
+            151,
+            135
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-07",
+      "number": 7,
+      "date": "2026-06-03",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "malibu"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "tigers"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            116,
+            157,
+            154,
+            151
+          ]
+        },
+        "detlef": {
+          "scores": [
+            144,
+            172,
+            119,
+            157
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            122,
+            102,
+            141,
+            133
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            111,
+            179,
+            206,
+            211
+          ]
+        },
+        "micha": {
+          "scores": [
+            138,
+            164,
+            156,
+            153
+          ]
+        },
+        "gunter": {
+          "scores": [
+            134,
+            143,
+            168,
+            203
+          ]
+        },
+        "diana": {
+          "scores": [
+            190,
+            167,
+            177,
+            150
+          ]
+        },
+        "maik": {
+          "scores": [
+            115,
+            133,
+            142,
+            167
+          ]
+        },
+        "simone": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "skampy": {
+          "scores": [
+            179,
+            159,
+            123,
+            196
+          ]
+        },
+        "benno": {
+          "scores": [
+            157,
+            147,
+            112,
+            149
+          ]
+        },
+        "dieter": {
+          "scores": [
+            115,
+            133,
+            124,
+            144
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            205,
+            187,
+            191,
+            170
+          ]
+        },
+        "thomas": {
+          "scores": [
+            157,
+            136,
+            158,
+            158
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "vegas": {
+          "scores": [
+            163,
+            164,
+            215,
+            152
+          ]
+        },
+        "karola": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ismene": {
+          "scores": [
+            127,
+            118,
+            154,
+            120
+          ]
+        },
+        "gunni": {
+          "scores": [
+            162,
+            137,
+            131,
+            130
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-08",
+      "number": 8,
+      "date": "2026-06-10",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "tigers",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            155,
+            190,
+            160,
+            167
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            183,
+            108,
+            128,
+            142
+          ]
+        },
+        "jerry": {
+          "scores": [
+            99,
+            160,
+            124,
+            83
+          ]
+        },
+        "denise": {
+          "scores": [
+            93,
+            141,
+            91,
+            123
+          ]
+        },
+        "rene": {
+          "scores": [
+            168,
+            191,
+            217,
+            165
+          ]
+        },
+        "micha": {
+          "scores": [
+            179,
+            206,
+            178,
+            159
+          ]
+        },
+        "gunter": {
+          "scores": [
+            135,
+            184,
+            153,
+            162
+          ]
+        },
+        "diana": {
+          "scores": [
+            203,
+            149,
+            192,
+            155
+          ]
+        },
+        "maik": {
+          "scores": [
+            196,
+            167,
+            188,
+            139
+          ]
+        },
+        "simone": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "skampy": {
+          "scores": [
+            165,
+            187,
+            159,
+            156
+          ]
+        },
+        "benno": {
+          "scores": [
+            145,
+            151,
+            159,
+            167
+          ]
+        },
+        "dieter": {
+          "scores": [
+            153,
+            138,
+            116,
+            149
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            169,
+            200,
+            150,
+            147
+          ]
+        },
+        "thomas": {
+          "scores": [
+            161,
+            156,
+            185,
+            152
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "vegas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "karola": {
+          "scores": [
+            176,
+            149,
+            163,
+            170
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ismene": {
+          "scores": [
+            122,
+            152,
+            99,
+            172
+          ]
+        },
+        "gunni": {
+          "scores": [
+            166,
+            163,
+            138,
+            152
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-09",
+      "number": 9,
+      "date": "2026-06-17",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "die-schraagen"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "3-bowler"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            124,
+            110,
+            121,
+            110
+          ]
+        },
+        "detlef": {
+          "scores": [
+            194,
+            142,
+            158,
+            183
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            117,
+            110,
+            90,
+            122
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            155,
+            155,
+            212,
+            135
+          ]
+        },
+        "micha": {
+          "scores": [
+            118,
+            175,
+            178,
+            197
+          ]
+        },
+        "gunter": {
+          "scores": [
+            158,
+            121,
+            142,
+            157
+          ]
+        },
+        "diana": {
+          "scores": [
+            176,
+            127,
+            123,
+            154
+          ]
+        },
+        "maik": {
+          "scores": [
+            175,
+            171,
+            160,
+            154
+          ]
+        },
+        "simone": {
+          "scores": [
+            109,
+            102,
+            110,
+            103
+          ]
+        },
+        "skampy": {
+          "scores": [
+            179,
+            161,
+            152,
+            151
+          ]
+        },
+        "benno": {
+          "scores": [
+            155,
+            131,
+            174,
+            163
+          ]
+        },
+        "dieter": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "thomas": {
+          "scores": [
+            169,
+            160,
+            146,
+            144
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            159,
+            128,
+            156,
+            177
+          ]
+        },
+        "vegas": {
+          "scores": [
+            177,
+            190,
+            244,
+            190
+          ]
+        },
+        "karola": {
+          "scores": [
+            141,
+            142,
+            127,
+            129
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            159,
+            187,
+            176,
+            182
+          ]
+        },
+        "ismene": {
+          "scores": [
+            147,
+            161,
+            154,
+            144
+          ]
+        },
+        "gunni": {
+          "scores": [
+            155,
+            192,
+            162,
+            135
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-10",
+      "number": 10,
+      "date": "2026-06-24",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            136,
+            149,
+            107,
+            137
+          ]
+        },
+        "jerry": {
+          "scores": [
+            173,
+            88,
+            101,
+            100
+          ]
+        },
+        "denise": {
+          "scores": [
+            107,
+            102,
+            89,
+            75
+          ]
+        },
+        "rene": {
+          "scores": [
+            180,
+            161,
+            193,
+            200
+          ]
+        },
+        "micha": {
+          "scores": [
+            147,
+            159,
+            134,
+            182
+          ]
+        },
+        "gunter": {
+          "scores": [
+            157,
+            142,
+            146,
+            155
+          ]
+        },
+        "diana": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "maik": {
+          "scores": [
+            144,
+            135,
+            180,
+            181
+          ]
+        },
+        "simone": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "skampy": {
+          "scores": [
+            174,
+            177,
+            179,
+            211
+          ]
+        },
+        "benno": {
+          "scores": [
+            137,
+            198,
+            153,
+            142
+          ]
+        },
+        "dieter": {
+          "scores": [
+            145,
+            151,
+            156,
+            178
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            145,
+            129,
+            190,
+            169
+          ]
+        },
+        "thomas": {
+          "scores": [
+            135,
+            169,
+            164,
+            143
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            138,
+            155,
+            116,
+            148
+          ]
+        },
+        "vegas": {
+          "scores": [
+            185,
+            171,
+            195,
+            154
+          ]
+        },
+        "karola": {
+          "scores": [
+            166,
+            134,
+            129,
+            129
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            199,
+            170,
+            131,
+            183
+          ]
+        },
+        "ismene": {
+          "scores": [
+            103,
+            139,
+            173,
+            146
+          ]
+        },
+        "gunni": {
+          "scores": [
+            126,
+            117,
+            157,
+            171
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-11",
+      "number": 11,
+      "date": "2026-07-01",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "3-bowler",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "malibu",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            133,
+            148,
+            134,
+            152
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            92,
+            110,
+            77,
+            94
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            192,
+            170,
+            198,
+            172
+          ]
+        },
+        "micha": {
+          "scores": [
+            172,
+            171,
+            155,
+            177
+          ]
+        },
+        "gunter": {
+          "scores": [
+            185,
+            149,
+            145,
+            155
+          ]
+        },
+        "diana": {
+          "scores": [
+            157,
+            146,
+            133,
+            151
+          ]
+        },
+        "maik": {
+          "scores": [
+            122,
+            199,
+            155,
+            149
+          ]
+        },
+        "simone": {
+          "scores": [
+            133,
+            99,
+            95,
+            123
+          ]
+        },
+        "skampy": {
+          "scores": [
+            161,
+            187,
+            139,
+            183
+          ]
+        },
+        "benno": {
+          "scores": [
+            101,
+            139,
+            164,
+            144
+          ]
+        },
+        "dieter": {
+          "scores": [
+            146,
+            135,
+            145,
+            110
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            185,
+            158,
+            163,
+            173
+          ]
+        },
+        "thomas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            118,
+            103,
+            158,
+            118
+          ]
+        },
+        "vegas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "karola": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            198,
+            145,
+            209,
+            215
+          ]
+        },
+        "ismene": {
+          "scores": [
+            145,
+            139,
+            161,
+            126
+          ]
+        },
+        "gunni": {
+          "scores": [
+            151,
+            159,
+            140,
+            120
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-12",
+      "number": 12,
+      "date": "2026-07-08",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "malibu"
+        },
+        {
+          "homeTeamId": "lady-diana-s",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "scooter"
+        },
+        {
+          "homeTeamId": "tigers",
+          "awayTeamId": "pincesses"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            118,
+            117,
+            116,
+            75
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            201,
+            148,
+            211,
+            183
+          ]
+        },
+        "micha": {
+          "scores": [
+            178,
+            182,
+            172,
+            198
+          ]
+        },
+        "gunter": {
+          "scores": [
+            143,
+            120,
+            180,
+            118
+          ]
+        },
+        "diana": {
+          "scores": [
+            183,
+            152,
+            137,
+            153
+          ]
+        },
+        "maik": {
+          "scores": [
+            144,
+            166,
+            161,
+            207
+          ]
+        },
+        "simone": {
+          "scores": [
+            126,
+            143,
+            124,
+            153
+          ]
+        },
+        "skampy": {
+          "scores": [
+            161,
+            178,
+            151,
+            198
+          ]
+        },
+        "benno": {
+          "scores": [
+            122,
+            146,
+            188,
+            155
+          ]
+        },
+        "dieter": {
+          "scores": [
+            151,
+            136,
+            139,
+            129
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            151,
+            177,
+            130,
+            154
+          ]
+        },
+        "thomas": {
+          "scores": [
+            154,
+            146,
+            125,
+            144
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            94,
+            124,
+            133,
+            129
+          ]
+        },
+        "vegas": {
+          "scores": [
+            147,
+            192,
+            181,
+            210
+          ]
+        },
+        "karola": {
+          "scores": [
+            169,
+            157,
+            148,
+            209
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            142,
+            144,
+            166,
+            176
+          ]
+        },
+        "ismene": {
+          "scores": [
+            134,
+            144,
+            113,
+            165
+          ]
+        },
+        "gunni": {
+          "scores": [
+            103,
+            138,
+            157,
+            158
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-13",
+      "number": 13,
+      "date": "2026-07-15",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "tigers"
+        },
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "die-schraagen"
+        },
+        {
+          "homeTeamId": "3-bowler",
+          "awayTeamId": "malibu"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "jerry": {
+          "scores": [
+            149,
+            135,
+            121,
+            76
+          ]
+        },
+        "denise": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "rene": {
+          "scores": [
+            174,
+            159,
+            184,
+            147
+          ]
+        },
+        "micha": {
+          "scores": [
+            167,
+            137,
+            156,
+            157
+          ]
+        },
+        "gunter": {
+          "scores": [
+            132,
+            142,
+            132,
+            123
+          ]
+        },
+        "diana": {
+          "scores": [
+            124,
+            178,
+            169,
+            121
+          ]
+        },
+        "maik": {
+          "scores": [
+            208,
+            154,
+            181,
+            179
+          ]
+        },
+        "simone": {
+          "scores": [
+            149,
+            130,
+            138,
+            145
+          ]
+        },
+        "skampy": {
+          "scores": [
+            122,
+            138,
+            158,
+            166
+          ]
+        },
+        "benno": {
+          "scores": [
+            164,
+            155,
+            154,
+            161
+          ]
+        },
+        "dieter": {
+          "scores": [
+            149,
+            170,
+            129,
+            159
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            221,
+            202,
+            168,
+            184
+          ]
+        },
+        "thomas": {
+          "scores": [
+            138,
+            156,
+            202,
+            180
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            108,
+            154,
+            146,
+            170
+          ]
+        },
+        "vegas": {
+          "scores": [
+            147,
+            151,
+            145,
+            190
+          ]
+        },
+        "karola": {
+          "scores": [
+            158,
+            159,
+            167,
+            168
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "ismene": {
+          "scores": [
+            166,
+            160,
+            150,
+            155
+          ]
+        },
+        "gunni": {
+          "scores": [
+            151,
+            155,
+            114,
+            174
+          ]
+        }
+      }
+    },
+    {
+      "id": "spieltag-14",
+      "number": 14,
+      "date": "2026-07-22",
+      "status": "published",
+      "pairings": [
+        {
+          "homeTeamId": "pincesses",
+          "awayTeamId": "3-bowler"
+        },
+        {
+          "homeTeamId": "scooter",
+          "awayTeamId": "lady-diana-s"
+        },
+        {
+          "homeTeamId": "all-stars",
+          "awayTeamId": "malibu"
+        },
+        {
+          "homeTeamId": "die-schraagen",
+          "awayTeamId": "tigers"
+        }
+      ],
+      "results": {
+        "toni": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "detlef": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "dummi": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tom": {
+          "scores": [
+            128,
+            182,
+            187,
+            110
+          ]
+        },
+        "jerry": {
+          "scores": [
+            117,
+            85,
+            128,
+            95
+          ]
+        },
+        "denise": {
+          "scores": [
+            118,
+            111,
+            114,
+            110
+          ]
+        },
+        "rene": {
+          "scores": [
+            179,
+            164,
+            237,
+            140
+          ]
+        },
+        "micha": {
+          "scores": [
+            146,
+            173,
+            213,
+            171
+          ]
+        },
+        "gunter": {
+          "scores": [
+            138,
+            146,
+            130,
+            155
+          ]
+        },
+        "diana": {
+          "scores": [
+            166,
+            167,
+            182,
+            212
+          ]
+        },
+        "maik": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "simone": {
+          "scores": [
+            130,
+            137,
+            134,
+            102
+          ]
+        },
+        "skampy": {
+          "scores": [
+            157,
+            156,
+            128,
+            177
+          ]
+        },
+        "benno": {
+          "scores": [
+            155,
+            136,
+            146,
+            142
+          ]
+        },
+        "dieter": {
+          "scores": [
+            150,
+            132,
+            137,
+            140
+          ]
+        },
+        "rainsen": {
+          "scores": [
+            130,
+            156,
+            137,
+            166
+          ]
+        },
+        "thomas": {
+          "scores": [
+            157,
+            170,
+            156,
+            167
+          ]
+        },
+        "ingolf": {
+          "scores": [
+            153,
+            147,
+            136,
+            141
+          ]
+        },
+        "vegas": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "karola": {
+          "scores": [
+            140,
+            179,
+            136,
+            133
+          ]
+        },
+        "dirk": {
+          "scores": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "tomber": {
+          "scores": [
+            146,
+            169,
+            141,
+            213
+          ]
+        },
+        "ismene": {
+          "scores": [
+            148,
+            135,
+            120,
+            131
+          ]
+        },
+        "gunni": {
+          "scores": [
+            181,
+            138,
+            107,
+            153
+          ]
+        }
+      }
+    }
+  ]
+}
