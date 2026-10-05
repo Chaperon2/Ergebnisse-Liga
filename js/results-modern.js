@@ -1,7 +1,10 @@
-import {resultExtras} from './club-features.js?v=17';
+import {loadPublicSeasons} from './public-api.js';
+import {isCompleted} from './season-state.js?v=19';
+import {finalMarkup} from './season-final.js?v=19';
+import {resultExtras} from './club-features.js?v=19';
 import {historyNavigation} from './history-navigation.js?v=17';
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
-import { renderPlayerOfWeek } from "./player-of-week.js?v=17";
+import { renderPlayerOfWeek } from "./player-of-week.js?v=19";
 
 const sectionsGrid = document.getElementById("sectionsGrid");
 const warningPill = document.getElementById("warningPill");
@@ -21,7 +24,7 @@ function playerWeekOptions(data = null) {
       eyebrow: "Liga-Ergebnisse",
       title: matchdayNumber ? `${seasonName} · Spieltag ${matchdayNumber}` : "Spieltag wird geladen",
       accent: "Ergebnisse im Überblick",
-      description: "Spieler/in des Tages, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
+      description: "Spieler der Woche, aktuelle Serien und Tabellen in einer gemeinsamen Kopfkonsole.",
       dateLabel: "Datum",
       date: matchday?.date ? formatDate(matchday.date) : "–",
     },
@@ -289,8 +292,17 @@ function showError(message) {
 }
 
 const showSelected = historyNavigation(render);
+const seasonCatalog=loadPublicSeasons();
 watchPublicResults({
-  onData: (data, _seasonId, meta) => {
+  onData: async (data, _seasonId, meta) => {
+    let catalog;try{catalog=await seasonCatalog}catch{catalog=null}
+    const info=catalog?.data?.find(s=>s.seasonId===data.seasonId);
+    const finalView=(info&&isCompleted(info))||(catalog?.activeSeasonId&&data.seasonId!==catalog.activeSeasonId);
+    if(finalView){
+      document.querySelector('.results-award-header').hidden=true;summaryGrid.hidden=true;document.querySelector('.history-tools').hidden=true;
+      const extras=document.getElementById('resultExtras');if(extras)extras.hidden=true;
+      sectionsGrid.innerHTML=finalMarkup(data,{completed:isCompleted(info)});return;
+    }
     showSelected(data);
     if (liveState && (!new URLSearchParams(location.search).get("spieltag") || Number(new URLSearchParams(location.search).get("spieltag")) === data.matchday.number)) {
       liveState.className = `live-state ${meta?.source === "fallback" ? "fallback" : "live"}`;

@@ -1,46 +1,31 @@
-import { loadPublicSeasons, watchLoader } from "./public-api.js";
-
-const message = document.querySelector("#archiveMessage");
-const container = document.querySelector("#seasonArchive");
-
-function escapeHtml(value) {
-  return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+import {loadPublicSeasons,loadPublicResults,watchLoader} from './public-api.js';
+import {escapeHtml as esc} from './public-data.js';
+import {isCompleted} from './season-state.js?v=19';
+import {finalMarkup} from './season-final.js?v=19';
+const message=document.querySelector('#archiveMessage'),container=document.querySelector('#seasonArchive');
+const finals=document.createElement('section');finals.id='seasonFinal';finals.setAttribute('aria-live','polite');container.after(finals);
+let selected=null,token=0,seasons=[];
+async function selectSeason(id){
+  const season=seasons.find(s=>s.seasonId===id);if(!season)return;
+  selected=id;const current=++token;finals.textContent='Finale Auswertung wird geladen …';
+  container.querySelectorAll('[data-season]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.season===id)));
+  try{const result=await loadPublicResults(id);if(current!==token)return;
+    finals.innerHTML=finalMarkup(result.data,{completed:isCompleted(season)});
+    if(result.warning){const p=document.createElement('p');p.textContent=result.warning;finals.prepend(p)}
+    const url=new URL(location.href);url.searchParams.set('saison',id);history.replaceState(null,'',url);
+  }catch{if(current!==token)return;finals.innerHTML='<p>Diese Auswertung konnte nicht geladen werden.</p><button type="button">Erneut versuchen</button>';finals.querySelector('button').onclick=()=>selectSeason(id)}
 }
-function formatDate(value) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ""))) return "–";
-  return new Date(`${value}T12:00:00`).toLocaleDateString("de-DE");
-}
-function statusLabel(season) {
-  if (season.status === "completed" || Number(season.currentPublishedMatchday) >= Number(season.matchdayCount ?? 14)) return "abgeschlossen";
-  if (Number(season.currentPublishedMatchday ?? 0) > 0) return "laufend";
-  return "vorbereitet";
-}
-function render(seasons, meta) {
-  if (!seasons.length) {
-    container.innerHTML = "";
-    message.textContent = "Noch keine öffentliche Saison im Archiv.";
-    message.className = "status";
-    return;
-  }
-  message.textContent = meta.warning ?? "";
-  message.className = meta.warning ? "status" : "status hidden";
-  container.innerHTML = seasons.map((season) => {
-    const isActive = season.seasonId === meta.activeSeasonId;
-    const published = Number(season.currentPublishedMatchday ?? 0);
-    const count = Number(season.matchdayCount ?? 14);
-    const range = season.firstMatchdayDate || season.lastMatchdayDate ? `${formatDate(season.firstMatchdayDate)} bis ${formatDate(season.lastMatchdayDate)}` : "Termine nicht veröffentlicht";
-    return `<article class="archive-card${isActive ? " is-active" : ""}">
-      <header><div><span class="schedule-state">${escapeHtml(isActive ? "aktuelle Saison" : statusLabel(season))}</span><h2>${escapeHtml(season.seasonName ?? season.seasonId)}</h2></div><strong>${published}/${count} Spieltage</strong></header>
-      <p class="muted">${escapeHtml(range)}</p>
-      <div class="archive-progress"><span style="width:${Math.max(0, Math.min(100, count ? published / count * 100 : 0))}%"></span></div>
-      <div class="actions">
-        ${season.hasResults ? `<a class="button" href="ergebnisse.html?saison=${encodeURIComponent(season.seasonId)}">Ergebnisse</a>` : ""}
-        ${season.hasSchedule ? `<a class="button secondary" href="spielplan.html?saison=${encodeURIComponent(season.seasonId)}">Spielplan</a>` : ""}
-      </div>
-    </article>`;
-  }).join("");
-}
-watchLoader(loadPublicSeasons, {
-  onData: (data, meta) => render(data, meta),
-  onError: (error) => { message.textContent = `Saisonarchiv konnte nicht geladen werden: ${error}`; message.className = "status error"; container.innerHTML = ""; },
+watchLoader(loadPublicSeasons,{
+  onData:(data,meta)=>{
+    seasons=[...data].sort((a,b)=>String(b.firstMatchdayDate||b.seasonId).localeCompare(String(a.firstMatchdayDate||a.seasonId)));
+    message.textContent=meta.warning||(!seasons.length?'Noch keine Saisons verfügbar.':'');
+    container.innerHTML=seasons.map(s=>{const completed=isCompleted(s),active=s.seasonId===meta.activeSeasonId&&!completed;
+      return `<article class="archive-card"><header><div><span class="schedule-state">${completed?'Abgeschlossen':active?'Aktuelle Saison':'Saisonstand'}</span><h2>${esc(s.seasonName??s.seasonId)}</h2></div></header><div class="actions">${active?`<a class="button" href="ergebnisse.html?saison=${encodeURIComponent(s.seasonId)}">Aktuelle Ergebnisse</a>`:s.hasResults?`<button class="button" type="button" data-season="${esc(s.seasonId)}">${completed?'Finale Auswertung':'Letzter Saisonstand'}</button>`:'<span>Noch keine Auswertung veröffentlicht</span>'}</div></article>`;
+    }).join('');
+    container.querySelectorAll('[data-season]').forEach(b=>b.onclick=()=>selectSeason(b.dataset.season));
+    const requested=selected||new URLSearchParams(location.search).get('saison');
+    const target=seasons.find(s=>s.seasonId===requested&&s.hasResults&&(isCompleted(s)||s.seasonId!==meta.activeSeasonId))||seasons.find(s=>isCompleted(s)&&s.hasResults);
+    if(target)selectSeason(target.seasonId);else{selected=null;token++;finals.textContent='Noch keine abgeschlossene Saison verfügbar.'}
+  },
+  onError:()=>{message.textContent='Das Saisonarchiv ist gerade nicht erreichbar. Bitte lade die Seite erneut.'}
 });

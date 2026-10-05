@@ -1,4 +1,4 @@
-import {calculatePersonalAward} from './personal-performance.js?v=17';
+import {calculatePersonalAward} from './personal-performance.js?v=19';
 const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
 export const calculatePlayerOfWeek=calculatePersonalAward;
 function escapeHtml(value) {
@@ -62,10 +62,10 @@ export function playerOfWeekMarkup(award, { compact = false, context = "", headi
     ? "Noch ohne Referenzschnitt"
     : `${signed(award.improvementPercent)} % · ${signed(award.improvement)} Pins`;
 
-  return `<section class="${classes}" aria-label="Spieler/in des Tages: ${escapeHtml(award.name)}">
+  return `<section class="${classes}" aria-label="Spieler der Woche: ${escapeHtml(award.name)}">
     ${pageHead}
     <div class="pow-main">
-      <div class="pow-kicker"><span>Spieler/in des Tages</span><b>Spieltag ${award.matchdayNumber}</b></div>
+      <div class="pow-kicker"><span>Spieler der Woche</span><b>Spieltag ${award.matchdayNumber}</b></div>
       <div class="pow-name-row">
         <div class="pow-avatar"><i class="fa-solid fa-bowling-ball"></i><span>★</span></div>
         <div class="pow-name"><span class="pow-crown" aria-hidden="true"><i class="fa-solid fa-crown"></i></span><strong>${escapeHtml(award.name)}</strong><span>${escapeHtml(award.team)}</span></div>
@@ -84,13 +84,15 @@ export function playerOfWeekMarkup(award, { compact = false, context = "", headi
     </div>
     <div class="pow-breakdown">
       
-      ${breakdownItem("Eigene Steigerung", award.breakdown.form, 80, "form")}
-      ${breakdownItem("Spiele über eigenem Schnitt", award.breakdown.consistency, 20, "consistency")}
+      ${breakdownItem("Eigene Steigerung", award.breakdown.form, 50, "form")}
+      ${breakdownItem("Spiele über eigenem Schnitt", award.breakdown.consistency, 25, "consistency")}
+      ${breakdownItem("Tagesleistung", award.breakdown.performance, 15, "performance")}
+      ${breakdownItem("200er-Spiele", award.breakdown.highlight, 10, "highlight")}
       <p class="pow-reference">${escapeHtml(award.referenceLabel)} · Ø ${number(award.referenceAverage)}</p>
     </div>
     <details class="pow-method">
       <summary>So wird gewertet</summary>
-      <p><b>80 % persönliche Steigerung, 20 % Spiele über dem eigenen Schnitt.</b> Vergleich: die letzten bis zu zwölf gültigen Spiele vor diesem Spieltag (mindestens drei), sonst der Vorsaison-Schnitt. Die heutigen Spiele zählen nicht zum Vergleich. Gleicher Schnitt ergibt 40 von 80 Steigerungspunkten; jedes Prozent Verbesserung bringt 1,6 Punkte, begrenzt auf 0–80. Dazu bis zu 20 Punkte für den Anteil der Spiele über dem eigenen Schnitt. Gesamtpins, Tabellenplatz und 200er-Spiele geben keinen Bonus. Mindestens drei gültige Tages-Spiele sind nötig. Ohne Vergleichswerte sammelt man zuerst seine persönliche Basis. Bei Gleichstand zählen die prozentuale Steigerung, dann die relative Gleichmäßigkeit; bei vollständigem Gleichstand entscheidet die feste Spieler-ID. Archivtage werden ebenfalls nach dieser neuen Regel bewertet.</p>
+      <p><b>50 % persönliche Steigerung, 25 % Spiele über dem eigenen Schnitt, 15 % Tagesleistung und 10 % 200er-Spiele.</b> Vergleich: die letzten bis zu zwölf gültigen Spiele vor diesem Spieltag (mindestens drei), sonst der Vorsaison-Schnitt. Die heutigen Spiele zählen nicht zum Vergleich. Steigerungspunkte: 25 plus die prozentuale Veränderung, begrenzt auf 0–50. Für den Anteil der Spiele über dem eigenen Schnitt gibt es bis zu 25 Punkte. Tagesleistung: Tagesdurchschnitt / 300 × 15. 200er: Anteil der Spiele ab 200 Pins × 10 (ein 200er bei vier Spielen: 2,5 Punkte). Mindestens drei gültige Tages-Spiele und ein persönlicher Vergleichsschnitt sind erforderlich. Bei Gleichstand zählen die prozentuale Steigerung, dann die relative Gleichmäßigkeit und zuletzt die feste Spieler-ID. Archivtage werden nach dieser aktuellen Regel bewertet.</p>
     </details>
     ${pageActions}
   </section>`;

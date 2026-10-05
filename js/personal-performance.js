@@ -21,14 +21,16 @@ export function calculatePersonalAward(data) {
     const average=mean(scores),improvement=average-reference.average;
     const improvementPercent=100*improvement/reference.average;
     const above=scores.filter(v=>v>reference.average).length;
-    const form=80*clamp(.5+improvementPercent/50,0,1);
-    const consistency=20*above/scores.length;
+    const form=50*clamp(.5+improvementPercent/50,0,1);
+    const consistency=25*above/scores.length;
+    const performance=15*average/300;
+    const highlight=10*scores.filter(v=>v>=200).length/scores.length;
     return [{playerId:row.playerId,name:row.name??'Unbekannt',team:row.team??row.teamId,
       teamId:row.teamId,scores,games:scores.length,total:scores.reduce((a,b)=>a+b,0),
       average,bestGame:Math.max(...scores),referenceAverage:reference.average,referenceLabel:reference.label,
       improvement,improvementPercent,aboveReference:above,
       standardDeviation:Math.sqrt(mean(scores.map(v=>(v-average)**2))),
-      breakdown:{form,consistency},score:form+consistency}];
+      breakdown:{form,consistency,performance,highlight},score:form+consistency+performance+highlight}];
   });
   candidates.sort((a,b)=>b.score-a.score||b.improvementPercent-a.improvementPercent
     ||(a.standardDeviation/a.referenceAverage)-(b.standardDeviation/b.referenceAverage)
