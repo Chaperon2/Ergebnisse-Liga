@@ -1,5 +1,5 @@
 import {homeSeasonState} from './season-state.js?v=19';
-import {winnersMarkup} from './season-final.js?v=19';
+import {winnersMarkup} from './season-final.js?v=21';
 import {escapeHtml as esc,formatDate} from './public-data.js';
 import {loadPublicSchedule,loadPublicResults,loadPublicSeasons} from './public-api.js';
 import {buildTeamColorMap} from './team-colors.js';

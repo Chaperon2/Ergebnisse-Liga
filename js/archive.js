@@ -1,7 +1,7 @@
 import {loadPublicSeasons,loadPublicResults,watchLoader} from './public-api.js';
 import {escapeHtml as esc} from './public-data.js';
 import {isCompleted} from './season-state.js?v=19';
-import {finalMarkup} from './season-final.js?v=19';
+import {finalMarkup} from './season-final.js?v=21';
 const message=document.querySelector('#archiveMessage'),container=document.querySelector('#seasonArchive');
 const finals=document.createElement('section');finals.id='seasonFinal';finals.setAttribute('aria-live','polite');container.after(finals);
 let selected=null,token=0,seasons=[];
