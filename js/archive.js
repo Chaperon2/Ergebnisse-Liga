@@ -1,4 +1,5 @@
-import {loadPublicSeasons,loadPublicResults,watchLoader} from './public-api.js';
+import {watchLoader} from './public-api.js';
+import {loadArchiveSeasons,loadArchiveResults} from './archive-data.js?v=22';
 import {escapeHtml as esc} from './public-data.js';
 import {isCompleted} from './season-state.js?v=19';
 import {finalMarkup} from './season-final.js?v=21';
@@ -15,14 +16,14 @@ async function selectSeason(id){
     return;
   }
   finals.textContent='Finale Auswertung wird geladen …';
-  try{const result=await loadPublicResults(id);if(current!==token)return;
+  try{const result=await loadArchiveResults(season);if(current!==token)return;
     finals.innerHTML=finalMarkup(result.data,{completed:true});
     if(result.warning){const p=document.createElement('p');p.textContent=result.warning;finals.prepend(p)}
   }catch{if(current!==token)return;finals.innerHTML='<p>Diese Auswertung konnte nicht geladen werden.</p><button type="button">Erneut versuchen</button>';finals.querySelector('button').onclick=()=>selectSeason(id)}
 }
-watchLoader(loadPublicSeasons,{
+watchLoader(loadArchiveSeasons,{
   onData:(data,meta)=>{
-    seasons=[...data].sort((a,b)=>String(b.firstMatchdayDate||b.seasonId).localeCompare(String(a.firstMatchdayDate||a.seasonId)));
+    seasons=[...data].sort((a,b)=>b.seasonId.localeCompare(a.seasonId,undefined,{numeric:true}));
     message.textContent=meta.warning||(!seasons.length?'Noch keine Saisons verfügbar.':'');
     container.innerHTML=seasons.map(s=>`<article class="archive-card"><header><div><span class="schedule-state">${isCompleted(s)?'Abgeschlossen':s.seasonId===meta.activeSeasonId?'Aktuelle Saison':'Noch nicht abgeschlossen'}</span><h2>${esc(s.seasonName??s.seasonId)}</h2></div></header><div class="actions"><button class="button" type="button" data-season="${esc(s.seasonId)}" aria-pressed="${s.seasonId===selected}">Saison auswählen</button></div></article>`).join('');
     container.querySelectorAll('[data-season]').forEach(b=>b.onclick=()=>selectSeason(b.dataset.season));
