@@ -1,0 +1,16 @@
+/* Inset outline keeps the table dimensions unchanged, including on phones. */
+.results-view #sectionsGrid tbody tr.my-player-row{outline:2px solid #087e80!important;outline-offset:-2px;position:relative;z-index:1}
+.results-view #sectionsGrid tbody tr td[data-score-200="true"],
+.results-view #sectionsGrid tbody tr:hover td[data-score-200="true"],
+.results-view #sectionsGrid tbody tr.my-player-row td[data-score-200="true"]{
+ background:#efd38e!important;
+ background-image:linear-gradient(145deg,#fff0ba 0%,#ebc66e 100%)!important;
+ color:#503409!important;
+ border-color:#bd8c34!important;
+ outline:1px solid #ad7b29!important;
+ outline-offset:-2px!important;
+ font-weight:900!important;
+ font-size:1em!important;
+ text-shadow:none!important;
+ box-shadow:inset 0 -3px 0 #9a6b20!important;
+}
