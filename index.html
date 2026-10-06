@@ -1566,8 +1566,8 @@
     }
   </style>
 <link rel="stylesheet" href="css/bright-theme.css?v=15.9" />
-<link rel="stylesheet" href="css/club-features.css?v=19"><link rel="stylesheet" href="css/season-final.css?v=19"></head>
-<body>
+<link rel="stylesheet" href="css/club-features.css?v=19"><link rel="stylesheet" href="css/season-final.css?v=19"><link rel="stylesheet" href="css/personal-season.css?v=23"></head>
+<body class="personal-home">
 <a class="skip-link" href="#desktopNavigation">Direkt zur Navigation</a>
 <div aria-label="Desktop-Startseite" class="desktop-shell">
 <video aria-hidden="true" class="desktop-video" data-src="Rauch7.mp4" id="desktopVideo" loop="" muted="" playsinline="" preload="none"></video>
@@ -1589,7 +1589,7 @@
 <span><i class="fa-solid fa-bowling-ball"></i> Strikeclub Velten</span>
 </div>
 </div>
-<nav aria-label="Schnellnavigation" class="top-links">
+<nav aria-label="Schnellnavigation" class="top-links"><a class="top-link" href="spieleranalyse.html"><i class="fa-solid fa-user"></i><span>Spielerkarte</span></a>
 <a class="top-link" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnisse</span></a>
 <a class="top-link" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Spielplan</span></a>
 <a class="top-link" href="archiv.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Archiv</span></a>
@@ -1602,7 +1602,7 @@
 </div>
 
 </div>
-<aside class="side-stack">
+<aside class="side-stack"><section class="club-home" data-club-home aria-live="polite">Ligavorschau wird geladen …</section>
 <div aria-label="Ligainformationen" class="status-bank">
 <div class="status-cell"><small>Modus</small><strong>Live</strong><span>Veröffentlichte Saisondaten</span></div>
 <div class="status-cell"><small>Saison</small><strong>18</strong><span>Spieltage pro Saison</span></div>
@@ -1617,8 +1617,8 @@
 </div>
 </aside>
 </section>
-<section class="club-home" data-club-home aria-live="polite">Ligavorschau wird geladen …</section><main class="nav-zone" id="desktopNavigation">
-<h2 class="nav-zone-title"><span aria-hidden="true" class="pixel-dots"><i></i><i></i><i></i><i></i></span> Liga-Module</h2>
+<main class="nav-zone" id="desktopNavigation">
+<h2 class="nav-zone-title"><span aria-hidden="true" class="pixel-dots"><i></i><i></i><i></i><i></i></span> Deine Liga entdecken</h2>
 <nav aria-label="Hauptnavigation" class="nav-bento">
 <a class="nav-card nav-results" href="aktuelle_ergebnisse.html">
 <span class="nav-icon"><i class="fa-solid fa-chart-column"></i></span>
@@ -1646,14 +1646,14 @@
 <a class="nav-card nav-analysis" href="spieleranalyse.html">
 <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
 <small>04 // Verlauf</small>
-<strong>Spieleranalyse</strong>
-<span>Persönliche Entwicklung, Schnitt und Einzelspiel-Verlauf.</span>
+<strong>Spielerkarte</strong>
+<span>Dein Profil und deine Entwicklung über die Saisons.</span>
 </a>
 <a class="nav-card nav-records" href="rekorde.html">
 <span class="nav-icon"><i class="fa-solid fa-medal"></i></span>
 <small>05 // Best</small>
 <strong>Rekorde</strong>
-<span>Bestmarken der Saison.</span>
+<span>Saisonrekorde und Allzeit-Bestmarken.</span>
 </a>
 <a class="nav-card nav-news" href="termine-news.html">
 <span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>
@@ -1710,7 +1710,7 @@
 <i class="teaser-impact"></i>
 </span>
 </a>
-<a class="mobile-card analysis" href="spieleranalyse.html"><span class="mobile-card-icon"><i class="fa-solid fa-chart-line"></i></span><strong>Analyse</strong><small>Spielerverlauf</small></a>
+<a class="mobile-card analysis" href="spieleranalyse.html"><span class="mobile-card-icon"><i class="fa-solid fa-chart-line"></i></span><strong>Spielerkarte</strong><small>Spielerverlauf</small></a>
 <a class="mobile-card records" href="rekorde.html"><span class="mobile-card-icon"><i class="fa-solid fa-medal"></i></span><strong>Rekorde</strong><small>Bestmarken</small></a>
 <a class="mobile-card news" href="termine-news.html"><span class="mobile-card-icon"><i class="fa-solid fa-newspaper"></i></span><strong>News</strong><small>Termine &amp; Hinweise</small></a>
 <a class="mobile-card about" href="Über-uns.html"><span class="mobile-card-icon"><i class="fa-solid fa-people-group"></i></span><strong>Über uns</strong><small>Der Club</small></a>
@@ -1726,7 +1726,7 @@
 <a class="dock-item active" href="index.html"><i class="fa-solid fa-house"></i><span>Start</span></a>
 <a class="dock-item results" href="aktuelle_ergebnisse.html"><i class="fa-solid fa-trophy"></i><span>Ergebnis</span></a>
 <a class="dock-item schedule" href="spielplan.html"><i class="fa-solid fa-calendar-days"></i><span>Plan</span></a>
-<a class="dock-item game" href="bowling-minispiel.html"><i class="fa-solid fa-gamepad"></i><span>Spiel</span></a>
+<a class="dock-item" href="spieleranalyse.html"><i class="fa-solid fa-user"></i><span>Spielerkarte</span></a>
 </nav>
 </div>
 <script src="js/player-of-week-home.js?v=19" type="module"></script>
@@ -1758,5 +1758,5 @@
       reduced.addEventListener?.("change", manageVideo);
     })();
   </script>
-<script type="module" src="js/club-features.js?v=21"></script></body>
+<script type="module" src="js/club-features.js?v=23"></script></body>
 </html>
