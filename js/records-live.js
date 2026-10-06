@@ -1,3 +1,4 @@
+import {renderAlltime} from './alltime-records.js?v=23';
 import {
   escapeHtml,
   formatDate,
@@ -7,6 +8,9 @@ import {
 } from "./public-data.js";
 
 const recordsGrid = document.getElementById("recordsGrid");
+const switcher=document.createElement('div');switcher.className='record-switch';switcher.innerHTML='<button type="button" aria-pressed="true">Saisonrekorde</button><button type="button" aria-pressed="false">Allzeitrekorde</button>';
+const alltime=document.createElement('section');alltime.hidden=true;alltime.id='alltimeRecords';recordsGrid.before(switcher);recordsGrid.after(alltime);
+switcher.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{switcher.querySelectorAll('button').forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));recordsGrid.hidden=i===1;alltime.hidden=i===0});
 const header = document.querySelector(".header");
 const state = document.createElement("div");
 state.className = "live-data-state";
@@ -124,6 +128,7 @@ function showError(message) {
 watchPublicResults({
   onData: (data, _seasonId, meta) => {
     render(data);
+    renderAlltime(alltime,data);
     if (meta?.warning) {
       state.classList.add("fallback");
       state.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${escapeHtml(meta.warning)}</span>`;

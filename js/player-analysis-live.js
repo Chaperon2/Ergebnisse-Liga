@@ -1,3 +1,6 @@
+import {loadCareerData} from './career-data.js?v=23';
+import {nameKey,favourite} from './player-profile.js?v=23';
+import {renderCareer} from './player-career.js?v=23';
 import {
   escapeHtml,
   formatDate,
@@ -24,6 +27,9 @@ const infoModalText = document.getElementById("infoModalText");
 const infoModalClose = document.getElementById("infoModalClose");
 
 let currentData = null;
+let career={data:[],partial:false};
+let renderToken=0;
+const careerHost=document.createElement("section");careerHost.className="career-panel";document.querySelector(".chart-wrap").before(careerHost);
 let chart = null;
 let chartRows = [];
 
@@ -118,9 +124,9 @@ function buildChart(player) {
         {
           label: "Einzelspiel",
           data: chartRows.map((row) => row.gameValue),
-          borderColor: "#40f4ef",
+          borderColor: "#087e80",
           backgroundColor: "rgba(64,244,239,.22)",
-          pointBackgroundColor: chartRows.map((row) => row.isGap ? "#ff59b6" : "#40f4ef"),
+          pointBackgroundColor: chartRows.map((row) => row.isGap ? "#ff59b6" : "#087e80"),
           pointBorderColor: "#071012",
           pointRadius: chartRows.map((row) => row.isGap ? 5 : 3),
           pointHoverRadius: 7,
@@ -131,7 +137,7 @@ function buildChart(player) {
         {
           label: "Laufender Saison-Schnitt",
           data: chartRows.map((row) => row.averageValue),
-          borderColor: "#ffc85b",
+          borderColor: "#a36500",
           backgroundColor: "transparent",
           pointRadius: 0,
           pointHoverRadius: 4,
@@ -169,13 +175,13 @@ function buildChart(player) {
       },
       scales: {
         x: {
-          ticks: { color: "#c7b894", maxRotation: 0, autoSkip: true, maxTicksLimit: 18, font: { size: 10 } },
+          ticks: { color: "#35534d", maxRotation: 0, autoSkip: true, maxTicksLimit: 18, font: { size: 10 } },
           grid: { color: "rgba(200,151,70,.10)" },
         },
         y: {
           suggestedMin: 70,
           suggestedMax: 250,
-          ticks: { color: "#c7b894", font: { size: 10 } },
+          ticks: { color: "#35534d", font: { size: 10 } },
           grid: { color: "rgba(200,151,70,.13)" },
         },
       },
@@ -200,26 +206,27 @@ function renderPlayer(playerId) {
   statDeviation.textContent = player.consistency?.standardDeviation == null ? "–" : formatNumber(player.consistency.standardDeviation);
   statRange.textContent = player.consistency?.range == null ? "–" : `${formatInteger(player.consistency.range)} Pins`;
 
-  buildChart(player);
+  renderCareer(careerHost,career.data,player.name,career.partial);
+  if(player.entries?.length){chartCanvas.closest('.chart-wrap').hidden=false;buildChart(player)}
+  else{chart?.destroy();chartCanvas.closest('.chart-wrap').hidden=true;playedInfo.textContent='Saisonabschluss · '+(player.sourceSeasonName||currentData.seasonName);}
+  document.querySelector('.panel-title').textContent=player.name;
+  document.querySelector('.panel-subtitle').textContent=player.sourceSeasonName||currentData.seasonName;
+
 }
 
-function render(data) {
-  if (Number(data.schemaVersion ?? 1) < 2 || !Array.isArray(data.analytics?.players)) {
-    showError("Der veröffentlichte Saisonstand enthält noch keine Live-Analyse. Im Adminbereich einmal „Öffentliche Statistiken neu berechnen“ ausführen.");
-    return;
-  }
-
-  currentData = data;
-  const players = [...data.analytics.players]
-    .filter((player) => player.games > 0)
-    .sort((a, b) => a.name.localeCompare(b.name, "de"));
-
-  playerSelect.innerHTML = players.map((player) => (
-    `<option value="${escapeHtml(player.playerId)}">${escapeHtml(player.name)} · ${escapeHtml(player.team)}</option>`
-  )).join("");
-
-  const requested = selectedPlayerFromUrl();
-  renderPlayer(players.some((player) => player.playerId === requested) ? requested : players[0]?.playerId);
+async function render(data) {
+ const token=++renderToken;
+ let loaded;try{loaded=await loadCareerData(data)}catch{loaded={data:[data],partial:true}}
+ if(token!==renderToken)return;career=loaded;
+ const profiles=new Map();for(const season of career.data)for(const row of season.individualStandings?.rows??[])if(row.games>0)profiles.set(nameKey(row.name),{...row,sourceSeasonName:season.seasonName});
+ for(const player of (data.analytics?.players??[]).filter(p=>p.teamId!==data.dummyTeamId))profiles.set(nameKey(player.name),{...player,sourceSeasonName:data.seasonName});
+ const players=[...profiles.values()].sort((a,b)=>a.name.localeCompare(b.name,'de'));
+ currentData={...data,analytics:{...data.analytics,players}};
+ playerSelect.disabled=false;
+ playerSelect.innerHTML=players.map(p=>'<option value="'+escapeHtml(p.playerId)+'">'+escapeHtml(p.name)+'</option>').join('');
+ const wanted=selectedPlayerFromUrl(),saved=favourite();
+ const chosen=players.find(p=>p.playerId===wanted)||players.find(p=>nameKey(p.name)===nameKey(saved?.name))||players[0];
+ renderPlayer(chosen?.playerId);
 }
 
 function showError(message) {

@@ -1,7 +1,7 @@
 import {loadPublicSeasons} from './public-api.js';
 import {isCompleted} from './season-state.js?v=19';
 import {finalMarkup} from './season-final.js?v=21';
-import {resultExtras} from './club-features.js?v=19';
+import {resultExtras} from './club-features.js?v=23';
 import {historyNavigation} from './history-navigation.js?v=17';
 import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js";
 import { renderPlayerOfWeek } from "./player-of-week.js?v=19";
@@ -65,7 +65,7 @@ function playerAnalysisCell(playerId, name) {
   const href = `spieleranalyse.html?${params.toString()}`;
   return {
     html: true,
-    value: `<a class="player-analysis-link" href="${escapeHtml(href)}" aria-label="${safeName} in der Spieleranalyse öffnen">${safeName}</a>`,
+    value: `<a class="player-analysis-link" data-player-id="${escapeHtml(id)}" href="${escapeHtml(href)}" aria-label="${safeName} in der Spielerkarte öffnen">${safeName}</a>`,
   };
 }
 
