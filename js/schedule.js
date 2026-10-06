@@ -1,4 +1,4 @@
-import { loadPublicSchedule, requestedSeasonId, watchLoader } from "./public-api.js";
+import { loadPublicSchedule, requestedSeasonId, watchLoader } from "./public-api.js?v=30";
 
 const title = document.querySelector("#scheduleTitle");
 const summary = document.querySelector("#scheduleSummary");

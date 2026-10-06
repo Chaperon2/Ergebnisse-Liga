@@ -1,9 +1,10 @@
-import {loadPublicSeasons,loadPublicResults} from './public-api.js';
+import {normalizePlayerNames} from './player-names.js?v=30';
+import {loadPublicSeasons,loadPublicResults} from './public-api.js?v=30';
 
 async function readArchive(filename){
   const response=await fetch(new URL(`../data/archive/${filename}`,import.meta.url),{cache:'no-store'});
   if(!response.ok)throw new Error('Archivdatei konnte nicht geladen werden.');
-  return response.json();
+  return normalizePlayerNames(await response.json());
 }
 
 export function mergeArchiveSeasons(live,historical){

@@ -1,8 +1,8 @@
-import {selectedPlayer,rememberPlayer} from './player-profile.js?v=23';
+import {selectedPlayer,rememberPlayer} from './player-profile.js?v=30';
 import {homeSeasonState} from './season-state.js?v=19';
-import {winnersMarkup} from './season-final.js?v=21';
-import {escapeHtml as esc,formatDate} from './public-data.js';
-import {loadPublicSchedule,loadPublicResults,loadPublicSeasons} from './public-api.js';
+import {winnersMarkup} from './season-final.js?v=30';
+import {escapeHtml as esc,formatDate} from './public-data.js?v=30';
+import {loadPublicSchedule,loadPublicResults,loadPublicSeasons} from './public-api.js?v=30';
 import {buildTeamColorMap} from './team-colors.js';
 function selected(data){return selectedPlayer(data)?.teamId||''}
 function highlight(data){const player=selectedPlayer(data);

@@ -1,5 +1,5 @@
-import {loadArchiveSeasons,loadArchiveResults} from './archive-data.js?v=22';
-import {nameKey} from './player-profile.js?v=23';
+import {loadArchiveSeasons,loadArchiveResults} from './archive-data.js?v=30';
+import {nameKey} from './player-profile.js?v=30';
 export async function loadCareerData(current){
  const catalog=await loadArchiveSeasons();
  const settled=await Promise.allSettled(catalog.data.filter(s=>s.hasResults&&s.seasonId!==current?.seasonId).map(s=>loadArchiveResults(s)));

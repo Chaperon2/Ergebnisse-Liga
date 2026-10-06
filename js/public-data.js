@@ -1,4 +1,4 @@
-import { loadPublicResults, requestedSeasonId, watchLoader } from "./public-api.js";
+import { loadPublicResults, requestedSeasonId, watchLoader } from "./public-api.js?v=30";
 
 export { requestedSeasonId };
 

@@ -1,4 +1,4 @@
-import {escapeHtml as esc,formatNumber} from './public-data.js';
+import {escapeHtml as esc,formatNumber} from './public-data.js?v=30';
 function podium(rows,title,value,extra=""){
   const places=[2,1,3].map(rank=>{
     const winners=rows.filter(r=>Number(r.rank)===rank);

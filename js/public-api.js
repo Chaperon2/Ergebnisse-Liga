@@ -1,3 +1,4 @@
+import {normalizePlayerNames} from './player-names.js?v=30';
 const API_URL = "https://europe-west3-liga-velten.cloudfunctions.net/publicLigaData";
 const INITIAL_SEASON_ID = "2026-s2";
 const POLL_INTERVAL_MS = 60_000;
@@ -23,7 +24,7 @@ async function fetchJson(url, timeoutMs = 10_000) {
     if (!response.ok || !payload?.ok) {
       throw new Error(payload?.error || `HTTP ${response.status}`);
     }
-    return payload;
+    return normalizePlayerNames(payload);
   } finally {
     window.clearTimeout(timer);
   }
@@ -33,7 +34,7 @@ async function fallbackJson(filename) {
   const url = new URL(`../data/${filename}`, import.meta.url);
   const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) throw new Error(`Sicherungsdatei ${filename} fehlt.`);
-  return response.json();
+  return normalizePlayerNames(await response.json());
 }
 
 export async function loadPublicConfig() {

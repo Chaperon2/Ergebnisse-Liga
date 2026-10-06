@@ -1,4 +1,5 @@
-export const nameKey=name=>String(name??'').normalize('NFC').trim().toLocaleLowerCase('de');
+import {canonicalPlayerName} from './player-names.js?v=30';
+export const nameKey=name=>canonicalPlayerName(name).toLocaleLowerCase('de');
 const key='strikeclub-favourite-player-v1';
 export function favourite(){try{return JSON.parse(localStorage.getItem(key))}catch{return null}}
 export function rememberPlayer(data,player){try{localStorage.setItem(key,JSON.stringify(player?{season:data.seasonId,playerId:player.playerId,name:player.name}:null))}catch{}}

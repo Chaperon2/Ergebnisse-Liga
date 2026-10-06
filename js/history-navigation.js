@@ -1,4 +1,4 @@
-import {escapeHtml as esc,formatDate} from './public-data.js';
+import {escapeHtml as esc,formatDate} from './public-data.js?v=30';
 const endpoint='https://europe-west3-liga-velten.cloudfunctions.net/publicLigaHistory';
 async function request(season,day){const url=new URL(endpoint);url.searchParams.set('season',season);if(day!==undefined)url.searchParams.set('day',day);const response=await fetch(url,{signal:AbortSignal.timeout(30000),cache:'no-store'});const result=await response.json();if(!response.ok||!result.ok)throw Error(result.error||'Archiv nicht erreichbar');return result.data}
 export function historyNavigation(render){
