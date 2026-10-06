@@ -1,5 +1,5 @@
-import {loadCareerData,allTimeRecords} from './career-data.js?v=30';
-import {escapeHtml as esc,formatNumber as num} from './public-data.js?v=30';
+import {loadCareerData,allTimeRecords} from './career-data.js?v=31';
+import {escapeHtml as esc,formatNumber as num} from './public-data.js?v=31';
 let sequence=0;
 export async function renderAlltime(host,current){
  const token=++sequence;host.innerHTML='<p>Allzeitrekorde werden geladen …</p>';

@@ -1,9 +1,9 @@
-import {loadPublicSeasons} from './public-api.js?v=30';
+import {loadPublicSeasons} from './public-api.js?v=31';
 import {isCompleted} from './season-state.js?v=19';
-import {finalMarkup} from './season-final.js?v=30';
-import {resultExtras} from './club-features.js?v=30';
-import {historyNavigation} from './history-navigation.js?v=30';
-import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js?v=30";
+import {finalMarkup} from './season-final.js?v=31';
+import {resultExtras} from './club-features.js?v=31';
+import {historyNavigation} from './history-navigation.js?v=31';
+import { escapeHtml, formatDate, formatNumber, watchPublicResults } from "./public-data.js?v=31";
 import { renderPlayerOfWeek } from "./player-of-week.js?v=19";
 
 const sectionsGrid = document.getElementById("sectionsGrid");

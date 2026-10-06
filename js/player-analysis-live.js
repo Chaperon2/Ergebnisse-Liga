@@ -1,13 +1,13 @@
-import {loadCareerData} from './career-data.js?v=30';
-import {nameKey,favourite} from './player-profile.js?v=30';
-import {renderCareer} from './player-career.js?v=30';
+import {loadCareerData} from './career-data.js?v=31';
+import {nameKey,favourite} from './player-profile.js?v=31';
+import {renderCareer} from './player-career.js?v=31';
 import {
   escapeHtml,
   formatDate,
   formatInteger,
   formatNumber,
   watchPublicResults,
-} from "./public-data.js?v=30";
+} from "./public-data.js?v=31";
 
 const playerSelect = document.getElementById("playerSelect");
 const playerChip = document.getElementById("playerChip");

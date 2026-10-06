@@ -1,11 +1,11 @@
-import {renderAlltime} from './alltime-records.js?v=30';
+import {renderAlltime} from './alltime-records.js?v=31';
 import {
   escapeHtml,
   formatDate,
   formatInteger,
   formatNumber,
   watchPublicResults,
-} from "./public-data.js?v=30";
+} from "./public-data.js?v=31";
 
 const recordsGrid = document.getElementById("recordsGrid");
 const switcher=document.createElement('div');switcher.className='record-switch';switcher.innerHTML='<button type="button" aria-pressed="true">Saisonrekorde</button><button type="button" aria-pressed="false">Allzeitrekorde</button>';

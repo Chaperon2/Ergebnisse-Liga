@@ -1,4 +1,4 @@
-import { watchPublicResults } from "./public-data.js?v=30";
+import { watchPublicResults } from "./public-data.js?v=31";
 import { playerOfWeekMarkup, calculatePlayerOfWeek } from "./player-of-week.js?v=19";
 
 const desktopHost = document.getElementById("playerWeekHomeDesktop");

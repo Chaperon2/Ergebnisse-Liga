@@ -1,5 +1,5 @@
-import {normalizePlayerNames} from './player-names.js?v=30';
-import {loadPublicSeasons,loadPublicResults} from './public-api.js?v=30';
+import {normalizePlayerNames} from './player-names.js?v=31';
+import {loadPublicSeasons,loadPublicResults} from './public-api.js?v=31';
 
 async function readArchive(filename){
   const response=await fetch(new URL(`../data/archive/${filename}`,import.meta.url),{cache:'no-store'});

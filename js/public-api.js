@@ -1,4 +1,4 @@
-import {normalizePlayerNames} from './player-names.js?v=30';
+import {normalizePlayerNames} from './player-names.js?v=31';
 const API_URL = "https://europe-west3-liga-velten.cloudfunctions.net/publicLigaData";
 const INITIAL_SEASON_ID = "2026-s2";
 const POLL_INTERVAL_MS = 60_000;

@@ -1,4 +1,4 @@
-import {canonicalPlayerName} from './player-names.js?v=30';
+import {canonicalPlayerName} from './player-names.js?v=31';
 export const nameKey=name=>canonicalPlayerName(name).toLocaleLowerCase('de');
 const key='strikeclub-favourite-player-v1';
 export function favourite(){try{return JSON.parse(localStorage.getItem(key))}catch{return null}}

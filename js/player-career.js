@@ -1,5 +1,5 @@
-import {careerRows} from './career-data.js?v=30';
-import {escapeHtml as esc,formatNumber as num} from './public-data.js?v=30';
+import {careerRows} from './career-data.js?v=31';
+import {escapeHtml as esc,formatNumber as num} from './public-data.js?v=31';
 export function renderCareer(host,data,name,partial=false){
  const rows=careerRows(data,name),valid=rows.filter(r=>r.player?.games>0);
  if(!valid.length){host.innerHTML='<p>Noch keine Saisonwerte vorhanden.</p>';return}
