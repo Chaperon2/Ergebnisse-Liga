@@ -23,7 +23,7 @@ export function winnersMarkup(data){
 }
 function table(title,headers,rows){return `<section class="final-table"><h3>${title}</h3><table><thead><tr>${headers.map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(v=>`<td>${esc(v??'–')}</td>`).join('')}</tr>`).join('')}</tbody></table></section>`}
 export function finalMarkup(data,{completed=true}={}){
-  const individual=(data.individualStandings?.rows??[]).map(r=>[r.rank,r.name,r.team,r.games,r.bestSeries,r.bestGame,r.pins,formatNumber(r.average),r.games200??0]);
+  const individual=(data.individualStandings?.rows??[]).map(r=>[r.rank,r.name,r.team,r.games,r.bestSeries,r.bestGame,r.pins,formatNumber(r.average),r.games200??'–']);
   const teams=(data.teamStandings?.rows??[]).map(r=>[r.rank,r.name,r.points,r.pins,r.matchdays,formatNumber(r.average)]);
   return `<div class="final-results">${completed?winnersMarkup(data):`<h2>${esc(data.seasonName)} · Letzter veröffentlichter Saisonstand</h2><p>Diese Saison ist noch nicht als abgeschlossen verzeichnet.</p>`}<p class="final-note">${completed?'Finale Auswertung':'Saisonstand'} · bis Spieltag ${Number(data.matchday?.number)||'–'}</p>${table('Einzelwertung',['Pl.','Name','Team','Sp.','Beste Serie','Bestes Spiel','Pins','Ø','200+'],individual)}${table('Teamwertung',['Pl.','Team','Punkte','Pins','Spieltage','Ø'],teams)}</div>`;
 }
