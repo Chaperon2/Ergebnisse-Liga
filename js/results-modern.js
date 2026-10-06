@@ -219,7 +219,8 @@ function render(data) {
     const awayClass = teamColorMap.get(matchup.away.teamId) ?? "duel-color-2";
     const roundRows = matchup.home.rounds.map((round, roundIndex) => {
       const awayRound = matchup.away.rounds[roundIndex];
-      return `<span class="duel-round"><b>R${roundIndex + 1}</b><span>${escapeHtml(round.display)}</span><i>:</i><span>${escapeHtml(awayRound?.display ?? "–")}</span></span>`;
+      const score = (value) => value ? `<span class="round-value"><strong>${escapeHtml(value.scoringPins ?? value.display)}</strong><small>${value.bonusPins > 0 ? `${escapeHtml(value.basePins)} + ${escapeHtml(value.bonusPins)} Bonus` : "Pins"}</small></span>` : `<span class="round-value">–</span>`;
+      return `<div class="duel-round"><b>Runde ${roundIndex + 1}</b>${score(round)}<i>:</i>${score(awayRound)}</div>`;
     }).join("");
     return `<article class="team-duel">
       <div class="duel-team ${homeClass}"><span class="duel-color-dot"></span><strong>${escapeHtml(homeName)}</strong><small>${escapeHtml(matchup.home.scoringPins)} Pins</small></div>
