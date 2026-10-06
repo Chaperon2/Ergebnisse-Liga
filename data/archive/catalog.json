@@ -68,14 +68,25 @@
       "archiveFile": "2024-s1.json"
     },
     {
-      "seasonId": "2023-s1",
-      "seasonName": "Liga 2023 S1",
+      "seasonId": "2023-s2",
+      "seasonName": "Liga 2023 S2",
       "status": "completed",
       "matchdayCount": 9,
       "currentPublishedMatchday": 9,
       "hasResults": true,
       "hasSchedule": false,
       "archiveMonth": "2023-11",
+      "archiveFile": "2023-s2.json"
+    },
+    {
+      "seasonId": "2023-s1",
+      "seasonName": "Liga 2023 S1",
+      "status": "completed",
+      "matchdayCount": 10,
+      "currentPublishedMatchday": 10,
+      "hasResults": true,
+      "hasSchedule": false,
+      "archiveMonth": "2023-06",
       "archiveFile": "2023-s1.json"
     }
   ]
