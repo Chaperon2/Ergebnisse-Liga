@@ -14,3 +14,15 @@
  text-shadow:none!important;
  box-shadow:inset 0 -3px 0 #9a6b20!important;
 }
+
+/* Draw the selection on each cell so clipped trend and score cells cannot hide it. */
+.results-view #sectionsGrid tbody tr.my-player-row{outline:none!important}
+.results-view #sectionsGrid tbody tr.my-player-row>td{box-shadow:inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
+.results-view #sectionsGrid tbody tr.my-player-row>td:first-child{box-shadow:inset 2px 0 0 #087e80,inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
+.results-view #sectionsGrid tbody tr.my-player-row>td:last-child{box-shadow:inset -2px 0 0 #087e80,inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
+.results-view #sectionsGrid tbody tr.my-player-row>td[data-score-200="true"]{outline:none!important}
+.results-view #sectionsGrid :is(.section-einzel,.section-team) tbody tr{height:28px!important}
+.results-view #sectionsGrid :is(.section-einzel,.section-team) tbody td{padding-top:3px!important;padding-bottom:3px!important;line-height:1.15!important;height:auto!important}
+.results-view #sectionsGrid :is(.section-einzel,.section-team) td.col-trend>.tendency{height:18px!important;min-height:0!important}
+@media(max-width:700px){.results-view #sectionsGrid :is(.section-einzel,.section-team) tbody td{padding-top:2px!important;padding-bottom:2px!important}}
+.results-view #sectionsGrid tbody tr.my-player-row>td[data-score-200="true"],.results-view #sectionsGrid tbody tr.my-player-row:hover>td[data-score-200="true"]{box-shadow:inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
