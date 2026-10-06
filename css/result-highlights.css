@@ -26,3 +26,23 @@
 .results-view #sectionsGrid :is(.section-einzel,.section-team) td.col-trend>.tendency{height:18px!important;min-height:0!important}
 @media(max-width:700px){.results-view #sectionsGrid :is(.section-einzel,.section-team) tbody td{padding-top:2px!important;padding-bottom:2px!important}}
 .results-view #sectionsGrid tbody tr.my-player-row>td[data-score-200="true"],.results-view #sectionsGrid tbody tr.my-player-row:hover>td[data-score-200="true"]{box-shadow:inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
+
+/* Colour alone distinguishes 200+ scores; retain the personal selection lines. */
+.results-view #sectionsGrid tbody tr td[data-score-200="true"],.results-view #sectionsGrid tbody tr:hover td[data-score-200="true"]{outline:none!important;box-shadow:none!important;border-color:#dfd5c4!important}
+.results-view #sectionsGrid tbody tr.my-player-row>td[data-score-200="true"],.results-view #sectionsGrid tbody tr.my-player-row:hover>td[data-score-200="true"]{box-shadow:inset 0 2px 0 #087e80,inset 0 -2px 0 #087e80!important}
+.results-view #sectionsGrid .team-duel{border:1px solid #cbbd9a!important;border-radius:16px!important;box-shadow:0 3px 12px #3b4c3210!important;background:#fffaf0!important;padding:14px!important;gap:12px!important}
+.results-view #sectionsGrid .team-duel:before{display:none!important}
+.results-view #sectionsGrid .duel-team{transform:none!important;border:1px solid #dfd8c5!important;border-top:4px solid var(--duel-accent,#087e80)!important;border-radius:12px!important;background:color-mix(in srgb,var(--duel-accent,#087e80) 9%,#fffdf8)!important;box-shadow:none!important;padding:12px 8px!important;min-height:82px;align-content:center;gap:7px!important}
+.results-view #sectionsGrid .duel-team strong{color:#233e38!important;font:800 17px/1.25 Arial,sans-serif!important;text-transform:none!important;text-shadow:none!important;overflow-wrap:anywhere}
+.results-view #sectionsGrid .duel-team small{color:#586457!important;font:600 12px/1.2 Arial,sans-serif!important}
+.results-view #sectionsGrid .duel-color-dot{display:none!important}
+.results-view #sectionsGrid .duel-score{font:800 30px/1 Arial,sans-serif!important;color:#165d57!important;gap:6px!important}
+.results-view #sectionsGrid .duel-rounds{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;width:100%;min-width:0}
+.results-view #sectionsGrid .duel-round{display:grid!important;grid-template-columns:minmax(0,1fr) 12px minmax(0,1fr)!important;gap:5px!important;padding:9px 6px!important;border:1px solid #e1dccb!important;border-radius:9px!important;background:#f5f2e9!important;text-align:center!important;min-width:0}
+.results-view #sectionsGrid .duel-round>b{grid-column:1/-1;color:#5d6a5a!important;font:700 11px/1.3 Arial,sans-serif!important;text-transform:uppercase;letter-spacing:.05em}
+.results-view #sectionsGrid .round-value{display:grid;gap:4px;min-width:0}
+.results-view #sectionsGrid .round-value strong{font:800 19px/1.15 Arial,sans-serif!important;color:#233e38!important;font-variant-numeric:tabular-nums!important}
+.results-view #sectionsGrid .round-value small{font:500 10px/1.3 Arial,sans-serif;color:#646b5e;white-space:normal}
+.results-view #sectionsGrid .duel-round>i{font-style:normal;align-self:start;color:#8b8a76!important;font-size:19px!important}
+@media(max-width:600px){.results-view #sectionsGrid .team-duel{padding:10px!important;gap:8px!important}.results-view #sectionsGrid .duel-team strong{font-size:14px!important}.results-view #sectionsGrid .duel-score{font-size:24px!important}}
+.results-view #sectionsGrid .duel-team{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;text-align:center!important}.results-view #sectionsGrid .duel-team>strong,.results-view #sectionsGrid .duel-team>small{position:static!important;grid-area:auto!important;transform:none!important;margin:0!important;width:auto!important;text-align:center!important}
