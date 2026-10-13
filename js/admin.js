@@ -140,6 +140,8 @@ function isFullAdmin() {
 
 function applyRoleUi() {
   const limited = isResultsEditor();
+  $("#matchdayRecoveryPanel").hidden = !isFullAdmin();
+  $("#renamePlayerPanel").hidden = !isFullAdmin();
   for (const button of workspaceButtons) {
     button.hidden = limited && button.dataset.workspaceTarget !== "results";
   }
@@ -160,6 +162,16 @@ function hideStatus(element) {
 
 function setBusy(busy) {
   isBusy = busy;
+  const published = Number(currentSeason?.currentPublishedMatchday ?? 0);
+  $("#matchdayRecoveryPanel").hidden = !isFullAdmin();
+  $("#matchdayRecoverySummary").textContent = published ? 'Aktuell veröffentlicht: Spieltag ' + published + '. Beim Zurücknehmen wird öffentlich Spieltag ' + (published - 1) + ' angezeigt.' : 'Noch kein Spieltag veröffentlicht.';
+  $("#withdrawLatestButton").disabled = busy || !isFullAdmin() || published < 1;
+  $("#moveLatestButton").disabled = busy || !isFullAdmin() || published < 2;
+  $("#matchdayRecoveryNote").disabled = busy;
+  $("#withdrawClearScores").disabled = busy;
+  for (const control of document.querySelectorAll("#renamePlayerPanel input, #renamePlayerPanel select, #renamePlayerPanel button")) {
+    control.disabled = busy || !currentSeason || !isFullAdmin();
+  }
   elements.importButton.disabled = busy || !isFullAdmin();
   elements.auditSeasonButton.disabled = busy || !currentSeason || !isFullAdmin();
   elements.rebuildPublicButton.disabled = busy || !currentSeason || Number(currentSeason?.currentPublishedMatchday ?? 0) < 1 || !isFullAdmin();
@@ -230,7 +242,7 @@ function teamName(teamId) {
 function rosterAtClient(teamId, matchdayNumber) {
   return players
     .map((player) => ({ player, assignment: playerAssignmentAtClient(player, matchdayNumber) }))
-    .filter(({ assignment }) => assignment.teamId === teamId)
+    .filter(({ player, assignment }) => playerActiveAtClient(player, matchdayNumber) && assignment.teamId === teamId)
     .sort((a, b) => a.assignment.rosterSlot - b.assignment.rosterSlot || Number(a.player.order ?? 999) - Number(b.player.order ?? 999));
 }
 
@@ -470,12 +482,18 @@ function updateScoreProgress() {
     if (label) label.textContent = `${cardFilled}/${inputs.length} Werte`;
   }
   elements.scoreEntryProgress.textContent = total ? `${filled} von ${total} Werten eingetragen` : "Keine Eingabefelder";
+  if (currentSeason) updatePublicationGuidance();
 }
 
 function getClientPublicationPlan() {
   const current = Number(currentSeason?.currentPublishedMatchday ?? 0);
   const edited = Number(elements.matchdayNumber.value || 0);
   if (!edited) return { allowed: false, mode: "blocked", message: "Bitte zuerst einen Spieltag laden." };
+  const scheduled = matchdays.find(day => Number(day.number) === edited);
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  const today = parts.year + '-' + parts.month + '-' + parts.day;
+  if (scheduled?.date > today) return { allowed: false, mode: 'blocked', message: 'Dieser Spieltag liegt in der Zukunft (' + scheduled.date + '). Veröffentlichung frühestens an diesem Datum.' };
+  if (![...elements.scoreGrid.querySelectorAll('.score-input')].some(input => input.value.trim() !== '')) return { allowed: false, mode: 'blocked', message: 'Noch keine Spielergebnisse eingetragen. Ein leerer Spieltag kann nicht veröffentlicht werden.' };
   if (current === 0) {
     return edited === 1
       ? { allowed: true, mode: "initial", throughMatchday: 1, requiresNote: false, message: "Erste Veröffentlichung der Saison: Spieltag 1." }
@@ -648,6 +666,7 @@ function renderScoreGrid(results = {}) {
   const matchdayNumber = Number(elements.matchdayNumber.value || (Number(currentSeason?.currentPublishedMatchday ?? 0) + 1) || 1);
   const playersByTeam = new Map(teams.map((team) => [team.id, []]));
   for (const player of players) {
+    if(!playerActiveAtClient(player,matchdayNumber))continue;
     const assignment = playerAssignmentAtClient(player, matchdayNumber);
     const roster = playersByTeam.get(assignment.teamId) ?? [];
     roster.push({ ...player, effectiveRosterSlot: assignment.rosterSlot });
@@ -1232,14 +1251,16 @@ async function importInitialData() {
 
 async function refreshSeasonList(preferredSeasonId = currentSeasonId) {
   if (!currentAdmin) return;
-  const snapshot = await getDocs(collection(db, "seasons"));
+  const [snapshot, configSnapshot] = await Promise.all([
+    getDocs(collection(db, "seasons")),
+    getDoc(doc(db, "publicConfig", "current")),
+  ]);
   seasons = snapshot.docs
     .map((item) => ({ id: item.id, ...item.data() }))
     .sort((a, b) => a.id.localeCompare(b.id, "de", { numeric: true }));
 
+  const activeSeasonId = String(configSnapshot.data()?.activeSeasonId ?? "").trim();
   if (isResultsEditor()) {
-    const configSnapshot = await getDoc(doc(db, "publicConfig", "current"));
-    const activeSeasonId = configSnapshot.data()?.activeSeasonId;
     seasons = seasons.filter((season) => season.id === activeSeasonId);
   }
 
@@ -1258,9 +1279,14 @@ async function refreshSeasonList(preferredSeasonId = currentSeasonId) {
     return;
   }
 
-  currentSeasonId = seasons.some((season) => season.id === preferredSeasonId)
-    ? preferredSeasonId
-    : seasons.at(-1).id;
+  const preferred = String(preferredSeasonId ?? "").trim();
+  currentSeasonId = seasons.some((season) => season.id === preferred)
+    ? preferred
+    : seasons.some((season) => season.id === activeSeasonId)
+      ? activeSeasonId
+      : seasons.some((season) => season.id === initialSeasonId)
+        ? initialSeasonId
+        : seasons.at(-1).id;
   elements.seasonSelect.value = currentSeasonId;
   await refreshSeasonData();
 }
@@ -1343,6 +1369,7 @@ async function refreshSeasonData() {
     teams = teamSnapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
     players = playerSnapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
     matchdays = matchdaySnapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+    renderPlayerRename();
     if (isFullAdmin()) await loadPreviousSeasonPlayerLookup();
 
     elements.seasonSummary.textContent = `${currentSeason.name ?? currentSeason.id} · ${teams.length} Teams · ${currentMatchdayCount()} Spieltage · Status ${currentSeason.status ?? "–"} · veröffentlicht bis Spieltag ${currentSeason.currentPublishedMatchday ?? 0}`;
@@ -1792,5 +1819,113 @@ onAuthStateChanged(auth, async (user) => {
   elements.securedArea.classList.remove("hidden");
   applyRoleUi();
   await checkDeployment();
-  await refreshSeasonList(currentSeasonId);
+  // Beim ersten Öffnen immer die aktuell veröffentlichte/aktive Saison vorauswählen.
+  // Spätere manuelle Saisonwechsel bleiben bei Refresh erhalten, weil diese Aufrufe
+  // weiterhin explizit currentSeasonId an refreshSeasonList übergeben.
+  await refreshSeasonList("");
+});
+
+
+// Independent name correction: do not reload the score form or position editor.
+function renderPlayerRename() {
+  const panel = $("#renamePlayerPanel");
+  panel.hidden = !isFullAdmin();
+  const select = $("#renamePlayerSelect");
+  const previous = select.value;
+  select.innerHTML = players.map((player) => '<option value="' + escapeHtml(player.id) + '">' + escapeHtml(player.name) + '</option>').join("");
+  if (players.some((player) => player.id === previous)) select.value = previous;
+  $("#renamePlayerName").value = players.find((player) => player.id === select.value)?.name ?? "";
+}
+
+$("#renamePlayerSelect").addEventListener("change", () => {
+  $("#renamePlayerName").value = players.find((player) => player.id === $("#renamePlayerSelect").value)?.name ?? "";
+  hideStatus($("#renamePlayerStatus"));
+});
+
+$("#renamePlayerButton").addEventListener("click", async () => {
+  if (isBusy || !isFullAdmin() || !currentSeasonId) return;
+  const player = players.find((item) => item.id === $("#renamePlayerSelect").value);
+  const name = $("#renamePlayerName").value.trim().normalize("NFC");
+  const status = $("#renamePlayerStatus");
+  if (!player || !name || name.length > 80 || /[\u0000-\u001f\u007f]/u.test(name)) {
+    showStatus(status, "Bitte einen Namen mit 1 bis 80 Zeichen eingeben.", "error");
+    return;
+  }
+  if (name === player.name) {
+    showStatus(status, "Der Name ist unverändert.");
+    return;
+  }
+  if (!window.confirm('„' + player.name + '“ in „' + name + '“ umbenennen? Die Änderung gilt für die ausgewählte Saison einschließlich ihrer veröffentlichten Auswertungen.')) return;
+  setBusy(true);
+  showStatus(status, "Spielername und gespeicherte Auswertungen werden aktualisiert …");
+  try {
+    const response = await httpsCallable(functions, "renameSeasonPlayer")({ seasonId: currentSeasonId, playerId: player.id, expectedName: player.name, name });
+    player.name = response.data.name;
+    // Preserve unsaved score values and position selections in their existing DOM.
+    for (const row of document.querySelectorAll("[data-player-id]")) {
+      if (row.dataset.playerId !== player.id) continue;
+      const scoreName = row.querySelector(".score-player-head > strong");
+      if (scoreName) {
+        const badge = scoreName.querySelector(".badge");
+        scoreName.textContent = player.name;
+        if (badge) scoreName.append(" ", badge);
+      }
+      const nameInput = row.querySelector(".player-name");
+      if (nameInput) nameInput.value = player.name;
+      if (row.closest("#correctionPlayerSetup")) row.children[1].textContent = player.name;
+      for (const input of row.querySelectorAll(".score-input")) input.setAttribute("aria-label", player.name + ", Spiel " + (Number(input.dataset.scoreIndex) + 1));
+      const position = row.querySelector(".correction-player-position");
+      if (position) position.setAttribute("aria-label", "Neue Position für " + player.name);
+    }
+    renderPlayerRename();
+    // Clear an already rendered preview, which otherwise still shows the old name.
+    hideStatus(elements.previewStatus);
+    showStatus(status, 'Spieler wurde in „' + player.name + '“ umbenannt. Vorhandene Ergebniseingaben bleiben erhalten.', "success");
+  } catch (error) {
+    showStatus(status, error?.message ?? String(error), "error");
+  } finally {
+    setBusy(false);
+  }
+});
+
+
+async function recoverLatestMatchday(move) {
+  if (!isFullAdmin() || isBusy || !currentSeasonId) return;
+  const latest = Number(currentSeason.currentPublishedMatchday ?? 0);
+  const note = $("#matchdayRecoveryNote").value.trim();
+  const clearScores = $("#withdrawClearScores").checked;
+  const status = $("#matchdayRecoveryStatus");
+  if (note.length < 5) { showStatus(status, 'Bitte eine Begründung mit mindestens fünf Zeichen angeben.', 'error'); return; }
+  const question = move
+    ? 'Gespeicherte Scores von Spieltag ' + latest + ' auf den leeren Spieltag ' + (latest - 1) + ' verschieben und mit dessen Paarungen neu berechnen? Spieltag ' + latest + ' wird danach leer und unveröffentlicht. Ungespeicherte Formulareingaben werden verworfen.'
+    : 'Veröffentlichung von Spieltag ' + latest + ' zurücknehmen? ' + (clearScores ? 'Seine Scores werden gesichert und geleert.' : 'Seine Scores bleiben als Entwurf gespeichert.') + ' Paarungen und Termine bleiben erhalten. Ungespeicherte Formulareingaben werden verworfen.';
+  if (!window.confirm(question)) return;
+  setBusy(true);
+  showStatus(status, 'Sicherung und Korrektur werden gemeinsam ausgeführt …');
+  try {
+    const callable = httpsCallable(functions, move ? 'moveLatestMatchdayToPrevious' : 'withdrawLatestMatchday');
+    const response = await callable({ seasonId: currentSeasonId, expectedPublishedMatchday: latest, sourceMatchday: latest, targetMatchday: latest - 1, clearScores, note });
+    await refreshSeasonData();
+    showStatus(status, 'Erfolgreich. Öffentlich ist jetzt der Stand bis Spieltag ' + response.data.throughMatchday + '. Der folgende Spieltag ist wieder unveröffentlicht.', 'success');
+    $("#matchdayRecoveryNote").value = '';
+    $("#withdrawClearScores").checked = false;
+  } catch (error) { showStatus(status, error?.message ?? String(error), 'error'); }
+  finally { setBusy(false); }
+}
+$("#withdrawLatestButton").addEventListener('click', () => recoverLatestMatchday(false));
+$("#moveLatestButton").addEventListener('click', () => recoverLatestMatchday(true));
+
+function playerActiveAtClient(player,day){return Number(day)>=Number(player.activeFromMatchday??1)&&Number(day)<=Number(player.activeThroughMatchday??Infinity)}
+
+const splitButton=document.createElement('button');splitButton.type='button';splitButton.textContent='Vegas / D3nn1s: Trennung prüfen';
+$('#renamePlayerPanel').append(splitButton);
+splitButton.addEventListener('click',async()=>{
+ if(isBusy||!isFullAdmin())return;
+ const status=$('#renamePlayerStatus');if(currentSeasonId!=='2026-s3'){showStatus(status,'Bitte Liga 2026 S3 auswählen.','error');return}
+ setBusy(true);splitButton.disabled=true;
+ try{const call=httpsCallable(functions,'splitVegasReplacement');const preview=(await call({mode:'preview'})).data;
+ const detail=preview.summary.map(p=>p.name+': '+p.games+' Spiele, '+p.pins+' Pins, Ø '+Number(p.average).toLocaleString('de-DE',{maximumFractionDigits:1})).join('\n');
+ if(!window.confirm('Diese Trennung jetzt speichern?\nVegas bis Spieltag 5, D3nn1s ab Spieltag 6.\n'+detail+'\nMannschaftsergebnisse bleiben erhalten. Eine Sicherung wird angelegt.'))return;
+ await call({mode:'apply',token:preview.token});await refreshSeasonData();showStatus(status,'Vegas und D3nn1s sind getrennt. Alle veröffentlichten Spieltage wurden neu berechnet.','success');
+ }catch(e){showStatus(status,e.message||String(e),'error')}finally{setBusy(false);splitButton.disabled=false}
 });
