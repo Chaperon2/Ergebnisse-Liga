@@ -14,6 +14,10 @@
   <link rel="manifest" href="site.webmanifest?v=5">
   <title>Strikeclub Liga · Administration</title>
   <link rel="stylesheet" href="/css/admin.css?v=15.9">
+<style>
+    #renamePlayerPanel .editor-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 600px) { #renamePlayerPanel .editor-meta { grid-template-columns: minmax(0, 1fr); } }
+  </style>
 </head>
 <body>
   <main class="shell">
@@ -101,6 +105,30 @@
         </nav>
 
         <div class="workspace-panel" data-workspace-panel="results">
+          <section id="renamePlayerPanel" class="panel" hidden>
+            <h2>Spieler umbenennen</h2>
+            <p class="muted">Der Name wird in der ausgewählten Saison und ihren gespeicherten Auswertungen geändert. Andere Saisons bleiben unverändert. Ergebnisse und Positionen bleiben erhalten.</p>
+            <div class="editor-meta">
+              <label>Spieler<select id="renamePlayerSelect"></select></label>
+              <label>Neuer Name<input id="renamePlayerName" type="text" maxlength="80" autocomplete="off"></label>
+            </div>
+            <div class="actions"><button id="renamePlayerButton" type="button">Namen speichern</button></div>
+            <div id="renamePlayerStatus" class="status hidden" role="status"></div>
+          </section>
+
+          <section id="matchdayRecoveryPanel" class="panel" hidden>
+            <h2>Veröffentlichten Spieltag zurücknehmen</h2>
+            <p class="muted">Nur der zuletzt veröffentlichte Spieltag kann zurückgenommen werden. Die Tabelle wird bis zum vorherigen Spieltag neu berechnet. Termine, Paarungen und Bahnen bleiben im Spielplan erhalten.</p>
+            <p id="matchdayRecoverySummary"></p>
+            <label>Begründung<input id="matchdayRecoveryNote" type="text" maxlength="500" placeholder="z. B. Ergebnisse versehentlich beim falschen Spieltag erfasst"></label>
+            <label><input id="withdrawClearScores" type="checkbox"> Gespeicherte Ergebnisse dieses Spieltags ebenfalls löschen (vorher serverseitig sichern)</label>
+            <div class="actions"><button id="withdrawLatestButton" class="danger-button" type="button">Letzte Veröffentlichung zurücknehmen</button></div>
+            <hr>
+            <h3>Ergebnisse um einen Spieltag zurück verschieben</h3>
+            <p class="muted">Verschiebt die gespeicherten Ergebnisse des letzten veröffentlichten Spieltags auf den unmittelbar vorherigen Spieltag, sofern dieser leer ist. Der Quellspieltag wird zum leeren Entwurf. Vorhandene Zieleinträge werden nicht überschrieben.</p>
+            <div class="actions"><button id="moveLatestButton" type="button">Ergebnisse auf vorherigen Spieltag verschieben</button></div>
+            <div id="matchdayRecoveryStatus" class="status hidden" role="status"></div>
+          </section>
           <section class="panel daily-panel">
             <div class="panel-heading daily-heading">
               <div>
@@ -375,6 +403,6 @@
       </div>
     </div>
   </main>
-  <script type="module" src="/js/admin.js?v=15.12"></script>
+  <script type="module" src="/js/admin.js?v=15.13-player-split"></script>
 </body>
 </html>
