@@ -1,4 +1,4 @@
-import {renderAlltime} from './alltime-records.js?v=31';
+import {renderAlltime} from './alltime-records.js?v=32';
 import {
   escapeHtml,
   formatDate,
