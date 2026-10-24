@@ -1,4 +1,4 @@
-import {renderAlltimeStandings} from './alltime-standings.js?v=33';
+import {renderAlltimeStandings} from './alltime-standings.js?v=34';
 import {loadCareerData} from './career-data.js?v=33';
 let sequence=0;
 export async function renderAlltime(host,current){
