@@ -5,7 +5,7 @@ export async function loadCareerData(current){
  const settled=await Promise.allSettled(catalog.data.filter(s=>s.hasResults&&s.seasonId!==current?.seasonId).map(s=>loadArchiveResults(s)));
  const data=settled.filter(s=>s.status==='fulfilled').map(s=>s.value.data);
  if(current)data.push(current);
- return {data:data.sort((a,b)=>a.seasonId.localeCompare(b.seasonId,undefined,{numeric:true})),partial:!!catalog.warning||settled.some(s=>s.status==='rejected')};
+ return {archiveSeasonIds:catalog.data.filter(s=>s.status==='completed'||(Number(s.matchdayCount)>0&&Number(s.currentPublishedMatchday)>=Number(s.matchdayCount))).map(s=>s.seasonId),data:data.sort((a,b)=>a.seasonId.localeCompare(b.seasonId,undefined,{numeric:true})),partial:!!catalog.warning||settled.some(s=>s.status==='rejected')};
 }
 export function careerRows(data,name){return data.map(s=>{const matches=(s.individualStandings?.rows??[]).filter(r=>nameKey(r.name)===nameKey(name));return {seasonId:s.seasonId,seasonName:s.seasonName,player:matches.length===1?matches[0]:null}})}
 export function allTimeRecords(data){
