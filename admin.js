@@ -1915,7 +1915,11 @@ async function recoverLatestMatchday(move) {
 $("#withdrawLatestButton").addEventListener('click', () => recoverLatestMatchday(false));
 $("#moveLatestButton").addEventListener('click', () => recoverLatestMatchday(true));
 
-function playerActiveAtClient(player,day){return Number(day)>=Number(player.activeFromMatchday??1)&&Number(day)<=Number(player.activeThroughMatchday??Infinity)}
+function playerActiveAtClient(player, day){
+ const n=Number(day);
+ if(Array.isArray(player.activePeriods))return player.activePeriods.some(p=>n>=p.fromMatchday&&n<=(p.throughMatchday??Infinity));
+ return n>=Number(player.activeFromMatchday??1)&&n<=Number(player.activeThroughMatchday??Infinity);
+}
 
 const splitButton=document.createElement('button');splitButton.type='button';splitButton.textContent='Vegas / D3nn1s: Trennung prüfen';
 $('#renamePlayerPanel').append(splitButton);
@@ -1928,4 +1932,15 @@ splitButton.addEventListener('click',async()=>{
  if(!window.confirm('Diese Trennung jetzt speichern?\nVegas bis Spieltag 5, D3nn1s ab Spieltag 6.\n'+detail+'\nMannschaftsergebnisse bleiben erhalten. Eine Sicherung wird angelegt.'))return;
  await call({mode:'apply',token:preview.token});await refreshSeasonData();showStatus(status,'Vegas und D3nn1s sind getrennt. Alle veröffentlichten Spieltage wurden neu berechnet.','success');
  }catch(e){showStatus(status,e.message||String(e),'error')}finally{setBusy(false);splitButton.disabled=false}
+});
+
+const tigerButton=document.createElement('button');tigerButton.type='button';tigerButton.textContent='Vegas ab Spieltag 9 zu Tiger: prüfen';$('#renamePlayerPanel').append(tigerButton);
+tigerButton.addEventListener('click',async()=>{
+ if(isBusy||!isFullAdmin())return;
+ const status=$('#renamePlayerStatus');if(currentSeasonId!=='2026-s3'){showStatus(status,'Bitte Liga 2026 S3 auswählen.','error');return}
+ setBusy(true);tigerButton.disabled=true;
+ try{const call=httpsCallable(functions,'moveVegasToTiger'),preview=(await call({mode:'preview'})).data,p=preview.summary;
+ if(!window.confirm('Vegas ab Spieltag 9 zu '+p.team+' auf Position 1?\nEr ersetzt dort: '+p.replacedName+'.\nSpieltag 6 bis 8 bleibt Vegas ohne Teamplatz. D3nn1s bleibt unverändert.\nDie bisherigen Ergebnisse bleiben erhalten. Eine Sicherung wird angelegt.'))return;
+ await call({mode:'apply',token:preview.token});await refreshSeasonData();showStatus(status,'Vegas ist ab Spieltag 9 auf Position 1 bei Tiger eingetragen.','success');
+ }catch(e){showStatus(status,e.message||String(e),'error')}finally{setBusy(false);tigerButton.disabled=false}
 });
