@@ -1,4 +1,4 @@
-import {renderAlltime} from './alltime-records.js?v=34';
+import {renderAlltime} from './alltime-records.js?v=35';
 import {
   escapeHtml,
   formatDate,
@@ -114,13 +114,14 @@ function render(data) {
     },
   ];
 
-  recordsGrid.innerHTML = records.map(card).join("");
-  state.classList.remove("error");
+  const markup = records.map(card).join("");
+  if (recordsGrid.innerHTML !== markup) recordsGrid.innerHTML = markup;
+  state.classList.remove("error", "fallback");
   state.innerHTML = `<i class="fa-solid fa-signal"></i><span>${escapeHtml(data.seasonName ?? data.seasonId)} · berechnet bis Spieltag ${formatInteger(data.matchday?.number)} · Hausligaschnitt ${formatNumber(r.weightedHouseAverage)}</span>`;
 }
 
 function showError(message) {
-  recordsGrid.innerHTML = `<div class="error-box">${escapeHtml(message)}</div>`;
+  if (!recordsGrid.querySelector(".record-card")) recordsGrid.innerHTML = `<div class="error-box">${escapeHtml(message)}</div>`;
   state.classList.add("error");
   state.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${escapeHtml(message)}</span>`;
 }
