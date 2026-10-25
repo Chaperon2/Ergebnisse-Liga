@@ -1,18 +1,10 @@
 import {clubEvents,nextClubEvent,berlinDay} from './club-events-data.js?v=36';
-let banner=null,spacer=null,observer=null,lastKey;
-function syncBannerSpace(){if(!banner||!spacer)return;const height=Math.ceil(banner.getBoundingClientRect().bottom+8);spacer.style.height=height+'px';document.documentElement.style.setProperty('--club-banner-space',height+'px')}
-window.addEventListener('resize',syncBannerSpace);
-function update(){
- const event=nextClubEvent(),key=event?.id??null;
- if(key!==lastKey){lastKey=key;observer?.disconnect();banner?.remove();spacer?.remove();banner=null;spacer=null;document.documentElement.style.removeProperty('--club-banner-space');
-  if(event){banner=document.createElement('aside');banner.className='club-event-banner';banner.setAttribute('aria-label','Nächster Veranstaltungstermin');
-   const link=document.createElement('a');link.href='termine-news.html#'+event.id;
-   const label=document.createElement('span');label.className='club-event-label';label.textContent='Nächster Termin';
-   const title=document.createElement('strong');title.textContent=event.title;
-   const info=document.createElement('span');info.textContent=event.date.split('-').reverse().join('.')+' · '+event.time.replace(':00','')+' Uhr · '+event.location;
-   const more=document.createElement('span');more.className='club-event-more';more.textContent='Infos ansehen →';const track=document.createElement('span');track.className='club-event-ticker';track.append(label,title,info);const viewport=document.createElement('span');viewport.className='club-event-viewport';viewport.append(track);link.append(viewport,more);banner.append(link);spacer=document.createElement('div');spacer.className='club-event-spacer';spacer.setAttribute('aria-hidden','true');document.body.prepend(spacer);document.body.prepend(banner);syncBannerSpace();if(typeof ResizeObserver!=='undefined'){observer=new ResizeObserver(syncBannerSpace);observer.observe(banner);}
-  }
- }
- for(const event of clubEvents){const status=document.querySelector('#'+event.id+' [data-event-status]');if(status)status.textContent=event.date<berlinDay()?'Vergangener Termin':event.date===berlinDay()?'Heute':'Termin vormerken';}
-}
-update();setInterval(update,60000);
+let banner,spacer,track,unit,lastKey,observer,frame;
+function headers(){return [...document.querySelectorAll('header,nav,.mobile-top,.topbar')].filter(el=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();return ['sticky','fixed'].includes(s.position)&&s.top!=='auto'&&r.width>innerWidth/2&&r.height>0&&r.height<200&&!el.closest('.club-event-banner')})}
+function position(){if(!banner)return;let top=parseFloat(getComputedStyle(banner).getPropertyValue('--event-safe-top'))||0;for(const el of headers()){const r=el.getBoundingClientRect();if(r.top<=200&&r.bottom>0)top=Math.max(top,r.bottom)}banner.style.top=Math.ceil(top)+'px';document.documentElement.style.setProperty('--club-banner-space',Math.ceil(top+banner.offsetHeight)+'px');spacer.style.height=banner.offsetHeight+'px'}
+function resize(){if(!banner)return;const group=document.createElement('span');group.className='club-event-group';group.append(unit.cloneNode(true));track.replaceChildren(group);const width=group.getBoundingClientRect().width;if(width>0){const count=Math.ceil(banner.clientWidth/width);for(let n=1;n<count;n++){const copy=unit.cloneNode(true);copy.setAttribute('aria-hidden','true');group.append(copy)}}const clone=group.cloneNode(true);clone.setAttribute('aria-hidden','true');track.append(clone);track.style.animationDuration=Math.max(18,group.getBoundingClientRect().width/45)+'s';position()}
+function update(){const event=nextClubEvent(),key=event?.id??null;if(key!==lastKey){lastKey=key;observer?.disconnect();banner?.remove();spacer?.remove();banner=null;document.documentElement.style.removeProperty('--club-banner-space');if(event){
+ banner=document.createElement('aside');banner.className='club-event-banner';banner.setAttribute('aria-label','Nächster Veranstaltungstermin');const link=document.createElement('a');link.href='termine-news.html#'+event.id;const text=event.title+' · '+event.date.split('-').reverse().join('.')+' · '+event.time.replace(':00','')+' Uhr · '+event.location+' · Mehr erfahren →';link.setAttribute('aria-label',text);
+ track=document.createElement('span');track.className='club-event-ticker';unit=document.createElement('span');unit.className='club-event-unit';unit.textContent='Nächster Termin · '+text;link.append(track);banner.append(link);spacer=document.createElement('div');spacer.className='club-event-spacer';spacer.setAttribute('aria-hidden','true');const header=headers().at(-1);if(header)header.after(spacer);else document.body.prepend(spacer);document.body.prepend(banner);resize();if(typeof ResizeObserver!=='undefined'){observer=new ResizeObserver(position);observer.observe(banner);for(const h of headers())observer.observe(h)}
+ }}for(const e of clubEvents){const status=document.querySelector('#'+e.id+' [data-event-status]');if(status)status.textContent=e.date<berlinDay()?'Vergangener Termin':e.date===berlinDay()?'Heute':'Termin vormerken'}}
+window.addEventListener('resize',resize);window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(()=>{frame=null;position()})},{passive:true});update();setInterval(update,60000);document.fonts?.ready.then(resize);
